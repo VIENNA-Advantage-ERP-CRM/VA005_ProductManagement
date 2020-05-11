@@ -211,7 +211,7 @@ namespace VA005.Models
 
             if (pageNo == 1)
             {
-                string sql1 = "SELECT COUNT(M_Product_Category_ID) FROM (" + sql + ")";
+                string sql1 = "SELECT COUNT(M_Product_Category_ID) FROM (" + sql + ") t";
                 count = Util.GetValueOfInt(DB.ExecuteScalar(sql1, null, null));
             }
 
@@ -247,6 +247,13 @@ namespace VA005.Models
                 LEFT OUTER JOIN C_TaxCategory t ON t.C_TaxCategory_ID = p.C_TaxCategory_ID LEFT OUTER JOIN AD_TreeNodePR tree ON (p.M_Product_ID = tree.Node_ID AND tree.AD_Tree_ID = " + AD_Tree_ID +
                 " ) LEFT OUTER JOIN AD_Tree tr ON tr.AD_Tree_ID = " + AD_Tree_ID + " WHERE p.M_Product_ID = " + M_Product_ID;
             DataSet dsProd = DB.ExecuteDataset(sql, null, null);
+            if (dsProd != null && dsProd.Tables[0] != null)
+            {
+                foreach (DataColumn column in dsProd.Tables[0].Columns)
+                {
+                    column.ColumnName = column.ColumnName.ToUpper();
+                }
+            }
             return dsProd;
         }
 
