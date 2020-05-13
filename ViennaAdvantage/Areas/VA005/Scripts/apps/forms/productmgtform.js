@@ -287,7 +287,7 @@
 
             // Added by Bharat on 09 March 2018 to add search box for Categories
             $searchCat = $('<div class="VA005-left-input-panel"><input id = ' + "VA005_searchCat_" + $self.windowNo + ' class="VA005-left-panelInput" type="text" value="" placeholder="' + VIS.Msg.getMsg("Search") +
-                '"><input class=" vis-group-pointer vis-group-ass-btns vis-group-search-icon" type="button"></div>');
+                '"><button class=" vis-group-pointer vis-group-ass-btns vis-group-search-icon"><i class="vis vis-search"></i></button></div>');
             //updated by Manjot Given ID To UI
             $ulLefttoolbar = $("<ul id= leftUi_" + $self.windowNo + ">");
             //End
@@ -307,9 +307,9 @@
 
 
             $divHeadProd = $('<div class="VA005-middle-head"><div class="VA005-middle-search">' +
-                '<input class="vis-group-add-btn vis-group-pointer vis-group-addLeft vis-group-ass-btns" type="button">' +
+                '<button class="vis-group-add-btn vis-group-pointer vis-group-addLeft vis-group-ass-btns" ><i class="vis vis-plus"></i></button>' +
                 '<input class="vis-group-SearchText vis-group-addLeft" style="border-radius:0;height:29px;" value="" placeholder="' + VIS.Msg.getMsg("Search") +
-                '" type="text"><input class=" vis-group-pointer vis-group-ass-btns vis-group-search-icon" type="button"></span></div>' +
+                '" type="text"><button class="vis-group-pointer vis-group-ass-btns vis-group-search-icon"><i class="vis vis-search"></i></button></div>' +
                 '<div class="VA005-middle-icons"><ul><li id="btnRefreshForm_' + $self.windowNo + '"><span class="glyphicon glyphicon-refresh VA005-icons-font" title="' + VIS.Msg.getMsg("VA005_Refresh") + '"></span></li>' +
                 '<li id="btnCopy_' + $self.windowNo + '"><span class="vis vis-copy VA005-icons-font" title="' + VIS.Msg.getMsg("Copy") + '"></span></li>' +
                 //'<span class="glyphicon glyphicon-edit VA005-icons-font" title="' + VIS.Msg.getMsg("VA005_CopyProduct") + '"></span></li>' +
@@ -536,7 +536,7 @@
             divAttr.append($attrControl.getControl());
             divAttr.append($attrControl.getBtn(0));
             divAttr.append('<span id="VA005_btnCancelVarient_' + $self.windowNo + '" class="VA005-icons glyphicon glyphicon-remove-circle VA005-icons-color" style="font-size:29px;float:left;" title="' + VIS.Msg.getMsg("Cancel") + '"></span>');
-            $attrControl.getBtn(0).on(VIS.Events.onClick, AttributeCtrl);
+            //$attrControl.getBtn(0).on(VIS.Events.onClick, AttributeCtrl);
             btnCancelVarient = $rightPanel.find("#VA005_btnCancelVarient_" + $self.windowNo);
             $divVarient.on("click", VarientContainerClick);
 
