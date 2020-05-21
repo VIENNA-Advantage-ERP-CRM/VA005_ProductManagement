@@ -8,7 +8,7 @@
         this.frame;
         this.windowNo;
         var $self = this; //scoped self pointer
-        var $root = $('<div class="vis-group-assign-content vis-forms-container" style="height:100%;">');
+        var $root = $('<div class="vis-group-assign-content vis-forms-container VA005-outermainwrapper" style="height:100%;">');
         var $zoomDiv = null;
         var $table;
         var $td0leftbar, $btnlbToggle, $searchQry, $searchCat, $searchBy, $ulLefttoolbar, $divlbMain, $td2_tr1; //left bar
@@ -70,7 +70,7 @@
         var pr = null;
         var isOk = true;
         var $maindiv = $('<div class="vis-forms-container" style="display:none;"></div>'); //layout
-        var $div = $('<div style="overflow-y:auto;margin-right:-2px;"></div>');
+        var $div = $('<div style="overflow-y:auto;"></div>');
         var $divPrice = $('<div style="width:100%;height:100%;"></div>');
         var $divPriceMain = $('<div style="width:100%;height:100%;display:none;margin-left:6px;"></div>'); //layout
         var $divSupp = $('<div style="width:100%;height:100%;"></div>');
@@ -78,7 +78,7 @@
         var $divCart = $('<div style="width:100%;height:100%;"></div>');
         var $divCartMain = $('<div style="width:100%;height:100%;"></div>');
         var $divPrint = $('<div style="display:none;"></div>'); //layout
-        var $divPrintPop = $('<div style="overflow-y:auto;margin-right:-2px;margin-bottom:15px"></div>');
+        var $divPrintPop = $('<div style="overflow-y:auto;margin-bottom:15px"></div>');
         var $divRelatedGrid = $('<div style="width:100%;height:100%;"></div>');
         var priceGrid = null;
         var supplierGrid = null;
@@ -287,7 +287,7 @@
 
             // Added by Bharat on 09 March 2018 to add search box for Categories
             $searchCat = $('<div class="VA005-left-input-panel"><input id = ' + "VA005_searchCat_" + $self.windowNo + ' class="VA005-left-panelInput" type="text" value="" placeholder="' + VIS.Msg.getMsg("Search") +
-                '"><input class=" vis-group-pointer vis-group-ass-btns vis-group-search-icon" type="button"></div>');
+                '"><button class="VA005-leftpanelcatsearchbtn"><i class="vis vis-search"></i></button></div>');
             //updated by Manjot Given ID To UI
             $ulLefttoolbar = $("<ul id= leftUi_" + $self.windowNo + ">");
             //End
@@ -307,32 +307,32 @@
 
 
             $divHeadProd = $('<div class="VA005-middle-head"><div class="VA005-middle-search">' +
-                '<input class="vis-group-add-btn vis-group-pointer vis-group-addLeft vis-group-ass-btns" type="button">' +
-                '<input class="vis-group-SearchText vis-group-addLeft" style="border-radius:0;height:29px;" value="" placeholder="' + VIS.Msg.getMsg("Search") +
-                '" type="text"><input class=" vis-group-pointer vis-group-ass-btns vis-group-search-icon" type="button"></span></div>' +
-                '<div class="VA005-middle-icons"><ul><li id="btnRefreshForm_' + $self.windowNo + '"><span class="glyphicon glyphicon-refresh VA005-icons-font" title="' + VIS.Msg.getMsg("VA005_Refresh") + '"></span></li>' +
+                '<button class="vis-group-add-btn VA005-leftpanelcatsearchbtn"><i class="vis vis-plus"></i></button>' +
+                '<input class="vis-group-SearchText vis-group-addLeft" style="border-radius:0;height:31px;" value="" placeholder="' + VIS.Msg.getMsg("Search") +
+                '" type="text"><button class="vis-group-search-icon VA005-leftpanelcatsearchbtn"><i class="vis vis-search"></i></button></span></div>' +
+                '<div class="VA005-middle-icons"><ul><li id="btnRefreshForm_' + $self.windowNo + '"><span class="vis vis-refresh VA005-icons-font" title="' + VIS.Msg.getMsg("VA005_Refresh") + '"></span></li>' +
                 '<li id="btnCopy_' + $self.windowNo + '"><span class="vis vis-copy VA005-icons-font" title="' + VIS.Msg.getMsg("Copy") + '"></span></li>' +
-                //'<span class="glyphicon glyphicon-edit VA005-icons-font" title="' + VIS.Msg.getMsg("VA005_CopyProduct") + '"></span></li>' +
-                '<li id="btnImage_' + $self.windowNo + '"><span class="glyphicon glyphicon-picture VA005-icons-font" title="' + VIS.Msg.getMsg("VA005_UploadImage") + '"></span></li>' +
-                '<li id="btnSupplier_' + $self.windowNo + '"><span class="glyphicon glyphicon-user VA005-icons-font" title="' + VIS.Msg.getMsg("VA005_UpdateSupplier") + '"></span></li>' +
-                '<li id="btnPriceList_' + $self.windowNo + '"><span class="glyphicon glyphicon-usd VA005-icons-font" title="' + VIS.Msg.getMsg("VA005_UpdatePrice") + '"></span></li>' +
-                '<li id="btnAddCart_' + $self.windowNo + '"><span class="glyphicon glyphicon-shopping-cart VA005-icons-font" title="' + VIS.Msg.getMsg("VA005_AddCart") + '"></span></li>' +
-                '<li id="btnEditMuLtiple_' + $self.windowNo + '"><span class="glyphicon glyphicon-edit VA005-icons-font" title="' + VIS.Msg.getMsg("VA005_UpdateProduct") + '"></span></li></ul></div></div>' +
+                //'<span class="vis vis-edit VA005-icons-font" title="' + VIS.Msg.getMsg("VA005_CopyProduct") + '"></span></li>' +
+                '<li id="btnImage_' + $self.windowNo + '"><span class="vis vis-image VA005-icons-font" title="' + VIS.Msg.getMsg("VA005_UploadImage") + '"></span></li>' +
+                '<li id="btnSupplier_' + $self.windowNo + '"><span class="vis vis-user VA005-icons-font" title="' + VIS.Msg.getMsg("VA005_UpdateSupplier") + '"></span></li>' +
+                '<li id="btnPriceList_' + $self.windowNo + '"><span class="fa fa-usd VA005-icons-font" title="' + VIS.Msg.getMsg("VA005_UpdatePrice") + '"></span></li>' +
+                '<li id="btnAddCart_' + $self.windowNo + '"><span class="fa fa-shopping-cart VA005-icons-font" title="' + VIS.Msg.getMsg("VA005_AddCart") + '"></span></li>' +
+                '<li id="btnEditMuLtiple_' + $self.windowNo + '"><span class="vis vis-edit VA005-icons-font" title="' + VIS.Msg.getMsg("VA005_UpdateProduct") + '"></span></li></ul></div></div>' +
                 '<div class="VA005-middle-cat-bar"><span style="font-weight:bold;">' + VIS.Msg.getMsg("VA005_Categories") + ' : </span><span id="btnShowAll_'
-                + $self.windowNo + '" class="vis-group-pointer" style="color:#1aa0ed;">' + VIS.Msg.getMsg("All") + '</span> <span id="catInfo_' + $self.windowNo + '" style="display:none;"></span></div>' +
+                + $self.windowNo + '" class="vis-group-pointer" style="color:rgba(var(--v-c-primary), 1);">' + VIS.Msg.getMsg("All") + '</span> <span id="catInfo_' + $self.windowNo + '" style="display:none;"></span></div>' +
                 '<div class="VA005-middle-cart-bar"><input type="checkbox" id="VA005_chkAll_' + $self.windowNo + '"></input><span>' + VIS.Msg.getMsg("SelectAll") + '</span>' +
                 '<div style="float:right;margin-right:20px;"><span style="font-weight:bold;">' + VIS.Msg.getMsg("VA005_SelectedCart") +
                 ' : </span><span id="VA005_cartInfo_' + $self.windowNo + '">' + VIS.Msg.getMsg("None") + '</span></div></div>');
             $divHeadVarient = $('<div class="VA005-right-head VA005-tab-control"><ul class="VA005-tabs" style="overflow: auto;white-space: nowrap;">' +
-                '<li id="VA005_btnDetails_' + $self.windowNo + '" class="VA005-selectedTab" style="margin: 0 0px 0 2px;">' + VIS.Msg.getMsg("Details") + '</li>' +
-                '<li id="VA005_btnVarient_' + $self.windowNo + '" style="margin: 0 0px 0 2px;">' + VIS.Msg.getMsg("VA005_Varients") + '</li>' +
-                '<li id="VA005_btnUom_' + $self.windowNo + '" style="margin: 0 0px 0 2px;">' + VIS.Msg.getElement(VIS.Env.getCtx(), "C_UOM_ID") + '</li>' +
-                '<li id="VA005_btnRelated_' + $self.windowNo + '" style="margin: 0 0px 0 2px;">' + VIS.Msg.getMsg("Related") + '</li>' +
-                '<li id="VA005_btnCart_' + $self.windowNo + '" style="margin: 0 0px 0 2px;float:right;">' + VIS.Msg.getMsg("VA005_Cart") + '</li></ul></div>');
+                '<li id="VA005_btnDetails_' + $self.windowNo + '" class="VA005-selectedTab">' + VIS.Msg.getMsg("Details") + '</li>' +
+                '<li id="VA005_btnVarient_' + $self.windowNo + '">' + VIS.Msg.getMsg("VA005_Varients") + '</li>' +
+                '<li id="VA005_btnUom_' + $self.windowNo + '">' + VIS.Msg.getElement(VIS.Env.getCtx(), "C_UOM_ID") + '</li>' +
+                '<li id="VA005_btnRelated_' + $self.windowNo + '">' + VIS.Msg.getMsg("Related") + '</li>' +
+                '<li id="VA005_btnCart_' + $self.windowNo + '">' + VIS.Msg.getMsg("VA005_Cart") + '</li></ul></div>');
             //$middlePanel = $('<div class="VA005-middle-left-main">').append($divHeadProd);
 
             //Manish 26/9/2016...            
-            $btnAttrValueControls = $('<div style="float:right;margin-right:15px;position:absolute;right:0;width:100%"><p id="VA005_SelectedNodeText_' + $self.windowNo + '" style="float: left;padding-left: 15px;color: #1aa0ed;font-size: 16px;font-weight: bold;">bfehfh</p><div style="float:right"><span id="VA005_btnDeleteAttVal_' + $self.windowNo + '"  class="VA005-RemoveLinkeImage VA005-AttValOpacity" style="font-size:18px;margin-right:6px" title="' + VIS.Msg.getMsg("VA005_RemoveImage") + '"></span><span id="VA005_btnDeleteCross_' + $self.windowNo + '"  style="font-size: 18px;" class="glyphicon glyphicon-remove-circle " title="' + VIS.Msg.getMsg("VA005_Close") + '"></span></div></div>');
+            $btnAttrValueControls = $('<div style="float:right;margin-right:15px;position:absolute;right:0;width:100%"><p id="VA005_SelectedNodeText_' + $self.windowNo + '" style="float: left;padding-left: 15px;color: rgba(var(--v-c-primary), 1);font-size: 16px;font-weight: bold;">bfehfh</p><div style="float:right"><span id="VA005_btnDeleteAttVal_' + $self.windowNo + '"  class="VA005-RemoveLinkeImage VA005-AttValOpacity" style="font-size:18px;margin-right:6px" title="' + VIS.Msg.getMsg("VA005_RemoveImage") + '"></span><span id="VA005_btnDeleteCross_' + $self.windowNo + '"  style="font-size: 18px;" class="vis vis-mark " title="' + VIS.Msg.getMsg("VA005_Close") + '"></span></div></div>');
             productAttValues = $('<div class="VA005-AttributesValMainDiv"></div>');
             $middlePanel = $('<div class="VA005-middle-left-main" style="height:98%" >').append($divHeadProd);
             //End 26/9/2016...
@@ -343,9 +343,9 @@
             ImagePanel = $('<div class="VA005-middle-right-main">');
             var imagepanelTop = ('<div class="VA005-Image-panel-top"><div class="VA005-Image-panel-div"><i id="VA005_btnerase_' + $self.windowNo +
                 '" class="fa fa-eraser" title="' + VIS.Msg.getMsg("Clear") + '"></i><span id="VA005_ImgDelete_' + $self.windowNo +
-                '" class="glyphicon glyphicon-trash " style="font-size: 22px !important;" title="' + VIS.Msg.getMsg("DeleteActivity") + '"></span><span id="VA005_btnUpload_' + $self.windowNo +
-                '" class="glyphicon glyphicon-upload " title="' + VIS.Msg.getMsg("VA005_UploadImage") + '"></span><span id="VA005_btnImgCancel_' + $self.windowNo +
-                '" class="glyphicon glyphicon-remove-circle " title="' + VIS.Msg.getMsg("Cancel") + '"></span></div></div>');
+                '" class="vis vis-delete" title="' + VIS.Msg.getMsg("DeleteActivity") + '"></span><span id="VA005_btnUpload_' + $self.windowNo +
+                '" class="vis vis-upload" title="' + VIS.Msg.getMsg("VA005_UploadImage") + '"></span><span id="VA005_btnImgCancel_' + $self.windowNo +
+                '" class="vis vis-mark" title="' + VIS.Msg.getMsg("Cancel") + '"></span></div></div>');
             ImagePanel.append(imagepanelTop);
             var divImage = $('<div class="VA005-div-images"><ul class="VA005-productimgul"></ul></div>');
             ImagePanel.append(divImage);
@@ -397,8 +397,8 @@
 
             middlePanel();
             rightPanel();
-            $zoomDiv = $('<ul class="vis-apanel-rb-ul"><li data-action="zoom" style="opacity: 1" title="' + VIS.Msg.getMsg("VA005_Zoom") + '"><img data-action="zoom" src="Areas/VIS/Images/Zoom16.png">' +
-                '</li><li data-action="refresh" title="' + VIS.Msg.getMsg("VA005_Refresh") + '"><img data-action="refresh" src="Areas/VIS/Images/Refresh16.png"></li></ul');
+            $zoomDiv = $('<ul class="vis-apanel-rb-ul"><li data-action="zoom" style="opacity: 1" title="' + VIS.Msg.getMsg("VA005_Zoom") + '"><i class="vis vis-find" data-action="zoom"></i>' +
+                '</li><li data-action="refresh" title="' + VIS.Msg.getMsg("VA005_Refresh") + '"><i class="vis vis-refresh" data-action="refresh"></i></li></ul');
             //$root.append($zoomDiv);
             $ImageZoom = $('<div id="popupPhotoLandscape" class="VA005-large"></div>');
             $root.append($ImageZoom);
@@ -476,7 +476,7 @@
 
         function rightPanel() {
             $divUom = '<div id="VA005_divUom_' + $self.windowNo + '" class="VA005-right-head-btn"><div class="VA005-Add-Btn" id="VA005_btnAddUom_' + $self.windowNo +
-                '"><span class="glyphicon glyphicon-plus" ></span><span style="margin-left:10px;">' + VIS.Msg.getMsg("VA005_AddUom") + '</span></div>' +
+                '"><span class="vis vis-plus" ></span><span style="margin-left:10px;">' + VIS.Msg.getMsg("VA005_AddUom") + '</span></div>' +
                 '<div id="VA005_divConversion_' + $self.windowNo + '" class="VA005-conv-form"><div class="VA005-conv-data"><select id="cmbUomTo_' + $self.windowNo + '"></select></div>' +
                 '<div class="VA005-conv-data"><div class="VA005-conversion-data"><label>' + VIS.Msg.getElement(VIS.Env.getCtx(), "MultiplyRate") +
                 '</label><input type="number" step="any" maxlength="26" class="vis-gc-vpanel-table-mandatory" style="display: inline-block;" id="VA005_txtMul_' + $self.windowNo + '"></div>' +
@@ -484,8 +484,8 @@
                 '</label><input type="number" step="any" maxlength="26" class="vis-gc-vpanel-table-mandatory" style="display: inline-block;" id="VA005_txtDiv_' + $self.windowNo + '"></div></div>' +
                 '<div class="VA005-conv-data"><div class="VA005-conversion-data"><label>' + VIS.Msg.getElement(VIS.Env.getCtx(), "UPC") + '</label><input id="VA005_uomUPC_' + $self.windowNo + '"></div>' +
                 '<div class="VA005-conversion-icons" style="margin-top:29px;"><span id="VA005_btnSaveUom_' + $self.windowNo +
-                '" class="VA005-icons glyphicon glyphicon-floppy-disk VA005-icons-font VA005-disabled" tabindex="0" title="' + VIS.Msg.getMsg("Save") + '"></span><span id="VA005_btnCancelUom_' + $self.windowNo +
-                '" class="VA005-icons glyphicon glyphicon-remove-circle VA005-icons-font" tabindex="0" title="' + VIS.Msg.getMsg("Cancel") + '"></span></div></div>';
+                '" class="VA005-icons vis vis-save VA005-icons-font VA005-disabled" tabindex="0" title="' + VIS.Msg.getMsg("Save") + '"></span><span id="VA005_btnCancelUom_' + $self.windowNo +
+                '" class="VA005-icons vis vis-mark VA005-icons-font" tabindex="0" title="' + VIS.Msg.getMsg("Cancel") + '"></span></div></div>';
             $rightPanel.append($divUom);
             $divUomGroup = $('<div class="VA005-uom-list">');
             $rightPanel.append($divUomGroup);
@@ -504,15 +504,15 @@
             $divUomGroup.on("click", uomContainerClick);
 
             $rightPanel.append('<div id="VA005_divVarient_' + $self.windowNo + '" class="VA005-right-head-btn"><div class="VA005-Add-Btn" id="VA005_btnAddVarient_' + $self.windowNo +
-                '"><span class="glyphicon glyphicon-plus" ></span><span style="margin-left:10px;">' + VIS.Msg.getMsg("VA005_AddVarient") + '</span></div>' +
+                '"><span class="vis vis-plus" ></span><span style="margin-left:10px;">' + VIS.Msg.getMsg("VA005_AddVarient") + '</span></div>' +
                 '<div class="VA005-Gen-Btn" id="VA005_btnGenerate_' + $self.windowNo +
                 '"><span class="glyphicon glyphicon-list-alt" ></span><span style="margin-left:10px;">' + VIS.Msg.getMsg("VA005_GenVariant") + '</span></div>' +
                 '<div class="VA005-conv-form"><div class="VA005-conv-data" id="VA005_divAttr_' + $self.windowNo + '"></div></div>');
             $divVarient = $('<div class="VA005-uom-list">');
             $divLeftTree = $('<div class="VA005-tree-list">');
             divtree = $('<div class="VA005-tree-data">');
-            $divLeftTree.append('<div style="float:right;margin-top: 5px;"><span id="VA005_SaveAttribute_' + $self.windowNo + '" class="VA005-icons glyphicon glyphicon-floppy-disk VA005-icons-font" title="' + VIS.Msg.getMsg("Save") + '">' +
-                '</span><span id="VA005_btnCancelGenerate_' + $self.windowNo + '" class="VA005-icons glyphicon glyphicon-remove-circle VA005-icons-font" title="' + VIS.Msg.getMsg("Cancel") + '"></span></div>').append(divtree);
+            $divLeftTree.append('<div style="float:right;margin-top: 5px;"><span id="VA005_SaveAttribute_' + $self.windowNo + '" class="VA005-icons vis vis-save VA005-icons-font" title="' + VIS.Msg.getMsg("Save") + '">' +
+                '</span><span id="VA005_btnCancelGenerate_' + $self.windowNo + '" class="VA005-icons vis vis-mark VA005-icons-font" title="' + VIS.Msg.getMsg("Cancel") + '"></span></div>').append(divtree);
             $rightPanel.append($divVarient).append($divLeftTree);
 
             divVarient = $rightPanel.find("#VA005_divVarient_" + $self.windowNo);
@@ -535,7 +535,7 @@
             $attrControl.getBtn(0).css("float", "left");
             divAttr.append($attrControl.getControl());
             divAttr.append($attrControl.getBtn(0));
-            divAttr.append('<span id="VA005_btnCancelVarient_' + $self.windowNo + '" class="VA005-icons glyphicon glyphicon-remove-circle VA005-icons-color" style="font-size:29px;float:left;" title="' + VIS.Msg.getMsg("Cancel") + '"></span>');
+            divAttr.append('<span id="VA005_btnCancelVarient_' + $self.windowNo + '" class="VA005-icons vis vis-mark VA005-icons-color" style="float:left;" title="' + VIS.Msg.getMsg("Cancel") + '"></span>');
             $attrControl.getBtn(0).on(VIS.Events.onClick, AttributeCtrl);
             btnCancelVarient = $rightPanel.find("#VA005_btnCancelVarient_" + $self.windowNo);
             $divVarient.on("click", VarientContainerClick);
@@ -543,13 +543,13 @@
             $rightPanel.append('<div id="VA005_divCart_' + $self.windowNo + '" class="VA005-right-head"><div class="VA005-conversion-data"><label>' + VIS.Msg.getMsg("VA005_Cart") +
                 '</label></div><div class="VA005-conversion-data"><span class="VA005-cart-update" style="display:none;"></span></div>' +
                 '<div id="VA005_divCartList_' + $self.windowNo + '" class="VA005-conv-data"><div class="VA005-conversion-data"><select id="VA005_cmbCart_' + $self.windowNo + '"></select></div>' +
-                '<div style="float:left;margin-top: 5px;"><span class="VA005-icons glyphicon glyphicon-plus VA005-icons-font" title="' + VIS.Msg.getMsg("VA005_AddNewCart") + '"></span>' +
-                '<span class="VA005-icons glyphicon glyphicon-edit VA005-icons-font" title="' + VIS.Msg.getMsg("Edit") + '"></span><span class="VA005-icons glyphicon glyphicon-refresh VA005-icons-font" title="'
-                + VIS.Msg.getMsg("VA005_Refresh") + '"></span><span class="VA005-icons glyphicon glyphicon-print VA005-icons-font" title="' + VIS.Msg.getMsg("Print") + '"></span></div></div>' +
+                '<div><span class="VA005-icons vis vis-plus VA005-icons-font" title="' + VIS.Msg.getMsg("VA005_AddNewCart") + '"></span>' +
+                '<span class="VA005-icons vis vis-edit VA005-icons-font" title="' + VIS.Msg.getMsg("Edit") + '"></span><span class="VA005-icons vis vis-refresh VA005-icons-font" title="'
+                + VIS.Msg.getMsg("VA005_Refresh") + '"></span><span class="VA005-icons vis vis-print VA005-icons-font" title="' + VIS.Msg.getMsg("Print") + '"></span></div></div>' +
                 //<input class="vis-group-add-btn vis-group-pointer vis-group-addLeft vis-group-ass-btns" type="button"></div></div>' +
                 '<div id="VA005_divNewCart_' + $self.windowNo + '" class="VA005-conv-data"><div class="VA005-conversion-data"><input id="VA005_scanName_' + $self.windowNo + '"></div>' +
-                '<div style="float:left;margin-top: 5px;"><span id="VA005_SaveScanName_' + $self.windowNo + '" class="VA005-icons glyphicon glyphicon-floppy-disk VA005-icons-font" tabindex="0" title="' + VIS.Msg.getMsg("Save") + '">' +
-                '</span><span id="VA005_btnCancelScan_' + $self.windowNo + '" class="VA005-icons glyphicon glyphicon-remove-circle VA005-icons-font" tabindex="0" title="' + VIS.Msg.getMsg("Cancel") + '"></span></div></div></div>');
+                '<div><span id="VA005_SaveScanName_' + $self.windowNo + '" class="VA005-icons vis vis-save VA005-icons-font" tabindex="0" title="' + VIS.Msg.getMsg("Save") + '">' +
+                '</span><span id="VA005_btnCancelScan_' + $self.windowNo + '" class="VA005-icons vis vis-mark VA005-icons-font" tabindex="0" title="' + VIS.Msg.getMsg("Cancel") + '"></span></div></div></div>');
             $divCartdata = $('<div class="VA005-uom-list">');
             $divCartdata.append($divCart);
             $rightPanel.append($divCartdata);
@@ -559,10 +559,10 @@
             divCart.hide();
             divNewCart.hide();
             $divCartdata.hide();
-            btnNewCart = divCart.find(".glyphicon-plus");
-            btnEditCart = divCart.find(".glyphicon-edit");
-            btnRefreshCart = divCart.find(".glyphicon-refresh");
-            btnPrint = divCart.find(".glyphicon-print");
+            btnNewCart = divCart.find(".vis-plus");
+            btnEditCart = divCart.find(".vis-edit");
+            btnRefreshCart = divCart.find(".vis-refresh");
+            btnPrint = divCart.find(".vis-print");
             cmbCart = divCart.find("#VA005_cmbCart_" + $self.windowNo);
             txtScan = $rightPanel.find("#VA005_scanName_" + $self.windowNo);
             btnSaveScan = $rightPanel.find("#VA005_SaveScanName_" + $self.windowNo);
@@ -573,19 +573,19 @@
                 + '<div class="VA005-form-top-fields">'
                 + '<div id="VA005_ProdDetZoomName_' + $self.windowNo + '" style= "display:none"><h4 id="VA005_prodName_' + $self.windowNo
                 + '" style="float:left;word-wrap:break-word;width:85%"></h4><span id="VA005_ZoomProduct" title=' + VIS.Msg.getMsg("VA005_ZoomToProduct")
-                + ' class="VA005-icons VA005-icons-font glyphicon glyphicon-edit" style="margin-top:5px"></span></div>'
+                + ' class="VA005-icons VA005-icons-font vis vis-edit" style="margin-top:5px"></span></div>'
                 + '<div style="float:left; width:100%" class="VA005-data-wrap" id="VA005_UPC_' + $self.windowNo + '">' // UPC Numbers to be shown in this DIV
                 + '<p>' + VIS.Msg.getElement(VIS.Env.getCtx(), "UPC") + '</p>'
                 + '</div>'
                 + '<div style="float:left;" class="VA005-data-wrap" id="VA005_AttributeSet_' + $self.windowNo + '">'
                 + '<p>' + VIS.Msg.getElement(VIS.Env.getCtx(), "M_AttributeSet_ID") + '</p>'
                 + '</div></div><!-- end of form-top-fields -->'
-                + '<div class="VA005-image-wrap" style="text-align: center; line-height: 146px;"></div></div>');
+                + '<div class="VA005-image-wrap"></div></div>');
             $rightPanel.append($divProdDetail);
             $divProdDetail.append($divProductDet);
             divUsrImage = $divProductDet.find(".VA005-image-wrap");
             imgUsrImage = $('<img style="max-height: 100%; max-width: 100%;" src=' + VIS.Application.contextUrl + 'Areas/VA005/Images/img-defult.png>');
-            divUsrImage.append($('<i style="max-height: 100%; max-width: 100%;" class="fa fa-picture-o" ></i>'));
+            divUsrImage.append($('<i style="max-height: 100%; max-width: 100%;" class="vis vis-image" ></i>'));
             $ProductDetails = $('<div class="VA005-form-fullFields">'
                 + '<div id="VA005_ProductType_' + $self.windowNo + '" class="VA005-data-wrap"><p>' + VIS.Msg.getElement(VIS.Env.getCtx(), "ProductType") + '</p></div>'
                 + '<div id="VA005_ProdCategory_' + $self.windowNo + '" class="VA005-data-wrap"><p>' + VIS.Msg.getElement(VIS.Env.getCtx(), "M_Product_Category_ID") + '</p></div>'
@@ -604,15 +604,15 @@
             prodTaxCat = $ProductDetails.find("#VA005_prodTaxCat_" + $self.windowNo);
             prodUOM = $ProductDetails.find("#VA005_prodUOM_" + $self.windowNo);
             prodParent = $ProductDetails.find("#VA005_ProdParent_" + $self.windowNo);
-            btnEditDetail = $divProductDet.find(".glyphicon-edit");
+            btnEditDetail = $divProductDet.find(".vis-edit");
 
             $divRelated = $('<div class="VA005-uom-list">');
             $rightPanel.append($divRelated);
             $divRelated.hide();
             $rightPanel.append("<div class='VA005-popup'>" +
                 "<input type='text' maxlength=40 id='VA005_upcTxt_" + $self.windowNo + "'></input><span id='VA005_upcOK_" + $self.windowNo +
-                "' class='glyphicon glyphicon-ok' title='" + VIS.Msg.getMsg("Save") + "'></span><span id='VA005_btnCancelUpc_" + $self.windowNo +
-                "' class='glyphicon glyphicon-remove' title='" + VIS.Msg.getMsg("Cancel") + "'></span></div>");
+                "' class='vis vis-markx' title='" + VIS.Msg.getMsg("Save") + "'></span><span id='VA005_btnCancelUpc_" + $self.windowNo +
+                "' class='vis vis-cross' title='" + VIS.Msg.getMsg("Cancel") + "'></span></div>");
             pop = $rightPanel.find('.VA005-popup');
             txtEditUPC = $rightPanel.find("#VA005_upcTxt_" + $self.windowNo);
 
@@ -665,14 +665,14 @@
                 '<div class="VA005-product-data"><label>' + VIS.Msg.getElement(VIS.Env.getCtx(), "AD_Org_ID") + '</label><select id="VA005_cmbOrg_' + $self.windowNo + '"></select></div>' +
                 '<div class="VA005-product-data"><label>' + VIS.Msg.getElement(VIS.Env.getCtx(), "Name") + '</label><input class="vis-gc-vpanel-table-mandatory" id="txtName_' + $self.windowNo + '" type="text" ></div>' +
                 '<div class="VA005-product-data"><div class="VA005-product-dataIcon"><label>' + VIS.Msg.getElement(VIS.Env.getCtx(), "M_Product_Category_ID") +
-                '</label><select class="vis-gc-vpanel-table-mandatory" id="cmbCat_' + $self.windowNo + '"></select><input type="button" id="btnProdCat_' + $self.windowNo + '"></div></div>' +
+                '</label><select class="vis-gc-vpanel-table-mandatory" id="cmbCat_' + $self.windowNo + '"></select><button  id="btnProdCat_' + $self.windowNo + '" class="input-group-text VA005-leftpanelcatsearchbtn"><i class="fa fa-ellipsis-v"></i></button></div></div>' +
                 '<div class="VA005-product-data"><label>' + VIS.Msg.getElement(VIS.Env.getCtx(), "ProductType") + '</label><select id="cmbType_' + $self.windowNo + '" ></select></div>' +
                 '<div class="VA005-product-data"><div class="VA005-product-dataIcon"><label>' + VIS.Msg.getElement(VIS.Env.getCtx(), "C_TaxCategory_ID") +
-                '</label><select class="vis-gc-vpanel-table-mandatory" id="cmbTax_' + $self.windowNo + '"></select><input type="button" id="btnTaxCategory_' + $self.windowNo + '"></div></div>' +
+                '</label><select class="vis-gc-vpanel-table-mandatory" id="cmbTax_' + $self.windowNo + '"></select><button id="btnTaxCategory_' + $self.windowNo + '" class="input-group-text VA005-leftpanelcatsearchbtn"><i class="fa fa-ellipsis-v"></i></button></div></div>' +
                 '<div class="VA005-product-data"><div class="VA005-product-dataIcon"><label>' + VIS.Msg.getElement(VIS.Env.getCtx(), "M_AttributeSet_ID") +
-                '</label><select id="cmbAttribute_' + $self.windowNo + '"></select><input type="button" id="btnAttributeSet_' + $self.windowNo + '"></div></div>' +
+                '</label><select id="cmbAttribute_' + $self.windowNo + '"></select><button id="btnAttributeSet_' + $self.windowNo + '" class="input-group-text VA005-leftpanelcatsearchbtn"><i class="fa fa-ellipsis-v"></i></button></div></div>' +
                 '<div class="VA005-product-data"><div class="VA005-product-dataIcon"><label>' + VIS.Msg.getElement(VIS.Env.getCtx(), "C_UOM_ID") +
-                '</label><select class="vis-gc-vpanel-table-mandatory" id="cmbUom_' + $self.windowNo + '" ></select><input type="button" id="btnUom_' + $self.windowNo + '"></div></div>' +
+                '</label><select class="vis-gc-vpanel-table-mandatory" id="cmbUom_' + $self.windowNo + '" ></select><button id="btnUom_' + $self.windowNo + '" class="input-group-text VA005-leftpanelcatsearchbtn"><i class="fa fa-ellipsis-v"></i></button></div></div>' +
                 '<div class="VA005-product-data"><label>' + VIS.Msg.getElement(VIS.Env.getCtx(), "UPC") + '</label><input id="txtUpc_' + $self.windowNo + '" type="text"></div>');
             cmbOrg = $maindiv.find("#VA005_cmbOrg_" + $self.windowNo);
             txtValue = $maindiv.find("#txtValue_" + $self.windowNo);
@@ -740,7 +740,7 @@
                     {
                         field: "Attribute", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.translate(VIS.Env.getCtx(), "Attribute") + '</span></div>', sortable: false, size: '150px', hidden: false,
                         render: function () {
-                            return '<div><input type=text readonly="readonly" style= "width:85%; border:none" ></input><img src="' + VIS.Application.contextUrl + 'Areas/VIS/Images/base/MultiX16.png" alt="Attribute Set Instance" title="Attribute Set Instance" style="opacity:1;float:right;"></div>';
+                            return '<div><input type=text readonly="readonly" style= "width:85%; border:none" ><i class="fa fa-list-alt VA005-gridicon" title="Attribute Set Instance" style="opacity: 1;"></i></div>';
                         }
                     },
                     { field: "updated", caption: "", sortable: false, size: '80px', display: false }
@@ -793,11 +793,11 @@
                                 src = '<img style="max-height: 100%; max-width: 100%;" src="' + VIS.Application.contextUrl + "Images/Thumb140x120/" + img + "?" + d.getTime() + '">';
                             }
                             else {
-                                src = '<i class= "fa fa-picture-o" ></i>';
+                                src = '<i class= "vis vis-image" ></i>';
                             }
                         }
                         else {
-                            src = '<i class= "fa fa-picture-o" ></i>';
+                            src = '<i class= "vis vis-image" ></i>';
                         }
 
                         $ImageZoom.empty();
@@ -1052,7 +1052,7 @@
                     {
                         field: "Attribute", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.translate(VIS.Env.getCtx(), "Attribute") + '</span></div>', sortable: false, size: '35%', hidden: false,
                         render: function () {
-                            return '<div><input type=text readonly="readonly" style= "width:85%; border:none" ></input><img src="' + VIS.Application.contextUrl + 'Areas/VIS/Images/base/MultiX16.png" alt="Attribute Set Instance" title="Attribute Set Instance" style="opacity:1;float:right;"></div>';
+                            return '<div><input type=text readonly="readonly" style= "width:85%; border:none" ><i class="fa fa-list-alt VA005-gridicon" title="Attribute Set Instance" style="opacity: 1;"></i></div>';
                         }
                     },
                     { field: "UPC", caption: VIS.Msg.getElement(VIS.Env.getCtx(), "UPC"), sortable: false, size: '80px', editable: { type: 'text' } },
@@ -1658,10 +1658,10 @@
            Create busyIndicator
         */
         function createBusyIndicator() {
-            $bsyDiv = $("<div class='vis-apanel-busy'>");
-            $bsyDiv.css({
-                "position": "absolute", "width": "98%", "height": "97%", 'text-align': 'center', 'z-index': '999'
-            });
+            $bsyDiv = $('<div class="vis-busyindicatorouterwrap"><div class="vis-busyindicatorinnerwrap"><i class="vis-busyindicatordiv"></i></div></div>');
+            //$bsyDiv.css({
+            //    "position": "absolute", "width": "98%", "height": "97%", 'text-align': 'center', 'z-index': '999'
+            //});
             $bsyDiv[0].style.visibility = "visible";
             $root.append($bsyDiv);
         };
@@ -1692,11 +1692,11 @@
                 '<span style="display:list-item;">{{SearchKey}}</span>' +
                 '</div>' +
                 '</div>' +
-                '<div class="vis-group-user-right">' +
+                '<div class="vis-group-user-right d-flex">' +
                 '<span class="VA005_Barcode"></span>' +
                 '<ul>' +
-                '<li style="margin-right:10px;"><span class="glyphicon glyphicon-shopping-cart VA005-icons-color" data-UID="{{M_ProductID}}"></span></li>' +          // if selected user can be updated                                  
-                '<li style="margin-right:10px;"><span class="glyphicon glyphicon-edit VA005-icons-color" data-UID="{{M_ProductID}}-{{ProdTableID}}-{{ProdWindowID}}"></span></li>' +
+                '<li style="margin-right:10px;"><span class="fa fa-shopping-cart VA005-icons-color" data-UID="{{M_ProductID}}"></span></li>' +          // if selected user can be updated                                  
+                '<li style="margin-right:10px;"><span class="vis vis-edit VA005-icons-color" data-UID="{{M_ProductID}}-{{ProdTableID}}-{{ProdWindowID}}"></span></li>' +
                 '</ul>' +
                 '<span class="VA005-Uom-span" data-UID="{{C_UomID}}">{{UOM}}</span>' +
                 '{{#GenerateBarcode UPC ".VA005_Barcode" }}' +
@@ -1759,12 +1759,12 @@
                                     '<div draggable="true" class="vis-group-user-profile" data-UID="' + M_ProductID + '">' +
                                     '<div style="height:46px;width:46px" class="vis-group-user-img vis-chatimgwrap">' + imgCtrl + '</div>' +
                                     //'<div class="vis-group-user-text" style="width:calc(100% - 70px);"><p style="font-weight: bold">' + Prodname +
-                                    '<div class="vis-group-user-text" style="width:calc(100% - 70px);"><p class="VA005-NameOfSelectedNode" style="font-weight: bold">' + Prodname +
+                                    '<div class="vis-group-user-text"><p class="VA005-NameOfSelectedNode" style="font-weight: bold">' + Prodname +
                                     '</p><span>' + ProCatName + '</span><span style="display:list-item;">' + SearchKey + '</span></div></div>' +
-                                    '<div class="vis-group-user-right"><div class="vis-group-user-right"><span id="VA005_Barcode_' + id + '" style="float:left;"></span>' +
-                                    '<span class="VA005-uom-icons glyphicon glyphicon-picture VA005-icons-color" data-UID="' + M_ProductID + '" title="' + VIS.Msg.getMsg("VA005_ShowAllImages") + '"></span>' +
-                                    '<span class="VA005-uom-icons glyphicon glyphicon-edit VA005-icons-color" data-UID="' + M_ProductID + '" title="' + VIS.Msg.getMsg("Edit") + '"></span>' +
-                                    '<span class="VA005-uom-icons glyphicon glyphicon-shopping-cart VA005-icons-color" data-UID="' + M_ProductID + '" title="' + VIS.Msg.getMsg("VA005_AddCart") + '"></span></div>' +
+                                    '<div class="vis-group-user-right"><div class="vis-group-user-right d-flex"><span id="VA005_Barcode_' + id + '" style="float:left;"></span>' +
+                                    '<span class="VA005-uom-icons vis vis-image VA005-icons-color" data-UID="' + M_ProductID + '" title="' + VIS.Msg.getMsg("VA005_ShowAllImages") + '"></span>' +
+                                    '<span class="VA005-uom-icons vis vis-edit VA005-icons-color" data-UID="' + M_ProductID + '" title="' + VIS.Msg.getMsg("Edit") + '"></span>' +
+                                    '<span class="VA005-uom-icons fa fa-shopping-cart VA005-icons-color" data-UID="' + M_ProductID + '" title="' + VIS.Msg.getMsg("VA005_AddCart") + '"></span></div>' +
                                     '<div><span class="VA005-Uom-span" data-UID="' + C_UomID + '">' + UOM + '</span></div></div></div>');
                                 $divProduct.append(divProduct);
                                 GenerateBarcode(upc, $divProduct.find("#VA005_Barcode_" + id));
@@ -1798,12 +1798,12 @@
                                     '<div draggable="true" class="vis-group-user-profile" data-UID="' + M_ProductID + '">' +
                                     '<div style="height:46px;width:46px" class="vis-group-user-img vis-chatimgwrap">' + imgCtrl + '</div>' +
                                     //'<div class="vis-group-user-text" style="width:calc(100% - 70px);"><p style="font-weight: bold">' + Prodname +
-                                    '<div class="vis-group-user-text" style="width:calc(100% - 70px);"><p class="VA005-NameOfSelectedNode" style="font-weight: bold">' + Prodname +
+                                    '<div class="vis-group-user-text"><p class="VA005-NameOfSelectedNode" style="font-weight: bold">' + Prodname +
                                     '</p><span>' + ProCatName + '</span><span style="display:list-item;">' + SearchKey + '</span></div></div>' +
-                                    '<div class="vis-group-user-right"><div class="vis-group-user-right"><span id="VA005_Barcode_' + id + '" style="float:left;"></span>' +
-                                    '<span class="VA005-uom-icons glyphicon glyphicon-picture VA005-icons-color" data-UID="' + M_ProductID + '" title="' + VIS.Msg.getMsg("VA005_ShowAllImages") + '"></span>' +
-                                    '<span class="VA005-uom-icons glyphicon glyphicon-edit VA005-icons-color" data-UID="' + M_ProductID + '" title="' + VIS.Msg.getMsg("Edit") + '"></span>' +
-                                    '<span class="VA005-uom-icons glyphicon glyphicon-shopping-cart VA005-icons-color" data-UID="' + M_ProductID + '" title="' + VIS.Msg.getMsg("VA005_AddCart") + '"></span></div>' +
+                                    '<div class="vis-group-user-right"><div class="vis-group-user-right d-flex"><span id="VA005_Barcode_' + id + '" style="float:left;"></span>' +
+                                    '<span class="VA005-uom-icons vis vis-image VA005-icons-color" data-UID="' + M_ProductID + '" title="' + VIS.Msg.getMsg("VA005_ShowAllImages") + '"></span>' +
+                                    '<span class="VA005-uom-icons vis vis-edit VA005-icons-color" data-UID="' + M_ProductID + '" title="' + VIS.Msg.getMsg("Edit") + '"></span>' +
+                                    '<span class="VA005-uom-icons fa fa-shopping-cart VA005-icons-color" data-UID="' + M_ProductID + '" title="' + VIS.Msg.getMsg("VA005_AddCart") + '"></span></div>' +
                                     '<div><span class="VA005-Uom-span" data-UID="' + C_UomID + '">' + UOM + '</span></div></div></div>');
                                 $divProduct.append(divProduct);
                                 GenerateBarcode(upc, $divProduct.find("#VA005_Barcode_" + id));
@@ -3696,7 +3696,7 @@
             prodUOM.find("span").remove();
             prodParent.find("span").remove();
             divUsrImage.empty();
-            divUsrImage.append($('<i style="max-height: 100%; max-width: 100%;" class="fa fa-picture-o" ></i>'));
+            divUsrImage.append($('<i style="max-height: 100%; max-width: 100%;" class="vis vis-image" ></i>'));
         };
 
         function clearRightPanel() {
@@ -3748,18 +3748,18 @@
                             for (var i = 0; i < returnValue.length; i++) {
                                 var src = returnValue[i]["imageurl"];
                                 if (i == 0) {
-                                    nameDiff = $('<div class="VA005-AttributesValuesBtm VA005-AttValues-Btm"><div><span class="glyphicon glyphicon-minus VA005-glyphicon-plus" style="float: left; margin: 2px 5px 0 0; font-size: 12px;"></span><p style="color:#1aa0ed;font-weight:bold;">' + returnValue[i]["AttributeName"] + '</p></div></div>');
+                                    nameDiff = $('<div class="VA005-AttributesValuesBtm VA005-AttValues-Btm"><div><span class="glyphicon glyphicon-minus VA005-vis-plus" style="float: left; margin: 2px 5px 0 0; font-size: 12px;"></span><p style="color:rgba(var(--v-c-primary), 1);font-weight:bold;">' + returnValue[i]["AttributeName"] + '</p></div></div>');
                                     productAttValues.append(nameDiff.append($('<div class="VA005-getDiv_' + i + ' VA005-AttValofbindingImg" style="width:100%;">')));
                                     getDIvProduct = productAttValues.find(".VA005-getDiv_" + i + "");
-                                    nameDiff.find(".VA005-glyphicon-plus").on("click", function () {
+                                    nameDiff.find(".VA005-vis-plus").on("click", function () {
                                         attValueExpandcollapse($(this), $($(this).parents()[1]).find(".VA005-AttValofbindingImg"));
                                     });
                                 }
                                 else if (attributeIDs != returnValue[i]["attributeID"]) {
-                                    nameDiff = $('<div class="VA005-AttributesValuesDown VA005-AttValues-Btm"><div><span class="glyphicon glyphicon-minus VA005-glyphicon-plus" style="float: left; margin: 2px 5px 0 0; font-size: 12px;"></span><p style="color:#1aa0ed;font-weight:bold;">' + returnValue[i]["AttributeName"] + '</p></div></div>');
+                                    nameDiff = $('<div class="VA005-AttributesValuesDown VA005-AttValues-Btm"><div><span class="glyphicon glyphicon-minus VA005-vis-plus" style="float: left; margin: 2px 5px 0 0; font-size: 12px;"></span><p style="color:rgba(var(--v-c-primary), 1);font-weight:bold;">' + returnValue[i]["AttributeName"] + '</p></div></div>');
                                     productAttValues.append(nameDiff.append($('<div class="VA005-getDiv_' + i + ' VA005-AttValofbindingImg" style="width:100%;">')));
                                     getDIvProduct = productAttValues.find(".VA005-getDiv_" + i + "");
-                                    nameDiff.find(".VA005-glyphicon-plus").on("click", function () {
+                                    nameDiff.find(".VA005-vis-plus").on("click", function () {
                                         attValueExpandcollapse($(this), $($(this).parents()[1]).find(".VA005-AttValofbindingImg"));
                                     });
                                 }
@@ -3835,7 +3835,7 @@
                     midtopdivvv.find(".ui-resizable-s").css("display", "inherit");
                     midtopdivvv.find(".ui-resizable-se").css("display", "inherit");
                     $divProduct.height($divProduct.height() - 20);
-                    midtopdivvv.css("border-bottom", "2px solid #1aa0ed");
+                    midtopdivvv.css("border-bottom", "2px solid rgba(var(--v-c-primary), 1)");
                     window.setTimeout(function () {
                         $bsyDiv[0].style.visibility = "hidden";
                     }, 300);
@@ -3921,13 +3921,13 @@
         function attValueExpandcollapse(current, ctrl) {
             if ($(ctrl).height() == "0") {
                 $(ctrl).css("height", "auto");
-                current.removeClass("glyphicon glyphicon-plus");
+                current.removeClass("vis vis-plus");
                 current.addClass("glyphicon glyphicon-minus");
             }
             else {
                 $(ctrl).css("height", "0px");
                 current.removeClass("glyphicon glyphicon-minus");
-                current.addClass("glyphicon glyphicon-plus");
+                current.addClass("vis vis-plus");
             }
         };
 
@@ -3937,7 +3937,7 @@
             var chk;
             var target = $(e.target);
 
-            if (target.hasClass("glyphicon-picture")) {
+            if (target.hasClass("vis-image")) {
                 $bsyDiv[0].style.visibility = "visible";
                 attrBottomValuesFlag = true;
                 btnImage.trigger("click");
@@ -3954,13 +3954,13 @@
                 uoms.push(uomID);
             }
 
-            else if (target.hasClass('glyphicon-edit')) {
+            else if (target.hasClass('vis-edit')) {
                 ProdID = target.data("uid");
                 zoomToWindow(ProdID, "Product");
                 $getProdectIDAfterEdit = ProdID;
                 ProdID = 0;
             }
-            else if (target.hasClass('glyphicon-shopping-cart')) {
+            else if (target.hasClass('fa-shopping-cart')) {
                 if (!isClick) {
                     if (cmbCart.val() == 0) {
                         VIS.ADialog.error("VA005_selectCart");
@@ -4086,7 +4086,7 @@
             window.setTimeout(function () {
                 if (attrBottomValuesFlag == true) {
                     $bsyDiv[0].style.visibility = "visible";
-                    if (!target.hasClass('glyphicon-edit')) {
+                    if (!target.hasClass('vis-edit')) {
                         var pIDS = 0;
                         if ($($divProduct.find(".vis-group-selected-opbackground")[0]).attr("data-uid") == 0 || $($divProduct.find(".vis-group-selected-opbackground")[0]).attr("data-uid") == "") {
                             pIDS = $getProdectIDAfterEdit;
@@ -4131,17 +4131,17 @@
 
             var chk;
             var target = $(e.target);
-            if (target.hasClass('glyphicon-edit')) {
+            if (target.hasClass('vis-edit')) {
                 c_UomConv_ID = target.attr("conversionid");
                 btnAdduom.hide();
                 divConversion.show();
                 fillConversion(c_UomConv_ID);
             }
-            else if (target.hasClass('glyphicon-trash')) {
+            else if (target.hasClass('vis-delete')) {
                 var convid = target.attr("conversionid");
                 deleteConversion(convid);
             }
-            else if (target.hasClass('glyphicon-shopping-cart')) {
+            else if (target.hasClass('fa-shopping-cart')) {
                 if (!isClick) {
                     if (cmbCart.val() == 0) {
                         VIS.ADialog.error("VA005_selectCart");
@@ -4234,7 +4234,7 @@
                     }, 200);
                 }
             }
-            else if (target.hasClass('glyphicon-shopping-cart')) {
+            else if (target.hasClass('fa-shopping-cart')) {
                 if (!isClick) {
                     if (cmbCart.val() == 0) {
                         VIS.ADialog.error("VA005_selectCart");
@@ -4384,9 +4384,9 @@
                     var upc = dr[i]["UPC"];
                     var div = '<div class="VA005-uom-wrap" conversionid = ' + conv_Id + '><div class="VA005-item-top"><div class="VA005-item-name"><input class="VA005-checkbox" type="checkbox"><label>' + uname +
                         '</label></div><div class="VA005-item-icons">' + '<span id = "VA005_BarCode_' + id + '" style="float:left;"></span><span conversionid = ' + conv_Id +
-                        ' class="VA005-uom-icons glyphicon glyphicon-trash VA005-icons-color" title="' + VIS.Msg.getMsg("DeleteActivity") + '"></span><span conversionid = ' + conv_Id +
-                        ' class="VA005-uom-icons glyphicon glyphicon-edit VA005-icons-color" title="' + VIS.Msg.getMsg("Edit") + '"></span>' +
-                        '<span class="VA005-uom-icons glyphicon glyphicon-shopping-cart VA005-icons-color" conversionid = ' + conv_Id + ' title="' + VIS.Msg.getMsg("VA005_AddCart") + '"></span></div></div><div><span class="VA005-multiplier">'
+                        ' class="VA005-uom-icons vis vis-delete VA005-icons-color" title="' + VIS.Msg.getMsg("DeleteActivity") + '"></span><span conversionid = ' + conv_Id +
+                        ' class="VA005-uom-icons vis vis-edit VA005-icons-color" title="' + VIS.Msg.getMsg("Edit") + '"></span>' +
+                        '<span class="VA005-uom-icons fa fa-shopping-cart VA005-icons-color" conversionid = ' + conv_Id + ' title="' + VIS.Msg.getMsg("VA005_AddCart") + '"></span></div></div><div><span class="VA005-multiplier">'
                         + VIS.Msg.getElement(VIS.Env.getCtx(), "MultiplyRate") + ' : ' + mRate + '</span><span class="VA005-divide">'
                         + VIS.Msg.getElement(VIS.Env.getCtx(), "DivideRate") + ' : ' + dRate + '</span></div></div>';
                     $divUomGroup.append(div);
@@ -4403,9 +4403,9 @@
             //    var upc = dr.getString(5);
             //    var div = '<div class="VA005-uom-wrap" conversionid = ' + conv_Id + '><div class="VA005-item-top"><div class="VA005-item-name"><input class="VA005-checkbox" type="checkbox"><label>' + uname +
             //        '</label></div><div class="VA005-item-icons">' + '<span id = "VA005_BarCode_' + id + '" style="float:left;"></span><span conversionid = ' + conv_Id +
-            //        ' class="VA005-uom-icons glyphicon glyphicon-trash VA005-icons-color" title="' + VIS.Msg.getMsg("DeleteActivity") + '"></span><span conversionid = ' + conv_Id +
-            //        ' class="VA005-uom-icons glyphicon glyphicon-edit VA005-icons-color" title="' + VIS.Msg.getMsg("Edit") + '"></span>' +
-            //        '<span class="VA005-uom-icons glyphicon glyphicon-shopping-cart VA005-icons-color" conversionid = ' + conv_Id + ' title="' + VIS.Msg.getMsg("VA005_AddCart") + '"></span></div></div><div><span class="VA005-multiplier">'
+            //        ' class="VA005-uom-icons vis vis-delete VA005-icons-color" title="' + VIS.Msg.getMsg("DeleteActivity") + '"></span><span conversionid = ' + conv_Id +
+            //        ' class="VA005-uom-icons vis vis-edit VA005-icons-color" title="' + VIS.Msg.getMsg("Edit") + '"></span>' +
+            //        '<span class="VA005-uom-icons fa fa-shopping-cart VA005-icons-color" conversionid = ' + conv_Id + ' title="' + VIS.Msg.getMsg("VA005_AddCart") + '"></span></div></div><div><span class="VA005-multiplier">'
             //        + VIS.Msg.getElement(VIS.Env.getCtx(), "MultiplyRate") + ' : ' + mRate + '</span><span class="VA005-divide">'
             //        + VIS.Msg.getElement(VIS.Env.getCtx(), "DivideRate") + ' : ' + dRate + '</span></div></div>';
             //    $divUomGroup.append(div);
@@ -4455,8 +4455,8 @@
                     var patr_id = dr[i]["M_ProductAttributes_ID"];
                     var div = '<div class="VA005-uom-wrap" attr_id = ' + attr_id + ' upc = ' + upc + '><div class="VA005-item-top"><div class="VA005-item-name"><input class="VA005-checkbox" type="checkbox" ><label>' + attr +
                         '</label></div><div class="VA005-item-icons"><span id = "VA005_BarCode_' + id + '" style="float:left;"></span>' +
-                        //'<span attr_id = '+ attr_id + ' class="VA005-uom-icons glyphicon glyphicon-edit VA005-icons-color"></span> 
-                        '<span attr_id = ' + attr_id + ' upc = "' + upc + '" class="VA005-uom-icons glyphicon glyphicon-shopping-cart VA005-icons-color" title="' + VIS.Msg.getMsg("VA005_AddCart") + '"></span></div></div>' +
+                        //'<span attr_id = '+ attr_id + ' class="VA005-uom-icons vis vis-edit VA005-icons-color"></span> 
+                        '<span attr_id = ' + attr_id + ' upc = "' + upc + '" class="VA005-uom-icons fa fa-shopping-cart VA005-icons-color" title="' + VIS.Msg.getMsg("VA005_AddCart") + '"></span></div></div>' +
                         '<div style="float: left;width: 100%;"><span patrid=' + patr_id + ' class="VA005-Edit-UPC">' + VIS.Msg.getMsg("VA005_EditUPC") + '</span></div>';
                     $divVarient.append(div);
                     GenerateBarcode(upc, $divVarient.find("#VA005_BarCode_" + id));
@@ -4471,8 +4471,8 @@
             //    var patr_id = dr.getInt(3);
             //    var div = '<div class="VA005-uom-wrap" attr_id = ' + attr_id + ' upc = ' + upc + '><div class="VA005-item-top"><div class="VA005-item-name"><input class="VA005-checkbox" type="checkbox" ><label>' + attr +
             //        '</label></div><div class="VA005-item-icons"><span id = "VA005_BarCode_' + id + '" style="float:left;"></span>' +
-            //        //'<span attr_id = '+ attr_id + ' class="VA005-uom-icons glyphicon glyphicon-edit VA005-icons-color"></span> 
-            //        '<span attr_id = ' + attr_id + ' upc = "' + upc + '" class="VA005-uom-icons glyphicon glyphicon-shopping-cart VA005-icons-color" title="' + VIS.Msg.getMsg("VA005_AddCart") + '"></span></div></div>' +
+            //        //'<span attr_id = '+ attr_id + ' class="VA005-uom-icons vis vis-edit VA005-icons-color"></span> 
+            //        '<span attr_id = ' + attr_id + ' upc = "' + upc + '" class="VA005-uom-icons fa fa-shopping-cart VA005-icons-color" title="' + VIS.Msg.getMsg("VA005_AddCart") + '"></span></div></div>' +
             //        '<div style="float: left;width: 100%;"><span patrid=' + patr_id + ' class="VA005-Edit-UPC">' + VIS.Msg.getMsg("VA005_EditUPC") + '</span></div>';
             //    $divVarient.append(div);
             //    GenerateBarcode(upc, $divVarient.find("#VA005_BarCode_" + id));
@@ -4520,12 +4520,12 @@
                     }
                     else {
                         divUsrImage.empty();
-                        divUsrImage.append($('<i style="max-height: 100%; max-width: 100%;" class="fa fa-picture-o" ></i>'));
+                        divUsrImage.append($('<i style="max-height: 100%; max-width: 100%;" class="vis vis-image" ></i>'));
                     }
                 }
                 else {
                     divUsrImage.empty();
-                    divUsrImage.append($('<i style="max-height: 100%; max-width: 100%;" class="fa fa-picture-o" ></i>'));
+                    divUsrImage.append($('<i style="max-height: 100%; max-width: 100%;" class="vis vis-image" ></i>'));
                 }
             }
             window.setTimeout(function () {
@@ -4649,12 +4649,12 @@
 
                             //*** First div for tree contain first image and paragraph on tree..
                             template: "<div style='margin:#= item.margin #;float:left' data-parentid='#= item.ParentID #' data-nodeid='#= item.NodeID #' data-dType= '#= item.Type #' class='VA005-attribute'>" +
-                                "<div style='width:auto;float:left' data-parentid='#= item.ParentID #' data-nodeid='#= item.NodeID #' data-dType= '#= item.Type #'>" +
-                                "<input type='checkbox' class='VA005-checkbox' style='vertical-align: text-top;float: left;margin: 11px 16px 0px 15px;" +
+                                "<div style='width:auto;float:left;display: flex;align-items: center;' data-parentid='#= item.ParentID #' data-nodeid='#= item.NodeID #' data-dType= '#= item.Type #'>" +
+                                "<input type='checkbox' class='VA005-checkbox' style='margin: 0;" +
                                 "display:#= item.checkbox #' data-parentid='#= item.ParentID #' data-nodeid='#= item.NodeID #' data-dType= '#= item.Type #'>" +
-                                "<img src='" + VIS.Application.contextUrl + "#= item.ImageSource #' style='vertical-align: text-top;float: left;margin: 6px 16px 0px 15px;" +
+                                "<img src='" + VIS.Application.contextUrl + "#= item.ImageSource #' style='" +
                                 "display:#= item.visibility #' data-parentid='#= item.ParentID #' data-nodeid='#= item.NodeID #' data-dType= '#= item.Type #'>" +
-                                "<p style='margin:0 0 0 9px;border-radius:4px;padding:#= item.padding #' data-parentid='#= item.ParentID #' data-nodeid='#= item.NodeID #' data-dType= '#= item.Type #'>#= item.text #</p>" +
+                                "<p style='border-radius:4px;padding: 5px 10px' data-parentid='#= item.ParentID #' data-nodeid='#= item.NodeID #' data-dType= '#= item.Type #'>#= item.text #</p>" +
                                 "</div>" +
                                 "</div>"
                         });
@@ -4936,11 +4936,11 @@
                             src = '<img alt="" title="" style="opacity:1;" src="' + VIS.Application.contextUrl + "Images/Thumb16x16/" + imag + "?" + d.getTime() + '">';
                         }
                         else {
-                            src = '<i class= "fa fa-picture-o" ></i>';
+                            src = '<i class= "vis vis-image" ></i>';
                         }
                     }
                     else {
-                        src = '<i class= "fa fa-picture-o" ></i>';
+                        src = '<i class= "vis vis-image" ></i>';
                     }
                     var rec = k + 1;
                     $($("#grid_gridprice_" + $self.windowNo + "_rec_" + rec).find("div")[0]).empty();
@@ -5101,7 +5101,7 @@
                 //var qry = "SELECT M_AttributeSet_ID FROM M_Product WHERE M_Product_ID = " + multiValues[k].product_ID;
                 if (mattsetid <= 0) {
                     $("#grid_gridcart_" + $self.windowNo + "_rec_" + cartGrid.records[k].recid).find("input:not([type='checkbox'])").hide();
-                    $("#grid_gridcart_" + $self.windowNo + "_rec_" + cartGrid.records[k].recid).find("img").hide();
+                    $("#grid_gridcart_" + $self.windowNo + "_rec_" + cartGrid.records[k].recid).find("i").hide();
                 }
             }
             cartGrid.selectNone();
@@ -5413,7 +5413,7 @@
                             dataSource: result,
                             template: "<div class='va005-parentss' id=#= item.NodeID #><div style='float:left'>" +
                                 "<div  class='va005_mouseover'  style='float:left'>" +
-                                "<p id=#= item.NodeID # style='margin:0 0 0 9px;border-radius:4px;'>#= item.text #</p>" +
+                                "<p id=#= item.NodeID #>#= item.text #</p>" +
                                 "</div>" +
                                 "</div></div>",
                         });
@@ -5422,11 +5422,11 @@
                     }
                     $bsyDiv[0].style.visibility = "hidden";
                     $leftTreeDiv.css({
-                        "display": "block", "margin-top": "10px", "color": "#fff", "cursor": "pointer"
+                        "display": "block", "margin-top": "10px", "cursor": "pointer"
                         , "height": "70%", "width": "100%"
                     });
-                    $root.find('.k-treeview .k-icon').css({ "background-color": "#cccccc", "border-radius": "4px" });
-                    $root.find('.k-top k-bot').css({ "background-color": "#cccccc" });
+                    $root.find('.k-treeview .k-icon').css({ "background-color": "rgba(var(--v-c-on-secondary), .2)", "border-radius": "4px" });
+                    $root.find('.k-top k-bot').css({ "background-color": "rgba(var(--v-c-on-secondary), .2)" });
                     $root.find('.k-widget k-treeview').css({ "height": "70%", "position": "absolute" });
                     $root.find('.VA005-apanel-lb').css({ "overflow": "inherit", "position": "relative" });
                     $leftTreeDiv.height(leftHeight);
@@ -6093,10 +6093,10 @@
         };
 
         function createBusy() {
-            $busy = $("<div class='vis-apanel-busy'>");
-            $busy.css({
-                "position": "absolute", "width": "98%", "height": "97%", 'text-align': 'center'
-            });
+            $busy = $('<div class="vis-busyindicatorouterwrap"><div class="vis-busyindicatorinnerwrap"><i class="vis-busyindicatordiv"></i></div></div>');
+            //$busy.css({
+            //    "position": "absolute", "width": "98%", "height": "97%", 'text-align': 'center'
+            //});
             $divMultiple.append($busy);
         };
 

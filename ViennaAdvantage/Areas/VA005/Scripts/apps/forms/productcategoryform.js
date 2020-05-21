@@ -536,8 +536,9 @@
                         mainProductCategoryUl.find("li:eq(0)").show();
                         btnSave.show();
                         btnUndo.show();
-                        divLeft.animate({ 'width': '61%' }, 500);
+                        //divLeft.animate({ 'width': '61%' }, 500);
                         divRight.animate({ 'width': "39%" }, 500);
+                        divRight.css('padding', '15px 0 15px 15px');
                         mainProductCategoryUl.find('li').removeClass('VA005-highlighted');
                         $(".VA005-effect-off").fadeIn();
                         $(".VA005-effect-off").fadeOut(2000);
@@ -554,8 +555,9 @@
                         mainProductCategoryUl.find("li:eq(0)").hide();
                         btnSave.hide();
                         btnUndo.hide();
-                        divLeft.animate({ 'width': '100%' }, 500);
+                        //divLeft.animate({ 'width': '100%' }, 500);
                         divRight.animate({ 'width': "0%" }, 500);
+                        divRight.css('padding', '0');
                         $(".VA005-effect-on").fadeIn();
                         $(".VA005-effect-on").fadeOut(2000);
                     }
@@ -586,7 +588,9 @@
                         imgUsrImage.removeAttr("src").attr("src", VIS.Application.contextUrl + "Images/Thumb140x120/" + imageUrl + "?" + d.getTime());
                     }
                     else {
-                        imgUsrImage.removeAttr("src").attr("src", VIS.Application.contextUrl + "Areas/VA005/Images/img-defult.png");
+                        //imgUsrImage.removeAttr("src").attr("src", VIS.Application.contextUrl + "Areas/VA005/Images/img-defult.png");
+                        imgUsrImage.removeAttr("src").attr("src", "");
+
                     }
                     fileUpload.val("");
                     btnUndo.attr('disabled', 'disabled').css("opacity", 0.6);
@@ -735,7 +739,7 @@
                         if (mainProductCategoryUl != null) {
                             mainProductCategoryUl.find('li:eq(0)').after("<li class='VA005-pro-cat' procatID=" + returnValue + "><div procatID=" + returnValue + " class='VA005-cat-img'><img style='height: 100%;width: 100%;' procatID=" + returnValue
                             + " src=''> </div> <div class='VA005-cat-caption'> <p procatID=" + returnValue + " > " + returnName +
-                            " </p> <p style='display:none;width:100%;height:100%;'><input procatID=" + returnValue + " type='text' value='" + returnName + "'></p></div></li>");
+                            " </p> <p style='display:none;'><input procatID=" + returnValue + " type='text' value='" + returnName + "'></p></div></li>");
                         }
                         if (!chkMultiple.prop("checked")) {
                             fillCategory(returnValue)
@@ -812,7 +816,9 @@
                         imgUsrImage.removeAttr("src").attr("src", VIS.Application.contextUrl + "Images/Thumb140x120/" + imageUrl + "?" + d.getTime());
                     }
                     else {
-                        imgUsrImage.removeAttr("src").attr("src", VIS.Application.contextUrl + "Areas/VA005/Images/img-defult.png");
+                        //imgUsrImage.removeAttr("src").attr("src", VIS.Application.contextUrl + "Areas/VA005/Images/img-defult.png");
+                        imgUsrImage.removeAttr("src").attr("src", "");
+
                     }
                     btnUndo.attr('disabled', 'disabled').css("opacity", 0.6);
                     btnSave.attr('disabled', 'disabled').css("opacity", 0.6);
@@ -890,7 +896,8 @@
             cmbmatPolicy.val("F");
             cmbProductType.val("I");
             cmbTaxCategory.val(-1);
-            imgUsrImage.removeAttr("src").attr("src", VIS.Application.contextUrl + "Areas/VA005/Images/Img-defult.png");
+            //imgUsrImage.removeAttr("src").attr("src", VIS.Application.contextUrl + "Areas/VA005/Images/Img-defult.png");
+            imgUsrImage.removeAttr("src").attr("src", "");
             divRight.addClass("VA005-web_dialog_overlay");
             divRight.find('input, textarea, button, select').attr('disabled', 'disabled');
         }
@@ -934,10 +941,10 @@
         };
 
         function busyIndicator() {
-            $BusyIndicator = $("<div class='vis-apanel-busy'>");
-            $BusyIndicator.css({
-                "position": "absolute", "width": "98%", "height": "97%", 'text-align': 'center'
-            });
+            $BusyIndicator = $('<div class="vis-busyindicatorouterwrap" style="visibility: hidden;"><div class="vis-busyindicatorinnerwrap"><i class="vis-busyindicatordiv"></i></div></div>');
+            //$BusyIndicator.css({
+            //    "position": "absolute", "width": "98%", "height": "97%", 'text-align': 'center'
+            //});
             $BusyIndicator[0].style.visibility = "visible";
             $root.append($BusyIndicator);
         };
