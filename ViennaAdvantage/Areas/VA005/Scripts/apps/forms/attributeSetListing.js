@@ -223,7 +223,7 @@
                         + "</div>"
 
 
-                      + "<div id='" + $self.windowNo + "middivforattributevalue'  style='overflow:auto;display:none;height:100%;width: 30%;min-width:30%;padding:12px;float: left;border-right:1px solid #ccc;'>"
+                      + "<div id='" + $self.windowNo + "middivforattributevalue' class='VA005-right-wrap-leftboxdiv' style='overflow:auto;display:none;width: 30%;'>"
                       //+ "<div id='" + $self.windowNo + "middivforattributevaluehideshow' style='display:none;height: 71%;  position: absolute; width: 29%; opacity: 0.6; z-index: 3;'></div>"
 
                       + "</div>"
@@ -1042,12 +1042,12 @@
                         $editattributeboxes.addClass("VA005-disabled");
 
                         if ($middivforattributevalue.is(':visible')) {
-                            //$leftboxdivwidth.animate({ width: "50%" });
-                            //$middivforattributevalue.animate({ width: "30%" });
+                            $leftboxdivwidth.animate({ width: "50%" });
+                            $middivforattributevalue.animate({ width: "30%" });
                             $middivforattributevalue.css({ "display": "none", 'width': '0%' });
-                            //$treeView.animate({ width: "50%" });
+                            $treeView.animate({ width: "50%" });
                             $treeView.css("display", "inherit");
-                            //$openattdialog.animate({ width: "50%" });
+                            $openattdialog.animate({ width: "50%" });
                             $attributeobject.cleartext();
                         }
                     }
@@ -1612,7 +1612,7 @@
                 //$attributedivleftdragdrop.css("overflow-y", "auto");
 
                 //$attributedivleftdragdrop.css("width", "100%");
-                //$leftboxbackdivforspliter.css("width", "100%");
+                $leftboxbackdivforspliter.css("width", "100%");
 
 
 
@@ -1781,8 +1781,8 @@
 
                 $middivforattributevalue.animate({ width: "0%" });
                 $middivforattributevalue.css({ "display": "none", 'width': '0%' });
-                //$leftboxdivwidth.animate({ width: "50%" });
-                //$openattdialog.animate({ width: "50%" });
+                $leftboxdivwidth.animate({ width: "50%" });
+                $openattdialog.animate({ width: "50%" });
 
                 $attributevaluedivleftdragdrop.empty();
 
@@ -2558,11 +2558,11 @@
                 nodeID = $(this).data("nodeid");
                 $treeView.css("display", "none");
 
-                //$leftboxdivwidth.animate({ width: "50%" });
+                $leftboxdivwidth.animate({ width: "50%" });
                 $middivforattributevalue.animate({ width: "0%" });
                 $middivforattributevalue.css({ "display": "none", 'width': '0%' });
 
-                //$openattdialog.animate({ width: "50%" });
+                $openattdialog.animate({ width: "50%" });
                 $openattdialog.css("display", "inherit");
                 editAttributeSet(nodeID);
                 $attributeobject.gridkendo();
