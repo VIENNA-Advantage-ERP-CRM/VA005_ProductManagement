@@ -278,12 +278,12 @@
             $lb = $("<div class='VA005-apanel-lb'>");
 
             $btnlbToggle = $("<div class='vis-apanel-lb-toggle' ><i class='fa fa-bars' aria-hidden='true'></i></div>");
-            $searchQry = $('<div class="VA005-Serach-Query"><span>' + VIS.Msg.getMsg("VA005_SearchQuery") + '</span><Select id = ' + "queryCat_" + $self.windowNo +
-                ' class="VA005-left-panel"></Select></div>');
+            $searchQry = $('<div class="vis-input-wrap"><div class="VA005-Serach-Query vis-control-wrap"><Select id = ' + "queryCat_" + $self.windowNo +
+                ' ></Select><label>' + VIS.Msg.getMsg("VA005_SearchQuery") + '</label></div></div>');
             //Updated By Manjot For SearchBy Category And Tree
-            $searchBy = $('<div class="VA005-Serach-Query"><span>' + VIS.Msg.getMsg("VA005_SearchBy") + '</span><Select id = "searchBy_' + $self.windowNo +
-                '" class="VA005-left-panel"><option selected="selected" value="C">' + VIS.Msg.getMsg("VA005_SearchByCat") +
-                '</option><option value="T">' + VIS.Msg.getMsg("VA005_SearchByTree") + '</option></Select></div>');
+            $searchBy = $('<div class="vis-input-wrap"><div class="VA005-Serach-Query vis-control-wrap"><Select id = "searchBy_' + $self.windowNo +
+                '" ><option selected="selected" value="C">' + VIS.Msg.getMsg("VA005_SearchByCat") +
+                '</option><option value="T">' + VIS.Msg.getMsg("VA005_SearchByTree") + '</option></Select><label>' + VIS.Msg.getMsg("VA005_SearchBy") + '</label></div></div>');
 
             // Added by Bharat on 09 March 2018 to add search box for Categories
             $searchCat = $('<div class="VA005-left-input-panel"><input id = ' + "VA005_searchCat_" + $self.windowNo + ' class="VA005-left-panelInput" type="text" value="" placeholder="' + VIS.Msg.getMsg("Search") +

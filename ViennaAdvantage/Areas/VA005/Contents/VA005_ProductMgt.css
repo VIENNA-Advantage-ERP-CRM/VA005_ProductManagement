@@ -81,13 +81,13 @@ ul.VA005-tabs > li:last-child {
     width: 100%;
 }
 .VA005-Serach-Query {
-    width: 100%;
+    /*width: 100%;*/
     /* height: 60px; */
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
 }
 .VA005-Serach-Query > span {
-    color: rgba(var(--v-c-on-secondary), 1);
-    float: left;
+    /*color: rgba(var(--v-c-on-secondary), 1);*/
+    /*float: left;*/
     /* margin-left: 12px; */
 }
 .VA005-left-panel {
@@ -113,12 +113,14 @@ input.VA005-left-panelInput {
     width: calc(100% - 31px);
     /* margin: 0 0 0 12px; */
     /* background: transparent; */
-    border-radius: 0;
+    /*border-radius: 0;*/
     /* color: rgba(var(--v-c-on-secondary), 1); */
     outline: none;
     height: 31px;
     /* border: 1px solid rgba(var(--v-c-on-secondary), .2); */
     padding: 5px 10px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
     input.VA005-left-panelInput::-webkit-input-placeholder {
@@ -780,7 +782,10 @@ margin-top: -55px;*/
     background: rgba(var(--v-c-secondary), 1);
     color: rgba(var(--v-c-on-secondary), 1);
     font-size: 1rem;
-    border-radius: 0;
+    border-radius: .25rem;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left: none;
 }
 .VA005-conv-data .VA005-icons {
     height: 29px;
@@ -802,4 +807,11 @@ margin-top: -55px;*/
     max-width: 100%;
     max-height: 100%;
     color: rgba(var(--v-c-on-secondary), .3);
+}
+.vis-input-wrap .VA005-Serach-Query label,
+.vis-input-wrap .VA005-Serach-Query select:focus ~ label {
+    background: linear-gradient(rgba(var(--v-c-secondary), 1) 50%, transparent 50%);
+}
+.VA005-apanel-lb .vis-apanel-lb-toggle {
+    margin-bottom: 10px;
 }
