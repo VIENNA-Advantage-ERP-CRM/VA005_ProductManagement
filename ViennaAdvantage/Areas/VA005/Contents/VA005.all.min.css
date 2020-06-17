@@ -1,4 +1,4 @@
-﻿/*Version 1.0.11.2*/
+﻿/*Version 1.0.11.3*/
 .VA005-web_dialog_overlay {
     top: 0;
     right: 0;
@@ -532,7 +532,7 @@ body {
 }
 
 .VA005-form-top, .VA005-form-data, .VA005-form-dataIcon {
-    width: 100%;
+    width: calc(100% - 31px);
     float: left;
 }
 
@@ -622,7 +622,7 @@ body {
         color: rgba(var(--v-c-on-secondary), 1);
         font-size: 14px;
         font-weight: normal;
-        width: 100%;
+        width: calc(100% - 31px);
         float: left;
     }
 
@@ -641,7 +641,7 @@ body {
     }
 
     .VA005-form-dataIcon > select {
-        width: 93%;
+        width: calc(100% - 31px);
         float: left;
         border: 1px solid rgba(var(--v-c-on-secondary), .2);
         outline: none;
@@ -814,7 +814,7 @@ body {
     }
 
     .VA005-form-dataIcon > select {
-        width: 91%;
+        width: calc(100% - 31px);
     }
 }
 
@@ -842,7 +842,7 @@ body {
     }
 
     .VA005-form-dataIcon > select {
-        width: 89%;
+        width: calc(100% - 31px);
     }
 }
 
@@ -904,6 +904,7 @@ ul.VA005-tabs {
     .VA005-div-left-main > ul {
         list-style: none;
         padding: 0;
+        float: left;
     }
 
         .VA005-div-left-main > ul > li {
@@ -960,6 +961,7 @@ ul.VA005-tabs {
 .VA005-left-input-panel {
     width: 100%;
     height: 40px;
+    float: left;
 }
 
 input[type="text"].VA005-left-panelInput {
@@ -1639,3 +1641,4 @@ margin-top: -55px;*/
     justify-content: center;
     font-size: 100px;
 }
+
