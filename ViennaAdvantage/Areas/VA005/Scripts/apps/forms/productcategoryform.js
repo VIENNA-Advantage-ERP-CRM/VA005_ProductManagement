@@ -501,7 +501,7 @@
             if (btnDelete != null) {
                 btnDelete.on("click", function () {
                     if (pcats.length > 0) {
-                        if (VIS.ADialog.ask("DeleteRecord?")) {
+                        if (VIS.ADialog.confirm("DeleteRecord?")) {
                             $BusyIndicator[0].style.visibility = "visible";
                             for (var item in pcats) {
                                 var sql = "DELETE FROM M_Product_Category WHERE M_Product_Category_ID = " + pcats[item];
@@ -564,6 +564,8 @@
 
             if (btnUndo != null) {
                 btnUndo.on("click", function () {
+                    fillCategory(mainProductCategoryUl.find('li:eq(1)').attr('procatid'));
+
                     debugger;
                     $BusyIndicator[0].style.visibility = "visible";
                     txtName.val(catName);

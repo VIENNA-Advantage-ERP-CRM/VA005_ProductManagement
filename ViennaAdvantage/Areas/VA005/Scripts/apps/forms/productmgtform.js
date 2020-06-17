@@ -1812,6 +1812,11 @@
                         }
 
                     }
+                    //JID_1757 In product management window if product is not there then its display the message
+                    else {
+                        VIS.ADialog.info("TMRecordNotFound");
+
+                    }
                     prodContainerWidth = $($('.vis-group-user-wrap')[0]).width()
                     DragDropProduct();
 

@@ -666,7 +666,7 @@ namespace VA005.Models
                             if (!po.Save())
                             {
                                 ValueNamePair pp = VLogger.RetrieveError();
-                                error += pro.GetName() + (pp != null ? " - " + pp.GetValue() + " " + pp.ToString() : "") + "\n";
+                                error += pro.GetName() + (pp != null ? " - " + Msg.GetMsg(ctx, pp.GetValue()) + " " + pp.ToString() : "") + "\n";
                             }
                             else
                             {
@@ -694,7 +694,9 @@ namespace VA005.Models
                         if (!po.Save())
                         {
                             ValueNamePair pp = VLogger.RetrieveError();
-                            error += pro.GetName() + (pp != null ? " - " + pp.GetValue() + " " + pp.ToString() : "") + "\n";
+                             error += pro.GetName() + (pp != null ? " - " + Msg.GetMsg(ctx, pp.GetValue()) + " " + pp.ToString() : "") + "\n";
+                           
+                           
                         }
                         else
                         {
