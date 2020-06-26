@@ -37,6 +37,7 @@
         var $searchProdBtn = null;
         var $btnCreateProd = null;
         var $divProduct = null;
+        var $divProductInner = null;
         var $divUom = null;
         var $divUomGroup = null;
         var divUom = null;
@@ -451,8 +452,10 @@
 
             //midtopdivvv = $('<div style="border-bottom-color: rgb(26, 160, 237); border-bottom: 2px solid rgb(26, 160, 237);">');
             midtopdivvv = $('<div style="width:100%">');
+            $divProductInner = $('<div class="vis-group-DataContainer">');
             $divProduct = $('<div class="vis-group-users-container" style="margin:0;">');
             $divProduct.height($($root.parent()).height() - 95);
+            $divProduct.append($divProductInner);
             midtopdivvv.append($divProduct);
             textDiv = $('<div style="height:100%">');
             textDiv.append(midtopdivvv).append($('<div class="VA005-attrValuesWraperDiv" >').append(productAttValues));
@@ -1756,16 +1759,16 @@
 
                                 var divProduct = $('<div class="vis-group-user-wrap vis-group-selected-op vis-group-selected-opbackground" style="width:98%;" data-UID="' + M_ProductID + '">' +
                                     '<input type="checkbox" data-UID="' + M_ProductID + '"style="margin-left:0px;" class="vis-group-addLeft VA005-checkbox" checked="true">' +
-                                    '<div draggable="true" class="vis-group-user-profile" data-UID="' + M_ProductID + '">' +
+                                    '<div draggable="true" class="vis-group-user-profile VA005-productinfowrp" data-UID="' + M_ProductID + '">' +
                                     '<div style="height:46px;width:46px" class="vis-group-user-img vis-chatimgwrap">' + imgCtrl + '</div>' +
                                     //'<div class="vis-group-user-text" style="width:calc(100% - 70px);"><p style="font-weight: bold">' + Prodname +
                                     '<div class="vis-group-user-text" style="width:calc(100% - 70px);"><p class="VA005-NameOfSelectedNode" style="font-weight: bold">' + Prodname +
                                     '</p><span>' + ProCatName + '</span><span style="display:list-item;">' + SearchKey + '</span></div></div>' +
-                                    '<div class="vis-group-user-right"><div class="vis-group-user-right"><span id="VA005_Barcode_' + id + '" style="float:left;"></span>' +
+                                    '<div class="vis-group-user-right d-flex"><span id="VA005_Barcode_' + id + '" style="float:left;"></span><div class="d-flex flex-column"><div class="vis-group-user-right d-flex">' +
                                     '<span class="VA005-uom-icons glyphicon glyphicon-picture VA005-icons-color" data-UID="' + M_ProductID + '" title="' + VIS.Msg.getMsg("VA005_ShowAllImages") + '"></span>' +
                                     '<span class="VA005-uom-icons glyphicon glyphicon-edit VA005-icons-color" data-UID="' + M_ProductID + '" title="' + VIS.Msg.getMsg("Edit") + '"></span>' +
                                     '<span class="VA005-uom-icons glyphicon glyphicon-shopping-cart VA005-icons-color" data-UID="' + M_ProductID + '" title="' + VIS.Msg.getMsg("VA005_AddCart") + '"></span></div>' +
-                                    '<div><span class="VA005-Uom-span" data-UID="' + C_UomID + '">' + UOM + '</span></div></div></div>');
+                                    '<span class="VA005-Uom-span" data-UID="' + C_UomID + '">' + UOM + '</span></div></div></div>');
                                 $divProduct.append(divProduct);
                                 GenerateBarcode(upc, $divProduct.find("#VA005_Barcode_" + id));
                                 divProduct.find('.vis-group-user-profile').width(divProduct.width() - divProduct.find('.vis-group-user-right:eq(0)').width() - 20);
@@ -1795,17 +1798,17 @@
                                 //$divProduct.append(prodtheModTmp(data));
                                 var divProduct = $('<div class="vis-group-user-wrap" style="width:98%;" data-UID="' + M_ProductID + '">' +
                                     '<input type="checkbox" data-UID="' + M_ProductID + '" style="margin-left:0px;" class="vis-group-addLeft VA005-checkbox">' +
-                                    '<div draggable="true" class="vis-group-user-profile" data-UID="' + M_ProductID + '">' +
+                                    '<div draggable="true" class="vis-group-user-profile VA005-productinfowrp" data-UID="' + M_ProductID + '">' +
                                     '<div style="height:46px;width:46px" class="vis-group-user-img vis-chatimgwrap">' + imgCtrl + '</div>' +
                                     //'<div class="vis-group-user-text" style="width:calc(100% - 70px);"><p style="font-weight: bold">' + Prodname +
                                     '<div class="vis-group-user-text" style="width:calc(100% - 70px);"><p class="VA005-NameOfSelectedNode" style="font-weight: bold">' + Prodname +
                                     '</p><span>' + ProCatName + '</span><span style="display:list-item;">' + SearchKey + '</span></div></div>' +
-                                    '<div class="vis-group-user-right"><div class="vis-group-user-right"><span id="VA005_Barcode_' + id + '" style="float:left;"></span>' +
+                                    '<div class="vis-group-user-right d-flex"><span id="VA005_Barcode_' + id + '" style="float:left;"></span><div class="d-flex flex-column"><div class="vis-group-user-right d-flex">' +
                                     '<span class="VA005-uom-icons glyphicon glyphicon-picture VA005-icons-color" data-UID="' + M_ProductID + '" title="' + VIS.Msg.getMsg("VA005_ShowAllImages") + '"></span>' +
                                     '<span class="VA005-uom-icons glyphicon glyphicon-edit VA005-icons-color" data-UID="' + M_ProductID + '" title="' + VIS.Msg.getMsg("Edit") + '"></span>' +
                                     '<span class="VA005-uom-icons glyphicon glyphicon-shopping-cart VA005-icons-color" data-UID="' + M_ProductID + '" title="' + VIS.Msg.getMsg("VA005_AddCart") + '"></span></div>' +
-                                    '<div><span class="VA005-Uom-span" data-UID="' + C_UomID + '">' + UOM + '</span></div></div></div>');
-                                $divProduct.append(divProduct);
+                                    '<span class="VA005-Uom-span" data-UID="' + C_UomID + '">' + UOM + '</span></div></div></div>');
+                                $divProductInner.append(divProduct);
                                 GenerateBarcode(upc, $divProduct.find("#VA005_Barcode_" + id));
                                 divProduct.find('.vis-group-user-profile').width(divProduct.width() - divProduct.find('.vis-group-user-right:eq(0)').width() - 20);
                             }
@@ -5531,6 +5534,7 @@
             $searchProdBtn = null;
             $btnCreateProd = null;
             $divProduct = null;
+            $divProductInner = null;
             $divUom = null;
             $divUomGroup = null;
             divUom = null;
