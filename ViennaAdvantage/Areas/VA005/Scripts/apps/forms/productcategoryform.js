@@ -152,7 +152,7 @@
             LoadAssetGroup();
             LoadProductTypes();
             LoadMatPolicies();
-            mainProductCategoryUl.find('li:eq(1)').addClass('VA005-highlighted');
+            mainProductCategoryUl.find('li:eq(1) .VA005-cat-caption').addClass('VA005-highlighted');
             fillCategory(mainProductCategoryUl.find('li:eq(1)').attr('procatid'));
             btnUndo.attr('disabled', 'disabled').css("opacity", 0.6);
             btnSave.attr('disabled', 'disabled').css("opacity", 0.6);
@@ -320,23 +320,23 @@
                                 pcatIdOld = pcat_ID;
                                 fillCategory(pcat_ID)
                             }
-                            if (mainProductCategoryUl.find("li[procatid='" + pcatImg + "']").hasClass('VA005-highlighted')) {
+                            if (mainProductCategoryUl.find("li[procatid='" + pcatImg + "'] .VA005-cat-caption").hasClass('VA005-highlighted')) {
                                 ShowOrHide(true, currentElement);
                             }
-                            mainProductCategoryUl.find('li').removeClass('VA005-highlighted');
-                            mainProductCategoryUl.find("li[procatid='" + pcatImg + "']").addClass('VA005-highlighted');
+                            mainProductCategoryUl.find('li .VA005-cat-caption').removeClass('VA005-highlighted');
+                            mainProductCategoryUl.find("li[procatid='" + pcatImg + "'] .VA005-cat-caption").addClass('VA005-highlighted');
                             pcats = [];
                             if (VIS.Utility.Util.getValueOfInt(pcatImg) > 0) {
                                 pcats.push(pcatImg);
                             }
                         }
                         else {
-                            if (mainProductCategoryUl.find("li[procatid='" + pcatImg + "']").hasClass('VA005-highlighted')) {
-                                mainProductCategoryUl.find("li[procatid='" + pcatImg + "']").removeClass('VA005-highlighted');
+                            if (mainProductCategoryUl.find("li[procatid='" + pcatImg + "'] .VA005-cat-caption").hasClass('VA005-highlighted')) {
+                                mainProductCategoryUl.find("li[procatid='" + pcatImg + "'] .VA005-cat-caption").removeClass('VA005-highlighted');
                                 pcats.splice(pcats.indexOf(pcatImg), 1);
                             }
                             else {
-                                mainProductCategoryUl.find("li[procatid='" + pcatImg + "']").addClass('VA005-highlighted');
+                                mainProductCategoryUl.find("li[procatid='" + pcatImg + "'] .VA005-cat-caption").addClass('VA005-highlighted');
                                 pcats.push(pcatImg);
                             }
                         }
@@ -516,8 +516,8 @@
                                 }
                             }
                             pcats = [];
-                            mainProductCategoryUl.find('li').removeClass('VA005-highlighted');
-                            mainProductCategoryUl.find('li:eq(1)').addClass('VA005-highlighted');
+                            mainProductCategoryUl.find('li .VA005-cat-caption').removeClass('VA005-highlighted');
+                            mainProductCategoryUl.find('li:eq(1) .VA005-cat-caption').addClass('VA005-highlighted');
                             fillCategory(mainProductCategoryUl.find('li:eq(1)').attr('procatid'));
                         }
                     }
@@ -539,10 +539,10 @@
                         //divLeft.animate({ 'width': '61%' }, 500);
                         divRight.animate({ 'width': "39%" }, 500);
                         divRight.css('padding', '15px 0 15px 15px');
-                        mainProductCategoryUl.find('li').removeClass('VA005-highlighted');
+                        mainProductCategoryUl.find('li .VA005-cat-caption').removeClass('VA005-highlighted');
                         $(".VA005-effect-off").fadeIn();
                         $(".VA005-effect-off").fadeOut(2000);
-                        mainProductCategoryUl.find('li:eq(1)').addClass('VA005-highlighted');
+                        mainProductCategoryUl.find('li:eq(1) .VA005-cat-caption').addClass('VA005-highlighted');
                         fillCategory(mainProductCategoryUl.find('li:eq(1)').attr('procatid'));
 
                     }
@@ -738,13 +738,13 @@
                     if (returnValue != "") {
                         if (mainProductCategoryUl != null) {
                             mainProductCategoryUl.find('li:eq(0)').after("<li class='VA005-pro-cat' procatID=" + returnValue + "><div procatID=" + returnValue + " class='VA005-cat-img'><img style='height: 100%;width: 100%;' procatID=" + returnValue
-                            + " src=''> </div> <div class='VA005-cat-caption'> <p procatID=" + returnValue + " > " + returnName +
+                                + " src=''> </div> <div class='VA005-cat-caption'><input type='checkbox' class='VA005-catboxcheck'> <p procatID=" + returnValue + " > " + returnName +
                             " </p> <p style='display:none;'><input procatID=" + returnValue + " type='text' value='" + returnName + "'></p></div></li>");
                         }
                         if (!chkMultiple.prop("checked")) {
                             fillCategory(returnValue)
-                            mainProductCategoryUl.find('li').removeClass('VA005-highlighted');
-                            mainProductCategoryUl.find("li[procatid='" + returnValue + "']").addClass('VA005-highlighted');
+                            mainProductCategoryUl.find('li .VA005-cat-caption').removeClass('VA005-highlighted');
+                            mainProductCategoryUl.find("li[procatid='" + returnValue + "'] .VA005-cat-caption").addClass('VA005-highlighted');
                             pcat_ID = returnValue;
                             pcats = [];
                             pcats.push(returnValue);
@@ -918,13 +918,13 @@
                     imageUrl = imageUrl.substring(imageUrl.lastIndexOf("/") + 1, imageUrl.length);
                     var d = new Date();
                     mainProductCategoryUl.append("<li class='VA005-pro-cat' procatID=" + pcat_ID + "><div procatID=" + pcat_ID + " class='VA005-cat-img'><img procatID=" + pcat_ID + " style='height: 100%;width: 100%;' src='"
-                    + VIS.Application.contextUrl + "Images/Thumb140x120/" + imageUrl + "?" + d.getTime() + "'> </div> <div class='VA005-cat-caption'> <p procatID=" + pcat_ID + " > " + name +
-                    " </p> <p style='display:none;width:100%;height:100%;'><input procatID=" + pcat_ID + " type='text' value='" + name + "'></p></div></li>");
+                    + VIS.Application.contextUrl + "Images/Thumb140x120/" + imageUrl + "?" + d.getTime() + "'> </div> <div class='VA005-cat-caption'> <input type='checkbox' class='VA005-catboxcheck'><p procatID=" + pcat_ID + " > " + name +
+                    " </p> <p style='display:none;width:100%;'><input procatID=" + pcat_ID + " type='text' value='" + name + "'></p></div></li>");
                 }
                 else {
                     mainProductCategoryUl.append("<li class='VA005-pro-cat' procatID=" + pcat_ID + "><div procatID=" + pcat_ID + " class='VA005-cat-img'><img procatID=" + pcat_ID
-                    + " style='height: 100%;width: 100%;' src=''> </div> <div class='VA005-cat-caption'> <p procatID=" + pcat_ID + "> " + name +
-                    " </p> <p style='display:none;width:100%;height:100%;'><input procatID=" + pcat_ID + " type='text' value='" + name + "'></p></div></li>");
+                        + " style='height: 100%;width: 100%;' src=''> </div> <div class='VA005-cat-caption'><input type='checkbox' class='VA005-catboxcheck'> <p procatID=" + pcat_ID + "> " + name +
+                    " </p> <p style='display:none;width:100%;'><input procatID=" + pcat_ID + " type='text' value='" + name + "'></p></div></li>");
                 }
             }
             dr.close();

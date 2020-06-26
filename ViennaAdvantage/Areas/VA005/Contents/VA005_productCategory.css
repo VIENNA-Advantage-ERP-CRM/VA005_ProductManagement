@@ -12,8 +12,8 @@
     z-index: 101;
 }
 
-.VA005-highlighted {
-    border: 2px solid rgb(var(--v-c-primary), 1);
+.VA005-cat-caption.VA005-highlighted {
+    border: 1px solid rgb(var(--v-c-primary), 1);
 }
 
 .VA005-disabled {
