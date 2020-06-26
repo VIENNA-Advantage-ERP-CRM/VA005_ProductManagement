@@ -621,3 +621,12 @@ body
     }
 }
 
+.VA005-productinfowrp {
+    display: flex;
+    padding-left: 10px;
+    list-style: none;
+}
+
+.VA005-middle-left-main .vis-group-DataContainer {
+    padding-left: 0;
+}
