@@ -33,8 +33,7 @@ namespace VA005 //  Please replace namespace with prefix of your module..
 
             /* ==>  Here include all css files in style bundle......see example below....  */
 
-            style.Include("~/Areas/VA005/Contents/VA005_productCategory.css",
-                          "~/Areas/VA005/Contents/VA005_productCategory.css",
+            style.Include("~/Areas/VA005/Contents/VA005_productCategory.css",                          
                           "~/Areas/VA005/Contents/VA005_style.css",
                           "~/Areas/VA005/Contents/VA005_ProductMgt.css");
 
