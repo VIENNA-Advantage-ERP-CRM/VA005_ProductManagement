@@ -1640,8 +1640,9 @@ LEFT JOIN ad_image adimg ON adimg.ad_image_id    =attimage.ad_image_id
         // Added by Bharat on 05 March 2018 to get UOM Conversion Data
         public Dictionary<string, object> LoadUOMConversionData(int c_UomConv_ID, Ctx ctx)
         {
+            // Added by shifali on 06 July 2020 to get DivideRate and MultiplyRate Data
             Dictionary<string, object> obj = null;
-            string sql = "SELECT prd.Name, prd.M_Product_ID, uc.C_UOM_To_ID, uc.UPC FROM C_UOM_Conversion uc INNER JOIN M_Product prd ON uc.M_Product_ID = prd.M_Product_ID WHERE uc.C_UOM_Conversion_ID = " + c_UomConv_ID;
+            string sql = "SELECT prd.Name, prd.M_Product_ID, uc.C_UOM_To_ID, uc.UPC,uc.MultiplyRate AS DivideRate, uc.DivideRate AS MultiplyRate FROM C_UOM_Conversion uc INNER JOIN M_Product prd ON uc.M_Product_ID = prd.M_Product_ID WHERE uc.C_UOM_Conversion_ID = " + c_UomConv_ID;
             DataSet ds = DB.ExecuteDataset(sql, null, null);
             if (ds != null && ds.Tables[0].Rows.Count > 0)
             {
@@ -1650,6 +1651,8 @@ LEFT JOIN ad_image adimg ON adimg.ad_image_id    =attimage.ad_image_id
                 obj["C_UOM_To_ID"] = Util.GetValueOfInt(ds.Tables[0].Rows[0]["C_UOM_To_ID"]);
                 obj["M_Product_ID"] = Util.GetValueOfInt(ds.Tables[0].Rows[0]["M_Product_ID"]);
                 obj["UPC"] = Util.GetValueOfString(ds.Tables[0].Rows[0]["UPC"]);
+                obj["DivideRate"] = Util.GetValueOfDecimal(ds.Tables[0].Rows[0]["DivideRate"]);
+                obj["MultiplyRate"] = Util.GetValueOfDecimal(ds.Tables[0].Rows[0]["MultiplyRate"]);
             }
             return obj;
         }
