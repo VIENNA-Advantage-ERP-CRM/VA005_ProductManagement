@@ -108,6 +108,8 @@
         var btnGenerate = null;
         var btnSaveAttr = null;
         var btnCancelGen = null;
+        var Multiplier = null;
+        var Division = null;
 
         var btnCancelVarient = null;
         var btnSaveUom = null;
@@ -134,8 +136,8 @@
         var txtName = null;
         var txtValue = null;
         var txtUpc = null;
-        var txtMul = null;
-        var txtDiv = null;
+        var $txtMul = null;
+        var $txtDiv = null;
         var uomUPC = false;
         var cmbOrg = null;
         var cmbProductType = null;
@@ -481,16 +483,24 @@
             $divUom = '<div id="VA005_divUom_' + $self.windowNo + '" class="VA005-right-head-btn"><div class="VA005-Add-Btn" id="VA005_btnAddUom_' + $self.windowNo +
                 '"><span class="glyphicon glyphicon-plus" ></span><span style="margin-left:10px;">' + VIS.Msg.getMsg("VA005_AddUom") + '</span></div>' +
                 '<div id="VA005_divConversion_' + $self.windowNo + '" class="VA005-conv-form"><div class="VA005-conv-data"><select id="cmbUomTo_' + $self.windowNo + '"></select></div>' +
-                '<div class="VA005-conv-data"><div class="VA005-conversion-data"><label>' + VIS.Msg.getElement(VIS.Env.getCtx(), "MultiplyRate") +
-                '</label><input type="number" step="any" maxlength="26" class="vis-gc-vpanel-table-mandatory" style="display: inline-block;" id="VA005_txtMul_' + $self.windowNo + '"></div>' +
-                '<div class="VA005-conversion-data"><label>' + VIS.Msg.getElement(VIS.Env.getCtx(), "DivideRate") +
-                '</label><input type="number" step="any" maxlength="26" class="vis-gc-vpanel-table-mandatory" style="display: inline-block;" id="VA005_txtDiv_' + $self.windowNo + '"></div></div>' +
+                '<div class="VA005-conv-data"><div class="VA005-conversion-data VA005-Multiplier-data"><label>' + VIS.Msg.getElement(VIS.Env.getCtx(), "MultiplyRate") +
+                '</label></div>' +
+                '<div class="VA005-conversion-data VA005-Division-data"><label>' + VIS.Msg.getElement(VIS.Env.getCtx(), "DivideRate") +
+                '</label></div></div>' +
                 '<div class="VA005-conv-data"><div class="VA005-conversion-data"><label>' + VIS.Msg.getElement(VIS.Env.getCtx(), "UPC") + '</label><input id="VA005_uomUPC_' + $self.windowNo + '"></div>' +
                 '<div class="VA005-conversion-icons" style="margin-top:29px;"><span id="VA005_btnSaveUom_' + $self.windowNo +
                 '" class="VA005-icons glyphicon glyphicon-floppy-disk VA005-icons-font VA005-disabled" tabindex="0" title="' + VIS.Msg.getMsg("Save") + '"></span><span id="VA005_btnCancelUom_' + $self.windowNo +
-                '" class="VA005-icons glyphicon glyphicon-remove-circle VA005-icons-font" tabindex="0" title="' + VIS.Msg.getMsg("Cancel") + '"></span></div></div>';
+                '" class="VA005-icons glyphicon glyphicon-remove-circle VA005-icons-font" tabindex="0" title="' + VIS.Msg.getMsg("Cancel") + '"></span></div></div>'; 
+            $txtMul = new VIS.Controls.VAmountTextBox("MulAmount", false, false, true, 50, 100, VIS.DisplayType.Amount, VIS.Msg.getMsg("Amount")); 
+            $txtDiv = new VIS.Controls.VAmountTextBox("DivAmount", false, false, true, 50, 100, VIS.DisplayType.Amount, VIS.Msg.getMsg("Amount"));
+            $txtDiv.addVetoableChangeListener(this);
+            $txtMul.addVetoableChangeListener(this);           
             $rightPanel.append($divUom);
             $divUomGroup = $('<div class="VA005-uom-list">');
+            Multiplier = $rightPanel.find(".VA005-Multiplier-data");
+            Multiplier.append($txtMul.getControl());
+            Division = $rightPanel.find(".VA005-Division-data");
+            Division.append($txtDiv.getControl());
             $rightPanel.append($divUomGroup);
             divUom = $rightPanel.find("#VA005_divUom_" + $self.windowNo);
             divUom.hide();
@@ -498,9 +508,8 @@
             btnAdduom = $rightPanel.find("#VA005_btnAddUom_" + $self.windowNo);
             divConversion = $rightPanel.find("#VA005_divConversion_" + $self.windowNo);
             divConversion.hide();
-            cmbUomTo = $rightPanel.find("#cmbUomTo_" + $self.windowNo);
-            txtMul = $rightPanel.find("#VA005_txtMul_" + $self.windowNo);
-            txtDiv = $rightPanel.find("#VA005_txtDiv_" + $self.windowNo);
+            cmbUomTo = $rightPanel.find("#cmbUomTo_" + $self.windowNo);            
+            
             uomUPC = $rightPanel.find("#VA005_uomUPC_" + $self.windowNo);
             btnSaveUom = $rightPanel.find("#VA005_btnSaveUom_" + $self.windowNo);
             btnCancelUom = $rightPanel.find("#VA005_btnCancelUom_" + $self.windowNo);
@@ -724,9 +733,15 @@
                         }
                     },
                     { field: "Product", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.translate(VIS.Env.getCtx(), "Product") + '</span></div>', sortable: false, size: '200px', hidden: false },
-                    { field: "PriceList", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceList") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, editable: { type: 'float' }, render: 'number:2' },
-                    { field: "PriceStd", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceStd") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, editable: { type: 'float' }, render: 'number:2' },
-                    { field: "PriceLimit", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceLimit") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, editable: { type: 'float' }, render: 'number:2' },
+                    { field: "PriceList", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceList") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, editable: { type: 'float' } },
+                    {
+                        field: "PriceStd", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceStd") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, editable: { type: 'float' }
+
+                    },
+                    {
+                        field: "PriceLimit", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceLimit") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, editable: { type: 'float' }
+
+                    },
                     { field: "UOM", caption: "", sortable: false, size: '80px', display: false },
                     {
                         field: "C_Uom_ID", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "C_UOM_ID") + '</span></div>', sortable: false, size: '80px', min: 80, hidden: false, editable: { type: 'select', items: uomArray, showAll: true },
@@ -904,7 +919,13 @@
                             return html;
                         }
                     },
-                    { field: "PriceList", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceList") + '</span></div>', sortable: false, size: '80px', min: 80, hidden: false, editable: { type: 'float' }, render: 'number:2' },
+                    {
+                        field: "PriceList", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceList") + '</span></div>', sortable: false, size: '80px', min: 80, hidden: false, editable: { type: 'float' },
+                        render: function (record, index, col_index) {
+                            var val = VIS.Utility.Util.getValueOfDecimal(record["PriceList"].toFixed(precision));
+                            return (val).toLocaleString();
+                        }
+                    },
                     { field: "DeliveryTime", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "DeliveryTime_Promised") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, editable: { type: 'int' } },
                     { field: "updated", caption: "", sortable: false, size: '80px', display: false }
                 ],
@@ -1040,7 +1061,13 @@
                 columns: [
                     { field: "product_ID", caption: "product_ID", sortable: false, size: '80px', display: false },
                     { field: "Product", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.translate(VIS.Env.getCtx(), "Product") + '</span></div>', sortable: false, size: '35%', hidden: false },
-                    { field: "Qty", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "Quantity") + '</span></div>', sortable: false, size: '15%', hidden: false, editable: { type: 'float' }, render: 'number:2' },
+                    {
+                        field: "Qty", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "Quantity") + '</span></div>', sortable: false, size: '15%', hidden: false, editable: { type: 'float' },
+                        render: function (record, index, col_index) {
+                            var val = VIS.Utility.Util.getValueOfDecimal(record["Qty"].toFixed(precision));
+                            return (val).toLocaleString();
+                        }
+                    },
                     {
                         field: "C_Uom_ID", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "C_UOM_ID") + '</span></div>', sortable: false, size: '15%', hidden: false, editable: { type: 'select', items: uomArray, showAll: true },
                         render: function (record, index, col_index) {
@@ -1392,6 +1419,7 @@
 
         function LoadUomToCallBack(data) {
             cmbUomTo.append(' <option value = -1>' + VIS.Msg.getMsg("VA005_UomTo") + '</option>');
+            
             var key, value;
             if (data.length > 0) {
                 for (var i in data) {
@@ -1421,6 +1449,7 @@
 
         function LoadPriceListCallBack(data) {
             cmbPriceList.append(" <option value = 0></option>");
+            
             var key, value;
             if (data.length > 0) {
                 for (var i in data) {
@@ -3304,7 +3333,7 @@
                 BindCartGrid();
             });
 
-            //txtMul.on("keydown", function (event) {
+            //$txtMul.on("keydown", function (event) {
             //     
             //    if (event.keyCode == 189 || event.keyCode == 109 || event.keyCode == 173) { // dash (-)
             //        if (event.keyCode == 189 && this.value.length == 0) {
@@ -3336,65 +3365,100 @@
                 }
             });
 
-            txtMul.on("keyup", function (event) {
-                var rate1 = this.value;
-                var rate2 = VIS.Env.ZERO;
-                var one = 1.0;
+            // Added by Shifali on 3rd July 2020 to change the date and amount acc. to culture
+            this.vetoablechange = function (evt) {
+                if (evt.propertyName == "MulAmount") {
+                    $txtMul.setValue(evt.newValue);
+                    var rate1 = evt.newValue;
+                    var rate2 = VIS.Env.ZERO;
+                    var one = 1.0;
 
-                if (VIS.Utility.Util.getValueOfDouble(rate1) != 0.0)	//	no divide by zero
-                {
-                    //rate2 = Decimal.Round(Decimal.Divide(one, rate1), 12);// MidpointRounding.AwayFromZero);  //By Sarab
-                    rate2 = (one / rate1).toFixed(12);
+                    if (VIS.Utility.Util.getValueOfDouble(rate1) != 0.0)	//	no divide by zero
+                    {
+                        rate2 = (one / rate1).toFixed(12);
+                    }
+                    uomChange = true;
+                    $txtDiv.setValue(rate2);
                 }
-                uomChange = true;
-                txtDiv.val(rate2);
-            });
+                else if (evt.propertyName == "DivAmount") {
+                    $txtDiv.setValue(evt.newValue);
+                    if (uomChange) {
+                        uomChange = false;
+                        return;
+                    }
+                    var rate1 = evt.newValue;
+                    var rate2 = VIS.Env.ZERO;
+                    var one = 1.0;
 
-            txtMul.on("change", function (event) {
-                var rate1 = this.value;
-                var rate2 = VIS.Env.ZERO;
-                var one = 1.0;
-
-                if (VIS.Utility.Util.getValueOfDouble(rate1) != 0.0)	//	no divide by zero
-                {
-                    rate2 = (one / rate1).toFixed(12);
+                    if (VIS.Utility.Util.getValueOfDouble(rate1) != 0.0)	//	no divide by zero
+                    {
+                        //rate2 = Decimal.Round(Decimal.Divide(one, rate1), 12);// MidpointRounding.AwayFromZero);  //By Sarab
+                        rate2 = (one / rate1).toFixed(12);
+                    }
+                    $txtMul.setValue(rate2);
                 }
-                uomChange = true;
-                txtDiv.val(rate2);
-            });
+            };
 
-            txtDiv.on("keyup", function (event) {
-                if (uomChange) {
-                    uomChange = false;
-                    return;
-                }
-                var rate1 = this.value;
-                var rate2 = VIS.Env.ZERO;
-                var one = 1.0;
+        //    $txtMul.on("keyup", function (event) {
+        //        var rate1 = this.value;
+        //        var rate2 = VIS.Env.ZERO;
+        //        var one = 1.0;
 
-                if (VIS.Utility.Util.getValueOfDouble(rate1) != 0.0)	//	no divide by zero
-                {
-                    rate2 = (one / rate1).toFixed(12);
-                }
-                txtMul.val(rate2);
-            });
+        //        if (VIS.Utility.Util.getValueOfDouble(rate1) != 0.0)	//	no divide by zero
+        //        {
+        //            //rate2 = Decimal.Round(Decimal.Divide(one, rate1), 12);// MidpointRounding.AwayFromZero);  //By Sarab
+        //            rate2 = (one / rate1).toFixed(12);
+        //        }
+        //        uomChange = true;
+        //        $txtDiv.val(rate2);
+        //    });
 
-            txtDiv.on("change", function (event) {
-                if (uomChange) {
-                    uomChange = false;
-                    return;
-                }
-                var rate1 = this.value;
-                var rate2 = VIS.Env.ZERO;
-                var one = 1.0;
+            //$('.VA005-Multiplier-data').on("change", function (e) {
+            //    var rate1 = this.value;
+            //    var rate2 = VIS.Env.ZERO;
+            //    var one = 1.0;
 
-                if (VIS.Utility.Util.getValueOfDouble(rate1) != 0.0)	//	no divide by zero
-                {
-                    //rate2 = Decimal.Round(Decimal.Divide(one, rate1), 12);// MidpointRounding.AwayFromZero);  //By Sarab
-                    rate2 = (one / rate1).toFixed(12);
-                }
-                txtMul.val(rate2);
-            });
+            //    if (VIS.Utility.Util.getValueOfDouble(rate1) != 0.0)	//	no divide by zero
+            //    {
+            //        rate2 = (one / rate1).toFixed(12);
+            //    }
+            //    uomChange = true;
+            //    $txtDiv.setValue(rate2);              
+            //});
+
+        //    $txtDiv.on("keyup", function (event) {
+        //        if (uomChange) {
+        //            uomChange = false;
+        //            return;
+        //        }
+        //        var rate1 = this.value;
+        //        var rate2 = VIS.Env.ZERO;
+        //        var one = 1.0;
+
+        //        if (VIS.Utility.Util.getValueOfDouble(rate1) != 0.0)	//	no divide by zero
+        //        {
+        //            rate2 = (one / rate1).toFixed(12);
+        //        }
+        //        $txtMul.setValue(rate2);
+        //    });
+
+
+            //$txtDiv.on("input",function(event) {
+            //    if (uomChange) {
+            //        uomChange = false;
+            //        return;
+            //    }
+            //    var rate1 = this.value;
+            //    var rate2 = VIS.Env.ZERO;
+            //    var one = 1.0;
+
+            //    if (VIS.Utility.Util.getValueOfDouble(rate1) != 0.0)	//	no divide by zero
+            //    {
+            //        //rate2 = Decimal.Round(Decimal.Divide(one, rate1), 12);// MidpointRounding.AwayFromZero);  //By Sarab
+            //        rate2 = (one / rate1).toFixed(12);
+            //    }
+            //    $txtMul.setValue(rate2);
+            //});
         };
 
         function AddToCart(source) {
@@ -3647,8 +3711,8 @@
                 data: {
                     id: prods[0],
                     Conv_ID: c_UomConv_ID,
-                    Mul: VIS.Utility.Util.getValueOfDouble(txtMul.val()),
-                    Div: VIS.Utility.Util.getValueOfDouble(txtDiv.val()),
+                    Mul: VIS.Utility.Util.getValueOfDouble($txtMul.getValue()),                  
+                    Div: VIS.Utility.Util.getValueOfDouble($txtDiv.getValue()),
                     UOM: uoms[0],
                     UomTo: VIS.Utility.Util.getValueOfInt(cmbUomTo.val()),
                     UOMUPC: VIS.Utility.Util.getValueOfString(uomUPC.val())
@@ -3674,12 +3738,12 @@
                     return;
                 }
             });
-        };
+        };        
 
         function cancelConversion() {
             cmbUomTo.val(-1);
-            txtMul.val(0.0);
-            txtDiv.val(0.0);
+            $txtMul.setValue(0.0);
+            $txtDiv.setValue(0.0);
             uomUPC.val("");
             c_UomConv_ID = 0;
             divConversion.hide();
@@ -4332,8 +4396,8 @@
             var dr = VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/ProductManagement/LoadUOMRate", { "C_UOM_Conversion_ID": ucid });
             if (dr != null) {
                 cmbUomTo.val(dr["C_UOM_To_ID"]);
-                txtDiv.val(dr["DivideRate"]);
-                txtMul.val(dr["MultiplyRate"]);
+                $txtDiv.setValue(dr["DivideRate"]);
+                $txtMul.setValue(dr["MultiplyRate"]);
                 uomUPC.val(dr["UPC"]);
             }
 
@@ -4341,8 +4405,8 @@
             //var dr = VIS.DB.executeReader(qry.toString(), null);
             //while (dr.read()) {
             //    cmbUomTo.val(dr.getInt(0));
-            //    txtDiv.val(dr.getDecimal(1));
-            //    txtMul.val(dr.getDecimal(2));
+            //    $txtDiv.val(dr.getDecimal(1));
+            //    $txtMul.val(dr.getDecimal(2));
             //    uomUPC.val(dr.getString(3));
             //}
             //dr.close();
@@ -4369,7 +4433,7 @@
             $bsyDiv[0].style.visibility = "visible";
             cons = [];
             c_UomConv_ID = 0;
-            $divUomGroup.find(".VA005-uom-wrap").remove();
+            $divUomGroup.find(".VA005-uom-wrap").remove();           
             // Done by Bharat on 05 March 2018 to move queries to server side
             VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/ProductManagement/LoadUomGroup", { "M_Product_ID": prods[0] }, LoadUomGroupCallBack);
 
@@ -4395,8 +4459,8 @@
                         ' class="VA005-uom-icons glyphicon glyphicon-trash VA005-icons-color" title="' + VIS.Msg.getMsg("DeleteActivity") + '"></span><span conversionid = ' + conv_Id +
                         ' class="VA005-uom-icons glyphicon glyphicon-edit VA005-icons-color" title="' + VIS.Msg.getMsg("Edit") + '"></span>' +
                         '<span class="VA005-uom-icons glyphicon glyphicon-shopping-cart VA005-icons-color" conversionid = ' + conv_Id + ' title="' + VIS.Msg.getMsg("VA005_AddCart") + '"></span></div></div><div><span class="VA005-multiplier">'
-                        + VIS.Msg.getElement(VIS.Env.getCtx(), "MultiplyRate") + ' : ' + mRate + '</span><span class="VA005-divide">'
-                        + VIS.Msg.getElement(VIS.Env.getCtx(), "DivideRate") + ' : ' + dRate + '</span></div></div>';
+                        + VIS.Msg.getElement(VIS.Env.getCtx(), "MultiplyRate") + ' : ' + mRate.toLocaleString() + '</span><span class="VA005-divide">'
+                        + VIS.Msg.getElement(VIS.Env.getCtx(), "DivideRate") + ' : ' + dRate.toLocaleString() + '</span></div></div>';
                     $divUomGroup.append(div);
                     GenerateBarcode(upc, $divUomGroup.find("#VA005_BarCode_" + id));
                 }
@@ -4928,7 +4992,10 @@
                 multiValues = data;
                 for (var j = 0; j < dGrid.columns.length; j++) {
                     if (dGrid.columns[j].field == "PriceList" || dGrid.columns[j].field == "PriceStd" || dGrid.columns[j].field == "PriceLimit") {
-                        dGrid.columns[j].render = "number:" + precision;
+                        dGrid.columns[j].render = function (record, index, colIndex) {
+                            var val = VIS.Utility.Util.getValueOfDecimal(record[dGrid.columns[colIndex].field].toFixed(precision));
+                            return (val).toLocaleString();
+                        };;
                     }
                 }
                 w2utils.encodeTags(multiValues);
@@ -5231,7 +5298,10 @@
                 multiValues = data;
                 for (var j = 0; j < sGrid.columns.length; j++) {
                     if (sGrid.columns[j].field == "OrderMin" || sGrid.columns[j].field == "OrderPack") {
-                        sGrid.columns[j].render = "number:" + precision;
+                        sGrid.columns[j].render = function (record, index, colIndex) {
+                            var val = VIS.Utility.Util.getValueOfDecimal(record[sGrid.columns[colIndex].field].toFixed(precision));
+                            return (val).toLocaleString();
+                        };;
                     }
                 }
                 w2utils.encodeTags(multiValues);
@@ -5611,8 +5681,8 @@
             txtName = null;
             txtValue = null;
             txtUpc = null;
-            txtMul = null;
-            txtDiv = null;
+            $txtMul = null;
+            $txtDiv = null;
             uomUPC = false;
             cmbOrg = null;
             cmbProductType = null;
