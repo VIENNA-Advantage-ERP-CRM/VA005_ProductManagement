@@ -491,6 +491,7 @@
                 '<div class="VA005-conversion-icons" style="margin-top:29px;"><span id="VA005_btnSaveUom_' + $self.windowNo +
                 '" class="VA005-icons glyphicon glyphicon-floppy-disk VA005-icons-font VA005-disabled" tabindex="0" title="' + VIS.Msg.getMsg("Save") + '"></span><span id="VA005_btnCancelUom_' + $self.windowNo +
                 '" class="VA005-icons glyphicon glyphicon-remove-circle VA005-icons-font" tabindex="0" title="' + VIS.Msg.getMsg("Cancel") + '"></span></div></div>'; 
+            // Added new controls by Shifali on 03 July 2020 to change the amount acc. to culture.
             $txtMul = new VIS.Controls.VAmountTextBox("MulAmount", false, false, true, 50, 100, VIS.DisplayType.Amount, VIS.Msg.getMsg("Amount")); 
             $txtDiv = new VIS.Controls.VAmountTextBox("DivAmount", false, false, true, 50, 100, VIS.DisplayType.Amount, VIS.Msg.getMsg("Amount"));
             $txtDiv.addVetoableChangeListener(this);
@@ -921,6 +922,7 @@
                     },
                     {
                         field: "PriceList", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceList") + '</span></div>', sortable: false, size: '80px', min: 80, hidden: false, editable: { type: 'float' },
+                        // Added by Shifali to change the pricelist acc. to culture
                         render: function (record, index, col_index) {
                             var val = VIS.Utility.Util.getValueOfDecimal(record["PriceList"].toFixed(precision));
                             return (val).toLocaleString();
@@ -1063,6 +1065,7 @@
                     { field: "Product", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.translate(VIS.Env.getCtx(), "Product") + '</span></div>', sortable: false, size: '35%', hidden: false },
                     {
                         field: "Qty", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "Quantity") + '</span></div>', sortable: false, size: '15%', hidden: false, editable: { type: 'float' },
+                        //Added by Shifali to change the Qty acc. to culture.
                         render: function (record, index, col_index) {
                             var val = VIS.Utility.Util.getValueOfDecimal(record["Qty"].toFixed(precision));
                             return (val).toLocaleString();
@@ -4396,8 +4399,9 @@
             var dr = VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/ProductManagement/LoadUOMRate", { "C_UOM_Conversion_ID": ucid });
             if (dr != null) {
                 cmbUomTo.val(dr["C_UOM_To_ID"]);
+                // Done by shifali on 06 July 2020 to set Values on DivideRate and MultiplyRate
                 $txtDiv.setValue(dr["DivideRate"]);
-                $txtMul.setValue(dr["MultiplyRate"]);
+                $txtMul.setValue(dr["MultiplyRate"]);              
                 uomUPC.val(dr["UPC"]);
             }
 
