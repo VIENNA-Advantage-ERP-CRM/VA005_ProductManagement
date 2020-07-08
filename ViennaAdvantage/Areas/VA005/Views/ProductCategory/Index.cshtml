@@ -1,14 +1,24 @@
-﻿<div class="VA005-report-header">
-    <h3 class="VA005-report-tittle"></h3>
-    <button class="VA005-btn-close" id="@("btnClose_" + ViewBag.WindowNumber)"></button>
-    <button class="VA005-btn-Delete" id="@("btnDelete_" + ViewBag.WindowNumber)" style="background: url('Areas/VA005/Images/delete.png') no-repeat center;margin-right:10px"></button>
-    <button class="VA005-btn-Delete" id="@("btnSave_" + ViewBag.WindowNumber)" style="background: url('Areas/VA005/Images/Save.png') no-repeat center;"></button>
-    <button class="VA005-btn-Delete" id="@("btnUndo_" + ViewBag.WindowNumber)" style="background: url('Areas/VA005/Images/Undo.png') no-repeat center;"></button>
-    <button class="VA005-btn-Multiple" id="@("btnMultiple_" + ViewBag.WindowNumber)"></button>
+﻿<div class="vis-ad-w-header VA005-report-header">
+    <div class="vis-ad-w-name"><h4 class="VA005-report-tittle"></h4></div>
+    @*<button class="VA005-btn-close" id="@("btnClose_" + ViewBag.WindowNumber)"></button>*@
     <div>
         <h5 class="VA005-effect-on" style="display: none;"></h5>
         <h5 class="VA005-effect-off" style="display: none;"></h5>
     </div>
+    <button class="VA005-btn-Multiple" id="@("btnMultiple_" + ViewBag.WindowNumber)"><i class="fa fa-cubes"></i></button>
+    <button class="VA005-btn-Delete" id="@("btnUndo_" + ViewBag.WindowNumber)">
+        <i class="vis vis-ignore"></i>
+    </button>
+    <button class="VA005-btn-Delete" id="@("btnSave_" + ViewBag.WindowNumber)">
+        <i class="vis vis-save"></i>
+    </button>
+    <button class="VA005-btn-Delete" id="@("btnDelete_" + ViewBag.WindowNumber)" style="margin-right: 10px;">
+        <i class="vis vis-delete"></i>
+    </button>
+    <div class="vis-ad-w-close" id="@("btnClose_" + ViewBag.WindowNumber)">
+        <i class="fa fa-times"></i>
+    </div>
+    <div class="vis-ad-w-header-border"></div>
 </div>
 <!-- end of report-header -->
 <div class="VA005-content-wrap">
@@ -32,7 +42,8 @@
             <li class="VA005-pro-cat" procatid="0">
                 <div class="VA005-cat-caption">
                     <p>
-                        <img src="Areas/VA005/Images/add.png" alt="Add Category">
+                        <i class="vis vis-plus"></i>
+                        <label>Add New</label>
                     </p>
                 </div>
             </li>
@@ -44,84 +55,116 @@
                 <h4></h4>
                 <div class="VA005-form-data-top">
                     <input type="text" id="@("txtName_" + ViewBag.WindowNumber)" placeholder="Product Category">
+                    <div class="VA005-Zoom">
+                        <button class="VA005-btn-zoom" id="@("btnZoom_" + ViewBag.WindowNumber)"><i class="vis vis-find"></i></button>
+                    </div>
                 </div>
                 <!-- end of form-data-top -->
-                <div class="VA005-form-data-other">
-                    <textarea id="@("txtDesc_" + ViewBag.WindowNumber)" placeholder="Description"></textarea>
-                </div>
                 <!-- end of form-data-top -->
 
             </div>
             <!-- end of form-top-fields -->
 
-            <div class="VA005-image-wrap" style="display: inline-block;text-align: center;background: #f0f0f0;line-height: 155px;">
-                <label class="VA005-editIcon" for="@("fileUpload_" + ViewBag.WindowNumber)" id="@("lblfileUpload_" + ViewBag.WindowNumber)"></label>
+            <div class="VA005-image-wrap">
+                <label class="VA005-editIcon vis vis-pencil" for="@("fileUpload_" + ViewBag.WindowNumber)" id="@("lblfileUpload_" + ViewBag.WindowNumber)"></label>
                 <input id="@("fileUpload_" + ViewBag.WindowNumber)" style="display: none;" type="file" accept="image/*" />
                 <div class="VA005-image-area">
-                    <img src="Areas/VA005/Images/img-defult.png" style="max-width: 100%;max-height: 100%;" id="@("imgUsrImage_" + ViewBag.WindowNumber)" alt="">
+                    @*<i class="vis vis-image"></i>*@
+                    <img class="vis vis-image" src="" id="@("imgUsrImage_" + ViewBag.WindowNumber)" alt="">
                 </div>
             </div>
-            <div class="VA005-Zoom">
-                <button class="VA005-btn-zoom" id="@("btnZoom_" + ViewBag.WindowNumber)"></button>
-            </div>
+
             <!-- end of image-wrap -->
+            <div class="VA005-form-data-other">
+                <textarea id="@("txtDesc_" + ViewBag.WindowNumber)" placeholder="Description"></textarea>
+            </div>
         </div>
         <!-- end of form-top -->
         <div class="VA005-form-fullFields">
             <div class="VA005-form-data">
-                <label id="@("VA005_Value_" + ViewBag.WindowNumber)"></label>
-                <input type="text" id="@("txtValue_" + ViewBag.WindowNumber)">
+                <div class="input-group vis-input-wrap">
+                    <div class="vis-control-wrap">
+                        <input type="text" id="@("txtValue_" + ViewBag.WindowNumber)" placeholder=" " data-placeholder="">
+                        <label id="@("VA005_Value_" + ViewBag.WindowNumber)"></label>
+                    </div>
+                </div>
             </div>
             <!-- end of form-data -->
             <div class="VA005-form-data">
-                <label id="@("VA005_ProductType_" + ViewBag.WindowNumber)"></label>
-                <select data-val="true" class="vis-gc-vpanel-table-mandatory" id="@("cmbProductType_" + ViewBag.WindowNumber)" style="display: inline-block;">                    
-                </select>
+                <div class="input-group vis-input-wrap">
+                    <div class="vis-control-wrap">
+                        <select data-val="true" class="vis-ev-col-mandatory" id="@("cmbProductType_" + ViewBag.WindowNumber)" style="display: inline-block;">
+                        </select>
+                        <label id="@("VA005_ProductType_" + ViewBag.WindowNumber)"></label>
+                    </div>
+                </div>
             </div>
-            <div class="VA005-form-dataIcon">
-                <label id="@("VA005_Attribute_" + ViewBag.WindowNumber)"></label>
-                <select data-val="true" id="@("cmbAttributeSet_" + ViewBag.WindowNumber)" style="display: inline-block;">
-                    <option selected="selected" value="0"></option>
-                </select>
-                <input type="button" id="@("btnAttributeSet_" + ViewBag.WindowNumber)">
+            <div class="VA005-form-data">
+                <div class="input-group vis-input-wrap">
+                    <div class="vis-control-wrap">
+                        <select data-val="true" id="@("cmbAttributeSet_" + ViewBag.WindowNumber)" data-hasbtn=" ">
+                            <option selected="selected" value="0"></option>
+                        </select>
+                        <label id="@("VA005_Attribute_" + ViewBag.WindowNumber)"></label>
+                    </div>
+                    <div class="input-group-append">
+                        <button class="input-group-text VA005-leftpanelcatsearchbtn" id="@("btnAttributeSet_" + ViewBag.WindowNumber)"><i class="fa fa-ellipsis-v"></i></button>
+                    </div>
+                </div>
             </div>
-            <!-- end of form-dataIcon -->
+                    <!-- end of form-dataIcon -->
 
             <div class="VA005-form-data">
-                <label id="@("VA005_MatPol_" + ViewBag.WindowNumber)"></label>
-                <select data-val="true" id="@("cmbMatPolicy_" + ViewBag.WindowNumber)" style="display: inline-block;">                    
-                </select>
+                <div class="input-group vis-input-wrap">
+                    <div class="vis-control-wrap">
+                        <select data-val="true" id="@("cmbMatPolicy_" + ViewBag.WindowNumber)" style="display: inline-block;">
+                        </select>
+                        <label id="@("VA005_MatPol_" + ViewBag.WindowNumber)"></label>
+                    </div>
+                </div>
             </div>
-            <!-- end of form-data -->
+                    <!-- end of form-data -->
 
-            <div class="VA005-form-dataIcon">
-                <label id="@("VA005_TaxCat_" + ViewBag.WindowNumber)"></label>
-                 <select data-val="true" id="@("cmbTaxCategory_" + ViewBag.WindowNumber)" style="display: inline-block;">
-                    <option selected="selected" value="0"></option>
-                </select>
-                <input type="button" id="@("btnTaxCategory_" + ViewBag.WindowNumber)">
+            <div class="VA005-form-data">
+                <div class="input-group vis-input-wrap">
+                    <div class="vis-control-wrap">
+                        <select data-val="true" id="@("cmbTaxCategory_" + ViewBag.WindowNumber)" data-hasbtn=" ">
+                            <option selected="selected" value="0"></option>
+                        </select>
+                        <label id="@("VA005_TaxCat_" + ViewBag.WindowNumber)"></label>
+                    </div>
+                    <div class="input-group-append">
+                        <button class="input-group-text VA005-leftpanelcatsearchbtn" id="@("btnTaxCategory_" + ViewBag.WindowNumber)"><i class="fa fa-ellipsis-v"></i></button>
+                    </div>
+                </div>
             </div>
-            <!-- end of form-dataIcon -->
+                    <!-- end of form-dataIcon -->
 
-            <div class="VA005-form-dataIcon">
-                <label id="@("VA005_AstGrp_" + ViewBag.WindowNumber)"></label>
-                <select data-val="true" id="@("cmbAssetGroup_" + ViewBag.WindowNumber)" style="display: inline-block;">
-                    <option selected="selected" value="0"></option>
-                </select>
-                <input type="button" id="@("btnAssetGroup_" + ViewBag.WindowNumber)">
+            <div class="VA005-form-data">
+                <div class="input-group vis-input-wrap">
+                    <div class="vis-control-wrap">
+                        <select data-val="true" id="@("cmbAssetGroup_" + ViewBag.WindowNumber)" data-hasbtn=" ">
+                            <option selected="selected" value="0"></option>
+                        </select>
+                        <label id="@("VA005_AstGrp_" + ViewBag.WindowNumber)"></label>
+                    </div>
+                    <div class="input-group-append">
+                        <button class="input-group-text VA005-leftpanelcatsearchbtn" id="@("btnAssetGroup_" + ViewBag.WindowNumber)"><i class="fa fa-ellipsis-v"></i></button>
+                    </div>
+                </div>
             </div>
-            <!-- end of form-dataIcon -->
-            <div class="VA005-con-checkbox">
-                <input type="checkbox" id="@("IsConsumable_" + ViewBag.WindowNumber)">
-                <label id="@("lblConsumable_" + ViewBag.WindowNumber)"></label>
-            </div>
-            @*<div class="VA005-btns">
+                    <!-- end of form-dataIcon -->
+                    <div class="VA005-con-checkbox">
+                        <input type="checkbox" id="@("IsConsumable_" + ViewBag.WindowNumber)">
+                        <label id="@("lblConsumable_" + ViewBag.WindowNumber)"></label>
+                    </div>
+                    @*<div class="VA005-btns">
                 <span id="@("btnSave_" + ViewBag.WindowNumber)">Save</span>
                 <span id="@("btnDelete_" + ViewBag.WindowNumber)">Delete</span>
             </div>*@
-        </div>
-        <!-- end of form-fullFields -->
-    </div>
+                </div>
+                <!-- end of form-fullFields -->
+            </div>
     <!-- end of form-wrap -->
 
 
@@ -130,9 +173,9 @@
 
         <ul id="@("VA005_zoomWindow_" + ViewBag.WindowNumber)" class="vis-apanel-rb-ul">
             <li data-action="zoom" style="opacity: 1">
-                <img id="@("btnZoomWindow_" + ViewBag.WindowNumber)" data-action="zoom" src="Areas/VIS/Images/Zoom16.png">
+                <i class="vis vis-find" id="@("btnZoomWindow_" + ViewBag.WindowNumber)" data-action="zoom"></i>
             </li>           
             <li data-action="refresh">
-                <img id="@("btnRefresh_" + ViewBag.WindowNumber)" data-action="refresh" src="Areas/VIS/Images/Refresh16.png">
+                <i class="vis vis-refresh" id="@("btnRefresh_" + ViewBag.WindowNumber)" data-action="refresh"></i>
             </li>
         </ul>
