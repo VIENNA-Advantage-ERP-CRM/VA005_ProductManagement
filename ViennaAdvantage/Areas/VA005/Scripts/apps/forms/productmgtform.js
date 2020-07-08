@@ -348,7 +348,7 @@
                 '" class="fa fa-eraser" title="' + VIS.Msg.getMsg("Clear") + '"></i><span id="VA005_ImgDelete_' + $self.windowNo +
                 '" class="vis vis-delete" title="' + VIS.Msg.getMsg("DeleteActivity") + '"></span><span id="VA005_btnUpload_' + $self.windowNo +
                 '" class="vis vis-upload" title="' + VIS.Msg.getMsg("VA005_UploadImage") + '"></span><span id="VA005_btnImgCancel_' + $self.windowNo +
-                '" class="vis vis-mark" title="' + VIS.Msg.getMsg("Cancel") + '"></span></div></div>');
+                '" class="fa fa-times-circle-o" style="font-size: 22px !important;" title="' + VIS.Msg.getMsg("Cancel") + '"></span></div></div>');
             ImagePanel.append(imagepanelTop);
             var divImage = $('<div class="VA005-div-images"><ul class="VA005-productimgul"></ul></div>');
             ImagePanel.append(divImage);
@@ -591,7 +591,7 @@
             $rightPanel.find('.VA005-cart-update').text(VIS.Msg.getMsg("Updated"));
             $divProdDetail = $('<div class="VA005-uom-list">');
             $divProductDet = $('<div class="VA005-right-head" >'
-                + '<div class="VA005-form-top-fields">'
+                + '<div class="VA005-form-top-fields VA005-prodmgtrightfieldtop">'
                 + '<div id="VA005_ProdDetZoomName_' + $self.windowNo + '" style= "display:none"><h4 id="VA005_prodName_' + $self.windowNo
                 + '" style="flex: 1"></h4><span id="VA005_ZoomProduct" title=' + VIS.Msg.getMsg("VA005_ZoomToProduct")
                 + ' class="VA005-icons VA005-icons-font vis vis-edit" style="margin-top:5px"></span></div>'
@@ -601,7 +601,7 @@
                 + '<div style="float:left;" class="VA005-data-wrap" id="VA005_AttributeSet_' + $self.windowNo + '">'
                 + '<p>' + VIS.Msg.getElement(VIS.Env.getCtx(), "M_AttributeSet_ID") + '</p>'
                 + '</div></div><!-- end of form-top-fields -->'
-                + '<div class="VA005-image-wrap"></div></div>');
+                + '<div class="VA005-image-wrap VA005-prodmgtimgwrap"></div></div>');
             $rightPanel.append($divProdDetail);
             $divProdDetail.append($divProductDet);
             divUsrImage = $divProductDet.find(".VA005-image-wrap");

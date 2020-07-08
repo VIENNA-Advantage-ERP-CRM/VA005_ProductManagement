@@ -822,8 +822,8 @@ margin-top: -55px;*/
 }
 .VA005-catboxcheck[type="checkbox"] {
     position: absolute;
-    top: 0px;
-    left: 5px;
+    top: 6px;
+    left: 10px;
     width: 20px;
     height: 20px;
 }
@@ -852,4 +852,11 @@ margin-top: -55px;*/
 
 .VA005-form-fullFields .VA005-data-wrap:first-child {
     margin-top: 6px;
+}
+.VA005-prodmgtrightfieldtop {
+    width: 60%;
+    padding-right: 10px;
+}
+.VA005-prodmgtimgwrap {
+    width: 40%;
 }
