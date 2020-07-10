@@ -9,9 +9,7 @@
     <button class="VA005-btn-Delete" id="@("btnUndo_" + ViewBag.WindowNumber)">
         <i class="vis vis-ignore"></i>
     </button>
-    <button class="VA005-btn-Delete" id="@("btnSave_" + ViewBag.WindowNumber)">
-        <i class="vis vis-save"></i>
-    </button>
+    
     <button class="VA005-btn-Delete" id="@("btnDelete_" + ViewBag.WindowNumber)" style="margin-right: 10px;">
         <i class="vis vis-delete"></i>
     </button>
@@ -50,121 +48,128 @@
         </ul>
     </div>
     <div id="@("divRight_" + ViewBag.WindowNumber)" class="VA005-form-wrap vis-formouterwrpdiv">
-        <div class="VA005-form-top">
-            <div class="VA005-form-top-fields">
-                <h4></h4>
-                <div class="VA005-form-data-top">
-                    <input type="text" id="@("txtName_" + ViewBag.WindowNumber)" placeholder="Product Category">
-                    <div class="VA005-Zoom">
-                        <button class="VA005-btn-zoom" id="@("btnZoom_" + ViewBag.WindowNumber)"><i class="vis vis-find"></i></button>
+        <div class="VA005-rightformdatawrap">
+            <div class="VA005-form-top">
+                <div class="VA005-form-top-fields">
+                    <h4></h4>
+                    <div class="VA005-form-data-top">
+                        <input type="text" id="@("txtName_" + ViewBag.WindowNumber)" placeholder="Product Category">
+                        <div class="VA005-Zoom">
+                            <button class="VA005-btn-zoom" id="@("btnZoom_" + ViewBag.WindowNumber)"><i class="vis vis-find"></i></button>
+                        </div>
                     </div>
-                </div>
-                <!-- end of form-data-top -->
-                <!-- end of form-data-top -->
+                    <!-- end of form-data-top -->
+                    <!-- end of form-data-top -->
 
-            </div>
-            <!-- end of form-top-fields -->
+                </div>
+                <!-- end of form-top-fields -->
 
-            <div class="VA005-image-wrap">
-                <label class="VA005-editIcon vis vis-pencil" for="@("fileUpload_" + ViewBag.WindowNumber)" id="@("lblfileUpload_" + ViewBag.WindowNumber)"></label>
-                <input id="@("fileUpload_" + ViewBag.WindowNumber)" style="display: none;" type="file" accept="image/*" />
-                <div class="VA005-image-area">
-                    @*<i class="vis vis-image"></i>*@
-                    <img class="vis vis-image" src="" id="@("imgUsrImage_" + ViewBag.WindowNumber)" alt="">
+                <div class="VA005-image-wrap">
+                    <label class="VA005-editIcon vis vis-pencil" for="@("fileUpload_" + ViewBag.WindowNumber)" id="@("lblfileUpload_" + ViewBag.WindowNumber)"></label>
+                    <input id="@("fileUpload_" + ViewBag.WindowNumber)" style="display: none;" type="file" accept="image/*" />
+                    <div class="VA005-image-area">
+                        @*<i class="vis vis-image"></i>*@
+                        <img class="vis vis-image" src="" id="@("imgUsrImage_" + ViewBag.WindowNumber)" alt="">
+                    </div>
                 </div>
-            </div>
 
-            <!-- end of image-wrap -->
-            <div class="VA005-form-data-other">
-                <textarea id="@("txtDesc_" + ViewBag.WindowNumber)" placeholder="Description"></textarea>
-            </div>
-        </div>
-        <!-- end of form-top -->
-        <div class="VA005-form-fullFields">
-            <div class="VA005-form-data">
-                <div class="input-group vis-input-wrap">
-                    <div class="vis-control-wrap">
-                        <input type="text" id="@("txtValue_" + ViewBag.WindowNumber)" placeholder=" " data-placeholder="">
-                        <label id="@("VA005_Value_" + ViewBag.WindowNumber)"></label>
-                    </div>
+                <!-- end of image-wrap -->
+                <div class="VA005-form-data-other">
+                    <textarea id="@("txtDesc_" + ViewBag.WindowNumber)" placeholder="Description"></textarea>
                 </div>
             </div>
-            <!-- end of form-data -->
-            <div class="VA005-form-data">
-                <div class="input-group vis-input-wrap">
-                    <div class="vis-control-wrap">
-                        <select data-val="true" class="vis-ev-col-mandatory" id="@("cmbProductType_" + ViewBag.WindowNumber)" style="display: inline-block;">
-                        </select>
-                        <label id="@("VA005_ProductType_" + ViewBag.WindowNumber)"></label>
+            <!-- end of form-top -->
+            <div class="VA005-form-fullFields">
+                <div class="VA005-form-data">
+                    <div class="input-group vis-input-wrap">
+                        <div class="vis-control-wrap">
+                            <input type="text" id="@("txtValue_" + ViewBag.WindowNumber)" placeholder=" " data-placeholder="">
+                            <label id="@("VA005_Value_" + ViewBag.WindowNumber)"></label>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="VA005-form-data">
-                <div class="input-group vis-input-wrap">
-                    <div class="vis-control-wrap">
-                        <select data-val="true" id="@("cmbAttributeSet_" + ViewBag.WindowNumber)" data-hasbtn=" ">
-                            <option selected="selected" value="0"></option>
-                        </select>
-                        <label id="@("VA005_Attribute_" + ViewBag.WindowNumber)"></label>
-                    </div>
-                    <div class="input-group-append">
-                        <button class="input-group-text VA005-leftpanelcatsearchbtn" id="@("btnAttributeSet_" + ViewBag.WindowNumber)"><i class="fa fa-ellipsis-v"></i></button>
+                <!-- end of form-data -->
+                <div class="VA005-form-data">
+                    <div class="input-group vis-input-wrap">
+                        <div class="vis-control-wrap">
+                            <select data-val="true" class="vis-ev-col-mandatory" id="@("cmbProductType_" + ViewBag.WindowNumber)" style="display: inline-block;">
+                            </select>
+                            <label id="@("VA005_ProductType_" + ViewBag.WindowNumber)"></label>
+                        </div>
                     </div>
                 </div>
-            </div>
-                    <!-- end of form-dataIcon -->
+                <div class="VA005-form-data">
+                    <div class="input-group vis-input-wrap">
+                        <div class="vis-control-wrap">
+                            <select data-val="true" id="@("cmbAttributeSet_" + ViewBag.WindowNumber)" data-hasbtn=" ">
+                                <option selected="selected" value="0"></option>
+                            </select>
+                            <label id="@("VA005_Attribute_" + ViewBag.WindowNumber)"></label>
+                        </div>
+                        <div class="input-group-append">
+                            <button class="input-group-text VA005-leftpanelcatsearchbtn" id="@("btnAttributeSet_" + ViewBag.WindowNumber)"><i class="fa fa-ellipsis-v"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <!-- end of form-dataIcon -->
 
-            <div class="VA005-form-data">
-                <div class="input-group vis-input-wrap">
-                    <div class="vis-control-wrap">
-                        <select data-val="true" id="@("cmbMatPolicy_" + ViewBag.WindowNumber)" style="display: inline-block;">
-                        </select>
-                        <label id="@("VA005_MatPol_" + ViewBag.WindowNumber)"></label>
+                <div class="VA005-form-data">
+                    <div class="input-group vis-input-wrap">
+                        <div class="vis-control-wrap">
+                            <select data-val="true" id="@("cmbMatPolicy_" + ViewBag.WindowNumber)" style="display: inline-block;">
+                            </select>
+                            <label id="@("VA005_MatPol_" + ViewBag.WindowNumber)"></label>
+                        </div>
                     </div>
                 </div>
-            </div>
-                    <!-- end of form-data -->
+                <!-- end of form-data -->
 
-            <div class="VA005-form-data">
-                <div class="input-group vis-input-wrap">
-                    <div class="vis-control-wrap">
-                        <select data-val="true" id="@("cmbTaxCategory_" + ViewBag.WindowNumber)" data-hasbtn=" ">
-                            <option selected="selected" value="0"></option>
-                        </select>
-                        <label id="@("VA005_TaxCat_" + ViewBag.WindowNumber)"></label>
-                    </div>
-                    <div class="input-group-append">
-                        <button class="input-group-text VA005-leftpanelcatsearchbtn" id="@("btnTaxCategory_" + ViewBag.WindowNumber)"><i class="fa fa-ellipsis-v"></i></button>
+                <div class="VA005-form-data">
+                    <div class="input-group vis-input-wrap">
+                        <div class="vis-control-wrap">
+                            <select data-val="true" id="@("cmbTaxCategory_" + ViewBag.WindowNumber)" data-hasbtn=" ">
+                                <option selected="selected" value="0"></option>
+                            </select>
+                            <label id="@("VA005_TaxCat_" + ViewBag.WindowNumber)"></label>
+                        </div>
+                        <div class="input-group-append">
+                            <button class="input-group-text VA005-leftpanelcatsearchbtn" id="@("btnTaxCategory_" + ViewBag.WindowNumber)"><i class="fa fa-ellipsis-v"></i></button>
+                        </div>
                     </div>
                 </div>
-            </div>
-                    <!-- end of form-dataIcon -->
+                <!-- end of form-dataIcon -->
 
-            <div class="VA005-form-data">
-                <div class="input-group vis-input-wrap">
-                    <div class="vis-control-wrap">
-                        <select data-val="true" id="@("cmbAssetGroup_" + ViewBag.WindowNumber)" data-hasbtn=" ">
-                            <option selected="selected" value="0"></option>
-                        </select>
-                        <label id="@("VA005_AstGrp_" + ViewBag.WindowNumber)"></label>
-                    </div>
-                    <div class="input-group-append">
-                        <button class="input-group-text VA005-leftpanelcatsearchbtn" id="@("btnAssetGroup_" + ViewBag.WindowNumber)"><i class="fa fa-ellipsis-v"></i></button>
+                <div class="VA005-form-data">
+                    <div class="input-group vis-input-wrap">
+                        <div class="vis-control-wrap">
+                            <select data-val="true" id="@("cmbAssetGroup_" + ViewBag.WindowNumber)" data-hasbtn=" ">
+                                <option selected="selected" value="0"></option>
+                            </select>
+                            <label id="@("VA005_AstGrp_" + ViewBag.WindowNumber)"></label>
+                        </div>
+                        <div class="input-group-append">
+                            <button class="input-group-text VA005-leftpanelcatsearchbtn" id="@("btnAssetGroup_" + ViewBag.WindowNumber)"><i class="fa fa-ellipsis-v"></i></button>
+                        </div>
                     </div>
                 </div>
-            </div>
-                    <!-- end of form-dataIcon -->
-                    <div class="VA005-con-checkbox">
-                        <input type="checkbox" id="@("IsConsumable_" + ViewBag.WindowNumber)">
-                        <label id="@("lblConsumable_" + ViewBag.WindowNumber)"></label>
-                    </div>
-                    @*<div class="VA005-btns">
+                <!-- end of form-dataIcon -->
+                <div class="VA005-con-checkbox">
+                    <input type="checkbox" id="@("IsConsumable_" + ViewBag.WindowNumber)">
+                    <label id="@("lblConsumable_" + ViewBag.WindowNumber)"></label>
+                </div>
+                @*<div class="VA005-btns">
                 <span id="@("btnSave_" + ViewBag.WindowNumber)">Save</span>
                 <span id="@("btnDelete_" + ViewBag.WindowNumber)">Delete</span>
             </div>*@
-                </div>
-                <!-- end of form-fullFields -->
             </div>
+            <!-- end of form-fullFields -->
+        </div>
+        <div class="VA005-rightfrmsavebtnwrap">
+            <button id="@("btnSave_" + ViewBag.WindowNumber)">
+                <i class="vis vis-save"></i> <span>Save</span>
+            </button>
+        </div>
+    </div>
     <!-- end of form-wrap -->
 
 
