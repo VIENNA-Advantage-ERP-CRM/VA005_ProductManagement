@@ -1,4 +1,4 @@
-﻿/*Version 1.0.11.3*/
+﻿/*Version 1.0.12.2*/
 
 .VA005-web_dialog_overlay {
     top: 0;
@@ -29,9 +29,9 @@
 }
 
 .VA005-text-color-att-text {
-    width: 100%;
+    /*width: 100%;
     background-color: #FFC0CB;
-    margin: 0 0 5px 0;
+    margin: 0 0 5px 0;*/
 }
 
 .VA005-cmb-select {
@@ -64,6 +64,8 @@
     width: 100%;
     float: left;
     overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
 }
 
@@ -336,11 +338,6 @@
     width: 100%;
 }
 
-    .VA005-att-righttable input:not([type="checkbox"]):not([type="button"]), .VA005-att-righttable select {
-        width: 100%;
-        margin-bottom: 7px;
-    }
-
 .vis-forms-container table input[type="button"] {
     font-weight: normal;
 }
@@ -610,11 +607,11 @@ h4.VA005-report-tittle {
         }
 
 .VA005-form-wrap {
-    width: 350px;
+    width: 430px;
     height: 100%;
     float: right;
     padding: 15px 0 15px 15px;
-    overflow: auto;
+    /*overflow: auto;*/
 }
 
 .VA005-form-top {
@@ -769,9 +766,9 @@ h4.VA005-report-tittle {
     }
 
 .VA005-con-checkbox {
-    /*float: left;
-    margin-right: 10px;*/
     /* margin-top: 14px; */
+    width: 100%;
+    display: flex;
 }
 
     .VA005-con-checkbox > input[type="checkbox"] {
@@ -991,6 +988,31 @@ h4.VA005-report-tittle {
 .VA005-middle-left-main .vis-group-DataContainer {
     padding-left: 0;
 }
+
+.VA005-rightformdatawrap {
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 35px);
+    overflow: auto;
+}
+
+.VA005-rightfrmsavebtnwrap {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+}
+
+    .VA005-rightfrmsavebtnwrap button {
+        background: rgba(var(--v-c-primary), 1);
+        border: none;
+        color: rgba(var(--v-c-on-primary), 1);
+        border-radius: .25rem;
+        padding: 6px 15px;
+    }
+
+        .VA005-rightfrmsavebtnwrap button span {
+            padding-left: 5px;
+        }
 
 body {
 }
