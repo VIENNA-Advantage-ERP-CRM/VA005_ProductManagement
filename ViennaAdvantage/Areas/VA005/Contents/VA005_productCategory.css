@@ -27,9 +27,9 @@
 }
 
 .VA005-text-color-att-text {
-    width: 100%;
+    /*width: 100%;
     background-color: #FFC0CB;
-    margin: 0 0 5px 0;
+    margin: 0 0 5px 0;*/
 }
 
 .VA005-cmb-select {
@@ -61,6 +61,8 @@
     width: 100%;
     float: left;
     overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
 }
 .VA005-top-wrap-treedesign > h4 {
@@ -315,10 +317,6 @@
 }
 .VA005-att-righttable {
     width: 100%;
-}
-.VA005-att-righttable input:not([type="checkbox"]):not([type="button"]), .VA005-att-righttable select {
-    width: 100%;
-    margin-bottom: 7px;
 }
 .vis-forms-container table input[type="button"] {
     font-weight: normal;
