@@ -42,9 +42,9 @@
         //var $topdivforname = $('<div class="VA005-att-tree-vieww"><h4 style="float:left;color:#1aa0ed">' + VIS.Msg.getMsg("VA005_AddAttribute") + '</h4></div>');
         var $topdivforname = $('<div class="VA005-top-wrap-treedesign VA005-att-tree-vieww"><h4>' + VIS.Msg.getMsg("VA005_EditAttribute") + '</h4></div>');
         var $maindiv = $('<div style="height:100%">');
-        var $textname = $('<input class="VA005-text-color-att-text" style="background-color:white;margin-bottom:6px" type="text" maxlength="20" >');
-        var $textdesc = $('<input style="margin-bottom:6px" class="VA005-text-color-att-text"  type="text">');
-        var $cmbselect = $('<select class="VA005-cmb-select">');
+        var $textname = $('<input class="VA005-text-color-att-text" type="text" maxlength="20" >');
+        var $textdesc = $('<input class="VA005-text-color-att-text"  type="text">');
+        var $cmbselect = $('<select>');
         var $chkboxmandatoryfield = $('<input type="checkbox">');
         var $chkboxisactivefield = $('<input type="checkbox" checked>');
 
@@ -59,15 +59,15 @@
 
         // var $maindiv2 = $('<div style="margin-top:96px">');
         var $textsearchdiv = $('<input  class="VA005-text-color-att-text" type="text">');
-        var $textnamediv = $('<input   class="VA005-text-color-att-text" style="background-color:pink" type="text">');
+        var $textnamediv = $('<input   class="VA005-text-color-att-text" class="vis-ev-col-mandatory" type="text">');
         var $btndiv = $('<input type="button" value="Save">');
 
-        var $btnok = $('<input style="position:inherit;padding: 5.5px 14px !important;" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" value="' + VIS.Msg.getMsg("Ok") + '" >')
+        var $btnok = $('<input style="position:inherit;padding: 6px 14px !important; margin-left: 10px;" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" value="' + VIS.Msg.getMsg("Ok") + '" >')
         //var $btnok = $('<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" value="OK" >')
-        var $btncancel = $('<input style="position:inherit;padding: 5.5px 14px !important;" type="button"  class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" value="' + VIS.Msg.getMsg("Cancel") + ' ">')
+        var $btncancel = $('<input style="position:inherit;padding: 6px 14px !important; margin-left: 10px;" type="button"  class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" value="' + VIS.Msg.getMsg("Cancel") + ' ">')
 
-        var $btnokmiddiv = $('<input style="padding: 5.5px 14px !important;" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" value="OK" >')
-        var $btncancelmiddiv = $('<input style="padding: 5.5px 14px !important;" type="button"  class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" value="Cancel">')
+        var $btnokmiddiv = $('<input style="padding: 6px 14px !important; margin-left: 10px;" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" value="OK" >')
+        var $btncancelmiddiv = $('<input style="padding: 6px 14px !important; margin-left: 10px;" type="button"  class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" value="Cancel">')
         var $attributenameh4 = $('<h4>' + VIS.Msg.getMsg("VA005_AddAttributeValue") + '</h4>');
         var $griddiv = $('<div  style="position:inherit;float:left;height:50px;width:100%;margin-top:10px;">');
         //var $griddiv = $('<div  style="z-index:0;float:left;height:50px;width:100%;margin-top:10px;">');
@@ -1026,10 +1026,10 @@
         //*** Design for attribute dailog..
         function attributeDialogDeign() {
             $maindiv.append($('<div>').append($topdivforname));
-            $maindiv.append($('<div>').append('<label style="margin-bottom:0">' + VIS.Msg.getMsg("Name") + '</label>')).append($('<div>').append($textname));
-            $maindiv.append($('<div>').append('<label style="margin-bottom:0">' + VIS.Msg.getMsg("Description") + '</label>')).append($('<div>').append($textdesc));
+            $maindiv.append($('<div class="input-group vis-input-wrap">').append($('<div class="vis-control-wrap">').append($textname).append('<label>' + VIS.Msg.getMsg("Name") + '</label>')));
+            $maindiv.append($('<div class="input-group vis-input-wrap">').append($('<div class="vis-control-wrap">').append($textdesc).append('<label>' + VIS.Msg.getMsg("Description") + '</label>')));
             //$maindiv.append($('<div>').append('<label>' + VIS.Msg.getMsg("VA005_AttributeType") + '</label>')).append($('<div style="float:left;width:100%">').append($cmbselect).append($btnaddselect));
-            $maindiv.append($('<div>').append('<label style="margin-bottom:0">' + VIS.Msg.getMsg("VA005_AttributeType") + '</label>')).append($('<div style="float:left;width:100%;">').append($cmbselect));
+            $maindiv.append($('<div class="input-group vis-input-wrap">').append($('<div class="vis-control-wrap">').append($cmbselect).append('<label>' + VIS.Msg.getMsg("VA005_AttributeType") + '</label>')));
 
 
             //$maindiv.append($('<div>').append('<label style="margin-bottom:0">' + VIS.Msg.getMsg("VA005_AttributeType") + '</label>'));

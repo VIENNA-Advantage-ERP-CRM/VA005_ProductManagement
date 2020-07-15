@@ -79,7 +79,7 @@
         var $divCart = $('<div style="width:100%;height:100%;"></div>');
         var $divCartMain = $('<div style="width:100%;height:100%;"></div>');
         var $divPrint = $('<div style="display:none;"></div>'); //layout
-        var $divPrintPop = $('<div style="overflow-y:auto;margin-bottom:15px"></div>');
+        var $divPrintPop = $('<div style="overflow-y:auto;"></div>');
         var $divRelatedGrid = $('<div style="width:100%;height:100%;"></div>');
         var priceGrid = null;
         var supplierGrid = null;
@@ -290,7 +290,7 @@
 
             // Added by Bharat on 09 March 2018 to add search box for Categories
             $searchCat = $('<div class="VA005-left-input-panel input-group vis-input-wrap"><div class="vis-control-wrap"><input id = ' + "VA005_searchCat_" + $self.windowNo + ' class="VA005-left-panelInput" type="text" value="" placeholder="' + VIS.Msg.getMsg("Search") +
-                '" data-hasbtn=" "></div><div class="input-group-append"><button class="VA005-leftpanelcatsearchbtn input-group-text"><i class="vis vis-search"></i></button></div></div>');
+                '" data-hasbtn=" "></div><div class="input-group-append"><button class="VA005-leftpanelcatsearchbtn input-group-text vis-group-search-icon"><i class="vis vis-search"></i></button></div></div>');
             //updated by Manjot Given ID To UI
             $ulLefttoolbar = $("<ul id= leftUi_" + $self.windowNo + ">");
             //End
@@ -978,9 +978,9 @@
 
         function PrintPanel() {
             $divPrint.append($divPrintPop);
-            $divPrintPop.append('<div class="VA005-form-data"><label>' + VIS.Msg.getMsg("VA005_StickerHeader") + '</label><input class="vis-ev-col-mandatory" id="txtHeader_'
-                + $self.windowNo + '" type="text" maxlength="40"></div><div class="VA005-form-data"><label>' + VIS.Msg.getElement(VIS.Env.getCtx(), "M_PriceList_Version_ID") +
-                '</label><select class="vis-ev-col-mandatory" id="cmbVarsion_' + $self.windowNo + '"></select></div>');
+            $divPrintPop.append('<div class="VA005-form-data input-group vis-input-wrap" style="margin-top: 5px;"><div class="vis-control-wrap"><input class="vis-ev-col-mandatory" id="txtHeader_'
+                + $self.windowNo + '" type="text" maxlength="40"><label>' + VIS.Msg.getMsg("VA005_StickerHeader") + '</label></div></div><div class="VA005-form-data input-group vis-input-wrap"><div class="vis-control-wrap"><select class="vis-ev-col-mandatory" id="cmbVarsion_' + $self.windowNo + '"></select><label>' + VIS.Msg.getElement(VIS.Env.getCtx(), "M_PriceList_Version_ID") +
+                '</label></div></div>');
             txtHeader = $divPrint.find("#txtHeader_" + $self.windowNo);
             cmbVersion = $divPrint.find("#cmbVarsion_" + $self.windowNo);
         };
@@ -3319,7 +3319,7 @@
                     pr = new VIS.ChildDialog();
                     pr.setContent($divPrint);
                     $divPrint.show();
-                    pr.setHeight(300);
+                    //pr.setHeight(300);
                     pr.setWidth(300);
                     pr.setTitle(VIS.Msg.getMsg("VA005_PrintStickers"));
                     pr.setModal(true);
