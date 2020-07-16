@@ -637,3 +637,6 @@ h4.VA005-report-tittle {
 .VA005-rightfrmsavebtnwrap button span {
     padding-left: 5px;
 }
+.VA005-att-tree-vieww h5 {
+    color: rgba(var(--v-c-primary), 1);
+}
