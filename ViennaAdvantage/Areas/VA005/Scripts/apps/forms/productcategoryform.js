@@ -397,12 +397,13 @@
                     currentElement = null;
                 });
 
-                mainProductCategoryUl.on("scroll", function () {
+                divLeft.on("scroll", function ()                
+                {                                     
                     if ($(this).scrollTop() + $(this).innerHeight() >= this.scrollHeight) {
                         pageNo++;
                         LoadCategory(pageNo, PAGESIZE);
                     }
-                });
+                });                                
             }
 
             if (btnSave != null) {
@@ -461,6 +462,7 @@
                                                 imgCtrl.removeAttr("src").attr("src", VIS.Application.contextUrl + "Images/Thumb140x120/" + imgUrl + "?" + d.getTime());
                                             }
                                             //ClearData();
+                                            fillCategory(pcat_ID);
                                         }
                                     }
                                     $BusyIndicator[0].style.visibility = "hidden";
@@ -505,6 +507,7 @@
                                         element2.text(txtName.val());
                                         //ClearData();
                                     }
+                                    fillCategory(pcat_ID);
                                 }
                                 $BusyIndicator[0].style.visibility = "hidden";
                             },
@@ -516,6 +519,7 @@
                                 return;
                             }
                         });
+
                     }
                     btnUndo.attr('disabled', 'disabled').css("opacity", 0.6);
                     btnSave.attr('disabled', 'disabled').css("opacity", 0.6);
@@ -524,21 +528,26 @@
 
             if (btnDelete != null) {
                 btnDelete.on("click", function () {
-                    if (pcats.length > 0) {
-                        if (VIS.ADialog.ask("DeleteRecord?")) {
-                            $BusyIndicator[0].style.visibility = "visible";
+                    var myArray = [];
+                    if (pcats.length > 0) {                       
+                        //if (VIS.ADialog.ask("DeleteRecord?")) {
+                        VIS.ADialog.confirm("VA005_DeleteIt", true, "", "Confirm", function (result) {
+                            $BusyIndicator[0].style.visibility = "visible";                            
                             for (var item in pcats) {
                                 var sql = "DELETE FROM M_Product_Category WHERE M_Product_Category_ID = " + pcats[item];
                                 var no = VIS.DB.executeQuery(sql.toString(), null, null);
                                 if (no <= 0) {
-                                    VIS.ADialog.error("VA005_ProductCategory");
+                                    var str = "SELECT Name FROM M_Product_Category WHERE M_Product_Category_ID = " + pcats[item];
+                                    var name = VIS.DB.executeScalar(str, null, null);
+                                    myArray.push(name);
+                                    VIS.ADialog.error("VA005_ProductCategory", true, myArray.toString());
                                 }
                                 else {
                                     var li = mainProductCategoryUl.find("li[procatid='" + pcats[item] + "']");
                                     li.remove();
                                     ClearData();
                                 }
-                            }
+                            }                                                                                      
                             pcats = [];
                             btnDelete.attr('disabled', 'disabled').css("opacity", 0.6);
                             mainProductCategoryUl.find(".VA005-catboxcheck").prop("checked", false);
@@ -546,7 +555,8 @@
                             mainProductCategoryUl.find('li .VA005-cat-caption').removeClass('VA005-highlighted');
                             mainProductCategoryUl.find('li:eq(1) .VA005-cat-caption').addClass('VA005-highlighted');
                             fillCategory(mainProductCategoryUl.find('li:eq(1)').attr('procatid'));
-                        }
+                            // }
+                        });
                     }
                     $BusyIndicator[0].style.visibility = "hidden";
                 });
@@ -592,8 +602,7 @@
             }
 
             if (btnUndo != null) {
-                btnUndo.on("click", function () {
-                    
+                btnUndo.on("click", function () {                   
                     $BusyIndicator[0].style.visibility = "visible";
                     txtName.val(catName);
                     txtValue.val(searchKey);
@@ -716,7 +725,6 @@
                 });
             }
         };
-
         var zoomToWindow = function (record_id, windowName) {
             
             var sql = "select ad_window_id from ad_window where name = '" + windowName + "'";// Upper( name)=Upper('user' )

@@ -76,7 +76,7 @@ namespace VA005.Models
 
         public string SelectionSave(VA005_SaveSelectionList value)
         {
-            MAttributeValue obj = new MAttributeValue(_ctx, 0, null);
+            MAttributeValue obj = new MAttributeValue(_ctx, 0, null);            
             obj.SetName(value.secname);
 
             if (String.IsNullOrEmpty(value.searchkey))
@@ -88,8 +88,9 @@ namespace VA005.Models
             {
                 obj.SetValue(value.searchkey);
             }
-
             obj.SetM_Attribute_ID(value.attributeID);
+            string str = "SELECT NVL(MAX(SeqNo),0)+10 AS DefaultValue FROM M_AttributeValue WHERE M_Attribute_ID=" + obj.GetM_Attribute_ID();           
+            obj.Set_Value("SeqNo", Util.GetValueOfInt(DB.ExecuteScalar(str, null, null)));
             if (obj.Save())
             {
                 return obj.GetM_AttributeValue_ID().ToString();
@@ -101,7 +102,7 @@ namespace VA005.Models
         {
             List<VA005_ShowGrideData> obj = new List<VA005_ShowGrideData>();
             //string sql = "select name,value,m_attributevalue_id from m_attributevalue where m_attribute_id='" + value.attributevalueid + "' and isactive='Y'";
-            string sql = "select name,value,m_attributevalue_id from m_attributevalue where m_attribute_id='" + value.attributevalueid + "' and isactive='Y' ORDER BY M_Attributevalue_ID DESC";
+            string sql = "select name,value,m_attributevalue_id,seqno from m_attributevalue where m_attribute_id='" + value.attributevalueid + "' and isactive='Y' ORDER BY SeqNo DESC";
             DataSet ds = DB.ExecuteDataset(sql, null, null);
             if (ds != null)
             {
