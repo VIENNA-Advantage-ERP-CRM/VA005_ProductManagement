@@ -7,7 +7,6 @@
     VA005.ProductCategoryForm = function () {
         this.frame;
         this.windowNo;
-
         var $self = this; //scoped self pointer
         var $root = $("<div class='vis-forms-container'>");
         var mainProductCategoryUl = null;
@@ -396,8 +395,8 @@
                     }
                     currentElement = null;
                 });
-
-                mainProductCategoryUl.on("scroll", function () {
+                // Done change by Shifali on 16th July 2020 to LoadCategory while scrolling
+                divLeft.on("scroll", function () {
                     if ($(this).scrollTop() + $(this).innerHeight() >= this.scrollHeight) {
                         pageNo++;
                         LoadCategory(pageNo, PAGESIZE);
@@ -460,8 +459,10 @@
                                                 var d = new Date();
                                                 imgCtrl.removeAttr("src").attr("src", VIS.Application.contextUrl + "Images/Thumb140x120/" + imgUrl + "?" + d.getTime());
                                             }
-                                            //ClearData();
+                                            //ClearData();                                           
                                         }
+                                        // Added by Shifali on 16th July 2020 to get the same data after undo (JID_1860)
+                                        fillCategory(pcat_ID);
                                     }
                                     $BusyIndicator[0].style.visibility = "hidden";
                                 },
@@ -505,6 +506,7 @@
                                         element2.text(txtName.val());
                                         //ClearData();
                                     }
+                                    fillCategory(pcat_ID);
                                 }
                                 $BusyIndicator[0].style.visibility = "hidden";
                             },
@@ -524,14 +526,21 @@
 
             if (btnDelete != null) {
                 btnDelete.on("click", function () {
+                    var NameList = [];
                     if (pcats.length > 0) {
-                        if (VIS.ADialog.confirm("DeleteRecord?")) {
+                        // Added by Shifali on 16th July to correct error msg (JID_1860)
+                        //if (VIS.ADialog.confirm("DeleteRecord?")) {
+                        VIS.ADialog.confirm("VA005_DeleteIt", true, "", "Confirm", function (result) {
                             $BusyIndicator[0].style.visibility = "visible";
                             for (var item in pcats) {
                                 var sql = "DELETE FROM M_Product_Category WHERE M_Product_Category_ID = " + pcats[item];
                                 var no = VIS.DB.executeQuery(sql.toString(), null, null);
                                 if (no <= 0) {
-                                    VIS.ADialog.error("VA005_ProductCategory");
+                                    //VIS.ADialog.error("VA005_ProductCategory");
+                                    var str = "SELECT Name FROM M_Product_Category WHERE M_Product_Category_ID = " + pcats[item];
+                                    var name = VIS.DB.executeScalar(str, null, null);
+                                    NameList.push(name);
+                                    VIS.ADialog.error("VA005_ProductCategory", true, NameList.toString());
                                 }
                                 else {
                                     var li = mainProductCategoryUl.find("li[procatid='" + pcats[item] + "']");
@@ -546,7 +555,8 @@
                             mainProductCategoryUl.find('li .VA005-cat-caption').removeClass('VA005-highlighted');
                             mainProductCategoryUl.find('li:eq(1) .VA005-cat-caption').addClass('VA005-highlighted');
                             fillCategory(mainProductCategoryUl.find('li:eq(1)').attr('procatid'));
-                        }
+                       // }
+                        });
                     }
                     $BusyIndicator[0].style.visibility = "hidden";
                 });
