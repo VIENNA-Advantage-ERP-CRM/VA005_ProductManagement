@@ -7,6 +7,7 @@ using VAdvantage.Model;
 using VAdvantage.Utility;
 using System.Web.Helpers;
 using System.Web.Hosting;
+using VAdvantage.DataBase;
 using VIS.Classes;
 
 namespace VA005.Models
@@ -61,8 +62,8 @@ namespace VA005.Models
                 return true;
             }
             return false;
-        }        
-        
+        }
+
         /// <summary>
         /// Save images
         /// </summary>
@@ -90,6 +91,34 @@ namespace VA005.Models
             string imgByte = Convert.ToBase64String(byteArray);
             var id = CommonFunctions.SaveImage(ctx, byteArray, imageID, hpf.FileName.Substring(hpf.FileName.LastIndexOf('.')), isDatabaseSave);
             return id;
+        }
+        /// <summary>
+        /// Method to delete product category 
+        /// </summary>
+        /// <param name="ctx">Ctx</param>
+        /// <param name="pcats">ProductCategoryID</param>
+        /// <returns>Result</returns>
+        public List<KeyNamePair> DeleteCategory(Ctx ctx, string[] pcats)
+        {
+
+            //string[] param = pcats.Split(',');
+
+            List<KeyNamePair> NameList = new List<KeyNamePair>();
+            for(int i=0; i< pcats.Length;i++)
+            {
+                string sql = "DELETE FROM M_Product_Category WHERE M_Product_Category_ID = " + pcats[i];
+                int result = Util.GetValueOfInt(DB.ExecuteQuery(sql, null, null));
+                KeyNamePair obj = new KeyNamePair();
+                obj.Key = Util.GetValueOfInt(pcats[i]);
+                obj.Name = string.Empty;
+                if (result < 0)
+                {
+                    string str = "SELECT Name FROM M_Product_Category WHERE M_Product_Category_ID = " + pcats[i];
+                    obj.Name = Util.GetValueOfString(DB.ExecuteScalar(str, null, null));
+                }
+                NameList.Add(obj);
+            }
+            return NameList;
         }
     }
 }
