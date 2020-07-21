@@ -532,7 +532,6 @@
                         //if (VIS.ADialog.confirm("DeleteRecord?")) {
                         VIS.ADialog.confirm("VA005_DeleteIt", true, "", "Confirm", function (result) {
                             $BusyIndicator[0].style.visibility = "visible";
-                            //for (var item in pcats) {
                                 $.ajax({
                                     type: "POST",
                                     url: VIS.Application.contextUrl + "ProductCategory/DeleteCategory",
@@ -542,13 +541,10 @@
                                         pcats: pcats
                                     }),
                                     success: function (data) {
-                                        //NameList = data.result;
-                                        // NameList.push(data.result);
                                         if (data.result.length > 0) {
-                                            var itemnames = "";
                                             for (var i = 0; i < data.result.length; i++) {
                                                 if (data.result[i].Name != "") {
-                                                    itemnames +=  data.result[i].Name + ", ";
+                                                    NameList.push(data.result[i].Name);
                                                 }
                                                 else {
                                                     var li = mainProductCategoryUl.find("li[procatid='" + data.result[i].Key + "']");
@@ -556,8 +552,8 @@
                                                     ClearData();
                                                 }
                                             }
-                                            if (itemnames != "") {
-                                                VIS.ADialog.error("VA005_ProductCategory", true, itemnames);
+                                            if (NameList != "") {
+                                                VIS.ADialog.error("VA005_ProductCategory", true, NameList.toString());
                                             }
                                         }
                                     },
@@ -568,7 +564,6 @@
                                         alert("RecordNotSaved");
                                         return;
                                     }
-
                                     //for (var item in pcats) {
                                     //    var sql = "DELETE FROM M_Product_Category WHERE M_Product_Category_ID = " + pcats[item];
                                     //    var no = VIS.DB.executeQuery(sql.toString(), null, null);
@@ -586,7 +581,6 @@
                                     //    }
                                     //}
                                 });
-                            //}
                             pcats = [];
                             btnDelete.attr('disabled', 'disabled').css("opacity", 0.6);
                             mainProductCategoryUl.find(".VA005-catboxcheck").prop("checked", false);
