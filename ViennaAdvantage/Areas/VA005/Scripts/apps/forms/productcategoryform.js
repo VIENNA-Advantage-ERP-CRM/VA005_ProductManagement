@@ -553,7 +553,7 @@
                                                 }
                                             }
                                             if (NameList != "") {
-                                                VIS.ADialog.error("VA005_ProductCategory", true, NameList.toString());
+                                                VIS.ADialog.error("VA005_ProductCategory", true, NameList.join(", "));
                                             }
                                         }
                                     },
@@ -968,13 +968,15 @@
             cmbTaxCategory.val(-1);
             //imgUsrImage.removeAttr("src").attr("src", VIS.Application.contextUrl + "Areas/VA005/Images/Img-defult.png");
             imgUsrImage.removeAttr("src").attr("src", "");
-            divRight.addClass("VA005-web_dialog_overlay");
+            //divRight.addClass("VA005-web_dialog_overlay");
             divRight.find('input, textarea, button, select').attr('disabled', 'disabled');
         }
 
         var LoadCategory = function (pgNo, pgSize) {
 
             var sql = "SELECT pc.Name,pc.M_Product_Category_ID,img.ImageUrl,img.BinaryData FROM M_Product_Category pc LEFT JOIN AD_Image img ON pc.AD_Image_ID = img.AD_Image_ID WHERE pc.IsActive='Y' AND pc.AD_Client_ID = " + VIS.Env.getCtx().getAD_Client_ID();
+            //  Added by Shifali to access product acc to org
+            sql = VIS.MRole.addAccessSQL(sql, "M_Product_Category", true, true);
             VIS.DB.executeDataReaderPaging(sql.toString(), pgNo, pgSize, null, CategoryCallBack);
         };
 
