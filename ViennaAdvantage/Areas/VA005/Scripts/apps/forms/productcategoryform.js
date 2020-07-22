@@ -531,7 +531,8 @@
                         // Added by Shifali on 16th July to correct error msg (JID_1860)
                         //if (VIS.ADialog.confirm("DeleteRecord?")) {
                         VIS.ADialog.confirm("VA005_DeleteIt", true, "", "Confirm", function (result) {
-                            $BusyIndicator[0].style.visibility = "visible";
+                            if (result == true) {
+                                $BusyIndicator[0].style.visibility = "visible";
                                 $.ajax({
                                     type: "POST",
                                     url: VIS.Application.contextUrl + "ProductCategory/DeleteCategory",
@@ -581,13 +582,14 @@
                                     //    }
                                     //}
                                 });
-                            pcats = [];
-                            btnDelete.attr('disabled', 'disabled').css("opacity", 0.6);
-                            mainProductCategoryUl.find(".VA005-catboxcheck").prop("checked", false);
-                            mainProductCategoryUl.find('li .VA005-cat-caption').removeClass('VA005-catboxchecked');
-                            mainProductCategoryUl.find('li .VA005-cat-caption').removeClass('VA005-highlighted');
-                            mainProductCategoryUl.find('li:eq(1) .VA005-cat-caption').addClass('VA005-highlighted');
-                            fillCategory(mainProductCategoryUl.find('li:eq(1)').attr('procatid'));
+                                pcats = [];
+                                btnDelete.attr('disabled', 'disabled').css("opacity", 0.6);
+                                mainProductCategoryUl.find(".VA005-catboxcheck").prop("checked", false);
+                                mainProductCategoryUl.find('li .VA005-cat-caption').removeClass('VA005-catboxchecked');
+                                mainProductCategoryUl.find('li .VA005-cat-caption').removeClass('VA005-highlighted');
+                                mainProductCategoryUl.find('li:eq(1) .VA005-cat-caption').addClass('VA005-highlighted');
+                                fillCategory(mainProductCategoryUl.find('li:eq(1)').attr('procatid'));
+                            }
                         });
                     }
                     //fillCategory(mainProductCategoryUl.find('li:eq(1)').attr('procatid'));
