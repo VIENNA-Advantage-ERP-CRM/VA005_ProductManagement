@@ -177,7 +177,8 @@ namespace VA005.Models
                 mimg.SetBinaryData(buffer);
                 //mimg.SetImageURL(string.Empty);
             }
-            mimg.SetImageURL("Images/Thumb46x46");//Image Saved in File System so instead of byteArray image Url will be set            
+            //mimg.SetImageURL("Images/Thumb46x46");//Image Saved in File System so instead of byteArray image Url will be set            
+            mimg.SetImageURL(mimg.ImageFormat);
             if (!mimg.Save())
             {
                 return "";

@@ -81,6 +81,24 @@ namespace VA005.Controllers
                 value = obj.SaveImage(ctx, Server.MapPath("~/Images"), file, Convert.ToInt32(ad_image_id), isDatabaseSave);
             }
             return Json(new { result = value }, JsonRequestBehavior.AllowGet);
+        }  
+        /// <summary>
+        /// Method to delete product category
+        /// </summary>
+        /// <param name="pcats">ProductCategoryID</param>
+        /// <returns>Result</returns>
+        [HttpPost]
+        public JsonResult DeleteCategory(string[] pcats)
+        {
+            List<KeyNamePair> value=null;
+            //string[] param = pcats.Split(',');
+            if (Session["ctx"] != null)
+            {
+                VAdvantage.Utility.Ctx ctx = Session["ctx"] as Ctx;
+                VA005.Models.ProductCategortModel model = new Models.ProductCategortModel();
+                value = model.DeleteCategory(ctx, pcats);
+            }
+            return Json(new { result = value }, JsonRequestBehavior.AllowGet);
         }
     }
 }
