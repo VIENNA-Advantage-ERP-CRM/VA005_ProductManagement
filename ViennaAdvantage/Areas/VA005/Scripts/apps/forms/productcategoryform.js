@@ -975,7 +975,7 @@
         var LoadCategory = function (pgNo, pgSize) {
 
             var sql = "SELECT pc.Name,pc.M_Product_Category_ID,img.ImageUrl,img.BinaryData FROM M_Product_Category pc LEFT JOIN AD_Image img ON pc.AD_Image_ID = img.AD_Image_ID WHERE pc.IsActive='Y' AND pc.AD_Client_ID = " + VIS.Env.getCtx().getAD_Client_ID();
-            // Added by Shifali to access product acc to org
+            //  Added by Shifali to access product acc to org
             sql = VIS.MRole.addAccessSQL(sql, "M_Product_Category", true, true);
             VIS.DB.executeDataReaderPaging(sql.toString(), pgNo, pgSize, null, CategoryCallBack);
         };
