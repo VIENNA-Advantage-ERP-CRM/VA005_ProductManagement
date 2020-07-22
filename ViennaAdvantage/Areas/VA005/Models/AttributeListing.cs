@@ -96,7 +96,8 @@ namespace VA005.Models
                 attributeSetTree.text = System.Net.WebUtility.HtmlEncode(Convert.ToString(ds.Tables[0].Rows[i]["Name"]));
                 attributeSetTree.NodeID = Convert.ToInt32(ds.Tables[0].Rows[i]["m_attributeSet_ID"]);
                 //attributeSetTree.ParentID = Convert.ToInt32(ds.Tables[0].Rows[i]["m_attributeSet_ID"]);
-                attributeSetTree.ImageSource = "Areas/VA005/Images/attSet.png";
+                //attributeSetTree.ImageSource = "Areas/VA005/Images/attSet.png";
+                attributeSetTree.ImageSource = "vis vis-product";
                 //attributeSetTree.Image2 = "Areas/VA005/Images/edit.png";
                 attributeSetTree.Image2 = "Areas/VA005/Images/edt.png";
                 attributeSetTree.visibility = "inherit";
@@ -135,7 +136,9 @@ namespace VA005.Models
                     attributeSetTree.NodeID = Convert.ToInt32(drs[j]["m_attribute_ID"]);
                     attributeSetTree.ParentID = parentID;
                     //attributeSetTree.ImageSource = "Areas/VA005/Images/1.png";
-                    attributeSetTree.ImageSource = "Areas/VA005/Images/att.png";
+                    //attributeSetTree.ImageSource = "Areas/VA005/Images/att.png";
+                    attributeSetTree.ImageSource = "vis vis-task";
+
                     attributeSetTree.Image2 = "Areas/VA005/Images/edit.png";
                     //                    attributeSetTree.Image3 = "Areas/VA005/Images/multi-sel2.png";
                     attributeSetTree.Image3 = "Areas/VA005/Images/infop.png";

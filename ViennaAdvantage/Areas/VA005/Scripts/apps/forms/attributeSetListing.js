@@ -185,75 +185,75 @@
         function treeViewForAttributeSetListing() {
             $tree = $("<div style='height:100%' >");
             treedesign = "<div id='" + $self.windowNo + "leftboxdivwidth' class='VA005-right-wrap-leftboxdiv'>"
-                          + "<div class='top-wrap-treedesign'>"
-                          + "<h4 style='margin-top:11px'>" + VIS.Msg.getMsg("VA005_Attribute") + "</h4>"
-                          + "<div class='VA005-top-right-treedesign'>"
-                         // + "<div id='" + $self.windowNo + "editbtnatthideshow' style='z-index:2;display:none;opacity:0.6;height: 50px;position: absolute; width: 2%;'></div>"
-                          + "<div id='" + $self.windowNo + "hideshoweditbutton' style=';height: 29px;width: 26px;position: absolute;'></div>"
-                          //+ "<span><img style='cursor:pointer;margin-top:11px' src='" + VIS.Application.contextUrl + "Areas/VA005/Images/edt.png' id='" + $self.windowNo + "editattributeboxes'></img></span>"
-                           + "<span style='float:left;cursor:pointer;margin-top:3px;font-size:20px'  id='" + $self.windowNo + "editattributeboxes' class='glyphicon glyphicon-edit' title='" + VIS.Msg.getMsg("VA005_EditAttribute") + "'   ></span>"
-                             // + "<span style='cursor:pointer;margin-top:3px;font-size:20px'  id='" + $self.windowNo + "editattributeboxes' class='glyphicon glyphicon-edit' >        <div id='1hideshoweditbutton' style='background-color:yellow;height: 27px;width: 26px;position: absolute;margin-top: -20px;'></div>                     </span>"
-                           + "<span style='cursor:pointer;font-size:18px;margin:7px 0 0 10px' id='" + $self.windowNo + "delattributeboxes' class='glyphicon glyphicon-trash' title='" + VIS.Msg.getMsg("VA005_DeleteAttribute") + "' ></span>"
-                          //+ "<span><img style='cursor:pointer;display:none' src='" + VIS.Application.contextUrl + "Areas/VA005/Images/udo.jpg' id='" + $self.windowNo + "undoattributeboxes'></img></span>"
+                + "<div class='VA005-top-wrap-treedesign'>"
+                + "<h4>" + VIS.Msg.getMsg("VA005_Attribute") + "</h4>"
+                + "<div class='VA005-top-right-treedesign'>"
+                // + "<div id='" + $self.windowNo + "editbtnatthideshow' style='z-index:2;display:none;opacity:0.6;height: 50px;position: absolute; width: 2%;'></div>"
+                //+ "<div id='" + $self.windowNo + "hideshoweditbutton' style='height: 29px;width: 26px;position: absolute;'></div>"
+                //+ "<span><img style='cursor:pointer;margin-top:11px' src='" + VIS.Application.contextUrl + "Areas/VA005/Images/edt.png' id='" + $self.windowNo + "editattributeboxes'></img></span>"
+                + "<span id='" + $self.windowNo + "editattributeboxes' class='vis vis-edit' title='" + VIS.Msg.getMsg("VA005_EditAttribute") + "'   ></span>"
+                // + "<span style='cursor:pointer;margin-top:3px;font-size:20px'  id='" + $self.windowNo + "editattributeboxes' class='glyphicon glyphicon-edit' >        <div id='1hideshoweditbutton' style='background-color:yellow;height: 27px;width: 26px;position: absolute;margin-top: -20px;'></div>                     </span>"
+                + "<span id='" + $self.windowNo + "delattributeboxes' class='vis vis-delete' title='" + VIS.Msg.getMsg("VA005_DeleteAttribute") + "' ></span>"
+                //+ "<span><img style='cursor:pointer;display:none' src='" + VIS.Application.contextUrl + "Areas/VA005/Images/udo.jpg' id='" + $self.windowNo + "undoattributeboxes'></img></span>"
 
-                          + "</div>"
-                          + "</div>"
-                          + "<div class='VA005-att-tree-vieww'>"
-                          + "</div>"
+                + "</div>"
+                + "</div>"
+                + "<div class='VA005-att-tree-vieww'>"
+                + "</div>"
 
-                          ///*** top div of left side for attribute....
-                          + "<div id='" + $self.windowNo + "leftboxbackdivforspliter'  style='height:52%;margin-top:46px;'>"
-                           //+ "<div style='float:left;width:100%;border-bottom:1px solid #ccc;overflow-y:auto;overflow-x:none;height:101%' class='VA005_maindivleft' id='" + $self.windowNo + "attributedivleftdragdrop'>"
-                            + "<div style='float:left;width:100%;border-bottom:1px solid #ccc;overflow-y:auto;overflow-x:none;height:101%' class='VA005_maindivleft' id='" + $self.windowNo + "attributedivleftdragdrop'>"
-                          + "</div>"
-                          // + "<div style='cursor:n-resize;background-color:pink;float:left;width:100%;height:10px' class='VA005_splitter' id='" + $self.windowNo + "VA005_splitter'>"
-                        //  + "</div>"
-                          + "</div>"
+                ///*** top div of left side for attribute....
+                + "<div id='" + $self.windowNo + "leftboxbackdivforspliter' class='VA005-att-lefttopwrap'>"
+                //+ "<div style='float:left;width:100%;border-bottom:1px solid #ccc;overflow-y:auto;overflow-x:none;height:101%' class='VA005_maindivleft' id='" + $self.windowNo + "attributedivleftdragdrop'>"
+                + "<div class='VA005-att-lefttopinnerwrap VA005_maindivleft' id='" + $self.windowNo + "attributedivleftdragdrop'>"
+                + "</div>"
+                // + "<div style='cursor:n-resize;background-color:pink;float:left;width:100%;height:10px' class='VA005_splitter' id='" + $self.windowNo + "VA005_splitter'>"
+                //  + "</div>"
+                + "</div>"
 
-                          ///*** bottom div of left side for attribute....
-                          + "<div id='" + $self.windowNo + "leftboxattvaluebelow'  style='height:53%;margin-top:4px'>"
-                           + "<div id='" + $self.windowNo + "AttributeValuegetid' class='VA005-att-tree-vieww' style='margin-bottom: 10px;'>"
-                          + "<h5>" + VIS.Msg.getMsg("VA005_AttributeValue") + "</h5>"
-                          + "</div>"
-                          + "<div style='float:left'>"
-                          + "</div>"
-                          + "<div style='margin-left:0px;overflow:auto;height:76%;float:left' id='" + $self.windowNo + "attributevaluedivleftdragdrop'>"
-                          + "</div>"
-                          + "</div>"
-                        + "</div>"
-
-
-                      + "<div id='" + $self.windowNo + "middivforattributevalue'  style='overflow:auto;display:none;height:100%;width: 30%;min-width:30%;padding:12px;float: left;border-right:1px solid #ccc;'>"
-                      //+ "<div id='" + $self.windowNo + "middivforattributevaluehideshow' style='display:none;height: 71%;  position: absolute; width: 29%; opacity: 0.6; z-index: 3;'></div>"
-
-                      + "</div>"
+                ///*** bottom div of left side for attribute....
+                + "<div id='" + $self.windowNo + "leftboxattvaluebelow'  style='height:45%;'>"
+                + "<div id='" + $self.windowNo + "AttributeValuegetid' class='VA005-att-tree-vieww''>"
+                + "<h5>" + VIS.Msg.getMsg("VA005_AttributeValue") + "</h5>"
+                + "</div>"
+                + "<div style='float:left'>"
+                + "</div>"
+                + "<div style='margin-left:0px;overflow:auto;height:76%;float:left' id='" + $self.windowNo + "attributevaluedivleftdragdrop'>"
+                + "</div>"
+                + "</div>"
+                + "</div>"
 
 
-                        //*** right div for attributeset listing....
-                        + "<div id='" + $self.windowNo + "btndiv' class='VA005-right-wrap-div-setlisting-top'>"
-                            //+ "<div id='" + $self.windowNo + "hideshowrightdiv' style='width:100%;height:auto;' >"
-                            + "<div class='VA005-top-wrap-div-h'>"
-                            + "<h4 style='float:left;color:#1aa0ed'>" + VIS.Msg.getMsg("VA005_AttributeSetListing") + "</h4>"
-                            + "<div style='position:relative' class='VA005-top-right-div-openattset'>"
-                            //+ "<span style='margin-right:10px'><img src='" + VIS.Application.contextUrl + "Areas/VA005/Images/add.png' id='" + $self.windowNo + "openattributeset'></img></span>"
-                            + "<span id='" + $self.windowNo + "openattributeset' class='glyphicon glyphicon-plus' style='cursor:pointer;margin:8px 10px 0 0;font-size:20px;' title='" + VIS.Msg.getMsg("VA005_OpenAttributeSet") + "'   ></span>"
+                + "<div id='" + $self.windowNo + "middivforattributevalue' class='VA005-right-wrap-leftboxdiv' style='overflow:auto;display:none;width: 30%;'>"
+                //+ "<div id='" + $self.windowNo + "middivforattributevaluehideshow' style='display:none;height: 71%;  position: absolute; width: 29%; opacity: 0.6; z-index: 3;'></div>"
 
-                            //+ "<div id='" + $self.windowNo + "deletebtnhideshow' style='opacity:0.6;height: 37px;width: 27px;position: absolute;float: right;top: 0;right: 0;z-index: 2;'></div>"
+                + "</div>"
 
-                            + "<span id='" + $self.windowNo + "deleteattribute' class='VA005-disabled glyphicon glyphicon-trash' style='cursor:pointer;font-size:18px;' title='" + VIS.Msg.getMsg("VA005_DeleteAttributeSet") + "' ></span>"
-                            //+ "<span><img src='" + VIS.Application.contextUrl + "Areas/VA005/Images/del.png' id='" + $self.windowNo + "openattribute'></img></span>"
-                            + "</div>"
-                            + "</div>"
-                            //+ "<div class='VA005-att-tree-div-showtree' style='height:95%'>"
-                            //+ "<div id='" + $self.windowNo + "showtree' style='height:95%;width:auto'></div>"
-                             + "<div style='z-index:999999' class='VA005-att-tree-div-showtree'  >"
-                            //+ "<div style='z-index:999999' id='" + $self.windowNo + "showtree' style='min-width:420px;-webkit-overflow-scrolling:touch;' ></div>"
-                             + "<div  id='" + $self.windowNo + "showtree' style='min-width:420px;-webkit-overflow-scrolling:touch;' ></div>"
-                            + "</div>"
-                            //-webkit-overflow-scrolling: touch;
-                            + "</div>"
-                             + "<span id='" + $self.windowNo + "deletemsz' style='display:none;color:red'>" + VIS.Msg.getMsg("VA005_DeletSuccessfully") + "</span>"
-                         + "</div>"
+
+                //*** right div for attributeset listing....
+                + "<div id='" + $self.windowNo + "btndiv' class='VA005-right-wrap-div-setlisting-top'>"
+                //+ "<div id='" + $self.windowNo + "hideshowrightdiv' style='width:100%;height:auto;' >"
+                + "<div class='VA005-top-wrap-div-h VA005-top-wrap-treedesign'>"
+                + "<h4>" + VIS.Msg.getMsg("VA005_AttributeSetListing") + "</h4>"
+                + "<div style='position:relative' class='VA005-top-right-treedesign VA005-top-right-div-openattset'>"
+                //+ "<span style='margin-right:10px'><img src='" + VIS.Application.contextUrl + "Areas/VA005/Images/add.png' id='" + $self.windowNo + "openattributeset'></img></span>"
+                + "<span id='" + $self.windowNo + "openattributeset' class='vis vis-plus' title='" + VIS.Msg.getMsg("VA005_OpenAttributeSet") + "'   ></span>"
+
+                //+ "<div id='" + $self.windowNo + "deletebtnhideshow' style='opacity:0.6;height: 37px;width: 27px;position: absolute;float: right;top: 0;right: 0;z-index: 2;'></div>"
+
+                + "<span id='" + $self.windowNo + "deleteattribute' class='VA005-disabled vis vis-delete' title='" + VIS.Msg.getMsg("VA005_DeleteAttributeSet") + "' ></span>"
+                //+ "<span><img src='" + VIS.Application.contextUrl + "Areas/VA005/Images/del.png' id='" + $self.windowNo + "openattribute'></img></span>"
+                + "</div>"
+                + "</div>"
+                //+ "<div class='VA005-att-tree-div-showtree' style='height:95%'>"
+                //+ "<div id='" + $self.windowNo + "showtree' style='height:95%;width:auto'></div>"
+                + "<div style='z-index:999999' class='VA005-att-tree-div-showtree'  >"
+                //+ "<div style='z-index:999999' id='" + $self.windowNo + "showtree' style='min-width:420px;-webkit-overflow-scrolling:touch;' ></div>"
+                + "<div  id='" + $self.windowNo + "showtree' style='min-width:350px;-webkit-overflow-scrolling:touch;' ></div>"
+                + "</div>"
+                //-webkit-overflow-scrolling: touch;
+                + "</div>"
+                + "<span id='" + $self.windowNo + "deletemsz' style='display:none;color:red'>" + VIS.Msg.getMsg("VA005_DeletSuccessfully") + "</span>"
+                + "</div>"
             $tree.append(treedesign);
 
             $deletemsz = $tree.find("#" + $self.windowNo + "deletemsz");
@@ -323,10 +323,10 @@
         function attributeAppendDiv() {
 
             $attributedivleftdragdrop.empty();
-            var str = "<div style='cursor:pointer' class='VA005-attributedivstatic  VA005-divboxtarget-design-hover' title='" + VIS.Msg.getMsg("VA005_AddAttribute") + "' >"
-           // var str = "<div style='cursor:pointer' class='VA005-attributedivstatic  VA005-divboxtarget-design-hover' VA005_plusimg='N'>"
-                                 + "<span style='cursor:pointer'><img src='" + VIS.Application.contextUrl + "Areas/VA005/Images/add.png' id='" + $self.windowNo + "addnewattribute'></img></span>"
-                         + "</div><div class='VA005-innerattrb'></div>";
+            var str = "<div class='VA005-attributedivstatic  VA005-divboxtarget-design-hover' title='" + VIS.Msg.getMsg("VA005_AddAttribute") + "' >"
+                // var str = "<div style='cursor:pointer' class='VA005-attributedivstatic  VA005-divboxtarget-design-hover' VA005_plusimg='N'>"
+                + "<span><i class='vis vis-plus' id='" + $self.windowNo + "addnewattribute'></i></span>"
+                + "</div><div class='VA005-innerattrb'></div>";
             $attributedivleftdragdrop.append($(str));
 
             $attributedivleftdragdrop.find('.VA005-attributedivstatic').on("click", staticdivappendinleftboxes);
@@ -384,11 +384,11 @@
                         debugger;
                         //$($($(this).find('.k-state-hover').parents('li')[0]).find('.k-state-hover')).css('z-index', '99999');
                         //$($divLeftTree.find('.va005-parentss').parent()).css('z-index', '99999');
-
-                        attrlabelvalue = $(this).find('label');
-                        draggabledivid = $(this).attr("data-id");
-                        $dragevents = true;
-
+                        
+                            attrlabelvalue = $(this).find('label');
+                            draggabledivid = $(this).attr("data-id");
+                            $dragevents = true;
+                        
                     },
                     drag: function (event, ui) {
                         if ($(this).data('isactive') == 'N') {
@@ -569,15 +569,18 @@
             debugger;
             $editattributeboxes.removeClass("VA005-disabled");
             if ($attributeobject.$getvalueonchange == true) {
-                var msg = "" + VIS.Msg.getMsg("VA005_SaveAttributeIt") + "";
-                var r = VIS.ADialog.ask(msg);
-                if (r == true) {
-                    $attributeobject.onchangesaveattribute();
-                    $attributeobject.$getvalueonchange = false;
-                }
-                else {
-                    $attributeobject.$getvalueonchange = false;
-                }
+                //var msg = "" + VIS.Msg.getMsg("VA005_SaveAttributeIt") + "";
+                // var r = VIS.ADialog.ask(msg);
+                // Added by Shifali to print message acc to culture JID_1864
+                VIS.ADialog.confirm("VA005_SaveAttributeIt", true, "", "Confirm", function (result) {
+                    if (result == true) {
+                        $attributeobject.onchangesaveattribute();
+                        $attributeobject.$getvalueonchange = false;
+                    }
+                    else {
+                        $attributeobject.$getvalueonchange = false;
+                    }
+                });
             }
 
             $bsyDiv[0].style.visibility = "visible";
@@ -708,8 +711,8 @@
 
         ////////////////////========================
         function getTemaplate(selectedAttributeID, findnamecount, isActive) {
-            str = "<div data-isActive='" + isActive + "' data-id='" + selectedAttributeID + "' title='" + findnamecount + "' style='word-break:break-word;line-height:20px;cursor:pointer;' id='" + $self.windowNo + "divappendinleftsideboxes_header' class='VA005-attributediv  VA005-divboxtarget-design-hover'>"
-            + "<div style='float: left; width: 100%;'><input attid='" + selectedAttributeID + "' class='VA005-checkboxonleftdiv' type='checkbox' style='float: left;'></div>";
+            str = "<div data-isActive='" + isActive + "' data-id='" + selectedAttributeID + "' title='" + findnamecount + "' id='" + $self.windowNo + "divappendinleftsideboxes_header' class='VA005-attributediv  VA005-divboxtarget-design-hover'>"
+                + "<div style='float: left; width: 100%;'><input attid='" + selectedAttributeID + "' class='VA005-checkboxonleftdiv' type='checkbox' style='float: left;'></div>";
             //+ "<label style='word-break:break-word;line-height:20px;margin-top:10px;font-weight:normal;cursor:pointer'>" + findnamecount + "</label>"
             //+ "<label class='VA005-textoverfllowhidden'>" + findnamecount + "</label>"
 
@@ -843,7 +846,8 @@
 
                 $attributevaluedivleftdragdrop.empty();
                 //var sql = "SELECT M_ATTRIBUTEVALUE_ID, name, M_ATTRIBUTE_ID FROM m_attributevalue where M_ATTRIBUTE_ID=" + selectedAttributeID;
-                var sql = "SELECT M_ATTRIBUTEVALUE_ID, name, M_ATTRIBUTE_ID FROM m_attributevalue WHERE M_ATTRIBUTE_ID=" + selectedAttributeID;
+                // Added "ORDER BY CLAUSE" by Shifali on 16th July 2020
+                var sql = "SELECT M_ATTRIBUTEVALUE_ID, name, M_ATTRIBUTE_ID FROM m_attributevalue WHERE M_ATTRIBUTE_ID=" + selectedAttributeID + " ORDER BY M_ATTRIBUTEVALUE_ID ";
 
                 //sql = VIS.MRole.addAccessSQL(sql, "M_AttributeValue", true, true);
                 //    var ds = VIS.DB.executeDataSet(sql, null, null);
@@ -855,9 +859,9 @@
                     var str = '';
                     for (var i = 0; i < ds.tables[0].rows.length; i++) {
                         str += "<div data-id='" + VIS.Utility.Util.getValueOfInt(ds.tables[0].rows[i].cells["m_attributevalue_id"]) + "' class='VA005-attributediv  VA005-divboxtarget-design-hover'>"
-                                        //+ "<label class='VA005-textoverfllowhidden1' title='" + VIS.Utility.encodeText(ds.tables[0].rows[i].cells["name"]) + "'>" + VIS.Utility.encodeText(ds.tables[0].rows[i].cells["name"]) + "</label>"
-                                        + "<label class='VA005-textoverfllowhidden2' title='" + VIS.Utility.encodeText(ds.tables[0].rows[i].cells["name"]) + "'>" + VIS.Utility.encodeText(ds.tables[0].rows[i].cells["name"]) + "</label>"
-                                + "</div>";
+                            //+ "<label class='VA005-textoverfllowhidden1' title='" + VIS.Utility.encodeText(ds.tables[0].rows[i].cells["name"]) + "'>" + VIS.Utility.encodeText(ds.tables[0].rows[i].cells["name"]) + "</label>"
+                            + "<label class='VA005-textoverfllowhidden2' title='" + VIS.Utility.encodeText(ds.tables[0].rows[i].cells["name"]) + "'>" + VIS.Utility.encodeText(ds.tables[0].rows[i].cells["name"]) + "</label>"
+                            + "</div>";
                     }
                     $attributevaluedivleftdragdrop.append($(str));
 
@@ -938,47 +942,49 @@
             e.stopPropagation();
             $self.isSaveOnItemFocus = false;
             if ($attributeobject.$getvalueonchange == true) {
+                //Done by Shifali on 16th July 2020 (JID_1861)
+                // var msg = "" + VIS.Msg.getMsg("VA005_SaveAttributeIt") + "";
+                //var r = VIS.ADialog.ask(msg);
+                VIS.ADialog.confirm("VA005_SaveAttributeIt", true, "", "Confirm", function (result) {
+                    if (result == true) {
+                        $self.isSaveOnItemFocus = true;
+                        $attributeobject.onchangesaveattribute();
+                        $attributeobject.cmboonclick();
+                        $self.attributevallueonattributeclick(selectedAttributeID);
+                        // gettargettext.val($attributeobject.$textnametextvalue);
 
-                var msg = "" + VIS.Msg.getMsg("VA005_SaveAttributeIt") + "";
-                var r = VIS.ADialog.ask(msg);
-                if (r == true) {
-                    $self.isSaveOnItemFocus = true;
-                    $attributeobject.onchangesaveattribute();
-                    $attributeobject.cmboonclick();
-                    $self.attributevallueonattributeclick(selectedAttributeID);
-                    // gettargettext.val($attributeobject.$textnametextvalue);
+                        //$($attributedivleftdragdrop.find('label')).text($attributeobject.$textnametextvalue);
+                        //var text = $attributeobject.$textnametextvalue;
 
-                    //$($attributedivleftdragdrop.find('label')).text($attributeobject.$textnametextvalue);
-                    //var text = $attributeobject.$textnametextvalue;
+                        if (!textattribute.is('label')) {
+                            if (textattribute.hasClass('VA005-attributediv')) {
+                                textattribute = textattribute.find('label');
+                            }
+                            else {
+                                textattribute = textattribute.siblings()[0];
+                            }
+                        }
 
-                    if (!textattribute.is('label')) {
-                        if (textattribute.hasClass('VA005-attributediv')) {
-                            textattribute = textattribute.find('label');
+                        textattribute.text($attributeobject.$textnametextvalue);
+
+                        textattribute.addClass("VA005-textoverfllowhidden");
+
+                        loadTreeData();
+
+                        //if ($attributeobject.$activechkbox)
+                        if ($attributeobject.$activechkbox) {
+                            textattribute.css("color", "black");
+                            //textattribute.css("color", "red")
                         }
                         else {
-                            textattribute = textattribute.siblings()[0];
+                            textattribute.css("color", "#AFA5A5");
+                            //textattribute.css("color", "black");
                         }
                     }
-
-                    textattribute.text($attributeobject.$textnametextvalue);
-
-                    textattribute.addClass("VA005-textoverfllowhidden");
-
-                    loadTreeData();
-
-                    //if ($attributeobject.$activechkbox)
-                    if ($attributeobject.$activechkbox) {
-                        textattribute.css("color", "black");
-                        //textattribute.css("color", "red")
-                    }
                     else {
-                        textattribute.css("color", "#AFA5A5");
-                        //textattribute.css("color", "black");
+                        $attributeobject.$getvalueonchange = false;
                     }
-                }
-                else {
-                    $attributeobject.$getvalueonchange = false;
-                }
+                });
 
             }
 
@@ -1043,7 +1049,7 @@
 
                         if ($middivforattributevalue.is(':visible')) {
                             $leftboxdivwidth.animate({ width: "50%" });
-                            //$middivforattributevalue.animate({ width: "30%" });
+                            $middivforattributevalue.animate({ width: "30%" });
                             $middivforattributevalue.css({ "display": "none", 'width': '0%' });
                             $treeView.animate({ width: "50%" });
                             $treeView.css("display", "inherit");
@@ -1258,64 +1264,64 @@
 
         ///****designe Open first attributeset dialog...
         function openAddAtrributeDialog() {
-            $openattdialog = $("<div  class='VA005-left-wrap-div-openattributre' style='display:none;height:500px;overflow: scroll;'>");
-            $opendialog = "<div class='VA005-att-tree-vieww'><h4 style='float:left;color:#1aa0ed'>" + VIS.Msg.getMsg("VA005_AddAttributeSet") + "</h4></div>"
+            $openattdialog = $("<div  class='VA005-left-wrap-div-openattributre' style='display:none;'>");
+            $opendialog = "<div class='VA005-att-tree-vieww VA005-top-wrap-treedesign'><h4>" + VIS.Msg.getMsg("VA005_AddAttributeSet") + "</h4></div>"
 
-                + "<div>"
-                            + "<table style='width:100%;table-layout: fixed; '>"
-                            + "<tr>"
-                            + "<td colspan='2' style='width:100%'>" + VIS.Msg.getMsg("Name") + " </td>"
-                            + "</tr>"
-                            + "<tr>"
-                            + "<td colspan='2'><input style='width:100%;margin:0px 0px 10px 0;background-color:pink' id='" + $self.windowNo + "txtname' type='text' /></td>"
-                            + "</tr>"
-                            + "<tr>"
-                            + "<td style='width:110px'>" + VIS.Msg.getMsg("Description") + "</td>"
-                            + "</tr>"
-                            + "<tr>"
-                            + "<td colspan='2'><input style='width:100%;margin:0px 0px 10px 0' id='" + $self.windowNo + "txtdes'  type='text'/></td>"
-                            + "</tr>"
-                            + "<tr>"
-                            + "<td style='width:110px'>" + VIS.Msg.getMsg("VA005_MandatoryType") + "</td>"
-                            + "</tr>"
-                            + "<tr>"
-                            + "<td colspan='2'><select style='width:100%;margin:0px 0px 18px 0' id='" + $self.windowNo + "mandatorysec'></select></td>"
-                            + "</tr>"
-                            + "<tr>"
-                            + "<td  style='width:110px'></td>"
-                            + "</tr>"
-                            + "<div style='margin-top: 5px;'></div>"
-                            + "<tr>"
-                            //+ "<td><input style='margin:0 0 10px 0' type='checkbox'  id='" + $self.windowNo + "expirydate' />" + VIS.Msg.getMsg("VA005_ExpiryDate") + "</td>" + "<td><input style='margin:0' type='checkbox' disabled id='" + $self.windowNo + "mandatoryexpdate' />" + VIS.Msg.getMsg("VA005_MandatoryExpiryDate") + "</td>"
+                + "<div style='float: left; width: 100%;'>"
+                + "<table class='VA005-att-righttable mt-2'>"
+                //+ "<tr>"
+                //+ "<td colspan='2'>" + VIS.Msg.getMsg("Name") + " </td>"
+                //+ "</tr>"
+                + "<tr>"
+                + "<td><div class='input-group vis-input-wrap'><div class='vis-control-wrap'><input class='vis-ev-col-mandatory' id='" + $self.windowNo + "txtname' type='text'><label>" + VIS.Msg.getMsg("Name") + "</label></div></div></td>"
+                + "</tr>"
+                //+ "<tr>"
+                //+ "<td>" + VIS.Msg.getMsg("Description") + "</td>"
+                //+ "</tr>"
+                + "<tr>"
+                + "<td><div class='input-group vis-input-wrap'><div class='vis-control-wrap'><input id='" + $self.windowNo + "txtdes'  type='text' ><label>" + VIS.Msg.getMsg("Description") + "</label></div></div></td>"
+                + "</tr>"
+                //+ "<tr>"
+                //+ "<td>" + VIS.Msg.getMsg("VA005_MandatoryType") + "</td>"
+                //+ "</tr>"
+                + "<tr>"
+                + "<td><div class='input-group vis-input-wrap'><div class='vis-control-wrap'><select id='" + $self.windowNo + "mandatorysec'></select><label>" + VIS.Msg.getMsg("VA005_MandatoryType") + "</label></div></div></td>"
+                + "</tr>"
+                //+ "<tr>"
+                //+ "<td  style='width:110px'></td>"
+                //+ "</tr>"
+                //+ "<div style='margin-top: 5px;'></div>"
+                + "<tr>"
+                //+ "<td><input style='margin:0 0 10px 0' type='checkbox'  id='" + $self.windowNo + "expirydate' />" + VIS.Msg.getMsg("VA005_ExpiryDate") + "</td>" + "<td><input style='margin:0' type='checkbox' disabled id='" + $self.windowNo + "mandatoryexpdate' />" + VIS.Msg.getMsg("VA005_MandatoryExpiryDate") + "</td>"
 
-                            + "<td><input style='margin:0 0 13px 0' type='checkbox'  id='" + $self.windowNo + "expirydate' /><span style='margin-left: 8px;'>" + VIS.Msg.getMsg("VA005_ExpiryDate") + "</span></td>" + "<td><input style='margin:0' type='checkbox' disabled id='" + $self.windowNo + "mandatoryexpdate' /><span style='margin-left: 8px;'>" + VIS.Msg.getMsg("VA005_MandatoryExpiryDate") + "</span></td>"
-                            + "</tr>"
-                            + "<tr>"
-                            + "<td style='width:110px'></td>"
-                            + "</tr>"
-                            + "<div style='margin-top: 20px;'></div>"
-                            + "<tr>"
-                            //+ "<td><input style='margin:5px 0 10px 0' id='" + $self.windowNo + "lot'  type='radio' name='ab' checked='checked' /><span style='margin-left: 8px;'>" + VIS.Msg.getMsg("VA005_Lot") + "</span></td>" + "<td><input style='margin:5px 0 10px 0' id='" + $self.windowNo + "serial' type='radio' name='ab' /><span style='margin-left: 8px;'>" + VIS.Msg.getMsg("VA005_Serial") + "</span></td>"
-                             + "<td><input style='margin:5px 0 10px 0' id='" + $self.windowNo + "lot'  type='checkbox'   /><span style='margin-left: 8px;'>" + VIS.Msg.getMsg("VA005_Lot") + "</span></td>" + "<td><input style='margin:5px 0 10px 0' id='" + $self.windowNo + "serial' type='checkbox'   /><span style='margin-left: 8px;'>" + VIS.Msg.getMsg("VA005_Serial") + "</span></td>"
-                            + "</tr>"
-                            + "<tr>"
-                            + "<td style='width:110px;'><label style='float:left;margin:0px;margin-top:2px;font-weight:normal;margin-bottom:-2px' id='" + $self.windowNo + "lotandserialname'>" + VIS.Msg.getMsg("VA005_Lot&Serial") + "</label></td>"
-                            + "</tr>"
-                             + "<div style='margin-top: 15px;'></div>"
-                            + "<tr>"
-                            //+ "<td colspan='2' style='width:80%;margin:0 9px 3px 0'><select style='width:89%' id='" + $self.windowNo + "lotandserialdatadropdown'></select>&nbsp;&nbsp;<img src='" + VIS.Application.contextUrl + "Areas/VA005/Images/edt.png' id='" + $self.windowNo + "editbtn' style='margin:0 0 3px 0px; height:22px;cursor:pointer' ></img><img src='" + VIS.Application.contextUrl + "Areas/VA005/Images/add.png' id='" + $self.windowNo + "addbtn' style='margin:0 0 3px 9px;height:27px' ></img>                                  <div id='" + $self.windowNo + "hideshowbtndiv' style='background-color:white;height:31px;width:5%;position:absolute;margin:-33px 0px 0px 42.5%'></div>   </td>"
-                              //+ "<td colspan='2' style='width:80%;margin:0 9px 3px 0'><select class='VA005-selectattsetcmb' id='" + $self.windowNo + "lotandserialdatadropdown'></select>&nbsp;&nbsp;   <span> <div id='" + $self.windowNo + "editbtn' style='cursor:pointer;font-size:18px;' class='glyphicon glyphicon-edit'></div>   <div style='cursor:pointer;font-size:21px;margin-left:7px' class='glyphicon glyphicon-plus'  id='" + $self.windowNo + "addbtn'></div>        </span>                                <div id='" + $self.windowNo + "hideshowbtndiv' style='height:31px;width:5%;position:absolute;margin:-33px 0px 0px 42.5%'></div>   </td>"
-                                 + "<td colspan='2' style='width:80%;margin:0 9px 3px 0'><select class='VA005-selectattsetcmb' id='" + $self.windowNo + "lotandserialdatadropdown'></select>&nbsp;&nbsp;   <span> <div title='" + VIS.Msg.getMsg("VA005_Edit") + "'  id='" + $self.windowNo + "editbtn' style='cursor:pointer;font-size:18px;' class='VA005-disabled glyphicon glyphicon-edit'></div>   <div style='cursor:pointer;font-size:21px;margin-left:7px' title='" + VIS.Msg.getMsg("VA005_AddLotSerial") + "'    class='VA005-disabled glyphicon glyphicon-plus'  id='" + $self.windowNo + "addbtn'></div>        </span>                                 </td>"
-                            + "</tr>"
-                            + "<tr>"
-                            + "<td style='width:70px'></td>"
-                            + "</tr>"
-                            + "<tr>"
-                            //+ "<td colspan='2'><input id='" + $self.windowNo + "okbtnattributeset' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' style='margin:14px 0px 0px 62.5%' type='button'  value='OK'/><input id='" + $self.windowNo + "cancelbtnattributeset' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' style='margin:12px 0px 0px 8px' type='button'  value='Cancel'/></td>"
-                            + "<td colspan='2'><div style='float:right;'><input id='" + $self.windowNo + "okbtnattributeset' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' style='padding: 5.5px 14px !important' type='button'  value='" + VIS.Msg.getMsg("OK") + "'/><input id='" + $self.windowNo + "cancelbtnattributeset' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' style='padding: 5.5px 14px !important;' type='button'  value='" + VIS.Msg.getMsg("Cancel") + "'/></div></td>"
-                            + "</tr>"
-                            + "</table>"
-                            + "</div>"
+                + "<td><div style='width: 50%; float: left' class='input-group vis-input-wrap'><div class='vis-control-wrap'><label class='vis-ec-col-lblchkbox'><input type='checkbox'  id='" + $self.windowNo + "expirydate' />" + VIS.Msg.getMsg("VA005_ExpiryDate") + "</label></div></div>"
+                + "<div style='width: 50%; float: left' class='input-group vis-input-wrap'><div class='vis-control-wrap'><label class='vis-ec-col-lblchkbox'><input type='checkbox' disabled id='" + $self.windowNo + "mandatoryexpdate' />" + VIS.Msg.getMsg("VA005_MandatoryExpiryDate") + "</label></div></div></td>"
+                + "</tr>"
+                //+ "<tr>"
+                //+ "<td style='width:110px'></td>"
+                //+ "</tr>"
+                //+ "<div style='margin-top: 20px;'></div>"
+                + "<tr>"
+                //+ "<td><input style='margin:5px 0 10px 0' id='" + $self.windowNo + "lot'  type='radio' name='ab' checked='checked' /><span style='margin-left: 8px;'>" + VIS.Msg.getMsg("VA005_Lot") + "</span></td>" + "<td><input style='margin:5px 0 10px 0' id='" + $self.windowNo + "serial' type='radio' name='ab' /><span style='margin-left: 8px;'>" + VIS.Msg.getMsg("VA005_Serial") + "</span></td>"
+                + "<td><div style='width: 50%; float: left' class='input-group vis-input-wrap'><div class='vis-control-wrap'><label class='vis-ec-col-lblchkbox'><input id='" + $self.windowNo + "lot'  type='checkbox'>" + VIS.Msg.getMsg("VA005_Lot") + "</label></div></div>"
+                + "<div style='width: 50%; float: left' class='input-group vis-input-wrap'><div class='vis-control-wrap'><label class='vis-ec-col-lblchkbox'><input id='" + $self.windowNo + "serial' type='checkbox' >" + VIS.Msg.getMsg("VA005_Serial") + "</label></div></td>"
+                + "</tr>"
+                //+ "<tr>"
+                //+ "<td><label id='" + $self.windowNo + "lotandserialname'>" + VIS.Msg.getMsg("VA005_Lot&Serial") + "</label></td>"
+                //+ "</tr>"
+                //+ "<div style='margin-top: 15px;'></div>"
+                + "<tr>"
+                + "<td><div class='input-group vis-input-wrap'><div class='vis-control-wrap'><select class='VA005-selectattsetcmb' id='" + $self.windowNo + "lotandserialdatadropdown' data-hasbtn=' '></select><label id='" + $self.windowNo + "lotandserialname'>" + VIS.Msg.getMsg("VA005_Lot&Serial") + "</label></div> <div class='input-group-append'><span title='" + VIS.Msg.getMsg("VA005_Edit") + "'  id='" + $self.windowNo + "editbtn' class='input-group-text vis vis-edit'></span>   <span title='" + VIS.Msg.getMsg("VA005_AddLotSerial") + "'    class='input-group-text vis vis-plus'  id='" + $self.windowNo + "addbtn'></span>        </div></div>   </td>"
+                + "</tr>"
+                //+ "<tr>"
+                //+ "<td style='width:70px'></td>"
+                //+ "</tr>"
+                + "<tr>"
+                //+ "<td colspan='2'><input id='" + $self.windowNo + "okbtnattributeset' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' style='margin:14px 0px 0px 62.5%' type='button'  value='OK'/><input id='" + $self.windowNo + "cancelbtnattributeset' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' style='margin:12px 0px 0px 8px' type='button'  value='Cancel'/></td>"
+                + "<td><div class='d-flex justify-content-end'><input id='" + $self.windowNo + "okbtnattributeset' class='mr-3 ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' type='button'  value='" + VIS.Msg.getMsg("OK") + "'/><input id='" + $self.windowNo + "cancelbtnattributeset' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' type='button'  value='" + VIS.Msg.getMsg("Cancel") + "'/></div></td>"
+                + "</tr>"
+                + "</table>"
+                + "</div>"
 
             $openattdialog.append($opendialog);
 
@@ -1370,46 +1376,46 @@
         function lotserialDesign() {
 
             lotserialdialog = $('<div>');
-            lotserialdialogobject = "<div id='" + $self.windowNo + "divhideandshow' style='height:auto;width:100%;>"
-                                    + "<table style='width:100%'>"
-                                    + "<tr>"
-                                    + "<td>" + VIS.Msg.getMsg("Name") + "</td>"
-                                    + "</tr>"
-                                    + "<tr>"
-                                    + "<td><input style='width:100%;background-color:pink;margin:4px 0 8px 0;' id='" + $self.windowNo + "divnametxt' type='text' /></td>"
-                                    + "</tr>"
-                                    + "<tr>"
-                                    + "<td>" + VIS.Msg.getMsg("VA005_StartNo") + "</td>"
-                                    + "</tr>"
-                                    + "<tr>"
-                                    + "<td><input style='width:100%;margin:4px 0 8px 0;' id='" + $self.windowNo + "divstarttext' type='number' value='100' /></td>"
-                                    + "</tr>"
-                                    + "<tr>"
-                                    + "<td>" + VIS.Msg.getMsg("VA005_CurrentNext") + "</td>"
-                                    + "</tr>"
-                                    + "<tr>"
-                                    + "<td><input style='width:100%;margin:4px 0 8px 0;' id='" + $self.windowNo + "divcurrenttext' type='number'  value='100' /></td>"
-                                    + "</tr>"
-                                    + "<tr>"
-                                    + "<td>" + VIS.Msg.getMsg("VA005_Increment") + "</td>"
-                                    + "</tr>"
-                                    + "<tr>"
-                                    + "<td><input style='width:100%;margin:4px 0 8px 0;' id='" + $self.windowNo + "incrementtext' type='number'  value='1' /></td>"
-                                    + "</tr>"
-                                    + "<tr>"
-                                    + "<td>" + VIS.Msg.getMsg("VA005_Prefix") + "</td>"
-                                    + "</tr>"
-                                    + "<tr>"
-                                    + "<td><input style='width:100%;margin:4px 0 8px 0;' id='" + $self.windowNo + "prefixtxt' type='text' /></td>"
-                                    + "</tr>"
-                                    + "<tr>"
-                                    + "<td>" + VIS.Msg.getMsg("VA005_Suffix") + "</td>"
-                                    + "</tr>"
-                                    + "<tr>"
-                                    + "<td><input style='width:100%;margin:4px 0 8px 0;' id='" + $self.windowNo + "serfixtxt' type='text' /></td>"
-                                    + "</tr>"
-                                    + "</table>"
-                                    + "</div>"
+            lotserialdialogobject = "<div id='" + $self.windowNo + "divhideandshow' style='height:auto;width:100%;'>"
+                + "<table style='width:100%;'>"
+                //+ "<tr>"
+                //+ "<td>" + VIS.Msg.getMsg("Name") + "</td>"
+                //+ "</tr>"
+                + "<tr>"
+                + "<td><div class='input-group vis-input-wrap'><div class='vis-control-wrap'><input class='vis-ev-col-mandatory' id='" + $self.windowNo + "divnametxt' type='text' ><label>" + VIS.Msg.getMsg("Name") + "</label></div></div></td>"
+                + "</tr>"
+                //+ "<tr>"
+                //+ "<td>" + VIS.Msg.getMsg("VA005_StartNo") + "</td>"
+                //+ "</tr>"
+                + "<tr>"
+                + "<td><div class='input-group vis-input-wrap'><div class='vis-control-wrap'><input id='" + $self.windowNo + "divstarttext' type='number' value='100' /><label>" + VIS.Msg.getMsg("VA005_StartNo") + "</label></div></div></td>"
+                + "</tr>"
+                //+ "<tr>"
+                //+ "<td>" + VIS.Msg.getMsg("VA005_CurrentNext") + "</td>"
+                //+ "</tr>"
+                + "<tr>"
+                + "<td><div class='input-group vis-input-wrap'><div class='vis-control-wrap'><input id='" + $self.windowNo + "divcurrenttext' type='number'  value='100' /><label>" + VIS.Msg.getMsg("VA005_CurrentNext") + "</label></div></div></td>"
+                + "</tr>"
+                //+ "<tr>"
+                //+ "<td>" + VIS.Msg.getMsg("VA005_Increment") + "</td>"
+                //+ "</tr>"
+                + "<tr>"
+                + "<td><div class='input-group vis-input-wrap'><div class='vis-control-wrap'><input id='" + $self.windowNo + "incrementtext' type='number'  value='1' /><label>" + VIS.Msg.getMsg("VA005_Increment") + "</label></div></div></td>"
+                + "</tr>"
+                //+ "<tr>"
+                //+ "<td>" + VIS.Msg.getMsg("VA005_Prefix") + "</td>"
+                //+ "</tr>"
+                + "<tr>"
+                + "<td><div class='input-group vis-input-wrap'><div class='vis-control-wrap'><input id='" + $self.windowNo + "prefixtxt' type='text' /><label>" + VIS.Msg.getMsg("VA005_Prefix") + "</label></div></div></td>"
+                + "</tr>"
+                //+ "<tr>"
+                //+ "<td>" + VIS.Msg.getMsg("VA005_Suffix") + "</td>"
+                //+ "</tr>"
+                + "<tr>"
+                + "<td><div class='input-group vis-input-wrap'><div class='vis-control-wrap'><input id='" + $self.windowNo + "serfixtxt' type='text' /><label>" + VIS.Msg.getMsg("VA005_Suffix") + "</label></div></div></td>"
+                + "</tr>"
+                + "</table>"
+                + "</div>"
             lotserialdialog.append(lotserialdialogobject);
 
             $divnametxt = lotserialdialog.find("#" + $self.windowNo + "divnametxt");
@@ -1542,33 +1548,35 @@
                 if (selectedIds.length > 0) {
                     //var msg = "" + VIS.Msg.getMsg("VA005_DeleteIt") + "";
 
-                    var r = VIS.ADialog.ask("VA005_DeleteIt");
-                    if (r == true) {
-                        var strIds = "";
-                        for (var i = 0; i < selectedIds.length; i++) {
-                            if (i == 0) {
-                                strIds += selectedIds[i];
+                    //var r = VIS.ADialog.ask("VA005_DeleteIt");
+                    VIS.ADialog.confirm("VA005_DeleteIt", true, "", "Confirm", function (result) {
+                        if (result == true) {
+                            var strIds = "";
+                            for (var i = 0; i < selectedIds.length; i++) {
+                                if (i == 0) {
+                                    strIds += selectedIds[i];
+                                }
+                                else {
+                                    strIds += "," + selectedIds[i];
+                                }
                             }
-                            else {
-                                strIds += "," + selectedIds[i];
-                            }
-                        }
-                        //var sqlattribute = "delete from m_attribute where isactive='Y' and m_attribute_id IN  (" + strIds + ")";
-                        //VIS.DB.executeQuery(sqlattribute, null, null);
-                        deleteattributefromdata();
-                        loadTreeData();
-                        //// $divLeftTree.data("kendoTreeView").remove(selectedNode.closest(".k-item"));
-                        attributeAppendDiv();
-                        $bsyDiv[0].style.visibility = "hidden";
-                        $delattributeboxes.addClass("VA005-disabled");
+                            //var sqlattribute = "delete from m_attribute where isactive='Y' and m_attribute_id IN  (" + strIds + ")";
+                            //VIS.DB.executeQuery(sqlattribute, null, null);
+                            deleteattributefromdata();
+                            loadTreeData();
+                            //// $divLeftTree.data("kendoTreeView").remove(selectedNode.closest(".k-item"));
+                            attributeAppendDiv();
+                            $bsyDiv[0].style.visibility = "hidden";
+                            $delattributeboxes.addClass("VA005-disabled");
 
-                        $attributeobject.cleartext();
-                        selectedIds = [];
-                        $editattributeboxes.addClass("VA005-disabled");
-                    }
-                    else {
-                        $delattributeboxes.removeClass("VA005-disabled");
-                    }
+                            $attributeobject.cleartext();
+                            selectedIds = [];
+                            $editattributeboxes.addClass("VA005-disabled");
+                        }
+                        else {
+                            $delattributeboxes.removeClass("VA005-disabled");
+                        }
+                    });
                 }
                 else {
                     //VIS.ADialog.info("VA005_SelectAttributeBoxesFirst");
@@ -1606,19 +1614,19 @@
 
 
                 var currentheight = ui.size.height;
-                $attributedivleftdragdrop.css("height", currentheight);
+                //$attributedivleftdragdrop.css("height", currentheight);
 
-                $attributedivleftdragdrop.css("overflow-x", "none");
-                $attributedivleftdragdrop.css("overflow-y", "auto");
+                //$attributedivleftdragdrop.css("overflow-x", "none");
+                //$attributedivleftdragdrop.css("overflow-y", "auto");
 
-                $attributedivleftdragdrop.css("width", "100%");
+                //$attributedivleftdragdrop.css("width", "100%");
                 $leftboxbackdivforspliter.css("width", "100%");
 
 
 
                 var height = null;
                 height = $leftboxdivwidth.height() - ($AttributeValuegetid.height() + 10);
-                $attributedivleftdragdrop.css("max-height", height);
+                //$attributedivleftdragdrop.css("max-height", height);
                 $leftboxbackdivforspliter.css("max-height", height);
 
                 //$leftboxattvaluebelow.height($leftboxdivwidth.height() - ($leftboxbackdivforspliter.height() + 10));
@@ -2000,8 +2008,8 @@
                 $openattdialog.css("display", "inherit");
                 var str = '';
                 str = "<div id='" + $self.windowNo + "divappendinleftsideboxes' class='VA005-attributediv  VA005-divboxtarget-design-hover'>"
-                                     + "<label>" + VIS.Msg.getMsg("VA005_AddAttribute") + "</label>"
-                             + "</div>";
+                    + "<label>" + VIS.Msg.getMsg("VA005_AddAttribute") + "</label>"
+                    + "</div>";
                 $attributedivleftdragdrop.prepend($(str));
                 //  $undoattributeboxes.css("display", "none");
                 //$editattributeboxes.css("display", "inherit");
@@ -2037,10 +2045,10 @@
         function getMendatoryTypeData() {
             $cmbattsectmandtype.empty();
             var sql = "SELECT  AD_Ref_list.Name, AD_Ref_list.value" +
-            " FROM AD_Ref_list" +
-            " JOIN AD_Reference" +
-            " ON AD_Ref_List.AD_Reference_ID=AD_Reference.AD_Reference_ID" +
-             " WHERE AD_Reference.Name='M_AttributeSet MandatoryType' AND ad_ref_list.isactive='Y'";
+                " FROM AD_Ref_list" +
+                " JOIN AD_Reference" +
+                " ON AD_Ref_List.AD_Reference_ID=AD_Reference.AD_Reference_ID" +
+                " WHERE AD_Reference.Name='M_AttributeSet MandatoryType' AND ad_ref_list.isactive='Y'";
             var ds = VIS.DB.executeReader(sql.toString(), null);
             if (ds != null) {
                 var key, value = null;
@@ -2155,7 +2163,7 @@
             var ds = VIS.DB.executeDataSet(sql, null, null);
             if (ds != null) {
                 if (ds.tables[0].rows.length > 0) {
-                    for (var i = 0; i < ds.tables[0].rows.length ; i++) {
+                    for (var i = 0; i < ds.tables[0].rows.length; i++) {
                         $addatttextname.val(ds.tables[0].rows[0].cells["name"].toString().trim());
                         //$$addatttextdes.val(ds.tables[0].rows[0].cells["description"].toString().trim());
                         $$addatttextdes.val(ds.tables[0].rows[0].cells["description"]);
@@ -2359,7 +2367,7 @@
                         //drop:function(){alert('adas')},
 
                         dataBound: function (e) {
-                           
+
                         },
 
 
@@ -2403,30 +2411,31 @@
                         //$(uidds)
 
                         //*** First div for tree contain first image and paragraph on tree..
-                        template: "<div  id='#= item.UID #'  nid='#= item.NID #'  class='va005-parentss'><div class='#= item.classforgetnod #' style='margin:#= item.margin #;float:left'>" +
-                    //"<div style='overflow:auto' class='va005-parentss'><div class='#= item.classforgetnod #' style='margin:#= item.margin #;float:left'>" +
-                                    "<div  class='va005_mouseover' style='float:left'>" +
-                                         "<img   src='" + VIS.Application.contextUrl + "#= item.ImageSource #' style='vertical-align: text-top;float: left;margin: 6px 16px 0px 15px;display:#= item.visibility #''>" +
-                                         "<p style='color:black;margin:0 0 0 9px;border-radius:4px;padding:#= item.padding #'>#= item.text #</p>" +
-                                     "</div>" +
-                             "</div>" +
+                        template: "<div  id='#= item.UID #'  nid='#= item.NID #'  class='va005-parentss'><div class='#= item.classforgetnod #'>" +
+                            //"<div style='overflow:auto' class='va005-parentss'><div class='#= item.classforgetnod #' style='margin:#= item.margin #;float:left'>" +
+                            "<div  class='va005_mouseover' style='float:left'>" +
+                            "<i class='#= item.ImageSource #' style='display:#= item.visibility #''></i>" +
+                            //"<img src='" + VIS.Application.contextUrl + "#= item.ImageSource #' style='display:#= item.visibility #''>" +
+                            "<p>#= item.text #</p>" +
+                            "</div>" +
+                            "</div>" +
 
-                    //*** second div for tree contain attribute edit..
-                             "<div style='margin: 0;float:left' class='va005-editiconattvaluehide'  >" +
-                                     "<div style='float:left;display:#= item.visibility #'>" +
-                    //"<a style='cursor:pointer;display:#= item.visibility #'><img src='" + VIS.Application.contextUrl + "#= item.Image2 #' data-nodeid='#= item.NodeID #' data-dType= '#= item.Type #' class='va005_editSet' style='vertical-align: text-top;float: left;margin: 8px 0px 0px 0px;display:#= item.visibility #''></a>" +
-                                        "<a  style='color:gray;font-size:19px;margin:5px;cursor:pointer;display:#= item.visibility #' data-nodeid='#= item.NodeID #' data-dType= '#= item.Type #' class='data-id va005_editSet glyphicon glyphicon-edit va005-editattributecls' ></a>" +
-                                     "</div>" +
-                             "</div>" +
+                            //*** second div for tree contain attribute edit..
+                            "<div class='va005-editiconattvaluehide'  >" +
+                            "<div style='display:#= item.visibility #'>" +
+                            //"<a style='cursor:pointer;display:#= item.visibility #'><img src='" + VIS.Application.contextUrl + "#= item.Image2 #' data-nodeid='#= item.NodeID #' data-dType= '#= item.Type #' class='va005_editSet' style='vertical-align: text-top;float: left;margin: 8px 0px 0px 0px;display:#= item.visibility #''></a>" +
+                            "<a  style='display:#= item.visibility #' data-nodeid='#= item.NodeID #' data-dType= '#= item.Type #' class='data-id va005_editSet vis vis-edit va005-editattributecls' ></a>" +
+                            "</div>" +
+                            "</div>" +
 
-                    //*** Thired div for tree show only related attributeset value..
-                             "<div style='margin: 0;float:left' class='va005-editiconattinfoclosehide'>" +
-                                     "<div style='width:58px;float:right;display:#= item.ShowInfo #'>" +
-                    //"<a style='cursor:pointer;display:#= item.ShowInfo #'><img src='" + VIS.Application.contextUrl + "#= item.Image3 #'  data-nodeid='#= item.NodeID #' class='va005_editattribute'  style='vertical-align: text-top;float: left;margin: 6px 0px 10px 12px;display:#= item.ShowInfo #''></a>" +
-                                         "<a style='cursor:pointer;display:#= item.ShowInfo #'><span  data-nodeid='#= item.NodeID #' class='va005_editattribute  glyphicon glyphicon-italic'  style='color:gray;vertical-align: text-top;float: left;margin: 9px 0px 10px 9px;display:#= item.ShowInfo #''></span></a>" +
-                                          "<a style='cursor:pointer;display:#= item.ShowInfo #'><span  data-parentid='#= item.ParentID #'  data-nodeid='#= item.NodeID #' class='va005_remove  glyphicon glyphicon-remove'  style='color:gray;vertical-align: text-top;float: left;margin: 9px 0px 10px 9px;display:#= item.ShowInfo #''></span></a>" +
-                                     "</div>" +
-                             "</div></div>"
+                            //*** Thired div for tree show only related attributeset value..
+                            "<div style='margin: 0;float:left' class='va005-editiconattinfoclosehide'>" +
+                            "<div style='width:58px;float:right;display:#= item.ShowInfo #'>" +
+                            //"<a style='cursor:pointer;display:#= item.ShowInfo #'><img src='" + VIS.Application.contextUrl + "#= item.Image3 #'  data-nodeid='#= item.NodeID #' class='va005_editattribute'  style='vertical-align: text-top;float: left;margin: 6px 0px 10px 12px;display:#= item.ShowInfo #''></a>" +
+                            "<a style='cursor:pointer;display:#= item.ShowInfo #'><span  data-nodeid='#= item.NodeID #' class='va005_editattribute fa fa-italic'  style='float: left;margin: 9px 0px 10px 9px;display:#= item.ShowInfo #''></span></a>" +
+                            "<a style='cursor:pointer;display:#= item.ShowInfo #'><span  data-parentid='#= item.ParentID #'  data-nodeid='#= item.NodeID #' class='va005_remove fa fa-times'  style='float: left;margin: 9px 0px 10px 9px;display:#= item.ShowInfo #''></span></a>" +
+                            "</div>" +
+                            "</div></div>"
                     });
 
                     $divLeftTree.off(VIS.Events.onTouchStartOrClick, ".va005_editSet");
@@ -2448,7 +2457,7 @@
             });
 
 
-            dragdropnewold();                      
+            dragdropnewold();
 
         };
 
@@ -2458,43 +2467,38 @@
             //$divLeftTree.data("kendoTreeView").wrapper.find(".va005-parentss").eq(1).attr('id');
             //$divLeftTree.data("kendoTreeView").wrapper.find(".va005-parentss").eq(1).parent().on({
             $divLeftTree.data("kendoTreeView").wrapper.find(".va005-parentss").parent().on({
-                mouseenter: function ()
-                {
+                mouseenter: function () {
                     //window.setTimeout(function () {
                     //    $divLeftTree.find(".k-state-hover").css("background-color", "Gainsboro");                        
                     //}, 60);
 
-                    if ($dragevents == true)
-                    {
+                    if ($dragevents == true) {
                         //$(this).addClass("k-state-hover");VA005-classforgetnod 
                         var element = $(this).find(".classforgetnod");
-                        if (element.length > 0)
-                        {
-                            $(this).find(".va005-parentss").addClass("VA005-classforgetnod");                            
+                        if (element.length > 0) {
+                            $(this).find(".va005-parentss").addClass("VA005-classforgetnod");
                         }
                         else {
-                            $(this).css({ 'cursor': 'not-allowed' });                            
+                            $(this).css({ 'cursor': 'not-allowed' });
                         }
                     }
                 },
-                mouseleave: function ()
-                {
-                   
-                        //window.setTimeout(function () {
-                        //    $divLeftTree.find(".ui-droppable").css("background-color", "transparent");
-                        //}, 60);
-                   
+                mouseleave: function () {
 
-                    if ($dragevents == true)
-                    {
+                    //window.setTimeout(function () {
+                    //    $divLeftTree.find(".ui-droppable").css("background-color", "transparent");
+                    //}, 60);
+
+
+                    if ($dragevents == true) {
                         var element = $(this).find(".classforgetnod");
                         if (element.length > 0) {
                             $(this).find(".va005-parentss").removeClass("VA005-classforgetnod");
-                          
+
                         }
                         else {
                             $(this).css({ 'cursor': 'auto' });
-                           
+
                         }
                     }
                 }
@@ -2651,41 +2655,42 @@
             if (type == "1") {
 
 
-                var msg = "" + VIS.Msg.getMsg("VA005_DeleteIt") + "";
-                var r = VIS.ADialog.ask(msg);
-                if (r == true) {
+                //var msg = "" + VIS.Msg.getMsg("VA005_DeleteIt") + "";
+                //var r = VIS.ADialog.ask(msg);
+                VIS.ADialog.confirm("VA005_DeleteIt", true, "", "Confirm", function (result) {
+                    if (result == true) {
 
-                    var valuesendtoctrl = {
-                        attributesetdelID: nodeID
-                    };
+                        var valuesendtoctrl = {
+                            attributesetdelID: nodeID
+                        };
 
-                    $.ajax({
-                        url: VIS.Application.contextUrl + "AttributeListing/DeleteAttributeSetValue",
-                        type: 'Post',
-                        async: false,
-                        datatype: "Json",
-                        cache: false,
-                        data: valuesendtoctrl,
-                        success: function (data)
-                        {
-                            data = JSON.parse(data);
-                            var dataget = data;
-                            if (dataget == "") {
-                                $divLeftTree.data("kendoTreeView").remove(selectedNode.closest(".k-item"));
-                            }
-                            else {
-                                VIS.ADialog.error(dataget);
-                            }
-                            //grdRows.splice(grdRows.indexOf(row), 1);
+                        $.ajax({
+                            url: VIS.Application.contextUrl + "AttributeListing/DeleteAttributeSetValue",
+                            type: 'Post',
+                            async: false,
+                            datatype: "Json",
+                            cache: false,
+                            data: valuesendtoctrl,
+                            success: function (data) {
+                                data = JSON.parse(data);
+                                var dataget = data;
+                                if (dataget == "") {
+                                    $divLeftTree.data("kendoTreeView").remove(selectedNode.closest(".k-item"));
+                                }
+                                else {
+                                    VIS.ADialog.error(dataget);
+                                }
+                                //grdRows.splice(grdRows.indexOf(row), 1);
 
-                        },
-                        error: function (data) {
-                            if (data != null) {                                
-                                VIS.ADialog.error(data);
-                            }
-                        },
-                    });
-                }
+                            },
+                            error: function (data) {
+                                if (data != null) {
+                                    VIS.ADialog.error(data);
+                                }
+                            },
+                        });
+                    }
+                });
 
 
                 //var sql = "delete from m_attributeset where isactive='Y' and m_attributeset_id=" + nodeID;
@@ -2727,11 +2732,11 @@
             //            + "</div>"
 
             $iconullist = "<div style='height:auto;width:100%'>"
-                          //+   "<ul style='list-style-type: none;' id='" + $self.windowNo + "iconUi'>"
-                       //+ "<p style='font-size: 16px;color: #535353;margin-bottom: 3px;'>Attribute Link With attributeSet :</p>"
-                       + "<ul style='font-size: 17px;line-height: 1.7em;padding:0;margin:0' id='" + $self.windowNo + "iconUi'>"
-                       + "</ul>"
-                       + "</div>"
+                //+   "<ul style='list-style-type: none;' id='" + $self.windowNo + "iconUi'>"
+                //+ "<p style='font-size: 16px;color: #535353;margin-bottom: 3px;'>Attribute Link With attributeSet :</p>"
+                + "<ul style='line-height: 1.7em;padding-left: 2rem;;margin:0' id='" + $self.windowNo + "iconUi'>"
+                + "</ul>"
+                + "</div>"
             $icon.append($iconullist);
 
             //*** find "UI" ID
@@ -2747,7 +2752,7 @@
             var $str = null;
             if (ds != null) {
                 while (ds.read()) {
-                    $listid.append($("<li  style='font-size: 14px;color: #666; margin-left: 25px;'>" + VIS.Utility.Util.getValueOfString(ds.getString(0)) + "</li>"));
+                    $listid.append($("<li>" + VIS.Utility.Util.getValueOfString(ds.getString(0)) + "</li>"));
                 }
                 ds.close();
             }

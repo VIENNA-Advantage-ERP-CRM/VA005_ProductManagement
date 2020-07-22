@@ -7,7 +7,6 @@
     VA005.ProductCategoryForm = function () {
         this.frame;
         this.windowNo;
-
         var $self = this; //scoped self pointer
         var $root = $("<div class='vis-forms-container'>");
         var mainProductCategoryUl = null;
@@ -86,7 +85,7 @@
         };
 
         function loadRoot() {
-            debugger;
+
             $root.find(".VA005-report-tittle").text(VIS.Msg.getElement(VIS.Env.getCtx(), "M_Product_Category_ID"));
             $root.find(".VA005-form-top-fields h4").text(VIS.Msg.getElement(VIS.Env.getCtx(), "M_Product_Category_ID"));
             $root.find("#VA005_Value_" + $self.windowNo).text(VIS.Msg.getElement(VIS.Env.getCtx(), "Value"));
@@ -141,6 +140,7 @@
             lblfileUpload = $root.find("#lblfileUpload_" + $self.windowNo);
             //chkDataBaseSave = $root.find("#chkDataBaseSave_" + $self.windowNo);
             chkMultiple = $root.find("#chkMultiple_" + $self.windowNo);
+            btnMultiple.hide();
             pageNo++;
             if (!CheckDTD001() || cmbProductType.val() != "I") {
                 IsConsumable.css({ "display": "none" });
@@ -152,10 +152,11 @@
             LoadAssetGroup();
             LoadProductTypes();
             LoadMatPolicies();
-            mainProductCategoryUl.find('li:eq(1)').addClass('VA005-highlighted');
+            mainProductCategoryUl.find('li:eq(1) .VA005-cat-caption').addClass('VA005-highlighted');
             fillCategory(mainProductCategoryUl.find('li:eq(1)').attr('procatid'));
             btnUndo.attr('disabled', 'disabled').css("opacity", 0.6);
             btnSave.attr('disabled', 'disabled').css("opacity", 0.6);
+            btnDelete.attr('disabled', 'disabled').css("opacity", 0.6);
             btnZoom.attr('title', VIS.Msg.getMsg("VA005_Zoom"));
             Events();
             //ClearData();
@@ -163,19 +164,19 @@
         };
         var LoadProductTypes = function () {
             cmbProductType.append('<option value="E">' + VIS.Msg.getMsg("VA005_Expense") + '</option><option selected="selected" value="I">' + VIS.Msg.getMsg("VA005_Item") + '</option>' +
-                        '<option value="R">' + VIS.Msg.getMsg("VA005_Resource") + '</option><option value="S">' + VIS.Msg.getMsg("VA005_Service") + '</option>');
+                '<option value="R">' + VIS.Msg.getMsg("VA005_Resource") + '</option><option value="S">' + VIS.Msg.getMsg("VA005_Service") + '</option>');
         }
 
         var LoadMatPolicies = function () {
             cmbmatPolicy.append('<option value="F">' + VIS.Msg.getMsg("VA005_Fifo") + '</option><option selected="selected" value="L">' + VIS.Msg.getMsg("VA005_Lifo") + '</option>');
         }
-        
+
         var LoadAttributes = function () {
             cmbAttributeSet.empty();
             var qry = "SELECT M_AttributeSet_ID,Name FROM M_AttributeSet WHERE IsActive = 'Y' AND AD_Client_ID = " + VIS.context.getAD_Client_ID();
-            VIS.DB.executeReader(qry.toString(), null, LoadAttrCallBack);            
+            VIS.DB.executeReader(qry.toString(), null, LoadAttrCallBack);
         };
-        function LoadAttrCallBack(dr){
+        function LoadAttrCallBack(dr) {
             cmbAttributeSet.append(" <option value = 0></option>");
             while (dr.read()) {
                 key = VIS.Utility.Util.getValueOfInt(dr.getString(0));
@@ -187,7 +188,7 @@
         var LoadTaxCategories = function () {
             cmbTaxCategory.empty();
             var qry = "SELECT C_TaxCategory_ID,Name FROM C_TaxCategory WHERE IsActive = 'Y' AND AD_Client_ID = " + VIS.context.getAD_Client_ID();
-            VIS.DB.executeReader(qry.toString(), null, TaxCatCallBack);            
+            VIS.DB.executeReader(qry.toString(), null, TaxCatCallBack);
         };
 
         function TaxCatCallBack(dr) {
@@ -203,7 +204,7 @@
         var LoadAssetGroup = function () {
             cmbAssetGroup.empty();
             var qry = "SELECT A_Asset_Group_ID,Name FROM A_Asset_Group WHERE IsActive = 'Y' AND AD_Client_ID = " + VIS.context.getAD_Client_ID();
-            VIS.DB.executeReader(qry.toString(), null, AssetCallBack);            
+            VIS.DB.executeReader(qry.toString(), null, AssetCallBack);
         };
 
         function AssetCallBack(dr) {
@@ -304,47 +305,69 @@
             });
 
             if (mainProductCategoryUl != null) {
-                mainProductCategoryUl.on("click", "li", function () {
-                    debugger;
+                mainProductCategoryUl.on("click", "li", function (e) {
                     currentElement = $(this);
                     if (currentElement.is(":first-child")) {
                         addCategory();
                         addEffect(currentElement);
                     }
                     else {
-                        pcat_ID = currentElement.find("input").attr("procatID");
+                        var target = $(e.target);
+                        pcat_ID = currentElement.find("input[type=text]").attr("procatID");
                         pcatImg = currentElement.find("p").attr("procatID");
                         pcatOld = currentElement.find("p[procatid='" + pcatImg + "']").text();
-                        if (!chkMultiple.prop("checked")) {
+
+                        if (target.hasClass("VA005-catboxcheck")) {
+                            if (target.prop("checked")) {
+                                window.setTimeout(function () {
+                                    mainProductCategoryUl.find("li[procatid='" + pcatImg + "'] .VA005-cat-caption").addClass('VA005-catboxchecked');
+                                }, 200);
+                                pcats.push(pcatImg);
+                                if (pcats.length == 1) {
+                                    btnDelete.removeAttr('disabled').css("opacity", 1);
+                                }
+                            }
+                            else {
+                                window.setTimeout(function () {
+                                    mainProductCategoryUl.find("li[procatid='" + pcatImg + "'] .VA005-cat-caption").removeClass('VA005-catboxchecked');
+                                }, 200);
+                                pcats.splice(pcats.indexOf(pcatImg), 1);
+                                if (pcats.length == 0) {
+                                    btnDelete.attr('disabled', 'disabled').css("opacity", 0.6);
+                                }
+                            }
+                        }
+
+                        else if (!chkMultiple.prop("checked")) {
                             if (pcatIdOld != pcat_ID) {
                                 pcatIdOld = pcat_ID;
                                 fillCategory(pcat_ID)
                             }
-                            if (mainProductCategoryUl.find("li[procatid='" + pcatImg + "']").hasClass('VA005-highlighted')) {
+                            if (mainProductCategoryUl.find("li[procatid='" + pcatImg + "'] .VA005-cat-caption").hasClass('VA005-highlighted')) {
                                 ShowOrHide(true, currentElement);
                             }
-                            mainProductCategoryUl.find('li').removeClass('VA005-highlighted');
-                            mainProductCategoryUl.find("li[procatid='" + pcatImg + "']").addClass('VA005-highlighted');
-                            pcats = [];
-                            if (VIS.Utility.Util.getValueOfInt(pcatImg) > 0) {
-                                pcats.push(pcatImg);
-                            }
+                            mainProductCategoryUl.find('li .VA005-cat-caption').removeClass('VA005-highlighted');
+                            mainProductCategoryUl.find("li[procatid='" + pcatImg + "'] .VA005-cat-caption").addClass('VA005-highlighted');
+                            //pcats = [];
+                            //if (VIS.Utility.Util.getValueOfInt(pcatImg) > 0) {
+                            //    pcats.push(pcatImg);
+                            //}
                         }
                         else {
-                            if (mainProductCategoryUl.find("li[procatid='" + pcatImg + "']").hasClass('VA005-highlighted')) {
-                                mainProductCategoryUl.find("li[procatid='" + pcatImg + "']").removeClass('VA005-highlighted');
+                            if (mainProductCategoryUl.find("li[procatid='" + pcatImg + "'] .VA005-cat-caption").hasClass('VA005-highlighted')) {
+                                mainProductCategoryUl.find("li[procatid='" + pcatImg + "'] .VA005-cat-caption").removeClass('VA005-highlighted');
                                 pcats.splice(pcats.indexOf(pcatImg), 1);
                             }
                             else {
-                                mainProductCategoryUl.find("li[procatid='" + pcatImg + "']").addClass('VA005-highlighted');
+                                mainProductCategoryUl.find("li[procatid='" + pcatImg + "'] .VA005-cat-caption").addClass('VA005-highlighted');
                                 pcats.push(pcatImg);
                             }
                         }
                     }
                 });
 
-                mainProductCategoryUl.on("keydown", "input", function (event) {
-                    debugger;
+                mainProductCategoryUl.on("keydown", "input[type=text]", function (event) {
+
                     if (event.keyCode == 13 || event.keyCode == 9) {        //will work on press of tab key or enter key                        
                         if (currentElement != null) {
                             ShowOrHide(false, currentElement);
@@ -359,8 +382,8 @@
                     }
                 });
 
-                mainProductCategoryUl.on("focusout", "input", function () {
-                    debugger;
+                mainProductCategoryUl.on("focusout", "input[type=text]", function () {
+
                     if (currentElement != null) {
                         ShowOrHide(false, currentElement);
                         name = event.target.value;
@@ -372,8 +395,8 @@
                     }
                     currentElement = null;
                 });
-
-                mainProductCategoryUl.on("scroll", function () {
+                // Done change by Shifali on 16th July 2020 to LoadCategory while scrolling
+                divLeft.on("scroll", function () {
                     if ($(this).scrollTop() + $(this).innerHeight() >= this.scrollHeight) {
                         pageNo++;
                         LoadCategory(pageNo, PAGESIZE);
@@ -387,7 +410,7 @@
                         VIS.ADialog.error("VA005_ProductType");
                         return;
                     }
-                    debugger;
+
                     $BusyIndicator[0].style.visibility = "visible";
                     if (change) {
                         var xhr = new XMLHttpRequest();
@@ -420,7 +443,7 @@
                                 },
                                 success: function (data) {
                                     var returnValue = data.result;
-                                    debugger;
+
                                     if (returnValue) {
                                         change = false;
                                         if (mainProductCategoryUl != null) {
@@ -436,13 +459,15 @@
                                                 var d = new Date();
                                                 imgCtrl.removeAttr("src").attr("src", VIS.Application.contextUrl + "Images/Thumb140x120/" + imgUrl + "?" + d.getTime());
                                             }
-                                            //ClearData();
+                                            //ClearData();                                           
                                         }
+                                        // Added by Shifali on 16th July 2020 to get the same data after undo (JID_1860)
+                                        fillCategory(pcat_ID);
                                     }
                                     $BusyIndicator[0].style.visibility = "hidden";
                                 },
                                 error: function (jqXHR, textStatus, errorThrown) {
-                                    //debugger;
+                                    //
                                     console.log(textStatus);
                                     $BusyIndicator[0].style.visibility = "hidden";
                                     alert("RecordNotSaved");
@@ -472,7 +497,7 @@
                             }),
                             success: function (data) {
                                 var returnValue = data.result;
-                                debugger;
+
                                 if (returnValue) {
                                     if (mainProductCategoryUl != null) {
                                         var element1 = mainProductCategoryUl.find("input[procatid='" + pcat_ID + "']");
@@ -481,11 +506,12 @@
                                         element2.text(txtName.val());
                                         //ClearData();
                                     }
+                                    fillCategory(pcat_ID);
                                 }
                                 $BusyIndicator[0].style.visibility = "hidden";
                             },
                             error: function (jqXHR, textStatus, errorThrown) {
-                                //debugger;
+                                //
                                 console.log(textStatus);
                                 $BusyIndicator[0].style.visibility = "hidden";
                                 alert("RecordNotSaved");
@@ -500,34 +526,78 @@
 
             if (btnDelete != null) {
                 btnDelete.on("click", function () {
+                    var NameList = [];
                     if (pcats.length > 0) {
-                        if (VIS.ADialog.confirm("DeleteRecord?")) {
+                        // Added by Shifali on 16th July to correct error msg (JID_1860)
+                        //if (VIS.ADialog.confirm("DeleteRecord?")) {
+                        VIS.ADialog.confirm("VA005_DeleteIt", true, "", "Confirm", function (result) {
                             $BusyIndicator[0].style.visibility = "visible";
-                            for (var item in pcats) {
-                                var sql = "DELETE FROM M_Product_Category WHERE M_Product_Category_ID = " + pcats[item];
-                                var no = VIS.DB.executeQuery(sql.toString(), null, null);
-                                if (no <= 0) {
-                                    VIS.ADialog.error("VA005_ProductCategory");
-                                }
-                                else {
-                                    var li = mainProductCategoryUl.find("li[procatid='" + pcats[item] + "']");
-                                    li.remove();
-                                    ClearData();
-                                }
-                            }
+                                $.ajax({
+                                    type: "POST",
+                                    url: VIS.Application.contextUrl + "ProductCategory/DeleteCategory",
+                                    dataType: "json",
+                                    contentType: "application/json; charset=utf-8",
+                                    data: JSON.stringify({
+                                        pcats: pcats
+                                    }),
+                                    success: function (data) {
+                                        if (data.result.length > 0) {
+                                            for (var i = 0; i < data.result.length; i++) {
+                                                if (data.result[i].Name != "") {
+                                                    NameList.push(data.result[i].Name);
+                                                }
+                                                else {
+                                                    var li = mainProductCategoryUl.find("li[procatid='" + data.result[i].Key + "']");
+                                                    li.remove();
+                                                    ClearData();
+                                                }
+                                            }
+                                            if (NameList != "") {
+                                                VIS.ADialog.error("VA005_ProductCategory", true, NameList.join(", "));
+                                            }
+                                        }
+                                    },
+                                    error: function (jqXHR, textStatus, errorThrown) {
+                                        //
+                                        console.log(textStatus);
+                                        $BusyIndicator[0].style.visibility = "hidden";
+                                        alert("RecordNotSaved");
+                                        return;
+                                    }
+                                    //for (var item in pcats) {
+                                    //    var sql = "DELETE FROM M_Product_Category WHERE M_Product_Category_ID = " + pcats[item];
+                                    //    var no = VIS.DB.executeQuery(sql.toString(), null, null);
+                                    //    if (no <= 0) {
+                                    //        //VIS.ADialog.error("VA005_ProductCategory");
+                                    //        var str = "SELECT Name FROM M_Product_Category WHERE M_Product_Category_ID = " + pcats[item];
+                                    //        var name = VIS.DB.executeScalar(str, null, null);
+                                    //        NameList.push(name);
+                                    //        VIS.ADialog.error("VA005_ProductCategory", true, NameList.toString());
+                                    //    }
+                                    //    else {
+                                    //        var li = mainProductCategoryUl.find("li[procatid='" + pcats[item] + "']");
+                                    //        li.remove();
+                                    //        ClearData();
+                                    //    }
+                                    //}
+                                });
                             pcats = [];
-                            mainProductCategoryUl.find('li').removeClass('VA005-highlighted');
-                            mainProductCategoryUl.find('li:eq(1)').addClass('VA005-highlighted');
+                            btnDelete.attr('disabled', 'disabled').css("opacity", 0.6);
+                            mainProductCategoryUl.find(".VA005-catboxcheck").prop("checked", false);
+                            mainProductCategoryUl.find('li .VA005-cat-caption').removeClass('VA005-catboxchecked');
+                            mainProductCategoryUl.find('li .VA005-cat-caption').removeClass('VA005-highlighted');
+                            mainProductCategoryUl.find('li:eq(1) .VA005-cat-caption').addClass('VA005-highlighted');
                             fillCategory(mainProductCategoryUl.find('li:eq(1)').attr('procatid'));
-                        }
+                        });
                     }
+                    //fillCategory(mainProductCategoryUl.find('li:eq(1)').attr('procatid'));
                     $BusyIndicator[0].style.visibility = "hidden";
                 });
             }
 
             if (btnMultiple != null) {
                 btnMultiple.on("click", function () {
-                    debugger;
+
                     if (btnMultiple.hasClass('VA005-btn-Multiple-on')) {
                         btnMultiple.removeClass('VA005-btn-Multiple-on');
                         btnMultiple.addClass('VA005-btn-Multiple');
@@ -536,12 +606,13 @@
                         mainProductCategoryUl.find("li:eq(0)").show();
                         btnSave.show();
                         btnUndo.show();
-                        divLeft.animate({ 'width': '61%' }, 500);
+                        //divLeft.animate({ 'width': '61%' }, 500);
                         divRight.animate({ 'width': "39%" }, 500);
-                        mainProductCategoryUl.find('li').removeClass('VA005-highlighted');
+                        divRight.css('padding', '15px 0 15px 15px');
+                        mainProductCategoryUl.find('li .VA005-cat-caption').removeClass('VA005-highlighted');
                         $(".VA005-effect-off").fadeIn();
                         $(".VA005-effect-off").fadeOut(2000);
-                        mainProductCategoryUl.find('li:eq(1)').addClass('VA005-highlighted');
+                        mainProductCategoryUl.find('li:eq(1) .VA005-cat-caption').addClass('VA005-highlighted');
                         fillCategory(mainProductCategoryUl.find('li:eq(1)').attr('procatid'));
 
                     }
@@ -554,8 +625,9 @@
                         mainProductCategoryUl.find("li:eq(0)").hide();
                         btnSave.hide();
                         btnUndo.hide();
-                        divLeft.animate({ 'width': '100%' }, 500);
+                        //divLeft.animate({ 'width': '100%' }, 500);
                         divRight.animate({ 'width': "0%" }, 500);
+                        divRight.css('padding', '0');
                         $(".VA005-effect-on").fadeIn();
                         $(".VA005-effect-on").fadeOut(2000);
                     }
@@ -565,8 +637,6 @@
             if (btnUndo != null) {
                 btnUndo.on("click", function () {
                     fillCategory(mainProductCategoryUl.find('li:eq(1)').attr('procatid'));
-
-                    debugger;
                     $BusyIndicator[0].style.visibility = "visible";
                     txtName.val(catName);
                     txtValue.val(searchKey);
@@ -588,7 +658,9 @@
                         imgUsrImage.removeAttr("src").attr("src", VIS.Application.contextUrl + "Images/Thumb140x120/" + imageUrl + "?" + d.getTime());
                     }
                     else {
-                        imgUsrImage.removeAttr("src").attr("src", VIS.Application.contextUrl + "Areas/VA005/Images/img-defult.png");
+                        //imgUsrImage.removeAttr("src").attr("src", VIS.Application.contextUrl + "Areas/VA005/Images/img-defult.png");
+                        imgUsrImage.removeAttr("src").attr("src", "");
+
                     }
                     fileUpload.val("");
                     btnUndo.attr('disabled', 'disabled').css("opacity", 0.6);
@@ -599,7 +671,7 @@
 
             if (btnAttributeSet != null) {
                 btnAttributeSet.on("click", function (e) {
-                    debugger;
+
                     options.Attribute = "Y";
                     options.Asset = "N";
                     options.Tax = "N";
@@ -613,7 +685,7 @@
 
             if (btnTaxCategory != null) {
                 btnTaxCategory.on("click", function (e) {
-                    debugger;
+
                     options.Attribute = "N";
                     options.Asset = "N";
                     options.Tax = "Y";
@@ -624,7 +696,7 @@
 
             if (btnAssetGroup != null) {
                 btnAssetGroup.on("click", function (e) {
-                    debugger;
+
                     options.Attribute = "N";
                     options.Asset = "Y";
                     options.Tax = "N";
@@ -635,7 +707,7 @@
 
             if (btnZoom != null) {
                 btnZoom.on("click", function () {
-                    debugger;
+
                     var sql = "select ad_window_id from ad_window where name = 'Product Category'";// Upper( name)=Upper('user' )
                     var ad_window_Id = 0;
                     try {
@@ -659,14 +731,14 @@
 
             if (btnClose != null) {
                 btnClose.on("click", function () {
-                    debugger;
+
                     $self.dispose();
                 });
             }
 
             if (divzoomWindow != null) {
                 divzoomWindow.on("click", "LI", function (e) {
-                    debugger;
+
                     var action = $(e.target).data("action");
                     if (action == VIS.Actions.refresh) {
                         if (options.Attribute == "Y")
@@ -689,7 +761,7 @@
         };
 
         var zoomToWindow = function (record_id, windowName) {
-            debugger;
+
             var sql = "select ad_window_id from ad_window where name = '" + windowName + "'";// Upper( name)=Upper('user' )
             var ad_window_Id = 0;
             try {
@@ -732,25 +804,25 @@
                     data = jQuery.parseJSON(data);
                     var returnValue = data.Key;
                     var returnName = data.Name;
-                    debugger;
+
                     if (returnValue != "") {
                         if (mainProductCategoryUl != null) {
                             mainProductCategoryUl.find('li:eq(0)').after("<li class='VA005-pro-cat' procatID=" + returnValue + "><div procatID=" + returnValue + " class='VA005-cat-img'><img style='height: 100%;width: 100%;' procatID=" + returnValue
-                            + " src=''> </div> <div class='VA005-cat-caption'> <p procatID=" + returnValue + " > " + returnName +
-                            " </p> <p style='display:none;width:100%;height:100%;'><input procatID=" + returnValue + " type='text' value='" + returnName + "'></p></div></li>");
+                                + " src=''> </div> <div class='VA005-cat-caption'><input type='checkbox' class='VA005-catboxcheck'> <p procatID=" + returnValue + " > " + returnName +
+                                " </p> <p style='display:none;'><input procatID=" + returnValue + " type='text' value='" + returnName + "'></p></div></li>");
                         }
                         if (!chkMultiple.prop("checked")) {
                             fillCategory(returnValue)
-                            mainProductCategoryUl.find('li').removeClass('VA005-highlighted');
-                            mainProductCategoryUl.find("li[procatid='" + returnValue + "']").addClass('VA005-highlighted');
+                            mainProductCategoryUl.find('li .VA005-cat-caption').removeClass('VA005-highlighted');
+                            mainProductCategoryUl.find("li[procatid='" + returnValue + "'] .VA005-cat-caption").addClass('VA005-highlighted');
                             pcat_ID = returnValue;
-                            pcats = [];
-                            pcats.push(returnValue);
+                            //pcats = [];
+                            //pcats.push(returnValue);
                         }
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    //debugger;
+                    //
                     console.log(textStatus);
                     if (returnValue) {
                         return;
@@ -760,7 +832,7 @@
         };
 
         var fillCategory = function (cat_ID) {
-            debugger;
+
             if (VIS.Utility.Util.getValueOfInt(cat_ID) > 0) {
                 pcat_ID = cat_ID;
                 $BusyIndicator[0].style.visibility = "visible";
@@ -769,60 +841,62 @@
                 var sql = "";
                 if (CheckDTD001()) {
                     sql = "SELECT pc.Name,pc.Value,pc.M_AttributeSet_ID,pc.ProductType,pc.MMPolicy,pc.Description,pc.C_TaxCategory_ID,pc.A_Asset_Group_ID,pc.DTD001_IsConsumable,pc.AD_Image_ID,img.ImageUrl,img.BinaryData FROM M_Product_Category pc" +
-                    " LEFT JOIN AD_Image img ON pc.AD_Image_ID = img.AD_Image_ID WHERE pc.M_Product_Category_ID = " + cat_ID;
+                        " LEFT JOIN AD_Image img ON pc.AD_Image_ID = img.AD_Image_ID WHERE pc.M_Product_Category_ID = " + cat_ID;
                 }
                 else {
                     sql = "SELECT pc.Name,pc.Value,pc.M_AttributeSet_ID,pc.ProductType,pc.MMPolicy,pc.Description,pc.C_TaxCategory_ID,pc.A_Asset_Group_ID,pc.AD_Image_ID,img.ImageUrl,img.BinaryData FROM M_Product_Category pc" +
-                                        " LEFT JOIN AD_Image img ON pc.AD_Image_ID = img.AD_Image_ID WHERE pc.M_Product_Category_ID = " + cat_ID;
+                        " LEFT JOIN AD_Image img ON pc.AD_Image_ID = img.AD_Image_ID WHERE pc.M_Product_Category_ID = " + cat_ID;
                 }
-                VIS.DB.executeReader(sql.toString(), null, FillCatCallBack);                
+                VIS.DB.executeReader(sql.toString(), null, FillCatCallBack);
             }
         };
 
         function FillCatCallBack(dr) {
-                while (dr.read()) {
-                    catName = dr.getString("Name");
-                    searchKey = dr.getString("Value");
-                    attrSetId = dr.getInt("M_AttributeSet_ID");
-                    pType = dr.getString("ProductType");
-                    Description = dr.getString("Description");
-                    matPol = dr.getString("MMPolicy");
-                    taxCatID = dr.getInt("C_TaxCategory_ID");
-                    asetGrp = dr.getInt("A_Asset_Group_ID");
-                    if (CheckDTD001()) {
-                        IsCon = dr.getString("DTD001_IsConsumable");
-                    }
-                    imageUrl = dr.getString("ImageUrl");
-                    ad_image_id = dr.getInt("AD_Image_ID");
-                    txtName.val(catName);
-                    txtValue.val(searchKey);
-                    txtDesc.val(Description);
-                    cmbAttributeSet.val(attrSetId);
-                    cmbProductType.val(pType);
-                    cmbmatPolicy.val(matPol);
-                    cmbTaxCategory.val(taxCatID);
-                    cmbAssetGroup.val(asetGrp);
-                    if (IsCon == "Y") {
-                        IsConsumable.prop("checked", true);
-                    }
-                    else {
-                        IsConsumable.prop("checked", false);
-                    }
-                    if (imageUrl != "") {
-                        imageUrl = imageUrl.substring(imageUrl.lastIndexOf("/") + 1, imageUrl.length);
-                        var d = new Date();
-                        imgUsrImage.removeAttr("src").attr("src", VIS.Application.contextUrl + "Images/Thumb140x120/" + imageUrl + "?" + d.getTime());
-                    }
-                    else {
-                        imgUsrImage.removeAttr("src").attr("src", VIS.Application.contextUrl + "Areas/VA005/Images/img-defult.png");
-                    }
-                    btnUndo.attr('disabled', 'disabled').css("opacity", 0.6);
-                    btnSave.attr('disabled', 'disabled').css("opacity", 0.6);
+            while (dr.read()) {
+                catName = dr.getString("Name");
+                searchKey = dr.getString("Value");
+                attrSetId = dr.getInt("M_AttributeSet_ID");
+                pType = dr.getString("ProductType");
+                Description = dr.getString("Description");
+                matPol = dr.getString("MMPolicy");
+                taxCatID = dr.getInt("C_TaxCategory_ID");
+                asetGrp = dr.getInt("A_Asset_Group_ID");
+                if (CheckDTD001()) {
+                    IsCon = dr.getString("DTD001_IsConsumable");
                 }
-                dr.close();
-                pcats = [];
-                pcats.push(pcat_ID);
-                $BusyIndicator[0].style.visibility = "hidden";
+                imageUrl = dr.getString("ImageUrl");
+                ad_image_id = dr.getInt("AD_Image_ID");
+                txtName.val(catName);
+                txtValue.val(searchKey);
+                txtDesc.val(Description);
+                cmbAttributeSet.val(attrSetId);
+                cmbProductType.val(pType);
+                cmbmatPolicy.val(matPol);
+                cmbTaxCategory.val(taxCatID);
+                cmbAssetGroup.val(asetGrp);
+                if (IsCon == "Y") {
+                    IsConsumable.prop("checked", true);
+                }
+                else {
+                    IsConsumable.prop("checked", false);
+                }
+                if (imageUrl != "") {
+                    imageUrl = imageUrl.substring(imageUrl.lastIndexOf("/") + 1, imageUrl.length);
+                    var d = new Date();
+                    imgUsrImage.removeAttr("src").attr("src", VIS.Application.contextUrl + "Images/Thumb140x120/" + imageUrl + "?" + d.getTime());
+                }
+                else {
+                    //imgUsrImage.removeAttr("src").attr("src", VIS.Application.contextUrl + "Areas/VA005/Images/img-defult.png");
+                    imgUsrImage.removeAttr("src").attr("src", "");
+
+                }
+                btnUndo.attr('disabled', 'disabled').css("opacity", 0.6);
+                btnSave.attr('disabled', 'disabled').css("opacity", 0.6);
+            }
+            dr.close();
+            //pcats = [];
+            //pcats.push(pcat_ID);
+            $BusyIndicator[0].style.visibility = "hidden";
         };
 
         var updateCategory = function (pcat_ID, pname, item) {
@@ -839,7 +913,7 @@
                 }),
                 success: function (data) {
                     var returnValue = data.result;
-                    debugger;
+
                     if (returnValue) {
                         if (mainProductCategoryUl != null) {
                             element1.text(pname);
@@ -847,7 +921,7 @@
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    //debugger;
+                    //
                     console.log(textStatus);
                     if (textStatus) {
                         return;
@@ -892,15 +966,18 @@
             cmbmatPolicy.val("F");
             cmbProductType.val("I");
             cmbTaxCategory.val(-1);
-            imgUsrImage.removeAttr("src").attr("src", VIS.Application.contextUrl + "Areas/VA005/Images/Img-defult.png");
-            divRight.addClass("VA005-web_dialog_overlay");
+            //imgUsrImage.removeAttr("src").attr("src", VIS.Application.contextUrl + "Areas/VA005/Images/Img-defult.png");
+            imgUsrImage.removeAttr("src").attr("src", "");
+            //divRight.addClass("VA005-web_dialog_overlay");
             divRight.find('input, textarea, button, select').attr('disabled', 'disabled');
         }
 
         var LoadCategory = function (pgNo, pgSize) {
-            debugger;
+
             var sql = "SELECT pc.Name,pc.M_Product_Category_ID,img.ImageUrl,img.BinaryData FROM M_Product_Category pc LEFT JOIN AD_Image img ON pc.AD_Image_ID = img.AD_Image_ID WHERE pc.IsActive='Y' AND pc.AD_Client_ID = " + VIS.Env.getCtx().getAD_Client_ID();
-            VIS.DB.executeDataReaderPaging(sql.toString(), pgNo, pgSize, null, CategoryCallBack);            
+            //  Added by Shifali to access product acc to org
+            sql = VIS.MRole.addAccessSQL(sql, "M_Product_Category", true, true);
+            VIS.DB.executeDataReaderPaging(sql.toString(), pgNo, pgSize, null, CategoryCallBack);
         };
 
         function CategoryCallBack(dr) {
@@ -913,13 +990,13 @@
                     imageUrl = imageUrl.substring(imageUrl.lastIndexOf("/") + 1, imageUrl.length);
                     var d = new Date();
                     mainProductCategoryUl.append("<li class='VA005-pro-cat' procatID=" + pcat_ID + "><div procatID=" + pcat_ID + " class='VA005-cat-img'><img procatID=" + pcat_ID + " style='height: 100%;width: 100%;' src='"
-                    + VIS.Application.contextUrl + "Images/Thumb140x120/" + imageUrl + "?" + d.getTime() + "'> </div> <div class='VA005-cat-caption'> <p procatID=" + pcat_ID + " > " + name +
-                    " </p> <p style='display:none;width:100%;height:100%;'><input procatID=" + pcat_ID + " type='text' value='" + name + "'></p></div></li>");
+                        + VIS.Application.contextUrl + "Images/Thumb140x120/" + imageUrl + "?" + d.getTime() + "'> </div> <div class='VA005-cat-caption'> <input type='checkbox' class='VA005-catboxcheck'><p procatID=" + pcat_ID + " > " + name +
+                        " </p> <p style='display:none;width:100%;'><input procatID=" + pcat_ID + " type='text' value='" + name + "'></p></div></li>");
                 }
                 else {
                     mainProductCategoryUl.append("<li class='VA005-pro-cat' procatID=" + pcat_ID + "><div procatID=" + pcat_ID + " class='VA005-cat-img'><img procatID=" + pcat_ID
-                    + " style='height: 100%;width: 100%;' src=''> </div> <div class='VA005-cat-caption'> <p procatID=" + pcat_ID + "> " + name +
-                    " </p> <p style='display:none;width:100%;height:100%;'><input procatID=" + pcat_ID + " type='text' value='" + name + "'></p></div></li>");
+                        + " style='height: 100%;width: 100%;' src=''> </div> <div class='VA005-cat-caption'><input type='checkbox' class='VA005-catboxcheck'> <p procatID=" + pcat_ID + "> " + name +
+                        " </p> <p style='display:none;width:100%;'><input procatID=" + pcat_ID + " type='text' value='" + name + "'></p></div></li>");
                 }
             }
             dr.close();
@@ -936,16 +1013,16 @@
         };
 
         function busyIndicator() {
-            $BusyIndicator = $("<div class='vis-apanel-busy'>");
-            $BusyIndicator.css({
-                "position": "absolute", "width": "98%", "height": "97%", 'text-align': 'center'
-            });
+            $BusyIndicator = $('<div class="vis-busyindicatorouterwrap" style="visibility: hidden;"><div class="vis-busyindicatorinnerwrap"><i class="vis-busyindicatordiv"></i></div></div>');
+            //$BusyIndicator.css({
+            //    "position": "absolute", "width": "98%", "height": "97%", 'text-align': 'center'
+            //});
             $BusyIndicator[0].style.visibility = "visible";
             $root.append($BusyIndicator);
         };
         /*
-       dispose all object used in this form
-       */
+        dispose all object used in this form
+        */
         this.disposeComponent = function () {
             $self = null;
             if ($root)
