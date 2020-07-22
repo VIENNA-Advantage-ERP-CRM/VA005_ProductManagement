@@ -497,19 +497,20 @@
                                 //var entityGrid = $griddiv.data("kendoGrid");       
                                 
                                 selectedCellID = $($($(this.parentElement).siblings()).get(2)).html();
-                                var msg = "" + VIS.Msg.getMsg("VA005_DeleteIt") + "";
+                               // var msg = "" + VIS.Msg.getMsg("VA005_DeleteIt") + "";
 
-                                var r = VIS.ADialog.ask(msg);
+                               // var r = VIS.ADialog.ask(msg);
+                                VIS.ADialog.confirm("VA005_DeleteIt", true, "", "Confirm", function (result) {
+                                    if (result == true) {
+                                        //$bsyDiv[0].style.visibility = "visible";
+                                        deletefromgrid(selectedCellID);
 
-                                if (r == true) {
-                                    //$bsyDiv[0].style.visibility = "visible";
-                                    deletefromgrid(selectedCellID);
-                                   
-                                }
-                                else {
-                                    
-                                    return;
-                                }
+                                    }
+                                    else {
+
+                                        return;
+                                    }
+                                });
 
                                 //deletefromgrid(selectedCellID);
                                 
