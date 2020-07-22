@@ -2723,6 +2723,7 @@
                         $divlbMain.show();
                     }
 
+                    $divProduct.find('.vis-group-user-profile').width($divProduct.width() - $divProduct.find('.vis-group-user-right:eq(0)').width() - 20);
                     cartGrid.resize();
                     dRelatedGrid.resize();
                 });
