@@ -90,6 +90,8 @@
 
             $wrapper = $('#' + el.id + '_wrapper');
 
+            $wrapper.addClass('VA005-popupcontentwrapper');
+
             $wrapper.css({
                 opacity: 0,
                 visibility: 'hidden',

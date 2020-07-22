@@ -860,3 +860,19 @@ margin-top: -55px;*/
 .VA005-prodmgtimgwrap {
     width: 40%;
 }
+.VA005-poplblchkbefore label.vis-ec-col-lblchkbox:before {
+    position: absolute;
+    content: '';
+    background: #fff;
+    width: 100%;
+    top: -6px;
+    float: left;
+    height: 8px;
+}
+
+.VA005-poplblchkbefore label.vis-ec-col-lblchkbox {
+    width: 100%;
+}
+.VA005-popupcontentwrapper{
+    min-width: 300px;
+}
