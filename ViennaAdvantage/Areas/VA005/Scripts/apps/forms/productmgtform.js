@@ -2722,7 +2722,9 @@
                     if (w < 50) {
                         $divlbMain.show();
                     }
+
                     cartGrid.resize();
+                    dRelatedGrid.resize();
                 });
             });
 
