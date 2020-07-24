@@ -531,7 +531,8 @@
                         // Added by Shifali on 16th July to correct error msg (JID_1860)
                         //if (VIS.ADialog.confirm("DeleteRecord?")) {
                         VIS.ADialog.confirm("VA005_DeleteIt", true, "", "Confirm", function (result) {
-                            $BusyIndicator[0].style.visibility = "visible";
+                            if (result == true) {
+                                $BusyIndicator[0].style.visibility = "visible";
                                 $.ajax({
                                     type: "POST",
                                     url: VIS.Application.contextUrl + "ProductCategory/DeleteCategory",
@@ -553,7 +554,7 @@
                                                 }
                                             }
                                             if (NameList != "") {
-                                                VIS.ADialog.error("VA005_ProductCategory", true, NameList.toString());
+                                                VIS.ADialog.error("VA005_ProductCategory", true, NameList.join(", "));
                                             }
                                         }
                                     },
@@ -581,13 +582,14 @@
                                     //    }
                                     //}
                                 });
-                            pcats = [];
-                            btnDelete.attr('disabled', 'disabled').css("opacity", 0.6);
-                            mainProductCategoryUl.find(".VA005-catboxcheck").prop("checked", false);
-                            mainProductCategoryUl.find('li .VA005-cat-caption').removeClass('VA005-catboxchecked');
-                            mainProductCategoryUl.find('li .VA005-cat-caption').removeClass('VA005-highlighted');
-                            mainProductCategoryUl.find('li:eq(1) .VA005-cat-caption').addClass('VA005-highlighted');
-                            fillCategory(mainProductCategoryUl.find('li:eq(1)').attr('procatid'));
+                                pcats = [];
+                                btnDelete.attr('disabled', 'disabled').css("opacity", 0.6);
+                                mainProductCategoryUl.find(".VA005-catboxcheck").prop("checked", false);
+                                mainProductCategoryUl.find('li .VA005-cat-caption').removeClass('VA005-catboxchecked');
+                                mainProductCategoryUl.find('li .VA005-cat-caption').removeClass('VA005-highlighted');
+                                mainProductCategoryUl.find('li:eq(1) .VA005-cat-caption').addClass('VA005-highlighted');
+                                fillCategory(mainProductCategoryUl.find('li:eq(1)').attr('procatid'));
+                            }
                         });
                     }
                     //fillCategory(mainProductCategoryUl.find('li:eq(1)').attr('procatid'));
@@ -968,13 +970,15 @@
             cmbTaxCategory.val(-1);
             //imgUsrImage.removeAttr("src").attr("src", VIS.Application.contextUrl + "Areas/VA005/Images/Img-defult.png");
             imgUsrImage.removeAttr("src").attr("src", "");
-            divRight.addClass("VA005-web_dialog_overlay");
+            //divRight.addClass("VA005-web_dialog_overlay");
             divRight.find('input, textarea, button, select').attr('disabled', 'disabled');
         }
 
         var LoadCategory = function (pgNo, pgSize) {
 
             var sql = "SELECT pc.Name,pc.M_Product_Category_ID,img.ImageUrl,img.BinaryData FROM M_Product_Category pc LEFT JOIN AD_Image img ON pc.AD_Image_ID = img.AD_Image_ID WHERE pc.IsActive='Y' AND pc.AD_Client_ID = " + VIS.Env.getCtx().getAD_Client_ID();
+            //  Added by Shifali to access product acc to org
+            sql = VIS.MRole.addAccessSQL(sql, "M_Product_Category", true, true);
             VIS.DB.executeDataReaderPaging(sql.toString(), pgNo, pgSize, null, CategoryCallBack);
         };
 
