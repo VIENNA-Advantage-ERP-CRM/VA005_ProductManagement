@@ -72,10 +72,10 @@
         var isOk = true;
         var $maindiv = $('<div class="vis-forms-container" style="display:none;"></div>'); //layout
         var $div = $('<div style="overflow-y:auto;padding-top: 5px;"></div>');
-        var $divPrice = $('<div style="width:100%;height:100%;"></div>');
-        var $divPriceMain = $('<div style="width:100%;height:100%;display:none;margin-left:6px;"></div>'); //layout
+        var $divPrice = $('<div style="width:100%;height:100%;padding-top: 3px;"></div>');
+        var $divPriceMain = $('<div style="width:100%;height:100%;display:none;"></div>'); //layout
         var $divSupp = $('<div style="width:100%;height:100%;"></div>');
-        var $divSupplier = $('<div style="width:100%;height:100%;display:none;margin-left:6px;"></div>');
+        var $divSupplier = $('<div style="width:100%;height:100%;display:none;"></div>');
         var $divCart = $('<div style="width:100%;height:100%;"></div>');
         var $divCartMain = $('<div style="width:100%;height:100%;"></div>');
         var $divPrint = $('<div style="display:none;"></div>'); //layout
@@ -481,16 +481,18 @@
 
         function rightPanel() {
             $divUom = '<div id="VA005_divUom_' + $self.windowNo + '" class="VA005-right-head-btn"><div class="VA005-Add-Btn" id="VA005_btnAddUom_' + $self.windowNo +
-                '"><span class="glyphicon glyphicon-plus" ></span><span style="margin-left:10px;">' + VIS.Msg.getMsg("VA005_AddUom") + '</span></div>' +
-                '<div id="VA005_divConversion_' + $self.windowNo + '" class="VA005-conv-form"><div class="VA005-conv-data"><select id="cmbUomTo_' + $self.windowNo + '"></select></div>' +
-                '<div class="VA005-conv-data"><div class="VA005-conversion-data VA005-Multiplier-data"><label>' + VIS.Msg.getElement(VIS.Env.getCtx(), "MultiplyRate") +
-                '</label></div>' +
-                '<div class="VA005-conversion-data VA005-Division-data"><label>' + VIS.Msg.getElement(VIS.Env.getCtx(), "DivideRate") +
-                '</label></div></div>' +
-                '<div class="VA005-conv-data"><div class="VA005-conversion-data"><label>' + VIS.Msg.getElement(VIS.Env.getCtx(), "UPC") + '</label><input id="VA005_uomUPC_' + $self.windowNo + '"></div>' +
+                '"><span class="vis vis-plus" ></span><span style="margin-left:10px;">' + VIS.Msg.getMsg("VA005_AddUom") + '</span></div>' +
+                '<div id="VA005_divConversion_' + $self.windowNo + '" class="VA005-conv-form"><div class="VA005-conv-data input-group vis-input-wrap"><div class="vis-control-wrap"><select id="cmbUomTo_' + $self.windowNo + '"></select></div></div>' +
+                '<div class="VA005-conv-data"><div class="VA005-conversion-data input-group vis-input-wrap"><div class="vis-control-wrap VA005-Multiplier-data">' +
+                //'<label>' + VIS.Msg.getElement(VIS.Env.getCtx(), "MultiplyRate") + '</label>' +
+                '</div></div>' +
+                '<div class="VA005-conversion-data input-group vis-input-wrap"><div class="vis-control-wrap VA005-Division-data">' +
+                //'<label>' + VIS.Msg.getElement(VIS.Env.getCtx(), "DivideRate") + '</label>' +
+                '</div></div></div>' +
+                '<div class="VA005-conv-data"><div class="VA005-conversion-data input-group vis-input-wrap"><div class="vis-control-wrap"><input id="VA005_uomUPC_' + $self.windowNo + '" placeholder=" " data-placeholder=""><label>' + VIS.Msg.getElement(VIS.Env.getCtx(), "UPC") + '</label></div></div>' +
                 '<div class="VA005-conversion-icons" style="margin-top:29px;"><span id="VA005_btnSaveUom_' + $self.windowNo +
-                '" class="VA005-icons glyphicon glyphicon-floppy-disk VA005-icons-font VA005-disabled" tabindex="0" title="' + VIS.Msg.getMsg("Save") + '"></span><span id="VA005_btnCancelUom_' + $self.windowNo +
-                '" class="VA005-icons glyphicon glyphicon-remove-circle VA005-icons-font" tabindex="0" title="' + VIS.Msg.getMsg("Cancel") + '"></span></div></div>';
+                '" class="VA005-icons vis vis-save VA005-icons-font VA005-disabled" tabindex="0" title="' + VIS.Msg.getMsg("Save") + '"></span><span id="VA005_btnCancelUom_' + $self.windowNo +
+                '" class="VA005-icons fa fa-times-circle-o VA005-icons-font" tabindex="0" title="' + VIS.Msg.getMsg("Cancel") + '" style="font-size: 1.4rem;"></span></div></div>';
             // Added new controls by Shifali on 03 July 2020 to change the amount acc. to culture.
             $txtMul = new VIS.Controls.VAmountTextBox("MulAmount", false, false, true, 50, 100, VIS.DisplayType.Amount, VIS.Msg.getMsg("Amount"));
             $txtDiv = new VIS.Controls.VAmountTextBox("DivAmount", false, false, true, 50, 100, VIS.DisplayType.Amount, VIS.Msg.getMsg("Amount"));
@@ -499,9 +501,9 @@
             $rightPanel.append($divUom);
             $divUomGroup = $('<div class="VA005-uom-list">');
             Multiplier = $rightPanel.find(".VA005-Multiplier-data");
-            Multiplier.append($txtMul.getControl());
+            Multiplier.append($txtMul.getControl().attr('placeholder', ' ').attr('data-placeholder', '')).append('<label>' + VIS.Msg.getElement(VIS.Env.getCtx(), "MultiplyRate") + '</label>');
             Division = $rightPanel.find(".VA005-Division-data");
-            Division.append($txtDiv.getControl());
+            Division.append($txtDiv.getControl().attr('placeholder', ' ').attr('data-placeholder', '')).append('<label>' + VIS.Msg.getElement(VIS.Env.getCtx(), "DivideRate") + '</label>');
             $rightPanel.append($divUomGroup);
             divUom = $rightPanel.find("#VA005_divUom_" + $self.windowNo);
             divUom.hide();
@@ -730,10 +732,10 @@
 
         function PriceUpdatePanel() {
             $divPrice.append($divPriceMain);
-            $divPriceMain.append('<div class="VA005-form-data VA005-popup-head"><div class="input-group vis-input-wrap"><div class="vis-control-wrap"><select id="cmbPricelist_'
-                + $self.windowNo + '"></select><label id="lblPriceList_"' + $self.windowNo + '">' + VIS.Msg.getMsg("PriceListVersion") + '</label></div></div></div><div style = "float:right;margin-right:15px;margin-top:30px">' +
+            $divPriceMain.append('<div style=" float: left; width: 100%; "><div class="VA005-form-data VA005-popup-head"><div class="input-group vis-input-wrap"><div class="vis-control-wrap"><select id="cmbPricelist_'
+                + $self.windowNo + '"></select><label id="lblPriceList_"' + $self.windowNo + '">' + VIS.Msg.getMsg("PriceListVersion") + '</label></div></div></div><div style = "float:right; margin-top:10px">' +
                 //<div class="VA005-form-data VA005-popup-head" style="margin-left:20px;"><label>' + VIS.Msg.getElement(VIS.Env.getCtx(), "C_Currency_ID") +'</label>
-                '<label id="CurrInfo_' + $self.windowNo + '" style="float:right;"></label></div><div id="VA005_priceGrid_' + $self.windowNo + '" class="VA005-popup-data">');
+                '<label id="CurrInfo_' + $self.windowNo + '" style="float:right;"></label></div></div><div id="VA005_priceGrid_' + $self.windowNo + '" class="VA005-popup-data">');
             cmbPriceList = $divPriceMain.find("#cmbPricelist_" + $self.windowNo);
             priceGrid = $divPriceMain.find("#VA005_priceGrid_" + $self.windowNo);
             currSpan = $divPriceMain.find("#CurrInfo_" + $self.windowNo);
