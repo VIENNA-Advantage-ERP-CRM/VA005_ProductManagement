@@ -244,7 +244,7 @@
             $divCommonDocInfo.append($divDocFolder);
             //*****************Common Information Ends********************
             $divDocumentInformation = $('<div class="VA005-doc_information" style="float: left;width: 100%;"></div>');
-            $divbtnLayout = $('<div style="float:right;margin-top:10px;width:100%;"></div>');
+            $divbtnLayout = $('<div style="float:right;width:100%;"></div>');
             $btnOK = $('<input type="submit" class="VA005-upload-buttons" value=' + VIS.Msg.getMsg("OK") + ' style="background-color:rgba(var(--v-c-primary), 1);color: rgba(var(--v-c-on-primary), 1);font-weight: 200;font-family: helvetica;float:right;font-size: 14px;margin-right:10px;padding: 10px 15px;width:100px !Important;"></input>');
             $btnCancel = $('<input type="submit" style="background-color:rgba(var(--v-c-primary), 1);color: rgba(var(--v-c-on-primary), 1);font-weight: 200;font-family: helvetica;font-size: 14px;padding: 10px 15px;width:100px !Important;float:right;" value=' + VIS.Msg.getMsg("Cancel") + '></input>');
             $divbtnLayout.append($btnCancel);
