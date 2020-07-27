@@ -385,8 +385,8 @@
                         //$($($(this).find('.k-state-hover').parents('li')[0]).find('.k-state-hover')).css('z-index', '99999');
                         //$($divLeftTree.find('.va005-parentss').parent()).css('z-index', '99999');
                         
-                            attrlabelvalue = $(this).find('label');
-                            draggabledivid = $(this).attr("data-id");
+                             attrlabelvalue = $(this).find('label');
+                             draggabledivid = $(this).attr("data-id");
                             $dragevents = true;
                         
                     },
@@ -1501,7 +1501,7 @@
 
 
         function deleteattributefromdata() {
-
+            var NameList = [];
 
             $.ajax({
                 url: VIS.Application.contextUrl + "AttributeListing/DeleteAttributeFromData",
@@ -1515,14 +1515,24 @@
                     $attributevaluedivleftdragdrop.empty();
                     // $divLeftTree.data("kendoTreeView").remove(selectedNode.closest(".k-item"));
                     //grdRows.splice(grdRows.indexOf(row), 1);]
-
-                    if (data.value != "") {
-                        alert(data.value);
+                    // Added by shifali on 27th July 2020 to display name of attributes which are not deleted
+                    if (data.value.length > 0) {
+                        for (var i = 0; i < data.value.length; i++) {
+                            if (data.value[i].Name != "") {
+                                NameList.push(data.value[i].Name);
+                            }
+                        }
                     }
+                    if (NameList != "") {
+                        VIS.ADialog.error("VA005_AttributeCategory", true, NameList.join(", "));
+                    }
+                    //if (data.value != "") {
+                    //    VIS.ADialog.error(data.value, true);
+                    //}
                 },
                 error: function (data) {
                     if (data.value != null) {
-                        alert(data.value);
+                        VIS.ADialog.error(data.value);
                     }
                 },
             });

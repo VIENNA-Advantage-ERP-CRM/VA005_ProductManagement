@@ -497,27 +497,35 @@ namespace VA005.Models
         //    }
         //}
 
-        public string DeleteAttributeSetValue(List<Int32> value)
+        public List<KeyNamePair> DeleteAttributeSetValue(List<Int32> value)
         {
-            string _result = "";
+            //string _result = "";
+            List<KeyNamePair> NameList = new List<KeyNamePair>();
             for (int i = 0; i < value.Count; i++)
             {
                 MAttribute obj = new MAttribute(_ctx, value[i], null);
                 int attvalid = obj.GetM_Attribute_ID();
-                try
-                {
+                //try
+                //{
                     if (!obj.Delete(true))
                     {
-                        ValueNamePair pp = VLogger.RetrieveError();
-                        _result += pp.ToString() + "/n";
+                        //ValueNamePair pp = VLogger.RetrieveError();
+                        //_result += pp.ToString() + "/n";
+                        // Added by Shifali on 27th July 2020 to get the names of attribute which are not deleted
+                        KeyNamePair objkey = new KeyNamePair();
+                        objkey.Key = Util.GetValueOfInt(value[i]);
+                        objkey.Name = string.Empty;
+                        string str = "SELECT Name FROM M_Attribute WHERE M_Attribute_ID = " + obj.GetM_Attribute_ID();
+                        objkey.Name = Util.GetValueOfString(DB.ExecuteScalar(str, null, null));
+                        NameList.Add(objkey);
                     }
-                }
-                catch (Exception e)
-                {
+                //}
+                //catch (Exception e)
+                //{
 
-                }
+                //}
             }
-            return _result;
+            return NameList;
         }
 
     }
