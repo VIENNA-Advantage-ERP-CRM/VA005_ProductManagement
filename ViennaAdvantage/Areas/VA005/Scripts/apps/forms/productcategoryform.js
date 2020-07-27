@@ -971,7 +971,7 @@
             //imgUsrImage.removeAttr("src").attr("src", VIS.Application.contextUrl + "Areas/VA005/Images/Img-defult.png");
             imgUsrImage.removeAttr("src").attr("src", "");
             //divRight.addClass("VA005-web_dialog_overlay");
-            //divRight.find('input, textarea, button, select').attr('disabled', 'disabled');
+            divRight.find('input, textarea, button, select').attr('disabled', 'disabled');
         }
 
         var LoadCategory = function (pgNo, pgSize) {
