@@ -29,11 +29,11 @@
         var $leftui = null;
         var $categDiv = null;
         //end
-
+        var format = VIS.DisplayType.GetNumberFormat(VIS.DisplayType.Amount);
+        var dotFormatter = VIS.Env.isDecimalPoint();
         // added by Bharat on 09 March 2018
         var $txtsearchCat = null;
         var $searchCatBtn = null;
-
         var $searchProdBtn = null;
         var $btnCreateProd = null;
         var $divProduct = null;
@@ -752,12 +752,32 @@
                         }
                     },
                     { field: "Product", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.translate(VIS.Env.getCtx(), "Product") + '</span></div>', sortable: false, size: '200px', hidden: false },
-                    { field: "PriceList", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceList") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, editable: { type: 'float' } },
                     {
-                        field: "PriceStd", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceStd") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, editable: { type: 'float' }
+                        field: "PriceList", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceList") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, editable: { type: 'number' },
+                        // Added by shifali on 29th July 2020 to get PriceList value acc. to culture
+                        render: function (record, index, col_index) {
+                            var val = record["PriceList"];
+                            val = checkcommaordot(event, val);
+                            return parseFloat(val).toLocaleString();
+                        }
                     },
                     {
-                        field: "PriceLimit", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceLimit") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, editable: { type: 'float' }
+                        field: "PriceStd", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceStd") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, editable: { type: 'number' },
+                        // Added by shifali on 29th July 2020 to get PriceStd value acc. to culture
+                        render: function (record, index, col_index) {
+                            var val = record["PriceStd"];
+                            val = checkcommaordot(event, val);
+                            return parseFloat(val).toLocaleString();
+                        }
+                    },
+                    {
+                        field: "PriceLimit", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceLimit") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, editable: { type: 'number' },
+                        // Added by shifali on 29th July 2020 to get PriceLimit value acc. to culture
+                        render: function (record, index, col_index) {
+                            var val = record["PriceLimit"];
+                            val = checkcommaordot(event, val);
+                            return parseFloat(val).toLocaleString();
+                        }
                     },
                     { field: "UOM", caption: "", sortable: false, size: '80px', display: false },
                     {
@@ -784,17 +804,56 @@
                     //    render: function () { return '<div style="text-align: center;"><img src="' + VIS.Application.contextUrl + 'Areas/VIS/Images/delete-ico-hover.png" alt="Delete record" title="Delete record" style="opacity: 1;"></div>'; }
                     //}
                 ],
+                // Added by shifali on 29th July 2020 to get value acc. to culture while editing grid column
+                onEditField: function (event) {
+                    id = event.recid;
+                    if (event.column == 3 || event.column == 4 || event.column == 5) {
+                        dGrid.records[event.index][dGrid.columns[event.column].field] = checkcommaordot(event, dGrid.records[event.index][dGrid.columns[event.column].field]);
+                        var _value = format.GetFormatAmount(dGrid.records[event.index][dGrid.columns[event.column].field], "init", dotFormatter);
+                        dGrid.records[event.index][dGrid.columns[event.column].field] = format.GetConvertedString(_value, dotFormatter);
+                        $("#grid_gridprice_" + $self.windowNo + "_rec_" + id).keydown(function (event) {
+                            if (!dotFormatter && (event.keyCode == 190 || event.keyCode == 110)) {// , separator
+                                return false;
+                            }
+                            else if (dotFormatter && event.keyCode == 188) { // . separator
+                                return false;
+                            }
+                            if (event.target.value.contains(".") && (event.which == 110 || event.which == 190 || event.which == 188)) {
+                                if (event.target.value.indexOf('.') > -1) {
+                                    event.target.value = event.target.value.replace('.', '');
+                                }
+                            }
+                            else if (event.target.value.contains(",") && (event.which == 110 || event.which == 190 || event.which == 188)) {
+                                if (event.target.value.indexOf(',') > -1) {
+                                    event.target.value = event.target.value.replace(',', '');
+                                }
+                            }
+                            if (event.keyCode != 8 && event.keyCode != 9 && (event.keyCode < 37 || event.keyCode > 40) &&
+                                (event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105)
+                                && event.keyCode != 109 && event.keyCode != 189 && event.keyCode != 110
+                                && event.keyCode != 144 && event.keyCode != 188 && event.keyCode != 190) {
+                                return false;
+                            }
+                        });
+                    }
+                },
+
                 onChange: function (event) {
 
                     dGrid.records[event.index]["updated"] = true;
                     if (event.column == 3) {
-                        dGrid.records[event.index]["PriceList"] = event.value_new;
+                        // Added by Shifali on 29th July 2020 to get value acc. to culture
+                        var _val = format.GetConvertedNumber(event.value_new, dotFormatter);
+                        dGrid.records[event.index]["PriceList"] = _val.toFixed(precision);
+
                     }
                     else if (event.column == 4) {
-                        dGrid.records[event.index]["PriceStd"] = event.value_new;
+                        var _val = format.GetConvertedNumber(event.value_new, dotFormatter);
+                        dGrid.records[event.index]["PriceStd"] = _val.toFixed(precision);
                     }
                     else if (event.column == 5) {
-                        dGrid.records[event.index]["PriceLimit"] = event.value_new;
+                        var _val = format.GetConvertedNumber(event.value_new, dotFormatter);
+                        dGrid.records[event.index]["PriceLimit"] = _val.toFixed(precision);
                     }
                     else if (event.column == 7) {
                         dGrid.records[event.index]["C_Uom_ID"] = event.value_new;
@@ -803,6 +862,7 @@
                         dGrid.records[event.index]["Lot"] = event.value_new;
                     }
                 },
+
                 onClick: function (event) {
                     //if (event.column == 10 && dGrid.records.length > 0) {
                     //    dGrid.remove(event.recid);
@@ -887,6 +947,55 @@
             //LoadPriceList();
         };
 
+        // function to check comma or dot from given value and return new value
+        function checkcommaordot(event, val) {
+            var foundComma = false;
+            event.value_new = VIS.Utility.Util.getValueOfString(val);
+            if (event.value_new.contains(".")) {
+                foundComma = true;
+                var indices = [];
+                for (var i = 0; i < event.value_new.length; i++) {
+                    if (event.value_new[i] === ".")
+                        indices.push(i);
+                }
+                if (indices.length > 1) {
+                    event.value_new = removeAllButLast(event.value_new, '.');
+                }
+            }
+            if (event.value_new.contains(",")) {
+                if (foundComma) {
+                    event.value_new = removeAllButLast(event.value_new, ',');
+                }
+                else {
+                    var indices = [];
+                    for (var i = 0; i < event.value_new.length; i++) {
+                        if (event.value_new[i] === ",")
+                            indices.push(i);
+                    }
+                    if (indices.length > 1) {
+                        event.value_new = removeAllButLast(event.value_new, ',');
+                    }
+                    else {
+                        event.value_new = event.value_new.replace(",", ".");
+                    }
+                }
+            }
+            if (event.value_new == "") {
+                event.value_new = "0";
+            }
+            return event.value_new;
+        };
+
+        // Remove all seperator but only bring last seperator
+        function removeAllButLast(amt, seprator) {
+            var parts = amt.split(seprator);
+            amt = parts.slice(0, -1).join('') + '.' + parts.slice(-1);
+            if (amt.indexOf('.') == (amt.length - 1)) {
+                amt = amt.replace(".", "");
+            }
+            return amt;
+        };
+
         function SupplierPanel() {
             $divSupp.append($divSupplier);
             $divSupplier.append('<div class="VA005-form-data VA005-popup-head"><div class="input-group vis-input-wrap"><div class="vis-control-wrap"><select id="cmbSupplier_'
@@ -914,8 +1023,24 @@
                 columns: [
                     { field: "product_ID", caption: "", sortable: false, size: '80px', display: false },
                     { field: "Product", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.translate(VIS.Env.getCtx(), "Product") + '</span></div>', sortable: false, size: '200px', hidden: false },
-                    { field: "OrderMin", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "Order_Min") + '</span></div>', sortable: false, size: '120px', min: 80, hidden: false, editable: { type: 'float' }, render: 'number:2' },
-                    { field: "OrderPack", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "Order_Pack") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, editable: { type: 'float' }, render: 'number:2' },
+                    {
+                        field: "OrderMin", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "Order_Min") + '</span></div>', sortable: false, size: '120px', min: 80, hidden: false, editable: { type: 'number' },
+                        // Added by shifali on 29th July 2020 to get ordermin value acc. to culture
+                        render: function (record, index, col_index) {
+                            var val = record["OrderMin"];
+                            val = checkcommaordot(event, val);
+                            return parseFloat(val).toLocaleString();
+                        }
+                    },
+                    {
+                        field: "OrderPack", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "Order_Pack") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, editable: { type: 'number' },
+                        // Added by shifali on 29th July 2020 to get orderpack value acc. to culture
+                        render: function (record, index, col_index) {
+                            var val = record["OrderPack"];
+                            val = checkcommaordot(event, val);
+                            return parseFloat(val).toLocaleString();
+                        }
+                    },
                     {
                         field: "C_Uom_ID", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "C_UOM_ID") + '</span></div>', sortable: false, size: '80px', min: 80, hidden: false, editable: { type: 'select', items: uomArray, showAll: true },
                         render: function (record, index, col_index) {
@@ -937,24 +1062,65 @@
                         }
                     },
                     {
-                        field: "PriceList", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceList") + '</span></div>', sortable: false, size: '80px', min: 80, hidden: false, editable: { type: 'float' },
+                        field: "PriceList", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceList") + '</span></div>', sortable: false, size: '80px', min: 80, hidden: false, editable: { type: 'number' },
                         // Added by Shifali to change the pricelist acc. to culture
+                        //render: function (record, index, col_index) {
+                        //    var val = VIS.Utility.Util.getValueOfDecimal(record["PriceList"].toFixed(precision));
+                        //    return (val).toLocaleString();
+                        //}
                         render: function (record, index, col_index) {
-                            var val = VIS.Utility.Util.getValueOfDecimal(record["PriceList"].toFixed(precision));
-                            return (val).toLocaleString();
+                            var val = record["PriceList"];
+                            val = checkcommaordot(event, val);
+                            return parseFloat(val).toLocaleString();
                         }
                     },
                     { field: "DeliveryTime", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "DeliveryTime_Promised") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, editable: { type: 'int' } },
                     { field: "updated", caption: "", sortable: false, size: '80px', display: false }
                 ],
+                // Added by shifali on 29th July 2020 to get value acc. to culture while editing grid column
+                onEditField: function (event) {
+                    id = event.recid;
+                    if (event.column == 2 || event.column == 3 || event.column == 6) {
+                        sGrid.records[event.index][sGrid.columns[event.column].field] = checkcommaordot(event, sGrid.records[event.index][sGrid.columns[event.column].field]);
+                        var _value = format.GetFormatAmount(sGrid.records[event.index][sGrid.columns[event.column].field], "init", dotFormatter);
+                        sGrid.records[event.index][sGrid.columns[event.column].field] = format.GetConvertedString(_value, dotFormatter);
+                        $("#grid_gridsupplier_" + $self.windowNo + "_rec_" + id).keydown(function (event) {
+                            if (!dotFormatter && (event.keyCode == 190 || event.keyCode == 110)) {// , separator
+                                return false;
+                            }
+                            else if (dotFormatter && event.keyCode == 188) { // . separator
+                                return false;
+                            }
+                            if (event.target.value.contains(".") && (event.which == 110 || event.which == 190 || event.which == 188)) {
+                                if (event.target.value.indexOf('.') > -1) {
+                                    event.target.value = event.target.value.replace('.', '');
+                                }
+                            }
+                            if (event.target.value.contains(",") && (event.which == 110 || event.which == 190 || event.which == 188)) {
+                                if (event.target.value.indexOf(',') > -1) {
+                                    event.target.value = event.target.value.replace('', '');
+                                }
+                            }
+                            if (event.keyCode != 8 && event.keyCode != 9 && (event.keyCode < 37 || event.keyCode > 40) &&
+                                (event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105)
+                                && event.keyCode != 109 && event.keyCode != 189 && event.keyCode != 110
+                                && event.keyCode != 144 && event.keyCode != 188 && event.keyCode != 190) {
+                                return false;
+                            }
+                        });
+                    }
+                },
+
                 onChange: function (event) {
 
                     sGrid.records[event.index]["updated"] = true;
                     if (event.column == 2) {
-                        sGrid.records[event.index]["OrderMin"] = event.value_new;
+                        var _val = format.GetConvertedNumber(event.value_new, dotFormatter);
+                        sGrid.records[event.index]["OrderMin"] = _val.toFixed(precision);
                     }
                     else if (event.column == 3) {
-                        sGrid.records[event.index]["OrderPack"] = event.value_new;
+                        var _val = format.GetConvertedNumber(event.value_new, dotFormatter);
+                        sGrid.records[event.index]["OrderPack"] = _val.toFixed(precision);
                     }
                     else if (event.column == 4) {
                         sGrid.records[event.index]["C_Uom_ID"] = event.value_new;
@@ -963,7 +1129,8 @@
                         sGrid.records[event.index]["C_Currency_ID"] = event.value_new;
                     }
                     else if (event.column == 6) {
-                        sGrid.records[event.index]["PriceList"] = event.value_new;
+                        var _val = format.GetConvertedNumber(event.value_new, dotFormatter);
+                        sGrid.records[event.index]["PriceList"] = _val.toFixed(precision);
                     }
                     else if (event.column == 7) {
                         sGrid.records[event.index]["DeliveryTime"] = event.value_new;
@@ -3744,7 +3911,8 @@
                         $divUomGroup.show();
                     }
                     else {
-                        VIS.ADialog.error(returnValue);
+                        // Added by shifali to get error msg acc. to culture
+                        VIS.ADialog.error("VA005_UOMError");
                     }
                     $bsyDiv[0].style.visibility = "hidden";
                 },
@@ -5009,14 +5177,14 @@
         function callBackPriceGrid(data) {
             if (data.length > 0) {
                 multiValues = data;
-                for (var j = 0; j < dGrid.columns.length; j++) {
-                    if (dGrid.columns[j].field == "PriceList" || dGrid.columns[j].field == "PriceStd" || dGrid.columns[j].field == "PriceLimit") {
-                        dGrid.columns[j].render = function (record, index, colIndex) {
-                            var val = VIS.Utility.Util.getValueOfDecimal(record[dGrid.columns[colIndex].field].toFixed(precision));
-                            return (val).toLocaleString();
-                        };;
-                    }
-                }
+                //for (var j = 0; j < dGrid.columns.length; j++) {
+                //    if (dGrid.columns[j].field == "PriceList" || dGrid.columns[j].field == "PriceStd" || dGrid.columns[j].field == "PriceLimit") {
+                //        dGrid.columns[j].render = function (record, index, colIndex) {
+                //            var val = VIS.Utility.Util.getValueOfDecimal(record[dGrid.columns[colIndex].field]);
+                //            return (val).toLocaleString();
+                //        };;
+                //    }
+                //}
                 w2utils.encodeTags(multiValues);
                 dGrid.add(multiValues);
                 for (var k = 0; k < dGrid.records.length; k++) {
@@ -5315,14 +5483,14 @@
         function callBackSupplierGrid(data) {
             if (data.length > 0) {
                 multiValues = data;
-                for (var j = 0; j < sGrid.columns.length; j++) {
-                    if (sGrid.columns[j].field == "OrderMin" || sGrid.columns[j].field == "OrderPack") {
-                        sGrid.columns[j].render = function (record, index, colIndex) {
-                            var val = VIS.Utility.Util.getValueOfDecimal(record[sGrid.columns[colIndex].field].toFixed(precision));
-                            return (val).toLocaleString();
-                        };
-                    }
-                }
+                //for (var j = 0; j < sGrid.columns.length; j++) {
+                //    if (sGrid.columns[j].field == "OrderMin" || sGrid.columns[j].field == "OrderPack") {
+                //        sGrid.columns[j].render = function (record, index, colIndex) {
+                //            var val = VIS.Utility.Util.getValueOfDecimal(record[sGrid.columns[colIndex].field].toFixed(precision));
+                //            return (val).toLocaleString();
+                //        };
+                //    }
+                //}
                 w2utils.encodeTags(multiValues);
                 sGrid.add(multiValues);
             }
