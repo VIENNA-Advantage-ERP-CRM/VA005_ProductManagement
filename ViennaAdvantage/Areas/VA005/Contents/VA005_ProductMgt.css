@@ -334,9 +334,9 @@ input.VA005-left-panelInput {
     margin-bottom: 10px;*/
 }
 .VA005-conv-data > select, .VA005-conversion-data > input, .VA005-conversion-data > select {
-    /*float: left;
+    /*float: left;*/
     width: 100%;
-    border: 1px solid rgba(var(--v-c-on-secondary), .2);
+    /*border: 1px solid rgba(var(--v-c-on-secondary), .2);
     height: 31px;
     font-size: 14px;
     color: rgba(var(--v-c-on-secondary), 1);
