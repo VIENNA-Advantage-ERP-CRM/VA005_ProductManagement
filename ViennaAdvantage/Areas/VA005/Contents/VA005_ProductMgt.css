@@ -870,8 +870,8 @@ margin-top: -55px;*/
 .VA005-popupcontentwrapper{
     min-width: 300px;
 }
-.VA005-popup-data .w2ui-grid-body input, 
-.VA005-outermainwrapper .w2ui-grid-body input {
+.VA005-popup-data .w2ui-grid-body input[type="checkbox"],
+.VA005-outermainwrapper .w2ui-grid-body input[type="checkbox"] {
     min-height: unset !important;
     height: 12px;
     background: transparent;
