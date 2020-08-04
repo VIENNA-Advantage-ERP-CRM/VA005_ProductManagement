@@ -491,7 +491,7 @@
                 '</div></div></div>' +
                 '<div class="VA005-conv-data"><div class="VA005-conversion-data input-group vis-input-wrap"><div class="vis-control-wrap"><input id="VA005_uomUPC_' + $self.windowNo + '" placeholder=" " data-placeholder=""><label>' + VIS.Msg.getElement(VIS.Env.getCtx(), "UPC") + '</label></div></div>' +
                 '<div class="VA005-conversion-icons" style="margin-top:29px;"><span id="VA005_btnSaveUom_' + $self.windowNo +
-                '" class="VA005-icons vis vis-save VA005-icons-font VA005-disabled" tabindex="0" title="' + VIS.Msg.getMsg("Save") + '"></span><span id="VA005_btnCancelUom_' + $self.windowNo +
+                '" class="VA005-icons vis vis-save VA005-icons-font" tabindex="0" title="' + VIS.Msg.getMsg("Save") + '"></span><span id="VA005_btnCancelUom_' + $self.windowNo +
                 '" class="VA005-icons fa fa-times-circle-o VA005-icons-font" tabindex="0" title="' + VIS.Msg.getMsg("Cancel") + '" style="font-size: 1.4rem;"></span></div></div>';
             // Added new controls by Shifali on 03 July 2020 to change the amount acc. to culture.
             $txtMul = new VIS.Controls.VAmountTextBox("MulAmount", false, false, true, 50, 100, VIS.DisplayType.Amount, VIS.Msg.getMsg("Amount"));
