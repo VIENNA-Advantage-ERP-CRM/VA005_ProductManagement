@@ -1,5 +1,6 @@
 ﻿/*Version 1.0.13.0*/
 
+
 .VA005-web_dialog_overlay {
     top: 0;
     right: 0;
@@ -1378,9 +1379,9 @@ input.VA005-left-panelInput {
 }
 
     .VA005-conv-data > select, .VA005-conversion-data > input, .VA005-conversion-data > select {
-        /*float: left;
-    width: 100%;
-    border: 1px solid rgba(var(--v-c-on-secondary), .2);
+        /*float: left;*/
+        width: 100%;
+        /*border: 1px solid rgba(var(--v-c-on-secondary), .2);
     height: 31px;
     font-size: 14px;
     color: rgba(var(--v-c-on-secondary), 1);
@@ -1955,8 +1956,8 @@ margin-top: -55px;*/
     min-width: 300px;
 }
 
-.VA005-popup-data .w2ui-grid-body input,
-.VA005-outermainwrapper .w2ui-grid-body input {
+.VA005-popup-data .w2ui-grid-body input[type="checkbox"],
+.VA005-outermainwrapper .w2ui-grid-body input[type="checkbox"] {
     min-height: unset !important;
     height: 12px;
     background: transparent;
