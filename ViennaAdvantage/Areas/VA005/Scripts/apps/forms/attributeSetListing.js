@@ -380,21 +380,23 @@
                     cursorAt: { left: -10, top: -10 },
                     helper: function () {
                         // Getting attributes which needs to be dragged
-                        var selected = $attributedivleftdragdrop.find('.VA005-attributediv div').find("input:checked").parent().parent();
+                        var selected = $($attributedivleftdragdrop.find('.VA005-attributediv div').find("input:checked")).parent().parent();
                         if (selected.length === 0) {
                             selected = $(this);
                         }
                         var container = $('<div/>').attr('id', 'draggingContainer');
-                        if ($attributedivleftdragdrop.find('.VA005-attributediv').find("input:checked").length == 0) {
-                            if ($(this).hasClass("VIS-tm-topMLi")) {
-                                return;
-                            }
-                            selected = $(this).parent();
-                            container = $('<div style="background-color:lightblue;"/>').attr('id', 'draggingContainer');
-                        }
                         container.append(selected.clone());
                         return container;
                     },
+                    start: function (event, ui) {
+                        $dragevents = true;
+                    },
+                    drag: function (event, ui) {
+                    },
+
+                    stop: function () {
+                        $dragevents = false;
+                    }
                 });
 
 
@@ -493,79 +495,77 @@
                     saveAttribute(attributeidbydivboxes, attributesetidbydivboxes);
                     // loadTreeData();
                     //}, 200);
-                    attributeidbydivboxes.length = 0;
+                    attributeidbydivboxes.length = [];
                     //$bsyDiv[0].style.visibility = "hidden";
                 }
             });
         };
 
 
-        function saveAttribute(attributeidbydivboxes, getidoflablefordrop) {
+        function saveAttribute(attributeidbydivboxes, attributesetidbydivboxes) {
 
             $bsyDiv[0].style.visibility = "visible";
-            for (var i = 0; i < attributeidbydivboxes.length; i++) {
-                var valuesendtoctrl = {
-                    attributsetid: attributeidbydivboxes[i],
-                    lablename: attributesetidbydivboxes
-                };
-
-                $.ajax({
-                    url: VIS.Application.contextUrl + "Attribute/SaveAttributeuses",
-                    type: 'Post',
-                    async: false,
-                    datatype: "Json",
-                    data: valuesendtoctrl,
-                    success: function (data) {
-                        //selectedAttributeID = JSON.parse(data);
-                        var result = JSON.parse(data);
-                        loadTreeData();
-
-
-                        //var objNewNode = {};
-                        //objNewNode["text"] = attrlabelvalue
-                        //objNewNode["nodeid"] = result;                    
-                        //ImageSource = "Areas/VA005/Images/attSet.png";
-                        //var selectedNode = $($($divLeftTree.find('.k-state-hover').parents('li')[0])).find('.k-top').find('.k-state-hover');
+            //    var valuesendtoctrl = {
+            //        attributsetid: attributeidbydivboxes,
+            //        lablename: attributesetidbydivboxes
+            //};
+            var attributsetid = attributeidbydivboxes.toString();
+            $.ajax({
+                url: VIS.Application.contextUrl + "Attribute/SaveAttributeuses",
+                type: 'Post',
+                async: false,
+                datatype: "Json",
+                data: { attributsetid: attributsetid, nid: attributesetidbydivboxes },
+                success: function (data) {
+                    //selectedAttributeID = JSON.parse(data);
+                    var result = JSON.parse(data);
+                    loadTreeData();
 
 
-
-                        //var selectedNode = $($($divLeftTree.find('.k-state-hover').parents('li')[0])).find('.k-state-hover');
-
-                        //var newChild = $divLeftTree.data("kendoTreeView").append({
-                        //    ImageSource: "Areas/VA005/Images/att.png",
-                        //    text: attrlabelvalue.text(),
-                        //    'NodeID': result,
-                        //    'UID': attributeidbydivboxes + "_2_" + $self.windowNo,
-                        //    'Type': '2'
-
-                        //}, selectedNode);
-
-                        //selectedNode.dataSource.read();
+                    //var objNewNode = {};
+                    //objNewNode["text"] = attrlabelvalue
+                    //objNewNode["nodeid"] = result;                    
+                    //ImageSource = "Areas/VA005/Images/attSet.png";
+                    //var selectedNode = $($($divLeftTree.find('.k-state-hover').parents('li')[0])).find('.k-top').find('.k-state-hover');
 
 
 
-                        //newChild.find('img').css('margin', '6px 20px 0px 30px');
-                        //  newChild.find('p').css({ 'margin': '7px 47px 0px 30px' });
+                    //var selectedNode = $($($divLeftTree.find('.k-state-hover').parents('li')[0])).find('.k-state-hover');
+
+                    //var newChild = $divLeftTree.data("kendoTreeView").append({
+                    //    ImageSource: "Areas/VA005/Images/att.png",
+                    //    text: attrlabelvalue.text(),
+                    //    'NodeID': result,
+                    //    'UID': attributeidbydivboxes + "_2_" + $self.windowNo,
+                    //    'Type': '2'
+
+                    //}, selectedNode);
+
+                    //selectedNode.dataSource.read();
 
 
-                        // newChild.find(".va005-editattributecls").on("click", editItem);
+
+                    //newChild.find('img').css('margin', '6px 20px 0px 30px');
+                    //  newChild.find('p').css({ 'margin': '7px 47px 0px 30px' });
 
 
-                        //callattvalue(draggabledivid);
-
-                        // loadTreeData();
-                        //$divLeftTree.data("kendoTreeView").select(newChild);
-                        $bsyDiv[0].style.visibility = "hidden";
+                    // newChild.find(".va005-editattributecls").on("click", editItem);
 
 
+                    //callattvalue(draggabledivid);
 
-                    },
-                    error: function (data) {
-                        //alert(data)
-                    },
+                    // loadTreeData();
+                    //$divLeftTree.data("kendoTreeView").select(newChild);
+                    $bsyDiv[0].style.visibility = "hidden";
 
-                });
-            }
+
+
+                },
+                error: function (data) {
+                    //alert(data)
+                },
+
+            });
             // attributeidgetonokclick = selectedAttributeID;
         };
 
@@ -1035,18 +1035,18 @@
                     getidfromattboxexforaddnode = selectedAttributeID;
 
                     if (target.prop("checked")) {
-                        selectedIds.push(selectedAttributeID);
-                        target.parent().parent().addClass('VA005-divboxtarget-design');
-                        if (selectedIds.length == 1) {
-                            objectcall();
-                            $attributeobject.cmboonclick();
-                            $self.attributevallueonattributeclick(selectedAttributeID);
-                            $editattributeboxes.removeClass("VA005-disabled");
-                            $delattributeboxes.removeClass("VA005-disabled");
-                        }
-                        else {
-                            $attributevaluedivleftdragdrop.empty();
-                        }
+                            selectedIds.push(selectedAttributeID);
+                            target.parent().parent().addClass('VA005-divboxtarget-design');
+                            if (selectedIds.length == 1) {
+                                objectcall();
+                                $attributeobject.cmboonclick();
+                                $self.attributevallueonattributeclick(selectedAttributeID);
+                                $editattributeboxes.removeClass("VA005-disabled");
+                                $delattributeboxes.removeClass("VA005-disabled");
+                            }
+                            else {
+                                $attributevaluedivleftdragdrop.empty();
+                            }
                     }
                     else {
                         if (selectedIds.length == 1) {
@@ -1069,6 +1069,7 @@
                             //objectcall();
                         }
                     }
+
                     if (selectedIds.length == 0 || selectedIds.length > 1) {
 
                         $attributevaluedivleftdragdrop.empty();

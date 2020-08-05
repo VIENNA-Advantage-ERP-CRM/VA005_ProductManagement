@@ -26,7 +26,7 @@ namespace VA005.Models
         {
             MAttribute obj = new MAttribute(_ctx, value.ID, null);
             obj.SetName(value.name);
-           
+
 
             if (value.description != null)
             {
@@ -122,26 +122,55 @@ namespace VA005.Models
             return obj;
         }
 
-        public string SaveAttributeuses(VA005_SaveAttributeuses value)
+        //public string SaveAttributeuses(VA005_SaveAttributeuses value)
+        //{
+        //    MAttributeUse obj = new MAttributeUse(_ctx, 0, null);
+        //    //obj.SetM_AttributeSet_ID(value.attributsetid);
+        //    //obj.SetM_Attribute_ID(value.lablename);
+
+        //    obj.SetM_AttributeSet_ID(value.lablename);
+        //    obj.SetM_Attribute_ID(value.attributsetid);
+
+        //    var sql = "select max(seqno) as seqno from M_AttributeUse where isactive='Y'";
+        //    DataSet ds = DB.ExecuteDataset(sql, null, null);
+        //    value.sqno = Util.GetValueOfInt(ds.Tables[0].Rows[0]["seqno"]);
+
+        //    obj.SetSeqNo(value.sqno + 10);
+        //    if (obj.Save())
+        //    {
+        //        //return obj.GetM_AttributeSet_ID().ToString();
+        //        return obj.GetM_Attribute_ID().ToString();
+        //    }
+        //    return Msg.GetMsg(_ctx, "VA005_UnableToSaveAttributeUses");
+        //}
+        // Added by Shifali on 04 Aug 2020 to Save multiple attributes
+        /// <summary>
+        ///  Save Attribute Uses
+        /// </summary>
+        /// <param name="ctx">Ctx</param>
+        /// <param name="attributsetid">attributesetid</param>
+        /// <param name="nid">node id</param>
+        /// <returns>Result</returns>
+        public string SaveAttributeuses(Ctx ctx, string attributsetid, int nid)
         {
-            MAttributeUse obj = new MAttributeUse(_ctx, 0, null);
-            //obj.SetM_AttributeSet_ID(value.attributsetid);
-            //obj.SetM_Attribute_ID(value.lablename);
-
-            obj.SetM_AttributeSet_ID(value.lablename);
-            obj.SetM_Attribute_ID(value.attributsetid);
-
-            var sql = "select max(seqno) as seqno from M_AttributeUse where isactive='Y'";
-            DataSet ds = DB.ExecuteDataset(sql, null, null);
-            value.sqno = Util.GetValueOfInt(ds.Tables[0].Rows[0]["seqno"]);
-
-            obj.SetSeqNo(value.sqno + 10);
-            if (obj.Save())
+            string[] attributeID = attributsetid.Split(',');
+            for (int i = 0; i < attributeID.Length; i++)
             {
-                //return obj.GetM_AttributeSet_ID().ToString();
-                return obj.GetM_Attribute_ID().ToString();
+                MAttributeUse obj = new MAttributeUse(_ctx, 0, null);
+                obj.SetM_AttributeSet_ID(nid);
+                obj.SetM_Attribute_ID(Util.GetValueOfInt(attributeID[i]));
+                var sql = "SELECT max(seqno) AS seqno FROM M_AttributeUse where isactive='Y' AND M_AttributeSet_ID="+ obj.GetM_AttributeSet_ID();
+                DataSet ds = DB.ExecuteDataset(sql, null, null);
+                var sqno = Util.GetValueOfInt(ds.Tables[0].Rows[0]["seqno"]);
+                 
+                obj.SetSeqNo(sqno + 10);
+                if (!obj.Save())
+                {
+                    //return obj.GetM_AttributeSet_ID().ToString();
+                    return Msg.GetMsg(_ctx, "VA005_UnableToSaveAttributeUses");
+                }
             }
-            return Msg.GetMsg(_ctx, "VA005_UnableToSaveAttributeUses");
+            return string.Empty;
         }
 
         public String DeleteAttributeValue(VA005_DeleteAttributeValue value)
