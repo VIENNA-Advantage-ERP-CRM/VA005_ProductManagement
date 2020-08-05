@@ -55,11 +55,25 @@ namespace VA005.Controllers
             return Json(new { result =text}, JsonRequestBehavior.AllowGet);           
         }
 //=================================================
-        public JsonResult SaveAttributeuses(VA005.Models.Attribute.VA005_SaveAttributeuses value)
+        //public JsonResult SaveAttributeuses(VA005.Models.Attribute.VA005_SaveAttributeuses value)
+        //{
+        //    Ctx ctx = Session["ctx"] as Ctx;
+        //    VA005.Models.Attribute obj = new VA005.Models.Attribute(ctx);
+        //    var text = obj.SaveAttributeuses(value);
+        //    return Json(JsonConvert.SerializeObject(text), JsonRequestBehavior.AllowGet);
+        //}
+        // Added by Shifali on 04 Aug 2020 to Save multiple attributes
+        /// <summary>
+        /// Save Attribute Uses
+        /// </summary>
+        /// <param name="attributsetid">attributesetid</param>
+        /// <param name="nid">node id</param>
+        /// <returns>Result</returns>
+        public JsonResult SaveAttributeuses(string attributsetid,int nid)
         {
             Ctx ctx = Session["ctx"] as Ctx;
             VA005.Models.Attribute obj = new VA005.Models.Attribute(ctx);
-            var text = obj.SaveAttributeuses(value);
+            var text = obj.SaveAttributeuses(ctx, attributsetid,nid);
             return Json(JsonConvert.SerializeObject(text), JsonRequestBehavior.AllowGet);
         }
 
