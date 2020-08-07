@@ -797,7 +797,7 @@
                     else if (windowName == "Tax Category")
                         zoomQuery.addRestriction("C_TaxCategory_ID", VIS.Query.prototype.EQUAL, record_id);
                     else if (windowName == "Asset Group")
-                        zoomQuery.addRestriction("A_Asset_Gruoup_ID", VIS.Query.prototype.EQUAL, record_id);
+                        zoomQuery.addRestriction("A_Asset_Group_ID", VIS.Query.prototype.EQUAL, record_id);
                     zoomQuery.setRecordCount(1);
                     VIS.viewManager.startWindow(ad_window_Id, zoomQuery);
                 }
