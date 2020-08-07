@@ -3437,7 +3437,7 @@
             });
 
             btnEditCart.on("click", function (e) {
-                zoomToWindow(cmbCart.val(), "VAICNT_InventoryCount");
+                zoomToWindow(VIS.Utility.Util.getValueOfInt(cmbCart.val()), "VAICNT_InventoryCount");
             });
 
             btnRefreshCart.on("click", function (e) {
