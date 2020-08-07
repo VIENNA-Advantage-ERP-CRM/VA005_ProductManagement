@@ -1408,7 +1408,7 @@
 
             lotserialdialog = $('<div>');
             lotserialdialogobject = "<div id='" + $self.windowNo + "divhideandshow' style='height:auto;width:100%;'>"
-                + "<table style='width:100%;'>"
+                + "<table style='width:100%; height:390px'>"
                 //+ "<tr>"
                 //+ "<td>" + VIS.Msg.getMsg("Name") + "</td>"
                 //+ "</tr>"

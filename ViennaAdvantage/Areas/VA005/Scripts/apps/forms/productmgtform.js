@@ -4160,7 +4160,6 @@
                     else {
                         currentImgPaths = $(ui.draggable).attr("path");
                     }
-
                     SaveAttributeValueImage(currentImgPaths, $(ui.draggable).attr("filename"), parseInt($(this).find("img").attr("data-uid")), $(this), $(this).find("img").attr("data-attvalID"), $(this).find("img").attr("data-attimages_id"));
                 },
                 tolerance: 'pointer'
@@ -4372,9 +4371,9 @@
                 var M_Locator_ID = VIS.context.getContextAsInt($self.windowNo, "M_Locator_ID");
                 var C_BPartner_ID = VIS.context.getContextAsInt($self.windowNo, "C_BPartner_ID");
                 var obj = new VIS.PAttributesForm(0, prods[0], M_Locator_ID, C_BPartner_ID, productWindow, AD_Column_ID, $self.windowNo);
-                if (obj.hasAttribute) {
-                    obj.showDialog();
-                }
+                //if (obj.hasAttribute) {
+                //    obj.showDialog();
+                //}
                 obj.onClose = function (mAttributeSetInstanceId, name, mLocatorId) {
                     //setValueInControl(mAttributeSetInstanceId, name);
                     LoadVarients();
@@ -4600,19 +4599,23 @@
         };
 
         function deleteConversion(ucid) {
-            if (VIS.ADialog.ask("DeleteRecord?")) {
-                // Done by Bharat on 05 March 2018 to move queries to server side
-                var no = VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/ProductManagement/DeleteConversion", { "C_UOM_Conversion_ID": ucid });
+            // Done by Shifali to get the msg acc to culture
+            //if (VIS.ADialog.ask("DeleteRecord?")) {
+            VIS.ADialog.confirm("VA005_DeleteIt", true, "", "Confirm", function (result) {
+                if (result == true) {
+                    // Done by Bharat on 05 March 2018 to move queries to server side
+                    var no = VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/ProductManagement/DeleteConversion", { "C_UOM_Conversion_ID": ucid });
 
-                //var qry = "DELETE FROM C_UOM_Conversion WHERE C_UOM_Conversion_ID=" + ucid;
-                //var no = VIS.Utility.Util.getValueOfInt(VIS.DB.executeQuery(qry.toString()));
-                if (no > 0) {
-                    LoadUomGroup();
+                    //var qry = "DELETE FROM C_UOM_Conversion WHERE C_UOM_Conversion_ID=" + ucid;
+                    //var no = VIS.Utility.Util.getValueOfInt(VIS.DB.executeQuery(qry.toString()));
+                    if (no > 0) {
+                        LoadUomGroup();
+                    }
+                    else {
+                        VIS.ADialog.error("VA005_ConversionNotDeleted");
+                    }
                 }
-                else {
-                    VIS.ADialog.error("VA005_ConversionNotDeleted");
-                }
-            }
+            });
         };
 
         function LoadUomGroup() {
@@ -6104,7 +6107,8 @@
 
                         $self.okBtnPressed = true;
                         if (returnValue != "") {
-                            VIS.ADialog.error(returnValue);
+                            //Done by shifali to remove the extra brackets
+                            VIS.ADialog.error("", "", returnValue, "");
                             callBack(returnValue);
                         }
                         setBusy(false);
