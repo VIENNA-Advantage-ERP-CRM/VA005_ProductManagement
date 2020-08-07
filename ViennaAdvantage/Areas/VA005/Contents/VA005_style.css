@@ -612,6 +612,9 @@ h4.VA005-report-tittle {
 }
 .VA005-middle-left-main .vis-group-DataContainer {
     padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 .VA005-rightformdatawrap {
     display: flex;

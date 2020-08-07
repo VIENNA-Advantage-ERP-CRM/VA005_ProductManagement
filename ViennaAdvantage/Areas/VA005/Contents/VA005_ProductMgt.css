@@ -334,9 +334,9 @@ input.VA005-left-panelInput {
     margin-bottom: 10px;*/
 }
 .VA005-conv-data > select, .VA005-conversion-data > input, .VA005-conversion-data > select {
-    /*float: left;
+    /*float: left;*/
     width: 100%;
-    border: 1px solid rgba(var(--v-c-on-secondary), .2);
+    /*border: 1px solid rgba(var(--v-c-on-secondary), .2);
     height: 31px;
     font-size: 14px;
     color: rgba(var(--v-c-on-secondary), 1);
@@ -810,6 +810,7 @@ margin-top: -55px;*/
 }
 .VA005-apanel-lb .vis-apanel-lb-toggle {
     margin-bottom: 10px;
+    cursor: pointer;
 }
 .VA005-cat-caption > p label {
     display: block;
@@ -832,13 +833,13 @@ margin-top: -55px;*/
     border-width: 0 3px 3px 0;
 }
 .VA005-cat-caption.VA005-highlighted.VA005-catboxchecked, .VA005-cat-caption.VA005-catboxchecked {
-    border: 1px solid #f12d2d;
-    color: #f12d2d;
+    /*border: 1px solid #f12d2d;
+    color: #f12d2d;*/
 }
 
 .VA005-catboxchecked .VA005-catboxcheck[type="checkbox"]:checked:before, 
 .VA005-catboxchecked .VA005-catboxcheck[type="checkbox"]:checked {
-    border-color: #f12d2d;
+    /*border-color: #f12d2d;*/
 }
 .VA005-form-top-fields .VA005-data-wrap:last-child {
     margin-bottom: 0;
@@ -870,8 +871,8 @@ margin-top: -55px;*/
 .VA005-popupcontentwrapper{
     min-width: 300px;
 }
-.VA005-popup-data .w2ui-grid-body input, 
-.VA005-outermainwrapper .w2ui-grid-body input {
+.VA005-popup-data .w2ui-grid-body input[type="checkbox"],
+.VA005-outermainwrapper .w2ui-grid-body input[type="checkbox"] {
     min-height: unset !important;
     height: 12px;
     background: transparent;
@@ -889,4 +890,8 @@ margin-top: -55px;*/
 .VA005-tree-data .k-state-selected {
     background-color: transparent !important;
     color: rgba(var(--v-c-primary), 1) !important;
+}
+
+.VA005-middle-left-main .vis-group-user-wrap .vis-group-user-right {
+    margin-left: auto;
 }
