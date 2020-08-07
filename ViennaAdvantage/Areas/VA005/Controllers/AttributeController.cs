@@ -62,6 +62,7 @@ namespace VA005.Controllers
         //    var text = obj.SaveAttributeuses(value);
         //    return Json(JsonConvert.SerializeObject(text), JsonRequestBehavior.AllowGet);
         //}
+
         // Added by Shifali on 04 Aug 2020 to Save multiple attributes
         /// <summary>
         /// Save Attribute Uses
