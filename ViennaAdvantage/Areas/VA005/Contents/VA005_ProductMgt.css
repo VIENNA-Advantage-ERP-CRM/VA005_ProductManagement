@@ -810,6 +810,7 @@ margin-top: -55px;*/
 }
 .VA005-apanel-lb .vis-apanel-lb-toggle {
     margin-bottom: 10px;
+    cursor: pointer;
 }
 .VA005-cat-caption > p label {
     display: block;
@@ -889,4 +890,8 @@ margin-top: -55px;*/
 .VA005-tree-data .k-state-selected {
     background-color: transparent !important;
     color: rgba(var(--v-c-primary), 1) !important;
+}
+
+.VA005-middle-left-main .vis-group-user-wrap .vis-group-user-right {
+    margin-left: auto;
 }
