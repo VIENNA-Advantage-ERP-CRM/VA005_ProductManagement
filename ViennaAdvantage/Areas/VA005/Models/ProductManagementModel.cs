@@ -1189,7 +1189,8 @@ namespace VA005.Models
             }
             //mimg.SetImageURL("Images/Thumb32x32");//Image Saved in File System so instead of byteArray image Url will be set            
             //mimg.SetImageURL("TempFiles/ProductImages");
-            mimg.SetImageURL("Images");
+            //mimg.SetImageURL("Images");
+            mimg.SetImageURL(mimg.ImageFormat);
 
             if (!mimg.Save())
             {
@@ -1331,7 +1332,7 @@ LEFT JOIN ad_image adimg ON adimg.ad_image_id    =attimage.ad_image_id
         public List<Dictionary<string, object>> LoadOrganization(Ctx ctx)
         {
             List<Dictionary<string, object>> reDIc = null;
-            string sql = MRole.GetDefault(ctx).AddAccessSQL("SELECT AD_Org_ID, Name FROM AD_Org WHERE IsActive = 'Y' AND (IsSummary='N' OR AD_Org_ID=0)",
+            string sql = MRole.GetDefault(ctx).AddAccessSQL("SELECT AD_Org_ID, Name FROM AD_Org WHERE IsActive = 'Y' AND IsOrgUnit='N' AND (IsSummary='N' OR AD_Org_ID=0) ",
                     "AD_Org", MRole.SQL_FULLYQUALIFIED, MRole.SQL_RO) + " ORDER BY Name";
             DataSet ds = DB.ExecuteDataset(sql, null, null);
             if (ds != null && ds.Tables[0].Rows.Count > 0)

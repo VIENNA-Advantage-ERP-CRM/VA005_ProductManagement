@@ -1408,7 +1408,7 @@
 
             lotserialdialog = $('<div>');
             lotserialdialogobject = "<div id='" + $self.windowNo + "divhideandshow' style='height:auto;width:100%;'>"
-                + "<table style='width:100%;'>"
+                + "<table style='width:100%'>"
                 //+ "<tr>"
                 //+ "<td>" + VIS.Msg.getMsg("Name") + "</td>"
                 //+ "</tr>"
@@ -1468,7 +1468,7 @@
             lotserialDesign();
             eventslotserialdialog();
             var createTab = new VIS.ChildDialog();
-            createTab.setHeight(500);
+            createTab.setHeight(450);
             createTab.setWidth(450);
             createTab.setEnableResize(false);
 
@@ -2030,10 +2030,10 @@
             $cmbSerialDropdown.on("change", function () {
 
                 if ($addatttextlot.is(":checked")) {
-                    lotidget = $cmbSerialDropdown.val();
+                    lotidget = VIS.Utility.Util.getValueOfInt($cmbSerialDropdown.val());
                 }
                 else if ($addatttextserial.is(":checked")) {
-                    serialidget = $cmbSerialDropdown.val();
+                    serialidget = VIS.Utility.Util.getValueOfInt($cmbSerialDropdown.val());
                 }
             });
 
