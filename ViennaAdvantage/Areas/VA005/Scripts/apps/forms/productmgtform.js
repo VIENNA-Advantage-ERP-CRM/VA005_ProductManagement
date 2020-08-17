@@ -6355,7 +6355,8 @@
                     control1 = crt;
                     if (btn) {
                         divValue1.append(btn);
-                        crt.getControl().css("width", "65%");
+                        //crt.getControl().css("width", "65%");
+                        crt.getControl().css("width", "calc(100% - 30px)");
                         btn.css("max-width", "35px");
                     }
                 }
