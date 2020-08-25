@@ -557,9 +557,11 @@
             $DivAttrInputWrp.append($DivAttrCtrlWrp);
             $DivAttrInputWrp.append($DivAttrBtnWrp);
             $DivAttrCtrlWrp.append($attrControl.getControl().attr('placeholder', ' ').attr('data-placeholder', '').attr('data-hasbtn', ' '));
-            $DivAttrBtnWrp.append($attrControl.getBtn(0));
+            //$DivAttrBtnWrp.append($attrControl.getBtn(0));
+            $DivAttrBtnWrp.append('<button class="input-group-text VA005_AttrBtn"><i class="vis vis-pattribute"></i></button>');
             divAttr.append('<span id="VA005_btnCancelVarient_' + $self.windowNo + '" class="VA005-icons vis vis-mark VA005-icons-color" style="float:left;" title="' + VIS.Msg.getMsg("Cancel") + '"></span>');
-            $attrControl.getBtn(0).on(VIS.Events.onClick, AttributeCtrl);
+            //$attrControl.getBtn(0).on(VIS.Events.onClick, AttributeCtrl);
+            $rightPanel.find(".VA005_AttrBtn").on(VIS.Events.onClick, AttributeCtrl);
             btnCancelVarient = $rightPanel.find("#VA005_btnCancelVarient_" + $self.windowNo);
             $divVarient.on("click", VarientContainerClick);
 
@@ -4371,9 +4373,9 @@
                 var M_Locator_ID = VIS.context.getContextAsInt($self.windowNo, "M_Locator_ID");
                 var C_BPartner_ID = VIS.context.getContextAsInt($self.windowNo, "C_BPartner_ID");
                 var obj = new VIS.PAttributesForm(0, prods[0], M_Locator_ID, C_BPartner_ID, productWindow, AD_Column_ID, $self.windowNo);
-                //if (obj.hasAttribute) {
-                //    obj.showDialog();
-                //}
+                if (obj.hasAttribute) {
+                    obj.showDialog();
+                }
                 obj.onClose = function (mAttributeSetInstanceId, name, mLocatorId) {
                     //setValueInControl(mAttributeSetInstanceId, name);
                     LoadVarients();
