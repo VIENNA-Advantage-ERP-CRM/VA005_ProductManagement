@@ -70,7 +70,7 @@
         var ml = null;
         var pr = null;
         var isOk = true;
-        var $maindiv = $('<div class="vis-forms-container" style="display:none;"></div>'); //layout
+        var $maindiv = $('<div class="vis-forms-container vis-formouterwrpdiv" style="display:none;"></div>'); //layout
         var $div = $('<div style="overflow-y:auto;padding-top: 5px;"></div>');
         var $divPrice = $('<div style="width:100%;height:100%;padding-top: 3px;"></div>');
         var $divPriceMain = $('<div style="width:100%;height:100%;display:none;"></div>'); //layout
@@ -324,7 +324,7 @@
                 '<div class="VA005-middle-cat-bar"><span style="font-weight:bold;">' + VIS.Msg.getMsg("VA005_Categories") + ' : </span><span id="btnShowAll_'
                 + $self.windowNo + '" class="vis-group-pointer" style="color:rgba(var(--v-c-primary), 1);">' + VIS.Msg.getMsg("All") + '</span> <span id="catInfo_' + $self.windowNo + '" style="display:none;"></span></div>' +
                 '<div class="VA005-middle-cart-bar"><input type="checkbox" id="VA005_chkAll_' + $self.windowNo + '"></input><span>' + VIS.Msg.getMsg("SelectAll") + '</span>' +
-                '<div style="float:right;margin-right:20px;"><span style="font-weight:bold;">' + VIS.Msg.getMsg("VA005_SelectedCart") +
+                '<div class="VA005-selectedCartLblWrap"><span style="font-weight:bold;">' + VIS.Msg.getMsg("VA005_SelectedCart") +
                 ' : </span><span id="VA005_cartInfo_' + $self.windowNo + '">' + VIS.Msg.getMsg("None") + '</span></div></div>');
             $divHeadVarient = $('<div class="VA005-right-head VA005-tab-control"><ul class="VA005-tabs" style="overflow: auto;white-space: nowrap;">' +
                 '<li id="VA005_btnDetails_' + $self.windowNo + '" class="VA005-selectedTab">' + VIS.Msg.getMsg("Details") + '</li>' +
@@ -357,7 +357,7 @@
             ImagePanel.hide();
             $td2_tr1 = $("<td>");
             middleMain = $('<div style="position: relative;width: 100%;height: 100%;background-color:white;">');
-            middleMaindiv = $('<div class="VA005-middle-div-main">').append($middlePanel).append($rightPanel).append(ImagePanel);
+            middleMaindiv = $('<div class="VA005-middle-div-main vis-formouterwrpdiv">').append($middlePanel).append($rightPanel).append(ImagePanel);
             middleMain.append(middleMaindiv);
             $td2_tr1.append(middleMain);
             $tr = $("<tr>").append($td0leftbar).append($td2_tr1); //row 1
@@ -490,7 +490,7 @@
                 //'<label>' + VIS.Msg.getElement(VIS.Env.getCtx(), "DivideRate") + '</label>' +
                 '</div></div></div>' +
                 '<div class="VA005-conv-data"><div class="VA005-conversion-data input-group vis-input-wrap"><div class="vis-control-wrap"><input id="VA005_uomUPC_' + $self.windowNo + '" placeholder=" " data-placeholder=""><label>' + VIS.Msg.getElement(VIS.Env.getCtx(), "UPC") + '</label></div></div>' +
-                '<div class="VA005-conversion-icons" style="margin-top:29px;"><span id="VA005_btnSaveUom_' + $self.windowNo +
+                '<div class="VA005-conversion-icons"><span id="VA005_btnSaveUom_' + $self.windowNo +
                 '" class="VA005-icons vis vis-save VA005-icons-font" tabindex="0" title="' + VIS.Msg.getMsg("Save") + '"></span><span id="VA005_btnCancelUom_' + $self.windowNo +
                 '" class="VA005-icons fa fa-times-circle-o VA005-icons-font" tabindex="0" title="' + VIS.Msg.getMsg("Cancel") + '" style="font-size: 1.4rem;"></span></div></div>';
             // Added new controls by Shifali on 03 July 2020 to change the amount acc. to culture.
@@ -522,7 +522,7 @@
             $rightPanel.append('<div id="VA005_divVarient_' + $self.windowNo + '" class="VA005-right-head-btn"><div class="VA005-Add-Btn" id="VA005_btnAddVarient_' + $self.windowNo +
                 '"><span class="vis vis-plus" ></span><span style="margin-left:10px;">' + VIS.Msg.getMsg("VA005_AddVarient") + '</span></div>' +
                 '<div class="VA005-Gen-Btn" id="VA005_btnGenerate_' + $self.windowNo +
-                '"><span class="glyphicon glyphicon-list-alt" ></span><span style="margin-left:10px;">' + VIS.Msg.getMsg("VA005_GenVariant") + '</span></div>' +
+                '"><span class="glyphicon glyphicon-list-alt" ></span><span class="VA005-GenVariantLabl">' + VIS.Msg.getMsg("VA005_GenVariant") + '</span></div>' +
                 '<div class="VA005-conv-form"><div class="VA005-conv-data" id="VA005_divAttr_' + $self.windowNo + '"></div></div>');
             $divVarient = $('<div class="VA005-uom-list">');
             $divLeftTree = $('<div class="VA005-tree-list">');
