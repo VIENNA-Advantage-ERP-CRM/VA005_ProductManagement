@@ -33,7 +33,7 @@ ul.VA005-tabs > li {
     background: rgba(var(--v-c-primary), 1) !important;
 }
 ul.VA005-tabs > li:last-child {
-    margin-right:0;
+    /*margin-right:0;*/
     margin-left: auto;
 }
 
@@ -385,6 +385,7 @@ input.VA005-left-panelInput {
 
 .VA005-data-wrap {
     margin-bottom: 10px;
+    width: 100%;
 }
 .VA005-data-wrap p {
     font-size: 15px;
@@ -446,7 +447,7 @@ input.VA005-left-panelInput {
 }
 .VA005-uom-list {
     overflow: auto;
-    /* padding-right: 15px; */
+     padding-right: 15px; 
     height: 91%;
 }
 .VA005-uom-wrap {
@@ -632,15 +633,15 @@ p {
 }
 
 .VA005-upload-buttons {
-    background-color: rgba(var(--v-c-primary), 1);
-    color: rgba(var(--v-c-on-primary), 1);
-    font-weight: 200;
-    font-family: helvetica;
-    font-size: 14px;
-    padding: 10px 15px;
-    float: right;
-    margin-right: 10px;
-    width: 100px !Important;
+    /*background-color: rgba(var(--v-c-primary), 1);*/
+    /* color: rgba(var(--v-c-on-primary), 1); */
+    /* font-weight: 200; */
+    /* font-family: helvetica; */
+    /* font-size: 14px; */
+    /* padding: 10px 15px; */
+    /* float: right; */
+    /* margin-right: 10px; */
+    /* width: 100px !Important;*/
 }
 
 .VA005-file-icon {
@@ -894,4 +895,26 @@ margin-top: -55px;*/
 
 .VA005-middle-left-main .vis-group-user-wrap .vis-group-user-right {
     margin-left: auto;
+}
+.VA005-selectedCartLblWrap{
+    float: right;
+    padding-right: 15px;
+}
+.VA005-GenVariantLabl {
+    margin-left: 10px;
+}
+input[type="submit"].VA005-poupOkCancelBtn {
+    background-color: rgba(var(--v-c-primary), 1);
+    color: rgba(var(--v-c-on-primary), 1);
+    width: auto;
+    padding: 8px 12px;
+    margin-left: 10px;
+}
+.va005-new-att-chkboxWrap {
+    width: 100%;
+    float: left;
+    display: flex;
+}
+.va005-new-att-chkboxWrap label{
+    margin-right: 15px;
 }

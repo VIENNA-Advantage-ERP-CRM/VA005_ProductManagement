@@ -38,6 +38,8 @@ namespace VA005 //  Please replace namespace with prefix of your module..
                           "~/Areas/VA005/Contents/VA005_style.css",
                           "~/Areas/VA005/Contents/VA005_ProductMgt.css");
 
+            style.Include("~/Areas/VA005/Contents/VA005_rtl.css");
+
 
             script.Include("~/Areas/VA005/Scripts/apps/forms/productmgtform.js");
             script.Include("~/Areas/VA005/Scripts/apps/forms/productcategoryform.js",
