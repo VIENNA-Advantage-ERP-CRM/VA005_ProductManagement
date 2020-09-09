@@ -42,8 +42,8 @@
         //var $topdivforname = $('<div class="VA005-att-tree-vieww"><h4 style="float:left;color:#1aa0ed">' + VIS.Msg.getMsg("VA005_AddAttribute") + '</h4></div>');
         var $topdivforname = $('<div class="VA005-top-wrap-treedesign VA005-att-tree-vieww"><h4>' + VIS.Msg.getMsg("VA005_EditAttribute") + '</h4></div>');
         var $maindiv = $('<div style="height:100%">');
-        var $textname = $('<input class="VA005-text-color-att-text" type="text" maxlength="20" >');
-        var $textdesc = $('<input class="VA005-text-color-att-text"  type="text">');
+        var $textname = $('<input class="VA005-text-color-att-text" type="text" maxlength="20" placeholder=" " data-placeholder=""  >');
+        var $textdesc = $('<input class="VA005-text-color-att-text"  type="text" placeholder=" " data-placeholder="" >');
         var $cmbselect = $('<select>');
         var $chkboxmandatoryfield = $('<input type="checkbox">');
         var $chkboxisactivefield = $('<input type="checkbox" checked>');
@@ -58,8 +58,8 @@
         //var $maindiv2 = $('<div style="display:none;">');
 
         // var $maindiv2 = $('<div style="margin-top:96px">');
-        var $textsearchdiv = $('<input  class="VA005-text-color-att-text" type="text">');
-        var $textnamediv = $('<input   class="VA005-text-color-att-text" class="vis-ev-col-mandatory" type="text">');
+        var $textsearchdiv = $('<input  class="VA005-text-color-att-text" type="text" placeholder=" " data-placeholder="" >');
+        var $textnamediv = $('<input   class="VA005-text-color-att-text" class="vis-ev-col-mandatory" type="text" placeholder=" " data-placeholder="" >');
         var $btndiv = $('<input type="button" value="Save">');
 
         var $btnok = $('<input style="position:inherit;padding: 6px 14px !important; margin-left: 10px;" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" value="' + VIS.Msg.getMsg("Ok") + '" >')
@@ -1037,7 +1037,7 @@
 
            
 
-            $maindiv.append($('<div style="width:100%;float:left;display:flex;">').append($chkboxmandatoryfield).append('<label style="margin-right:3%">' + VIS.Msg.getMsg("VA005_Mandatory") + '</label>').append($chkboxisactivefield).append('<label style="margin-bottom:0">' + VIS.Msg.getMsg("VA005_Active") + '</label>'));
+            $maindiv.append($('<div class="va005-new-att-chkboxWrap">').append($chkboxmandatoryfield).append('<label>' + VIS.Msg.getMsg("VA005_Mandatory") + '</label>').append($chkboxisactivefield).append('<label style="margin-bottom:0">' + VIS.Msg.getMsg("VA005_Active") + '</label>'));
 
             $maindiv.append($griddiv);
 

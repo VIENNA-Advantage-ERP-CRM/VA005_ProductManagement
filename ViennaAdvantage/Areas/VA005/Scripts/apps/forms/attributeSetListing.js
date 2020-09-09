@@ -183,7 +183,7 @@
 
         //*** First Div for tree view attributeset listing...
         function treeViewForAttributeSetListing() {
-            $tree = $("<div style='height:100%' >");
+            $tree = $("<div style='height:100%' class='vis-formouterwrpdiv' >");
             treedesign = "<div id='" + $self.windowNo + "leftboxdivwidth' class='VA005-right-wrap-leftboxdiv'>"
                 + "<div class='VA005-top-wrap-treedesign'>"
                 + "<h4>" + VIS.Msg.getMsg("VA005_Attribute") + "</h4>"
@@ -1304,13 +1304,13 @@
                 //+ "<td colspan='2'>" + VIS.Msg.getMsg("Name") + " </td>"
                 //+ "</tr>"
                 + "<tr>"
-                + "<td><div class='input-group vis-input-wrap'><div class='vis-control-wrap'><input class='vis-ev-col-mandatory' id='" + $self.windowNo + "txtname' type='text'><label>" + VIS.Msg.getMsg("Name") + "</label></div></div></td>"
+                + "<td><div class='input-group vis-input-wrap'><div class='vis-control-wrap'><input class='vis-ev-col-mandatory' id='" + $self.windowNo + "txtname' type='text' placeholder=' ' data-placeholder=''><label>" + VIS.Msg.getMsg("Name") + "</label></div></div></td>"
                 + "</tr>"
                 //+ "<tr>"
                 //+ "<td>" + VIS.Msg.getMsg("Description") + "</td>"
                 //+ "</tr>"
                 + "<tr>"
-                + "<td><div class='input-group vis-input-wrap'><div class='vis-control-wrap'><input id='" + $self.windowNo + "txtdes'  type='text' ><label>" + VIS.Msg.getMsg("Description") + "</label></div></div></td>"
+                + "<td><div class='input-group vis-input-wrap'><div class='vis-control-wrap'><input id='" + $self.windowNo + "txtdes'  type='text' placeholder=' ' data-placeholder='' ><label>" + VIS.Msg.getMsg("Description") + "</label></div></div></td>"
                 + "</tr>"
                 //+ "<tr>"
                 //+ "<td>" + VIS.Msg.getMsg("VA005_MandatoryType") + "</td>"
@@ -1946,10 +1946,12 @@
             //*** first attributeset dailog text btn
             $addatttextname.on("change", function () {
                 if ($addatttextname.val().trim().length <= 0) {
-                    $addatttextname.css("background-color", "pink");
+                    //$addatttextname.css("background-color", "pink");
+                    $addatttextname.addClass('vis-ev-col-mandatory');
                 }
                 else {
-                    $addatttextname.css("background-color", "white");
+                    //$addatttextname.css("background-color", "white");
+                    $addatttextname.removeClass('vis-ev-col-mandatory');
                 }
             });
 
@@ -2071,10 +2073,12 @@
             }
 
             if ($addatttextname.val().trim().length <= 0) {
-                $addatttextname.css("background-color", "pink");
+                //$addatttextname.css("background-color", "pink");
+                $addatttextname.addClass('vis-ev-col-mandatory');
             }
             else {
-                $addatttextname.css("background-color", "white");
+                //$addatttextname.css("background-color", "white");
+                $addatttextname.removeClass('vis-ev-col-mandatory');
             }
         };
 
@@ -2262,10 +2266,12 @@
 
             $addattaddbtn.prop('disabled', true);
             if ($addatttextname.val().trim().length <= 0) {
-                $addatttextname.css("background-color", "pink");
+                //$addatttextname.css("background-color", "pink");
+                $addatttextname.addClass('vis-ev-col-mandatory');
             }
             else {
-                $addatttextname.css("background-color", "white");
+                //$addatttextname.css("background-color", "white");
+                $addatttextname.removeClass('vis-ev-col-mandatory');
             }
 
         };
