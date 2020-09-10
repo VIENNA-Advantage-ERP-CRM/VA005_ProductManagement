@@ -541,10 +541,15 @@ input.VA005-left-panelInput {
     width: 104px;
     height: 25px;
     margin: 2px 0px 2px 2px;
+    float: left;
 }
 .VA005-popup > span {
     margin: 0 5px;
     cursor: pointer;
+    height: 29px;
+    display: flex;
+    align-items: center;
+    float: left;
 }
 
 .VA005-Edit-UPC {
@@ -917,4 +922,7 @@ input[type="submit"].VA005-poupOkCancelBtn {
 }
 .va005-new-att-chkboxWrap label{
     margin-right: 15px;
+}
+.VA005-item-icons span {
+    float: left;
 }
