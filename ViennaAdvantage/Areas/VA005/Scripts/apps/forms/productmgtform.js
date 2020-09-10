@@ -753,9 +753,9 @@
                             return '<div style="text-align: center;"></div>';
                         }
                     },
-                    { field: "Product", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.translate(VIS.Env.getCtx(), "Product") + '</span></div>', sortable: false, size: '200px', hidden: false },
+                    { field: "Product", caption: '<div ><span>' + VIS.Msg.translate(VIS.Env.getCtx(), "Product") + '</span></div>', sortable: false, size: '200px', hidden: false },
                     {
-                        field: "PriceList", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceList") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, editable: { type: 'number' },
+                        field: "PriceList", caption: '<div ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceList") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, editable: { type: 'number' },
                         // Added by shifali on 29th July 2020 to get PriceList value acc. to culture
                         render: function (record, index, col_index) {
                             var val = record["PriceList"];
@@ -764,7 +764,7 @@
                         }
                     },
                     {
-                        field: "PriceStd", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceStd") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, editable: { type: 'number' },
+                        field: "PriceStd", caption: '<div ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceStd") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, editable: { type: 'number' },
                         // Added by shifali on 29th July 2020 to get PriceStd value acc. to culture
                         render: function (record, index, col_index) {
                             var val = record["PriceStd"];
@@ -773,7 +773,7 @@
                         }
                     },
                     {
-                        field: "PriceLimit", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceLimit") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, editable: { type: 'number' },
+                        field: "PriceLimit", caption: '<div ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceLimit") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, editable: { type: 'number' },
                         // Added by shifali on 29th July 2020 to get PriceLimit value acc. to culture
                         render: function (record, index, col_index) {
                             var val = record["PriceLimit"];
@@ -783,7 +783,7 @@
                     },
                     { field: "UOM", caption: "", sortable: false, size: '80px', display: false },
                     {
-                        field: "C_Uom_ID", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "C_UOM_ID") + '</span></div>', sortable: false, size: '80px', min: 80, hidden: false, editable: { type: 'select', items: uomArray, showAll: true },
+                        field: "C_Uom_ID", caption: '<div ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "C_UOM_ID") + '</span></div>', sortable: false, size: '80px', min: 80, hidden: false, editable: { type: 'select', items: uomArray, showAll: true },
                         render: function (record, index, col_index) {
                             var html = '';
                             for (var p in uomArray) {
@@ -792,10 +792,10 @@
                             return html;
                         }
                     },
-                    { field: "Lot", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "Lot") + '</span></div>', sortable: false, size: '80px', min: 80, hidden: false, editable: { type: 'text' } },
+                    { field: "Lot", caption: '<div ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "Lot") + '</span></div>', sortable: false, size: '80px', min: 80, hidden: false, editable: { type: 'text' } },
                     { field: "attribute_ID", caption: "", sortable: false, size: '80px', display: false },
                     {
-                        field: "Attribute", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.translate(VIS.Env.getCtx(), "Attribute") + '</span></div>', sortable: false, size: '150px', hidden: false,
+                        field: "Attribute", caption: '<div ><span>' + VIS.Msg.translate(VIS.Env.getCtx(), "Attribute") + '</span></div>', sortable: false, size: '150px', hidden: false,
                         render: function () {
                             return '<div><input type=text readonly="readonly" style= "width:85%; border:none" ><i class="fa fa-list-alt VA005-gridicon" title="Attribute Set Instance" style="opacity: 1;"></i></div>';
                         }
@@ -1024,9 +1024,9 @@
                 },
                 columns: [
                     { field: "product_ID", caption: "", sortable: false, size: '80px', display: false },
-                    { field: "Product", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.translate(VIS.Env.getCtx(), "Product") + '</span></div>', sortable: false, size: '200px', hidden: false },
+                    { field: "Product", caption: '<div ><span>' + VIS.Msg.translate(VIS.Env.getCtx(), "Product") + '</span></div>', sortable: false, size: '200px', hidden: false },
                     {
-                        field: "OrderMin", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "Order_Min") + '</span></div>', sortable: false, size: '120px', min: 80, hidden: false, editable: { type: 'number' },
+                        field: "OrderMin", caption: '<div ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "Order_Min") + '</span></div>', sortable: false, size: '120px', min: 80, hidden: false, editable: { type: 'number' },
                         // Added by shifali on 29th July 2020 to get ordermin value acc. to culture
                         render: function (record, index, col_index) {
                             var val = record["OrderMin"];
@@ -1035,7 +1035,7 @@
                         }
                     },
                     {
-                        field: "OrderPack", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "Order_Pack") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, editable: { type: 'number' },
+                        field: "OrderPack", caption: '<div ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "Order_Pack") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, editable: { type: 'number' },
                         // Added by shifali on 29th July 2020 to get orderpack value acc. to culture
                         render: function (record, index, col_index) {
                             var val = record["OrderPack"];
@@ -1044,7 +1044,7 @@
                         }
                     },
                     {
-                        field: "C_Uom_ID", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "C_UOM_ID") + '</span></div>', sortable: false, size: '80px', min: 80, hidden: false, editable: { type: 'select', items: uomArray, showAll: true },
+                        field: "C_Uom_ID", caption: '<div ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "C_UOM_ID") + '</span></div>', sortable: false, size: '80px', min: 80, hidden: false, editable: { type: 'select', items: uomArray, showAll: true },
                         render: function (record, index, col_index) {
                             var html = '';
                             for (var p in uomArray) {
@@ -1054,7 +1054,7 @@
                         }
                     },
                     {
-                        field: "C_Currency_ID", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "C_Currency_ID") + '</span></div>', sortable: false, size: '80px', min: 80, hidden: false, editable: { type: 'select', items: curArray, showAll: true },
+                        field: "C_Currency_ID", caption: '<div ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "C_Currency_ID") + '</span></div>', sortable: false, size: '80px', min: 80, hidden: false, editable: { type: 'select', items: curArray, showAll: true },
                         render: function (record, index, col_index) {
                             var html = '';
                             for (var p in curArray) {
@@ -1064,7 +1064,7 @@
                         }
                     },
                     {
-                        field: "PriceList", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceList") + '</span></div>', sortable: false, size: '80px', min: 80, hidden: false, editable: { type: 'number' },
+                        field: "PriceList", caption: '<div ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceList") + '</span></div>', sortable: false, size: '80px', min: 80, hidden: false, editable: { type: 'number' },
                         // Added by Shifali to change the pricelist acc. to culture
                         //render: function (record, index, col_index) {
                         //    var val = VIS.Utility.Util.getValueOfDecimal(record["PriceList"].toFixed(precision));
@@ -1076,7 +1076,7 @@
                             return parseFloat(val).toLocaleString();
                         }
                     },
-                    { field: "DeliveryTime", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "DeliveryTime_Promised") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, editable: { type: 'int' } },
+                    { field: "DeliveryTime", caption: '<div ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "DeliveryTime_Promised") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, editable: { type: 'int' } },
                     { field: "updated", caption: "", sortable: false, size: '80px', display: false }
                 ],
                 // Added by shifali on 29th July 2020 to get value acc. to culture while editing grid column
@@ -1183,7 +1183,7 @@
                     { field: "RelatedProduct", caption: VIS.Msg.getElement(VIS.Env.getCtx(), "RelatedProduct_ID"), sortable: false, size: '36%' },
                     //{ field: "RelatedType", caption: VIS.Msg.getElement(VIS.Env.getCtx(), "RelatedProductType"), sortable: false, size: '32%' },
                     {
-                        field: "RelatedType", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "RelatedProductType") + '</span></div>', sortable: false, size: '32%', hidden: false, editable: { type: 'select', items: relatedType, showAll: true },
+                        field: "RelatedType", caption: '<div ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "RelatedProductType") + '</span></div>', sortable: false, size: '32%', hidden: false, editable: { type: 'select', items: relatedType, showAll: true },
                         render: function (record, index, col_index) {
                             var html = '';
                             for (var p in relatedType) {
@@ -1247,9 +1247,9 @@
                 records: [],
                 columns: [
                     { field: "product_ID", caption: "product_ID", sortable: false, size: '80px', display: false },
-                    { field: "Product", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.translate(VIS.Env.getCtx(), "Product") + '</span></div>', sortable: false, size: '35%', hidden: false },
+                    { field: "Product", caption: '<div ><span>' + VIS.Msg.translate(VIS.Env.getCtx(), "Product") + '</span></div>', sortable: false, size: '35%', hidden: false },
                     {
-                        field: "Qty", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "Quantity") + '</span></div>', sortable: false, size: '15%', hidden: false, editable: { type: 'float' },
+                        field: "Qty", caption: '<div ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "Quantity") + '</span></div>', sortable: false, size: '15%', hidden: false, editable: { type: 'float' },
                         //Added by Shifali to change the Qty acc. to culture.
                         render: function (record, index, col_index) {
                             var val = VIS.Utility.Util.getValueOfDecimal(record["Qty"].toFixed(precision));
@@ -1257,7 +1257,7 @@
                         }
                     },
                     {
-                        field: "C_Uom_ID", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "C_UOM_ID") + '</span></div>', sortable: false, size: '15%', hidden: false, editable: { type: 'select', items: uomArray, showAll: true },
+                        field: "C_Uom_ID", caption: '<div ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "C_UOM_ID") + '</span></div>', sortable: false, size: '15%', hidden: false, editable: { type: 'select', items: uomArray, showAll: true },
                         render: function (record, index, col_index) {
                             var html = '';
                             for (var p in uomArray) {
@@ -1268,7 +1268,7 @@
                     },
                     { field: "attribute_ID", caption: VIS.Msg.getElement(VIS.Env.getCtx(), "M_AttributeSetInstance_ID"), sortable: false, size: '80px', display: false },
                     {
-                        field: "Attribute", caption: '<div style="text-align: center;" ><span>' + VIS.Msg.translate(VIS.Env.getCtx(), "Attribute") + '</span></div>', sortable: false, size: '35%', hidden: false,
+                        field: "Attribute", caption: '<div ><span>' + VIS.Msg.translate(VIS.Env.getCtx(), "Attribute") + '</span></div>', sortable: false, size: '35%', hidden: false,
                         render: function () {
                             return '<div><input type=text readonly="readonly" style= "width:85%; border:none" ><i class="fa fa-list-alt VA005-gridicon" title="Attribute Set Instance" style="opacity: 1;"></i></div>';
                         }
@@ -4647,7 +4647,7 @@
                     var conv_Id = dr[i]["C_UOM_Conversion_ID"];
                     var upc = dr[i]["UPC"];
                     var div = '<div class="VA005-uom-wrap" conversionid = ' + conv_Id + '><div class="VA005-item-top"><div class="VA005-item-name"><input class="VA005-checkbox" type="checkbox"><label>' + uname +
-                        '</label></div><div class="VA005-item-icons">' + '<span id = "VA005_BarCode_' + id + '" style="float:left;"></span><span conversionid = ' + conv_Id +
+                        '</label></div><div class="VA005-item-icons">' + '<span id = "VA005_BarCode_' + id + '" ></span><span conversionid = ' + conv_Id +
                         ' class="VA005-uom-icons vis vis-delete VA005-icons-color" title="' + VIS.Msg.getMsg("DeleteActivity") + '"></span><span conversionid = ' + conv_Id +
                         ' class="VA005-uom-icons vis vis-edit VA005-icons-color" title="' + VIS.Msg.getMsg("Edit") + '"></span>' +
                         '<span class="VA005-uom-icons fa fa-shopping-cart VA005-icons-color" conversionid = ' + conv_Id + ' title="' + VIS.Msg.getMsg("VA005_AddCart") + '"></span></div></div><div><span class="VA005-multiplier">'

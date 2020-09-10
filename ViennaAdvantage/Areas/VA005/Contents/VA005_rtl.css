@@ -8,7 +8,11 @@ html[dir="rtl"] .VA005-conversion-data,
 html[dir="rtl"] .VA005-icons,
 html[dir="rtl"] .VA005-pro-cat,
 html[dir="rtl"] .VA005-right-wrap-leftboxdiv,
-html[dir="rtl"] .VA005-divboxtarget-design-hover {
+html[dir="rtl"] .VA005-divboxtarget-design-hover,
+html[dir="rtl"] .VA005-popup > span,
+html[dir="rtl"] .VA005-popup > input,
+html[dir="rtl"] .VA005-item-icons span,
+html[dir="rtl"] .VA005-uom-icons {
     float: right;
 }
 
@@ -119,7 +123,8 @@ html[dir="rtl"] .VA005-uom-icons {
     text-align: left;
 }
 
-html[dir="rtl"] ul.VA005-tabs > li:last-child {
+html[dir="rtl"] ul.VA005-tabs > li:last-child,
+html[dir="rtl"] .VA005-middle-left-main .vis-group-user-wrap .vis-group-user-right {
     margin-left: unset;
     margin-right: auto;
 }
@@ -169,4 +174,14 @@ html[dir="rtl"] .VA005-att-tree-div-showtree .k-treeview .k-plus-disabled {
 
 html[dir="rtl"] .VA005-pro-cat {
     padding-left: 20px;
+}
+html[dir="rtl"] .va005-imageupload-popupwrap .k-dropzone .k-upload-status {
+    right: auto;
+    left: 12px;
+}
+
+html[dir="rtl"] .va005-imageupload-popupwrap .k-upload-files .k-button,
+html[dir="rtl"] .va005-imageupload-popupwrap .k-upload-status-total .k-icon {
+    margin-left: 0;
+    margin-right: 8px;
 }

@@ -136,7 +136,7 @@
         //*********************  
         function customDesign() {
 
-            $uploadLayout = $("<div></div>");
+            $uploadLayout = $("<div class='va005-imageupload-popupwrap'></div>");
 
             //$form = $('<form method="post" action=' + VIS.Application.contextUrl + 'VADMS/UploadDocument/SaveMultiple></form>');
 
