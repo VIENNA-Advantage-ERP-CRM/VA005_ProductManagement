@@ -926,3 +926,26 @@ input[type="submit"].VA005-poupOkCancelBtn {
 .VA005-item-icons span {
     float: left;
 }
+.VA005-attListing-header {
+    float: right;
+    /* margin-right: 15px; */
+    position: absolute;
+    right: 15px;
+    width: 100%;
+    display: flex;
+}
+.VA005-attListing-title {
+    padding-left: 15px;
+    color: rgba(var(--v-c-primary), 1);
+    font-size: 16px;
+    font-weight: 600;
+    flex: 1;
+}
+.VA005-attrValuesWraperDiv span.VA005-vis-plus {
+    float: left;
+    margin: 2px 5px 0 0;
+    font-size: 12px;
+}
+.VA005-item-icons {
+    display: flex;
+}

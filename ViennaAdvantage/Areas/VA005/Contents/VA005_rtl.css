@@ -12,7 +12,9 @@ html[dir="rtl"] .VA005-divboxtarget-design-hover,
 html[dir="rtl"] .VA005-popup > span,
 html[dir="rtl"] .VA005-popup > input,
 html[dir="rtl"] .VA005-item-icons span,
-html[dir="rtl"] .VA005-uom-icons {
+html[dir="rtl"] .VA005-uom-icons,
+html[dir="rtl"] .VA005-AttributesValuesDown span.VA005-vis-plus,
+html[dir="rtl"] .VA005-Add-Btn {
     float: right;
 }
 
@@ -23,7 +25,8 @@ html[dir="rtl"] .VA005-divide,
 html[dir="rtl"] .VA005-conversion-icons,
 html[dir="rtl"] .VA005-Image-panel-div,
 html[dir="rtl"] .VA005-right-wrap-div-setlisting-top,
-html[dir="rtl"] .VA005-left-wrap-div-openattributre {
+html[dir="rtl"] .VA005-left-wrap-div-openattributre,
+html[dir="rtl"] .VA005-Gen-Btn {
     float: left;
 }
 
@@ -45,14 +48,16 @@ html[dir="rtl"] .VA005-productinfowrp,
 html[dir="rtl"] .VA005-conversion-data:last-child,
 html[dir="rtl"] .VA005-middle-right-main,
 html[dir="rtl"] .VA005-left-wrap,
-html[dir="rtl"] .VA005-form-wrap {
+html[dir="rtl"] .VA005-form-wrap,
+html[dir="rtl"] .VA005-attListing-title {
     padding-left: 0;
 }
 
 html[dir="rtl"] .VA005-middle-left-main,
 html[dir="rtl"] .VA005-middle-right-main,
 html[dir="rtl"] .VA005-left-wrap,
-html[dir="rtl"] .VA005-form-wrap {
+html[dir="rtl"] .VA005-form-wrap,
+html[dir="rtl"] .VA005-attListing-title {
     padding-right: 15px;
 }
 
@@ -86,7 +91,8 @@ html[dir="rtl"] .vis-group-add-btn,
 html[dir="rtl"] .VA005-Image-panel-div,
 html[dir="rtl"] .VA005-btn-Delete,
 html[dir="rtl"] .VA005-divboxtarget-design-hover,
-html[dir="rtl"] .va005-new-att-chkboxWrap label {
+html[dir="rtl"] .va005-new-att-chkboxWrap label,
+html[dir="rtl"] .VA005-attrValuesWraperDiv span.VA005-vis-plus {
     margin-right: 0;
 }
 
@@ -114,7 +120,8 @@ html[dir="rtl"] input.VA005-poupOkCancelBtn {
     margin-right: 10px;
 }
 
-html[dir="rtl"] .vis-group-add-btn {
+html[dir="rtl"] .vis-group-add-btn,
+html[dir="rtl"] .VA005-attrValuesWraperDiv span.VA005-vis-plus {
     margin-left: 5px;
 }
 
@@ -173,7 +180,7 @@ html[dir="rtl"] .VA005-att-tree-div-showtree .k-treeview .k-plus-disabled {
 }
 
 html[dir="rtl"] .VA005-pro-cat {
-    padding-left: 20px;
+    /*padding-left: 20px;*/
 }
 html[dir="rtl"] .va005-imageupload-popupwrap .k-dropzone .k-upload-status {
     right: auto;
@@ -184,4 +191,11 @@ html[dir="rtl"] .va005-imageupload-popupwrap .k-upload-files .k-button,
 html[dir="rtl"] .va005-imageupload-popupwrap .k-upload-status-total .k-icon {
     margin-left: 0;
     margin-right: 8px;
+}
+html[dir="rtl"] .VA005-attListing-header {
+    right: auto;
+    left: 15px;
+}
+html[dir="rtl"] .VA005-large {
+    text-align: center;
 }

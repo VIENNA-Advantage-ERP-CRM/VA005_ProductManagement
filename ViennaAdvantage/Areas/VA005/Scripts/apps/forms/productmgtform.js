@@ -335,7 +335,7 @@
             //$middlePanel = $('<div class="VA005-middle-left-main">').append($divHeadProd);
 
             //Manish 26/9/2016...            
-            $btnAttrValueControls = $('<div style="float:right;margin-right:15px;position:absolute;right:0;width:100%"><p id="VA005_SelectedNodeText_' + $self.windowNo + '" style="float: left;padding-left: 15px;color: rgba(var(--v-c-primary), 1);font-size: 16px;font-weight: bold;">bfehfh</p><div style="float:right"><span id="VA005_btnDeleteAttVal_' + $self.windowNo + '"  class="VA005-RemoveLinkeImage VA005-AttValOpacity" style="font-size:18px;margin-right:6px" title="' + VIS.Msg.getMsg("VA005_RemoveImage") + '"></span><span id="VA005_btnDeleteCross_' + $self.windowNo + '"  style="font-size: 18px; cursor: pointer" class="vis vis-mark " title="' + VIS.Msg.getMsg("VA005_Close") + '"></span></div></div>');
+            $btnAttrValueControls = $('<div class="VA005-attListing-header"><p id="VA005_SelectedNodeText_' + $self.windowNo + '" class="VA005-attListing-title">bfehfh</p><div style="float:right"><span id="VA005_btnDeleteAttVal_' + $self.windowNo + '"  class="VA005-RemoveLinkeImage VA005-AttValOpacity" style="font-size:18px;margin-right:6px" title="' + VIS.Msg.getMsg("VA005_RemoveImage") + '"></span><span id="VA005_btnDeleteCross_' + $self.windowNo + '"  style="font-size: 18px; cursor: pointer" class="vis vis-mark " title="' + VIS.Msg.getMsg("VA005_Close") + '"></span></div></div>');
             productAttValues = $('<div class="VA005-AttributesValMainDiv"></div>');
             $middlePanel = $('<div class="VA005-middle-left-main" style="height:98%" >').append($divHeadProd);
             //End 26/9/2016...
@@ -4008,7 +4008,7 @@
                             for (var i = 0; i < returnValue.length; i++) {
                                 var src = returnValue[i]["imageurl"];
                                 if (i == 0) {
-                                    nameDiff = $('<div class="VA005-AttributesValuesBtm VA005-AttValues-Btm"><div><span class="glyphicon glyphicon-minus VA005-vis-plus" style="float: left; margin: 2px 5px 0 0; font-size: 12px;"></span><p style="color:rgba(var(--v-c-primary), 1);font-weight:bold;">' + returnValue[i]["AttributeName"] + '</p></div></div>');
+                                    nameDiff = $('<div class="VA005-AttributesValuesBtm VA005-AttValues-Btm"><div><span class="glyphicon glyphicon-minus VA005-vis-plus"></span><p style="color:rgba(var(--v-c-primary), 1);font-weight:bold;">' + returnValue[i]["AttributeName"] + '</p></div></div>');
                                     productAttValues.append(nameDiff.append($('<div class="VA005-getDiv_' + i + ' VA005-AttValofbindingImg" style="width:100%;">')));
                                     getDIvProduct = productAttValues.find(".VA005-getDiv_" + i + "");
                                     nameDiff.find(".VA005-vis-plus").on("click", function () {
