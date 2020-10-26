@@ -14,7 +14,13 @@ html[dir="rtl"] .VA005-popup > input,
 html[dir="rtl"] .VA005-item-icons span,
 html[dir="rtl"] .VA005-uom-icons,
 html[dir="rtl"] .VA005-AttributesValuesDown span.VA005-vis-plus,
-html[dir="rtl"] .VA005-Add-Btn {
+html[dir="rtl"] .VA005-Add-Btn,
+html[dir="rtl"] .VA005-form-top,
+html[dir="rtl"] .VA005-form-data,
+html[dir="rtl"] .VA005-form-dataIcon,
+html[dir="rtl"] .VA005-form-data-other,
+html[dir="rtl"] .VA005-form-top-fields,
+html[dir="rtl"] .VA005-product-data {
     float: right;
 }
 
@@ -29,6 +35,10 @@ html[dir="rtl"] .VA005-left-wrap-div-openattributre,
 html[dir="rtl"] .VA005-Gen-Btn {
     float: left;
 }
+html[dir="rtl"] .VA005-form-data.VA005-popup-head + div,
+html[dir="rtl"] .VA005-tree-list > div:first-child {
+    float: left !important;
+}
 
 html[dir="rtl"] .VA005-selectedCartLblWrap,
 html[dir="rtl"] .VA005-middle-left-main .vis-group-DataContainer,
@@ -39,7 +49,10 @@ html[dir="rtl"] .VA005-right-head,
 html[dir="rtl"] .VA005-uom-list,
 html[dir="rtl"] .VA005-pro-cat,
 html[dir="rtl"] .VA005-form-top,
-html[dir="rtl"] .VA005-form-fullFields {
+html[dir="rtl"] .VA005-form-fullFields,
+html[dir="rtl"] .VA005-prodmgtrightfieldtop,
+html[dir="rtl"] .VA005-product-data:nth-child(odd),
+html[dir="rtl"] .VA005-tree-list {
     padding-right: 0;
 }
 
@@ -49,7 +62,8 @@ html[dir="rtl"] .VA005-conversion-data:last-child,
 html[dir="rtl"] .VA005-middle-right-main,
 html[dir="rtl"] .VA005-left-wrap,
 html[dir="rtl"] .VA005-form-wrap,
-html[dir="rtl"] .VA005-attListing-title {
+html[dir="rtl"] .VA005-attListing-title,
+html[dir="rtl"] .VA005-product-data:nth-child(even) {
     padding-left: 0;
 }
 
@@ -67,11 +81,13 @@ html[dir="rtl"] .VA005-right-head,
 html[dir="rtl"] .VA005-right-head-btn,
 html[dir="rtl"] .VA005-uom-list,
 html[dir="rtl"] .VA005-form-top,
-html[dir="rtl"] .VA005-form-fullFields {
+html[dir="rtl"] .VA005-form-fullFields,
+html[dir="rtl"] .VA005-tree-list {
     padding-left: 15px;
 }
 
-html[dir="rtl"] .VA005-middle-left-main .vis-group-DataContainer {
+html[dir="rtl"] .VA005-middle-left-main .vis-group-DataContainer,
+html[dir="rtl"] .VA005-prodmgtrightfieldtop {
     padding-left: 12px;
 }
 
@@ -79,11 +95,13 @@ html[dir="rtl"] .VA005-productinfowrp {
     padding-right: 10px;
 }
 
-html[dir="rtl"] .VA005-conversion-data:last-child {
+html[dir="rtl"] .VA005-conversion-data:last-child,
+html[dir="rtl"] .VA005-product-data:nth-child(even) {
     padding-right: 7px;
 }
 
-html[dir="rtl"] .VA005-conversion-data:first-child {
+html[dir="rtl"] .VA005-conversion-data:first-child,
+html[dir="rtl"] .VA005-product-data:nth-child(odd) {
     padding-left: 7px;
 }
 
