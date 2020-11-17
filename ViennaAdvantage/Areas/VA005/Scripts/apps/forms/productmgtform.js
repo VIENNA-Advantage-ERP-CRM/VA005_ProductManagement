@@ -3913,8 +3913,8 @@
                         $divUomGroup.show();
                     }
                     else {
-                        // Added by shifali to get error msg acc. to culture
-                        VIS.ADialog.error("VA005_UOMError");
+                        //Getting the message from UOM Window
+                        VIS.ADialog.error("", "", returnValue, "");
                     }
                     $bsyDiv[0].style.visibility = "hidden";
                 },
