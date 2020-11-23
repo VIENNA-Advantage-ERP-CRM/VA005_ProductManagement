@@ -23,6 +23,9 @@ html[dir="rtl"] .VA005-form-top-fields,
 html[dir="rtl"] .VA005-product-data {
     float: right;
 }
+html[dir="rtl"] .VA005-attrValuesWraperDiv span.VA005-vis-plus {
+    float: right !important;
+}
 
 html[dir="rtl"] .VA005-selectedCartLblWrap,
 html[dir="rtl"] .VA005-item-icons,
