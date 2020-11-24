@@ -33,7 +33,7 @@ ul.VA005-tabs > li {
     background: rgba(var(--v-c-primary), 1) !important;
 }
 ul.VA005-tabs > li:last-child {
-    margin-right:0;
+    /*margin-right:0;*/
     margin-left: auto;
 }
 
@@ -385,6 +385,7 @@ input.VA005-left-panelInput {
 
 .VA005-data-wrap {
     margin-bottom: 10px;
+    width: 100%;
 }
 .VA005-data-wrap p {
     font-size: 15px;
@@ -446,7 +447,7 @@ input.VA005-left-panelInput {
 }
 .VA005-uom-list {
     overflow: auto;
-    /* padding-right: 15px; */
+     padding-right: 15px; 
     height: 91%;
 }
 .VA005-uom-wrap {
@@ -540,10 +541,15 @@ input.VA005-left-panelInput {
     width: 104px;
     height: 25px;
     margin: 2px 0px 2px 2px;
+    float: left;
 }
 .VA005-popup > span {
     margin: 0 5px;
     cursor: pointer;
+    height: 29px;
+    display: flex;
+    align-items: center;
+    float: left;
 }
 
 .VA005-Edit-UPC {
@@ -632,15 +638,15 @@ p {
 }
 
 .VA005-upload-buttons {
-    background-color: rgba(var(--v-c-primary), 1);
-    color: rgba(var(--v-c-on-primary), 1);
-    font-weight: 200;
-    font-family: helvetica;
-    font-size: 14px;
-    padding: 10px 15px;
-    float: right;
-    margin-right: 10px;
-    width: 100px !Important;
+    /*background-color: rgba(var(--v-c-primary), 1);*/
+    /* color: rgba(var(--v-c-on-primary), 1); */
+    /* font-weight: 200; */
+    /* font-family: helvetica; */
+    /* font-size: 14px; */
+    /* padding: 10px 15px; */
+    /* float: right; */
+    /* margin-right: 10px; */
+    /* width: 100px !Important;*/
 }
 
 .VA005-file-icon {
@@ -810,6 +816,7 @@ margin-top: -55px;*/
 }
 .VA005-apanel-lb .vis-apanel-lb-toggle {
     margin-bottom: 10px;
+    cursor: pointer;
 }
 .VA005-cat-caption > p label {
     display: block;
@@ -832,13 +839,13 @@ margin-top: -55px;*/
     border-width: 0 3px 3px 0;
 }
 .VA005-cat-caption.VA005-highlighted.VA005-catboxchecked, .VA005-cat-caption.VA005-catboxchecked {
-    border: 1px solid #f12d2d;
-    color: #f12d2d;
+    /*border: 1px solid #f12d2d;
+    color: #f12d2d;*/
 }
 
 .VA005-catboxchecked .VA005-catboxcheck[type="checkbox"]:checked:before, 
 .VA005-catboxchecked .VA005-catboxcheck[type="checkbox"]:checked {
-    border-color: #f12d2d;
+    /*border-color: #f12d2d;*/
 }
 .VA005-form-top-fields .VA005-data-wrap:last-child {
     margin-bottom: 0;
@@ -862,6 +869,7 @@ margin-top: -55px;*/
     top: -6px;
     float: left;
     height: 8px;
+
 }
 
 .VA005-poplblchkbefore label.vis-ec-col-lblchkbox {
@@ -870,8 +878,8 @@ margin-top: -55px;*/
 .VA005-popupcontentwrapper{
     min-width: 300px;
 }
-.VA005-popup-data .w2ui-grid-body input[type="checkbox"],
-.VA005-outermainwrapper .w2ui-grid-body input[type="checkbox"] {
+.VA005-popup-data .w2ui-grid-body input[type="text"],
+.VA005-outermainwrapper .w2ui-grid-body input[type="text"] {
     min-height: unset !important;
     height: 12px;
     background: transparent;
@@ -889,4 +897,56 @@ margin-top: -55px;*/
 .VA005-tree-data .k-state-selected {
     background-color: transparent !important;
     color: rgba(var(--v-c-primary), 1) !important;
+}
+
+.VA005-middle-left-main .vis-group-user-wrap .vis-group-user-right {
+    margin-left: auto;
+}
+.VA005-selectedCartLblWrap{
+    float: right;
+    padding-right: 15px;
+}
+.VA005-GenVariantLabl {
+    margin-left: 10px;
+}
+input[type="submit"].VA005-poupOkCancelBtn {
+    background-color: rgba(var(--v-c-primary), 1);
+    color: rgba(var(--v-c-on-primary), 1);
+    width: auto;
+    padding: 8px 12px;
+    margin-left: 10px;
+}
+.va005-new-att-chkboxWrap {
+    width: 100%;
+    float: left;
+    display: flex;
+}
+.va005-new-att-chkboxWrap label{
+    margin-right: 15px;
+}
+.VA005-item-icons span {
+    float: left;
+}
+.VA005-attListing-header {
+    float: right;
+    /* margin-right: 15px; */
+    position: absolute;
+    right: 15px;
+    width: 100%;
+    display: flex;
+}
+.VA005-attListing-title {
+    padding-left: 15px;
+    color: rgba(var(--v-c-primary), 1);
+    font-size: 16px;
+    font-weight: 600;
+    flex: 1;
+}
+.VA005-attrValuesWraperDiv span.VA005-vis-plus {
+    float: left;
+    margin: 2px 5px 0 0;
+    font-size: 12px;
+}
+.VA005-item-icons {
+    display: flex;
 }

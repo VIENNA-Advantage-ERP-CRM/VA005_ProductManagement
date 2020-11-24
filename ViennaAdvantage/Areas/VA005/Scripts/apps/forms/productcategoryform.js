@@ -316,11 +316,11 @@
                         pcat_ID = currentElement.find("input[type=text]").attr("procatID");
                         pcatImg = currentElement.find("p").attr("procatID");
                         pcatOld = currentElement.find("p[procatid='" + pcatImg + "']").text();
-
+                        // Done by Shifali to change the multiple selection category (183 point)
                         if (target.hasClass("VA005-catboxcheck")) {
                             if (target.prop("checked")) {
                                 window.setTimeout(function () {
-                                    mainProductCategoryUl.find("li[procatid='" + pcatImg + "'] .VA005-cat-caption").addClass('VA005-catboxchecked');
+                                    mainProductCategoryUl.find("li[procatid='" + pcatImg + "'] .VA005-cat-caption").addClass('VA005-catboxchecked VA005-highlighted');
                                 }, 200);
                                 pcats.push(pcatImg);
                                 if (pcats.length == 1) {
@@ -329,7 +329,7 @@
                             }
                             else {
                                 window.setTimeout(function () {
-                                    mainProductCategoryUl.find("li[procatid='" + pcatImg + "'] .VA005-cat-caption").removeClass('VA005-catboxchecked');
+                                    mainProductCategoryUl.find("li[procatid='" + pcatImg + "'] .VA005-cat-caption").removeClass('VA005-catboxchecked VA005-highlighted');
                                 }, 200);
                                 pcats.splice(pcats.indexOf(pcatImg), 1);
                                 if (pcats.length == 0) {
@@ -346,21 +346,39 @@
                             if (mainProductCategoryUl.find("li[procatid='" + pcatImg + "'] .VA005-cat-caption").hasClass('VA005-highlighted')) {
                                 ShowOrHide(true, currentElement);
                             }
-                            mainProductCategoryUl.find('li .VA005-cat-caption').removeClass('VA005-highlighted');
-                            mainProductCategoryUl.find("li[procatid='" + pcatImg + "'] .VA005-cat-caption").addClass('VA005-highlighted');
+                            else {
+                                mainProductCategoryUl.find("li .VA005-cat-caption").removeClass('VA005-highlighted VA005-catboxchecked');
+                                mainProductCategoryUl.find(".VA005-catboxcheck").prop("checked", false);
+                                pcats = [];
+                                // mainProductCategoryUl.find("li[procatid='" + pcatImg + "'] .VA005-cat-caption").addClass('VA005-highlighted');
+                                target.addClass('VA005-highlighted');
+                                target.find(".VA005-catboxcheck").prop("checked", true);
+                                pcats.push(pcatImg);
+                                btnDelete.removeAttr('disabled').css("opacity", 1);
+                            }
                             //pcats = [];
                             //if (VIS.Utility.Util.getValueOfInt(pcatImg) > 0) {
                             //    pcats.push(pcatImg);
                             //}
                         }
                         else {
-                            if (mainProductCategoryUl.find("li[procatid='" + pcatImg + "'] .VA005-cat-caption").hasClass('VA005-highlighted')) {
-                                mainProductCategoryUl.find("li[procatid='" + pcatImg + "'] .VA005-cat-caption").removeClass('VA005-highlighted');
-                                pcats.splice(pcats.indexOf(pcatImg), 1);
+                            if (target.length > 0) {
+                                mainProductCategoryUl.find(".VA005-catboxcheck").prop("checked", false);
+                                if (target.hasClass('VA005-highlighted')) {
+                                //if (mainProductCategoryUl.find("li[procatid='" + pcatImg + "'] .VA005-cat-caption").hasClass('VA005-highlighted')) {
+                                    mainProductCategoryUl.find("li[procatid='" + pcatImg + "'] .VA005-cat-caption").removeClass('VA005-highlighted');
+                                    //target.find(".VA005-catboxcheck").prop("checked", false);
+                                    pcats.splice(pcats.indexOf(pcatImg), 1);
+                                }
+                                else {
+                                    //mainProductCategoryUl.find("li[procatid='" + pcatImg + "'] .VA005-cat-caption").addClass('VA005-highlighted');
+                                    target.addClass('VA005-highlighted');
+                                    target.find(".VA005-catboxcheck").prop("checked", true);
+                                    pcats.push(pcatImg);
+                                }
                             }
                             else {
-                                mainProductCategoryUl.find("li[procatid='" + pcatImg + "'] .VA005-cat-caption").addClass('VA005-highlighted');
-                                pcats.push(pcatImg);
+                                return;
                             }
                         }
                     }
@@ -638,7 +656,7 @@
 
             if (btnUndo != null) {
                 btnUndo.on("click", function () {
-                    fillCategory(mainProductCategoryUl.find('li:eq(1)').attr('procatid'));
+                   // fillCategory(mainProductCategoryUl.find('li:eq(1)').attr('procatid'));
                     $BusyIndicator[0].style.visibility = "visible";
                     txtName.val(catName);
                     txtValue.val(searchKey);
@@ -779,7 +797,7 @@
                     else if (windowName == "Tax Category")
                         zoomQuery.addRestriction("C_TaxCategory_ID", VIS.Query.prototype.EQUAL, record_id);
                     else if (windowName == "Asset Group")
-                        zoomQuery.addRestriction("A_Asset_Gruoup_ID", VIS.Query.prototype.EQUAL, record_id);
+                        zoomQuery.addRestriction("A_Asset_Group_ID", VIS.Query.prototype.EQUAL, record_id);
                     zoomQuery.setRecordCount(1);
                     VIS.viewManager.startWindow(ad_window_Id, zoomQuery);
                 }

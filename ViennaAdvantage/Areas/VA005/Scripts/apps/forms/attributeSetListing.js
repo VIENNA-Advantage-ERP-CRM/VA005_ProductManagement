@@ -183,7 +183,7 @@
 
         //*** First Div for tree view attributeset listing...
         function treeViewForAttributeSetListing() {
-            $tree = $("<div style='height:100%' >");
+            $tree = $("<div style='height:100%' class='vis-formouterwrpdiv' >");
             treedesign = "<div id='" + $self.windowNo + "leftboxdivwidth' class='VA005-right-wrap-leftboxdiv'>"
                 + "<div class='VA005-top-wrap-treedesign'>"
                 + "<h4>" + VIS.Msg.getMsg("VA005_Attribute") + "</h4>"
@@ -315,7 +315,7 @@
         };
 
         var getidoflablefordrop = null;
-        var attributeidbydivboxes = null;
+        var attributeidbydivboxes = [];
         var attributesetidbydivboxes = null;
         var $senddivatt = null;
         //*** attribute box show in left box..
@@ -375,41 +375,71 @@
                 //    checkboxclickformultyselect(evt, $(this));
                 //});
 
+                // Done by shifali on 30th july to drag multiple attributes
                 $attributedivleftdragdrop.find('.VA005-attributediv').draggable({
-                    //zIndex: 2,
-                    revert: "invalid",
-                    helper: "clone",
-                    containment: $root,
+                    cursorAt: { left: -10, top: -10 },
+                    helper: function () {
+                        // Getting attributes which needs to be dragged
+                        var selected = $($attributedivleftdragdrop.find('.VA005-attributediv div').find("input:checked")).parent().parent();
+                        if (selected.length === 0) {
+                            selected = $(this);
+                        }
+                        var container = $('<div/>').attr('id', 'draggingContainer');
+                        container.append(selected.clone());
+                        return container;
+                    },
                     start: function (event, ui) {
-                        debugger;
-                        //$($($(this).find('.k-state-hover').parents('li')[0]).find('.k-state-hover')).css('z-index', '99999');
-                        //$($divLeftTree.find('.va005-parentss').parent()).css('z-index', '99999');
-                        
-                            attrlabelvalue = $(this).find('label');
-                            draggabledivid = $(this).attr("data-id");
-                            $dragevents = true;
-                        
+                        $dragevents = true;
                     },
                     drag: function (event, ui) {
-                        if ($(this).data('isactive') == 'N') {
-                            $dragevents = false;
-                            return false;
-                        }
                     },
 
                     stop: function () {
                         $dragevents = false;
                     }
-                    //hoverClass: function () {
-                    //         
-                    //        if ($(event.target).children().eq(1).find("a").data("dtype") != 1) {
-                    //            return;
-                    //        }
-                    //        $(event.target).css("background-color", "red");
-                    //    },                  
-
-
                 });
+
+
+                //$attributedivleftdragdrop.find('.VA005-attributediv').draggable({
+                //    //zIndex: 2,
+                //    revert: "invalid",
+                //    helper: "clone",
+                //    containment: $root,
+                //    start: function (event, ui) {
+                //        debugger;
+                //        //$($($(this).find('.k-state-hover').parents('li')[0]).find('.k-state-hover')).css('z-index', '99999');
+                //        //$($divLeftTree.find('.va005-parentss').parent()).css('z-index', '99999');
+
+                //            //attrlabelvalue = $(this).find('label');
+                //            //draggabledivid = $(this).attr("data-id");
+
+
+                //        for (var j = 0; j < selectedIds.length; j++) {
+                //            attrlabelvalue = $($($attributedivleftdragdrop.find("[data-id='" + selectedIds[j] + "']"))[0]).find('label');
+                //            draggabledivid = $($($attributedivleftdragdrop.find("[data-id='" + selectedIds[j] + "']"))[0]).attr("data-id");
+                //            $dragevents = true;
+                //        }
+                //    },
+                //    drag: function (event, ui) {
+                //        if ($(this).data('isactive') == 'N') {
+                //            $dragevents = false;
+                //            return false;
+                //        }
+                //    },
+
+                //    stop: function () {
+                //        $dragevents = false;
+                //    }
+                //    //hoverClass: function () {
+                //    //         
+                //    //        if ($(event.target).children().eq(1).find("a").data("dtype") != 1) {
+                //    //            return;
+                //    //        }
+                //    //        $(event.target).css("background-color", "red");
+                //    //    },                  
+
+
+                //});
 
 
 
@@ -448,44 +478,44 @@
 
         function DropItem() {
             $divid.find(".k-in").droppable({
-
+                tolerance: 'pointer',
                 drop: function (event, ui) {
                     debugger;
                     $bsyDiv[0].style.visibility = "visible";
                     //window.setTimeout(function () {
-                    attributeidbydivboxes = ($(ui.draggable)).data('id');
-                    //attributesetidbydivboxes = ($(($($(this).find('.k-state-hover').parents('li')[0])).find('a')[0])).data('nodeid');
+                    // attributeidbydivboxes = ($(ui.helper)).data('id');
+                    // attributesetidbydivboxes = ($(($($(this).find('.k-state-hover').parents('li')[0])).find('a')[0])).data('NID');
                     //alert(attributesetidbydivboxes);
+
+                    // Done by Shifali on 30th july to drop multiple selected attributes
+                    for (var i = 0; i < selectedIds.length; i++) {
+                        attributeidbydivboxes.push($($($attributedivleftdragdrop.find("[data-id='" + selectedIds[i] + "']"))[0]).attr("data-id"));
+                    }
                     attributesetidbydivboxes = $(this).children().eq(0).attr('NID');
-                    //$divLeftTree
                     saveAttribute(attributeidbydivboxes, attributesetidbydivboxes);
                     // loadTreeData();
                     //}, 200);
-
+                    attributeidbydivboxes.length = [];
                     //$bsyDiv[0].style.visibility = "hidden";
-
                 }
             });
-
-
         };
 
 
-        function saveAttribute(attributeidbydivboxes, getidoflablefordrop) {
+        function saveAttribute(attributeidbydivboxes, attributesetidbydivboxes) {
 
             $bsyDiv[0].style.visibility = "visible";
-            var valuesendtoctrl = {
-
-                attributsetid: attributeidbydivboxes,
-                lablename: attributesetidbydivboxes
-            };
-
+            //    var valuesendtoctrl = {
+            //        attributsetid: attributeidbydivboxes,
+            //        lablename: attributesetidbydivboxes
+            //};
+            var attributsetid = attributeidbydivboxes.toString();
             $.ajax({
                 url: VIS.Application.contextUrl + "Attribute/SaveAttributeuses",
                 type: 'Post',
                 async: false,
                 datatype: "Json",
-                data: valuesendtoctrl,
+                data: { attributsetid: attributsetid, nid: attributesetidbydivboxes },
                 success: function (data) {
                     //selectedAttributeID = JSON.parse(data);
                     var result = JSON.parse(data);
@@ -712,7 +742,7 @@
         ////////////////////========================
         function getTemaplate(selectedAttributeID, findnamecount, isActive) {
             str = "<div data-isActive='" + isActive + "' data-id='" + selectedAttributeID + "' title='" + findnamecount + "' id='" + $self.windowNo + "divappendinleftsideboxes_header' class='VA005-attributediv  VA005-divboxtarget-design-hover'>"
-                + "<div style='float: left; width: 100%;'><input attid='" + selectedAttributeID + "' class='VA005-checkboxonleftdiv' type='checkbox' style='float: left;'></div>";
+                + "<div class='VA005-attrdiv style='float: left; width: 100%;'><input attid='" + selectedAttributeID + "' class='VA005-checkboxonleftdiv' type='checkbox' style='float: left;'></div>";
             //+ "<label style='word-break:break-word;line-height:20px;margin-top:10px;font-weight:normal;cursor:pointer'>" + findnamecount + "</label>"
             //+ "<label class='VA005-textoverfllowhidden'>" + findnamecount + "</label>"
 
@@ -1005,18 +1035,18 @@
                     getidfromattboxexforaddnode = selectedAttributeID;
 
                     if (target.prop("checked")) {
-                        selectedIds.push(selectedAttributeID);
-                        target.parent().parent().addClass('VA005-divboxtarget-design');
-                        if (selectedIds.length == 1) {
-                            objectcall();
-                            $attributeobject.cmboonclick();
-                            $self.attributevallueonattributeclick(selectedAttributeID);
-                            $editattributeboxes.removeClass("VA005-disabled");
-                            $delattributeboxes.removeClass("VA005-disabled");
-                        }
-                        else {
-                            $attributevaluedivleftdragdrop.empty();
-                        }
+                            selectedIds.push(selectedAttributeID);
+                            target.parent().parent().addClass('VA005-divboxtarget-design');
+                            if (selectedIds.length == 1) {
+                                objectcall();
+                                $attributeobject.cmboonclick();
+                                $self.attributevallueonattributeclick(selectedAttributeID);
+                                $editattributeboxes.removeClass("VA005-disabled");
+                                $delattributeboxes.removeClass("VA005-disabled");
+                            }
+                            else {
+                                $attributevaluedivleftdragdrop.empty();
+                            }
                     }
                     else {
                         if (selectedIds.length == 1) {
@@ -1039,6 +1069,7 @@
                             //objectcall();
                         }
                     }
+
                     if (selectedIds.length == 0 || selectedIds.length > 1) {
 
                         $attributevaluedivleftdragdrop.empty();
@@ -1273,13 +1304,13 @@
                 //+ "<td colspan='2'>" + VIS.Msg.getMsg("Name") + " </td>"
                 //+ "</tr>"
                 + "<tr>"
-                + "<td><div class='input-group vis-input-wrap'><div class='vis-control-wrap'><input class='vis-ev-col-mandatory' id='" + $self.windowNo + "txtname' type='text'><label>" + VIS.Msg.getMsg("Name") + "</label></div></div></td>"
+                + "<td><div class='input-group vis-input-wrap'><div class='vis-control-wrap'><input class='vis-ev-col-mandatory' id='" + $self.windowNo + "txtname' type='text' placeholder=' ' data-placeholder=''><label>" + VIS.Msg.getMsg("Name") + "</label></div></div></td>"
                 + "</tr>"
                 //+ "<tr>"
                 //+ "<td>" + VIS.Msg.getMsg("Description") + "</td>"
                 //+ "</tr>"
                 + "<tr>"
-                + "<td><div class='input-group vis-input-wrap'><div class='vis-control-wrap'><input id='" + $self.windowNo + "txtdes'  type='text' ><label>" + VIS.Msg.getMsg("Description") + "</label></div></div></td>"
+                + "<td><div class='input-group vis-input-wrap'><div class='vis-control-wrap'><input id='" + $self.windowNo + "txtdes'  type='text' placeholder=' ' data-placeholder='' ><label>" + VIS.Msg.getMsg("Description") + "</label></div></div></td>"
                 + "</tr>"
                 //+ "<tr>"
                 //+ "<td>" + VIS.Msg.getMsg("VA005_MandatoryType") + "</td>"
@@ -1377,7 +1408,7 @@
 
             lotserialdialog = $('<div>');
             lotserialdialogobject = "<div id='" + $self.windowNo + "divhideandshow' style='height:auto;width:100%;'>"
-                + "<table style='width:100%;'>"
+                + "<table style='width:100%'>"
                 //+ "<tr>"
                 //+ "<td>" + VIS.Msg.getMsg("Name") + "</td>"
                 //+ "</tr>"
@@ -1437,7 +1468,7 @@
             lotserialDesign();
             eventslotserialdialog();
             var createTab = new VIS.ChildDialog();
-            createTab.setHeight(500);
+            createTab.setHeight(450);
             createTab.setWidth(450);
             createTab.setEnableResize(false);
 
@@ -1915,10 +1946,12 @@
             //*** first attributeset dailog text btn
             $addatttextname.on("change", function () {
                 if ($addatttextname.val().trim().length <= 0) {
-                    $addatttextname.css("background-color", "pink");
+                    //$addatttextname.css("background-color", "pink");
+                    $addatttextname.addClass('vis-ev-col-mandatory');
                 }
                 else {
-                    $addatttextname.css("background-color", "white");
+                    //$addatttextname.css("background-color", "white");
+                    $addatttextname.removeClass('vis-ev-col-mandatory');
                 }
             });
 
@@ -1999,10 +2032,10 @@
             $cmbSerialDropdown.on("change", function () {
 
                 if ($addatttextlot.is(":checked")) {
-                    lotidget = $cmbSerialDropdown.val();
+                    lotidget = VIS.Utility.Util.getValueOfInt($cmbSerialDropdown.val());
                 }
                 else if ($addatttextserial.is(":checked")) {
-                    serialidget = $cmbSerialDropdown.val();
+                    serialidget = VIS.Utility.Util.getValueOfInt($cmbSerialDropdown.val());
                 }
             });
 
@@ -2040,10 +2073,12 @@
             }
 
             if ($addatttextname.val().trim().length <= 0) {
-                $addatttextname.css("background-color", "pink");
+                //$addatttextname.css("background-color", "pink");
+                $addatttextname.addClass('vis-ev-col-mandatory');
             }
             else {
-                $addatttextname.css("background-color", "white");
+                //$addatttextname.css("background-color", "white");
+                $addatttextname.removeClass('vis-ev-col-mandatory');
             }
         };
 
@@ -2231,10 +2266,12 @@
 
             $addattaddbtn.prop('disabled', true);
             if ($addatttextname.val().trim().length <= 0) {
-                $addatttextname.css("background-color", "pink");
+                //$addatttextname.css("background-color", "pink");
+                $addatttextname.addClass('vis-ev-col-mandatory');
             }
             else {
-                $addatttextname.css("background-color", "white");
+                //$addatttextname.css("background-color", "white");
+                $addatttextname.removeClass('vis-ev-col-mandatory');
             }
 
         };

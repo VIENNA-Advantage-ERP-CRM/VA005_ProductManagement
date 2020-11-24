@@ -136,7 +136,7 @@
         //*********************  
         function customDesign() {
 
-            $uploadLayout = $("<div></div>");
+            $uploadLayout = $("<div class='va005-imageupload-popupwrap'></div>");
 
             //$form = $('<form method="post" action=' + VIS.Application.contextUrl + 'VADMS/UploadDocument/SaveMultiple></form>');
 
@@ -243,10 +243,10 @@
             $divCommonDocInfo.append($divDocKeepVersion);
             $divCommonDocInfo.append($divDocFolder);
             //*****************Common Information Ends********************
-            $divDocumentInformation = $('<div class="VA005-doc_information" style="float: left;width: 100%;"></div>');
-            $divbtnLayout = $('<div style="float:right;width:100%;"></div>');
-            $btnOK = $('<input type="submit" class="VA005-upload-buttons" value=' + VIS.Msg.getMsg("OK") + ' style="background-color:rgba(var(--v-c-primary), 1);color: rgba(var(--v-c-on-primary), 1);font-weight: 200;font-family: helvetica;float:right;font-size: 14px;margin-right:10px;padding: 10px 15px;width:100px !Important;"></input>');
-            $btnCancel = $('<input type="submit" style="background-color:rgba(var(--v-c-primary), 1);color: rgba(var(--v-c-on-primary), 1);font-weight: 200;font-family: helvetica;font-size: 14px;padding: 10px 15px;width:100px !Important;float:right;" value=' + VIS.Msg.getMsg("Cancel") + '></input>');
+            $divDocumentInformation = $('<div class="VA005-doc_information"></div>');
+            $divbtnLayout = $('<div class="vis-pull-right"></div>');
+            $btnOK = $('<input type="submit" class="VA005-upload-buttons VA005-poupOkCancelBtn" value=' + VIS.Msg.getMsg("OK") + '></input>');
+            $btnCancel = $('<input type="submit" class="VA005-poupOkCancelBtn" value=' + VIS.Msg.getMsg("Cancel") + '></input>');
             $divbtnLayout.append($btnCancel);
             $divbtnLayout.append($btnOK);
             $divDocumentInformation.append($divSingleUploadInfo);
@@ -452,7 +452,7 @@
 
             function dynamicDesignForKendo(count) {
                 if (count > 3) {
-                    $dialog.css("height", "442px");
+                    $dialog.css("height", "380px");
                     // $dialog.css("height", $(window).height() - 394);
                     //if ($(window).width() > $(window).height()) {
                     //    $dialog.css("height", $(window).height()*(55/100));
@@ -475,10 +475,10 @@
 
                 else if (count > 6) {
                     $(".k-upload-files").css("overflow", "scroll");
-                    $dialog.css("height", "453px");
+                    $dialog.css("height", "450px");
                 }
                 else if (count > 0 && count <= 3) {
-                    $dialog.css("height", "347px");
+                    $dialog.css("height", "280px");
                     $(".k-upload-files").css("overflow", "hidden");
                 }
 
@@ -544,10 +544,10 @@
                         $($($("#files").parent()).parent()).children()[2].remove();
                     }
                     if (count > 3) {
-                        $dialog.css("height", "442px");
+                        $dialog.css("height", "380px");
                     }
                     else if (count > 0 && count <= 3) {
-                        $dialog.css("height", "347px");
+                        $dialog.css("height", "280px");
                         $(".k-upload-files").css("overflow", "hidden");
                     }
                     if (count > 6) {
@@ -626,7 +626,7 @@
             $uploadLayout.find(".k-upload-files").css("overflow", "hidden");
             $uploadLayout.find(".k-upload-files").css("background", "white");
             $uploadLayout.find(".k-upload-files").css("margin-left", "10px");
-            $uploadLayout.find(".k-upload-files.k-reset").css({ "margin-left": "0px", "overflow": "hidden", "max-height": "200px", "background": "white", "float": "left", "width": "100%", "box-sizing": "border-box", "padding": "0 10px" });
+            $uploadLayout.find(".k-upload-files.k-reset").css({ "margin-left": "0px", "overflow": "hidden", "max-height": "300px", "background": "white", "float": "left", "width": "100%", "box-sizing": "border-box", "padding": "0 10px" });
             $uploadLayout.find(".k-widget.k-upload.k-header").css({ "float": "left", "width": "100%" });
             $uploadLayout.find(".k-progress").css("background-color", "#ddffd0");
         }
@@ -679,7 +679,7 @@
         function openUploadDocumentForm() {
             uploadDocumentDialog = new VIS.ChildDialog();
             uploadDocumentDialog.setContent($uploadLayout);
-            uploadDocumentDialog.setHeight(280);
+            uploadDocumentDialog.setHeight(230);
             uploadDocumentDialog.setWidth(705);
             uploadDocumentDialog.setTitle(VIS.Msg.getMsg("VA005_UploadImage"));
             uploadDocumentDialog.setEnableResize(false);

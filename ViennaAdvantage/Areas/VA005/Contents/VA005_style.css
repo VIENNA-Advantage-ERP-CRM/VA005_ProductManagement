@@ -78,6 +78,7 @@ h4.VA005-report-tittle {
     background: transparent;
     font-size: 1.2rem;
     padding: 0 7px;
+    margin-right: 10px;
 }
 .VA005-btn-Multiple,
 .VA005-btn-Multiple-on {
@@ -198,7 +199,8 @@ h4.VA005-report-tittle {
     position: relative;
     display: block;
     cursor: pointer;
-    padding: 0 20px 20px 0;
+    margin: 0 20px 20px 0;
+
 }
 
 /*.VA005-cat-img, .VA005-cat-caption
@@ -245,8 +247,9 @@ h4.VA005-report-tittle {
     /* -webkit-transform: translateY(-50%); */
     /*-ms-transform: translateY(-50%);*/
     /* transform: translateY(-50%); */
-    word-wrap: break-word;
+    word-break: break-word;
     margin: 0;
+    padding-top: 30px;
 }
 .VA005-cat-caption > p i {
     font-size: 1rem;
@@ -435,11 +438,11 @@ h4.VA005-report-tittle {
     margin:5px 0 5px 0;float:left;width: 100%;padding: 5px 0;
 }
 .VA005-AttributesValuesImgTop {
-     margin:4px 14px 15px 0;     
-     height:72px;
-     width:58px;
-      text-align: center;
-      position: relative;
+    margin: 4px 14px 15px 0;
+    height: 72px;
+    width: 58px;
+    text-align: center;
+    position: relative;
     /*display: inline-block;
     width: 100px;
     float: none;
@@ -448,8 +451,9 @@ h4.VA005-report-tittle {
     background: #f0f0f0;
     height: 100px; 
     line-height: 100px;*/
-
-
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
 }
 
 .VA005-AttValueImgaeBorderSelect {
@@ -612,6 +616,9 @@ h4.VA005-report-tittle {
 }
 .VA005-middle-left-main .vis-group-DataContainer {
     padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 .VA005-rightformdatawrap {
     display: flex;
