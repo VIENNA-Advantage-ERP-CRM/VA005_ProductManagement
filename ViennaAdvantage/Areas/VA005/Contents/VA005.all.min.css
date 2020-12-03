@@ -208,7 +208,7 @@
 .VA005-textoverfllowhidden2,
 .VA005-textoverfllowhidden-lightcolor,
 .VA005-textoverfllowhidden1 {
-    word-wrap: break-word;
+    word-break: break-word;
     line-height: 20px;
     /* margin-top: 10px; */
     font-weight: normal;
@@ -833,7 +833,7 @@ h4.VA005-report-tittle {
     background: #f0f0f0;
     height: 100px; 
     line-height: 100px;*/
-    display: flex;
+    display: inline-flex;
     align-items: flex-start;
     justify-content: center;
 }
