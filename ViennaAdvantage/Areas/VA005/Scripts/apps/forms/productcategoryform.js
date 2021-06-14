@@ -424,6 +424,11 @@
 
             if (btnSave != null) {
                 btnSave.on("click", function () {
+                    if (VIS.Utility.Util.getValueOfString(txtName.val()) == "") {
+                        VIS.ADialog.error("VA005_FieldMandatory");
+                        return;
+                    }
+
                     if (VIS.Utility.Util.getValueOfString(cmbProductType.val()) == "") {
                         VIS.ADialog.error("VA005_ProductType");
                         return;
