@@ -4211,6 +4211,7 @@
                 uomID = $(target.parents('.vis-group-user-wrap')).find(".VA005-Uom-span").data("uid");
                 prods.push(ProdID);
                 uoms.push(uomID);
+                return;
             }
 
             else if (target.hasClass('vis-edit')) {
@@ -4218,6 +4219,7 @@
                 zoomToWindow(ProdID, "Product");
                 $getProdectIDAfterEdit = ProdID;
                 ProdID = 0;
+                return;
             }
             else if (target.hasClass('fa-shopping-cart')) {
                 if (!isClick) {
@@ -4234,6 +4236,7 @@
                     }, 1000);
                     AddToCart("P");
                 }
+                return;
             }
             else if (target.hasClass('VA005-checkbox')) {
                 ProdID = target.data("uid");
