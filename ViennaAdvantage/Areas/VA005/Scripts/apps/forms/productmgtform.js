@@ -4211,7 +4211,7 @@
                 uomID = $(target.parents('.vis-group-user-wrap')).find(".VA005-Uom-span").data("uid");
                 prods.push(ProdID);
                 uoms.push(uomID);
-                return;
+                //return;
             }
 
             else if (target.hasClass('vis-edit')) {
@@ -4320,7 +4320,7 @@
                     $btnAttValuesDivClose.trigger("click");
                 }
             }
-            else {
+            else if (!target.hasClass("vis-image")) {
                 //$rightPanel.css("opacity", 1);
                 //$rightPanel.css("background-color", "white");
                 cancelConversion();
