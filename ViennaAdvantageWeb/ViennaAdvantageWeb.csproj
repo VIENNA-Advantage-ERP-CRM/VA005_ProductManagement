@@ -188,11 +188,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLL\VAICNTSvc.dll</HintPath>
     </Reference>
-    <Reference Include="ViennaBase">
-      <HintPath>..\..\..\Framework Breakage Dlls\ViennaBase.dll</HintPath>
+    <Reference Include="ViennaBase, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Framework Breakage Dlls\ViennaBase.dll</HintPath>
     </Reference>
-    <Reference Include="VIS">
-      <HintPath>..\..\..\Framework Breakage Dlls\VIS.dll</HintPath>
+    <Reference Include="VIS, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Framework Breakage Dlls\VIS.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
