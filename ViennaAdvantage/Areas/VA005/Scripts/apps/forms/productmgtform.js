@@ -5774,6 +5774,12 @@
 
         };
 
+        this.refreshUI = function () {
+            /*Refresh Grid on Focus*/
+            dRelatedGrid.resize();
+            cartGrid.resize();
+        };
+
         /*
         dispose all object used in this form
         */
@@ -5930,7 +5936,10 @@
             orgid = null;
             options = null;
         };
+    };
 
+    VA005.ProductMgtForm.prototype.refresh = function () {
+        this.refreshUI();
     };
 
     //Must Implement with same parameter
