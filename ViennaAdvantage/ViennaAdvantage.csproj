@@ -116,13 +116,11 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="VAICNT, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ViennaAdvantageWeb\DLL\VAICNT.dll</HintPath>
+    <Reference Include="VAICNT">
+      <HintPath>..\..\Framework Breakage Dlls\VAICNT.dll</HintPath>
     </Reference>
-    <Reference Include="VAICNTSvc, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ViennaAdvantageWeb\DLL\VAICNTSvc.dll</HintPath>
+    <Reference Include="VAICNTSvc">
+      <HintPath>..\..\Framework Breakage Dlls\VAICNTSvc.dll</HintPath>
     </Reference>
     <Reference Include="VAModelAD">
       <HintPath>..\..\Framework Breakage Dlls\VAModelAD.dll</HintPath>

@@ -28,32 +28,32 @@ namespace VA005 //  Please replace namespace with prefix of your module..
                 , new[] { "VA005.Controllers" }
             );    // Please replace ViennaAdvantage with prefix of your module...
 
-            ScriptBundle script = new ScriptBundle("~/Areas/VA005/Scripts/VA005Js");  
+            ScriptBundle script = new ScriptBundle("~/Areas/VA005/Scripts/VA005Js");
             StyleBundle style = new StyleBundle("~/Areas/VA005/Contents/VA005Style");
 
             /* ==>  Here include all css files in style bundle......see example below....  */
 
-            //style.Include("~/Areas/VA005/Contents/VA005_productCategory.css",
-            //              "~/Areas/VA005/Contents/VA005_productCategory.css",
-            //              "~/Areas/VA005/Contents/VA005_style.css",
-            //              "~/Areas/VA005/Contents/VA005_ProductMgt.css");
+            style.Include("~/Areas/VA005/Contents/VA005_productCategory.css",
+                          "~/Areas/VA005/Contents/VA005_productCategory.css",
+                          "~/Areas/VA005/Contents/VA005_style.css",
+                          "~/Areas/VA005/Contents/VA005_ProductMgt.css");
 
-            //style.Include("~/Areas/VA005/Contents/VA005_rtl.css");
-
-
-            //script.Include("~/Areas/VA005/Scripts/apps/forms/productmgtform.js");
-            //script.Include("~/Areas/VA005/Scripts/apps/forms/productcategoryform.js",
-            //            "~/Areas/VA005/Scripts/apps/forms/jquery-barcode.js",
-            //            "~/Areas/VA005/Scripts/apps/forms/attribute.js",
-            //            "~/Areas/VA005/Scripts/apps/forms/attributeSetListing.js",
-            //            "~/Areas/VA005/Scripts/apps/forms/uploadimage.js",
-            //            "~/Areas/VA005/Scripts/apps/forms/jquery-touch.js",
-            //            "~/Areas/VA005/Scripts/apps/forms/StickerProduct.js",
-            //            "~/Areas/VA005/Scripts/apps/forms/jquery.popupoverlay.js");
+            style.Include("~/Areas/VA005/Contents/VA005_rtl.css");
 
 
-            style.Include("~/Areas/VA005/Contents/VA005.all.min.css");
-            script.Include("~/Areas/VA005/Scripts/VA005.all.min.js");
+            script.Include("~/Areas/VA005/Scripts/apps/forms/productmgtform.js");
+            script.Include("~/Areas/VA005/Scripts/apps/forms/productcategoryform.js",
+                        "~/Areas/VA005/Scripts/apps/forms/jquery-barcode.js",
+                        "~/Areas/VA005/Scripts/apps/forms/attribute.js",
+                        "~/Areas/VA005/Scripts/apps/forms/attributeSetListing.js",
+                        "~/Areas/VA005/Scripts/apps/forms/uploadimage.js",
+                        "~/Areas/VA005/Scripts/apps/forms/jquery-touch.js",
+                        "~/Areas/VA005/Scripts/apps/forms/StickerProduct.js",
+                        "~/Areas/VA005/Scripts/apps/forms/jquery.popupoverlay.js");
+
+
+            //style.Include("~/Areas/VA005/Contents/VA005.all.min.css");
+            //script.Include("~/Areas/VA005/Scripts/VA005.all.min.js");
 
             /*-------------------------------------------------------
               Please replace "ViennaAdvantage" with prefix of your module..
