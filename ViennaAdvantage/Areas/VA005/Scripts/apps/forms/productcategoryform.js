@@ -173,48 +173,54 @@
 
         var LoadAttributes = function () {
             cmbAttributeSet.empty();
-            var qry = "SELECT M_AttributeSet_ID,Name FROM M_AttributeSet WHERE IsActive = 'Y' AND AD_Client_ID = " + VIS.context.getAD_Client_ID();
-            VIS.DB.executeReader(qry.toString(), null, LoadAttrCallBack);
+            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/ProductCategory/LoadAttribut", "", LoadAttrCallBack);
+            //var qry = "SELECT M_AttributeSet_ID,Name FROM M_AttributeSet WHERE IsActive = 'Y' AND AD_Client_ID = " + VIS.context.getAD_Client_ID();
+            // VIS.DB.executeReader(qry.toString(), null, LoadAttrCallBack);
         };
         function LoadAttrCallBack(dr) {
             cmbAttributeSet.append(" <option value = 0></option>");
-            while (dr.read()) {
-                key = VIS.Utility.Util.getValueOfInt(dr.getString(0));
-                value = VIS.Utility.encodeText(dr.getString(1));
-                cmbAttributeSet.append(" <option value=" + key + ">" + value + "</option>");
+            if (dr.length > 0) {
+                for (var i = 0; i < dr.length; i++) {
+                    key = VIS.Utility.Util.getValueOfInt(dr[i].C_TaxCategory_ID);
+                    value = dr[i].Name;
+                    cmbAttributeSet.append(" <option value=" + key + ">" + value + "</option>");
+                }
             }
-            dr.close();
         };
         var LoadTaxCategories = function () {
             cmbTaxCategory.empty();
-            var qry = "SELECT C_TaxCategory_ID,Name FROM C_TaxCategory WHERE IsActive = 'Y' AND AD_Client_ID = " + VIS.context.getAD_Client_ID();
-            VIS.DB.executeReader(qry.toString(), null, TaxCatCallBack);
+            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/ProductCategory/LoadTaxCategory", "", TaxCatCallBack);
+            //var qry = "SELECT C_TaxCategory_ID,Name FROM C_TaxCategory WHERE IsActive = 'Y' AND AD_Client_ID = " + VIS.context.getAD_Client_ID();
+            //VIS.DB.executeReader(qry.toString(), null, TaxCatCallBack);
         };
 
         function TaxCatCallBack(dr) {
             cmbTaxCategory.append(" <option value = 0></option>");
-            while (dr.read()) {
-                key = VIS.Utility.Util.getValueOfInt(dr.getString(0));
-                value = VIS.Utility.encodeText(dr.getString(1));
-                cmbTaxCategory.append(" <option value=" + key + ">" + value + "</option>");
+            if (dr.length > 0) {
+                for (var i = 0; i < dr.length; i++) {
+                    key = VIS.Utility.Util.getValueOfInt(dr[i].C_TaxCategory_ID);
+                    value = dr[i].Name;
+                    cmbTaxCategory.append(" <option value=" + key + ">" + value + "</option>");
+                }
             }
-            dr.close();
         };
 
         var LoadAssetGroup = function () {
             cmbAssetGroup.empty();
-            var qry = "SELECT A_Asset_Group_ID,Name FROM A_Asset_Group WHERE IsActive = 'Y' AND AD_Client_ID = " + VIS.context.getAD_Client_ID();
-            VIS.DB.executeReader(qry.toString(), null, AssetCallBack);
+            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/ProductCategory/LoadAssetGroup", "", AssetCallBack);
+            //var qry = "SELECT A_Asset_Group_ID,Name FROM A_Asset_Group WHERE IsActive = 'Y' AND AD_Client_ID = " + VIS.context.getAD_Client_ID();
+            //VIS.DB.executeReader(qry.toString(), null, AssetCallBack);
         };
 
         function AssetCallBack(dr) {
             cmbAssetGroup.append(" <option value = 0></option>");
-            while (dr.read()) {
-                key = VIS.Utility.Util.getValueOfInt(dr.getString(0));
-                value = VIS.Utility.encodeText(dr.getString(1));
-                cmbAssetGroup.append(" <option value=" + key + ">" + value + "</option>");
+            if (dr.length > 0) {
+                for (var i = 0; i < dr.length; i++) {
+                    key = VIS.Utility.Util.getValueOfInt(dr[i].A_Asset_Group_ID);
+                    value = dr[i].Name;
+                    cmbAssetGroup.append(" <option value=" + key + ">" + value + "</option>");
+                }
             }
-            dr.close();
         };
 
         var Events = function () {
@@ -365,7 +371,7 @@
                             if (target.length > 0) {
                                 mainProductCategoryUl.find(".VA005-catboxcheck").prop("checked", false);
                                 if (target.hasClass('VA005-highlighted')) {
-                                //if (mainProductCategoryUl.find("li[procatid='" + pcatImg + "'] .VA005-cat-caption").hasClass('VA005-highlighted')) {
+                                    //if (mainProductCategoryUl.find("li[procatid='" + pcatImg + "'] .VA005-cat-caption").hasClass('VA005-highlighted')) {
                                     mainProductCategoryUl.find("li[procatid='" + pcatImg + "'] .VA005-cat-caption").removeClass('VA005-highlighted');
                                     //target.find(".VA005-catboxcheck").prop("checked", false);
                                     pcats.splice(pcats.indexOf(pcatImg), 1);
@@ -475,8 +481,9 @@
                                             var imgCtrl = mainProductCategoryUl.find("img[procatid='" + pcat_ID + "']");
                                             element1.attr('value', txtName.val());
                                             element2.text(txtName.val());
-                                            var sql = "SELECT ImageUrl FROM AD_Image WHERE AD_Image_ID = " + ad_image_id;
-                                            var imgUrl = VIS.Utility.Util.getValueOfString(VIS.DB.executeScalar(sql.toString()));
+                                            var imgUrl = VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/ProductCategory/GetimgUrl", { "ad_image_id": ad_image_id });
+                                            //var sql = "SELECT ImageUrl FROM AD_Image WHERE AD_Image_ID = " + ad_image_id;
+                                            //var imgUrl = VIS.Utility.Util.getValueOfString(VIS.DB.executeScalar(sql.toString()));
                                             if (imgUrl != "") {
                                                 imgUrl = imgUrl.substring(imgUrl.lastIndexOf("/") + 1, imgUrl.length);
                                                 var d = new Date();
@@ -661,7 +668,7 @@
 
             if (btnUndo != null) {
                 btnUndo.on("click", function () {
-                   // fillCategory(mainProductCategoryUl.find('li:eq(1)').attr('procatid'));
+                    // fillCategory(mainProductCategoryUl.find('li:eq(1)').attr('procatid'));
                     $BusyIndicator[0].style.visibility = "visible";
                     txtName.val(catName);
                     txtValue.val(searchKey);
@@ -733,14 +740,12 @@
             if (btnZoom != null) {
                 btnZoom.on("click", function () {
 
-                    var sql = "select ad_window_id from ad_window where name = 'Product Category'";// Upper( name)=Upper('user' )
-                    var ad_window_Id = 0;
+                    var ad_window_Id = VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/ProductCategory/LoadbtnZoom", "");
+
                     try {
-                        var dr = VIS.DB.executeDataReader(sql);
-                        if (dr.read()) {
-                            ad_window_Id = dr.getInt(0);
-                        }
-                        dr.dispose();
+                        //if (dr.read()) {
+                        //    ad_window_Id = dr.getInt(0);
+                        //}
                         if (ad_window_Id > 0) {
                             var zoomQuery = new VIS.Query();
                             zoomQuery.addRestriction("M_Product_Category_ID", VIS.Query.prototype.EQUAL, VIS.Utility.Util.getValueOfInt(pcat_ID));
@@ -751,6 +756,24 @@
                     catch (e) {
                         console.log(e);
                     }
+                    //var sql = "select ad_window_id from ad_window where name = 'Product Category'";// Upper( name)=Upper('user' )
+                    //var ad_window_Id = 0;
+                    //try {
+                    //    var dr = VIS.DB.executeDataReader(sql);
+                    //    if (dr.read()) {
+                    //        ad_window_Id = dr.getInt(0);
+                    //    }
+                    //    dr.dispose();
+                    //    if (ad_window_Id > 0) {
+                    //        var zoomQuery = new VIS.Query();
+                    //        zoomQuery.addRestriction("M_Product_Category_ID", VIS.Query.prototype.EQUAL, VIS.Utility.Util.getValueOfInt(pcat_ID));
+                    //        zoomQuery.setRecordCount(1);
+                    //        VIS.viewManager.startWindow(ad_window_Id, zoomQuery);
+                    //    }
+                    //}
+                    //catch (e) {
+                    //    console.log(e);
+                    //}
                 });
             }
 
@@ -786,15 +809,12 @@
         };
 
         var zoomToWindow = function (record_id, windowName) {
+            var ad_window_Id = VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/ProductCategory/LoadWindow", { "windowName": windowName });
 
-            var sql = "select ad_window_id from ad_window where name = '" + windowName + "'";// Upper( name)=Upper('user' )
-            var ad_window_Id = 0;
             try {
-                var dr = VIS.DB.executeDataReader(sql);
-                if (dr.read()) {
-                    ad_window_Id = dr.getInt(0);
-                }
-                dr.dispose();
+                //if (dr.read()) {
+                //    ad_window_Id = dr.getInt(0);
+                //}
                 if (ad_window_Id > 0) {
                     var zoomQuery = new VIS.Query();
                     if (windowName == "Attribute Set")
@@ -810,12 +830,36 @@
             catch (e) {
                 console.log(e);
             }
+            //var sql = "select ad_window_id from ad_window where name = '" + windowName + "'";// Upper( name)=Upper('user' )
+            //var ad_window_Id = 0;
+            //try {
+            //    var dr = VIS.DB.executeDataReader(sql);
+            //    if (dr.read()) {
+            //        ad_window_Id = dr.getInt(0);
+            //    }
+            //    dr.dispose();
+            //    if (ad_window_Id > 0) {
+            //        var zoomQuery = new VIS.Query();
+            //        if (windowName == "Attribute Set")
+            //            zoomQuery.addRestriction("M_AttributeSet_ID", VIS.Query.prototype.EQUAL, record_id);
+            //        else if (windowName == "Tax Category")
+            //            zoomQuery.addRestriction("C_TaxCategory_ID", VIS.Query.prototype.EQUAL, record_id);
+            //        else if (windowName == "Asset Group")
+            //            zoomQuery.addRestriction("A_Asset_Group_ID", VIS.Query.prototype.EQUAL, record_id);
+            //        zoomQuery.setRecordCount(1);
+            //        VIS.viewManager.startWindow(ad_window_Id, zoomQuery);
+            //    }
+            //}
+            //catch (e) {
+            //    console.log(e);
+            //
 
         };
 
         var addCategory = function () {
-            var sql = "SELECT Count(*) FROM M_Product_Category WHERE IsActive = 'Y' AND AD_Client_ID = " + VIS.Env.getCtx().getAD_Client_ID();
-            count = VIS.Utility.Util.getValueOfInt(VIS.DB.executeScalar(sql.toString())) + 1;
+            count = VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/ProductCategory/GetAddCategory", "");
+            //var sql = "SELECT Count(*) FROM M_Product_Category WHERE IsActive = 'Y' AND AD_Client_ID = " + VIS.Env.getCtx().getAD_Client_ID();
+            //count = VIS.Utility.Util.getValueOfInt(VIS.DB.exe`cuteScalar(sql.toString())) + 1;
             catName = "Category-" + count;
             $.ajax({
                 type: "POST",
@@ -863,65 +907,69 @@
                 $BusyIndicator[0].style.visibility = "visible";
                 divRight.removeClass("VA005-web_dialog_overlay");
                 divRight.find('input, textarea, button, select').removeAttr('disabled');
-                var sql = "";
+                // var sql = "";
                 if (CheckDTD001()) {
-                    sql = "SELECT pc.Name,pc.Value,pc.M_AttributeSet_ID,pc.ProductType,pc.MMPolicy,pc.Description,pc.C_TaxCategory_ID,pc.A_Asset_Group_ID,pc.DTD001_IsConsumable,pc.AD_Image_ID,img.ImageUrl,img.BinaryData FROM M_Product_Category pc" +
-                        " LEFT JOIN AD_Image img ON pc.AD_Image_ID = img.AD_Image_ID WHERE pc.M_Product_Category_ID = " + cat_ID;
+                    VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/ProductCategory/GetCategory", { "M_Product_Category_ID": cat_ID }, FillCatCallBack);
+                    //sql = "SELECT pc.Name,pc.Value,pc.M_AttributeSet_ID,pc.ProductType,pc.MMPolicy,pc.Description,pc.C_TaxCategory_ID,pc.A_Asset_Group_ID,pc.DTD001_IsConsumable,pc.AD_Image_ID,img.ImageUrl,img.BinaryData FROM M_Product_Category pc" +
+                    //  " LEFT JOIN AD_Image img ON pc.AD_Image_ID = img.AD_Image_ID WHERE pc.M_Product_Category_ID = " + cat_ID;
                 }
                 else {
-                    sql = "SELECT pc.Name,pc.Value,pc.M_AttributeSet_ID,pc.ProductType,pc.MMPolicy,pc.Description,pc.C_TaxCategory_ID,pc.A_Asset_Group_ID,pc.AD_Image_ID,img.ImageUrl,img.BinaryData FROM M_Product_Category pc" +
-                        " LEFT JOIN AD_Image img ON pc.AD_Image_ID = img.AD_Image_ID WHERE pc.M_Product_Category_ID = " + cat_ID;
+                    VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/ProductCategory/GetCategory", { "M_Product_Category_ID": cat_ID }, FillCatCallBack);
+                    //sql = "SELECT pc.Name,pc.Value,pc.M_AttributeSet_ID,pc.ProductType,pc.MMPolicy,pc.Description,pc.C_TaxCategory_ID,pc.A_Asset_Group_ID,pc.AD_Image_ID,img.ImageUrl,img.BinaryData FROM M_Product_Category pc" +
+                    //    " LEFT JOIN AD_Image img ON pc.AD_Image_ID = img.AD_Image_ID WHERE pc.M_Product_Category_ID = " + cat_ID;
                 }
-                VIS.DB.executeReader(sql.toString(), null, FillCatCallBack);
+                // VIS.DB.executeReader(sql.toString(), null, FillCatCallBack);
             }
         };
 
         function FillCatCallBack(dr) {
-            while (dr.read()) {
-                catName = dr.getString("Name");
-                searchKey = dr.getString("Value");
-                attrSetId = dr.getInt("M_AttributeSet_ID");
-                pType = dr.getString("ProductType");
-                Description = dr.getString("Description");
-                matPol = dr.getString("MMPolicy");
-                taxCatID = dr.getInt("C_TaxCategory_ID");
-                asetGrp = dr.getInt("A_Asset_Group_ID");
-                if (CheckDTD001()) {
-                    IsCon = dr.getString("DTD001_IsConsumable");
-                }
-                imageUrl = dr.getString("ImageUrl");
-                ad_image_id = dr.getInt("AD_Image_ID");
-                txtName.val(catName);
-                txtValue.val(searchKey);
-                txtDesc.val(Description);
-                cmbAttributeSet.val(attrSetId);
-                cmbProductType.val(pType);
-                cmbmatPolicy.val(matPol);
-                cmbTaxCategory.val(taxCatID);
-                cmbAssetGroup.val(asetGrp);
-                if (IsCon == "Y") {
-                    IsConsumable.prop("checked", true);
-                }
-                else {
-                    IsConsumable.prop("checked", false);
-                }
-                if (imageUrl != "") {
-                    imageUrl = imageUrl.substring(imageUrl.lastIndexOf("/") + 1, imageUrl.length);
-                    var d = new Date();
-                    imgUsrImage.removeAttr("src").attr("src", VIS.Application.contextUrl + "Images/Thumb140x120/" + imageUrl + "?" + d.getTime());
-                }
-                else {
-                    //imgUsrImage.removeAttr("src").attr("src", VIS.Application.contextUrl + "Areas/VA005/Images/img-defult.png");
-                    imgUsrImage.removeAttr("src").attr("src", "");
+            if (dr.length > 0) {
+                for (var i = 0; i < dr.length; i++) {
+                    catName = dr[i].Name;
+                    searchKey = dr[i].Value;
+                    attrSetId = dr[i].M_AttributeSet_ID;
+                    pType = dr[i].ProductType;
+                    matPol = dr[i].MMPolicy;
+                    Description = dr[i].Description;
+                    taxCatID = dr[i].C_TaxCategory_ID;
+                    asetGrp = dr[i].A_Asset_Group_ID;
+                    if (CheckDTD001()) {
+                        IsCon = dr[i].DTD001_IsConsumable;
+                    }
+                    ad_image_id = dr[i].AD_Image_ID;
+                    imageUrl = dr[i].ImageUrl;
+                    txtName.val(catName);
+                    txtValue.val(searchKey);
+                    txtDesc.val(Description);
+                    cmbAttributeSet.val(attrSetId);
+                    cmbProductType.val(pType);
+                    cmbmatPolicy.val(matPol);
+                    cmbTaxCategory.val(taxCatID);
+                    cmbAssetGroup.val(asetGrp);
+                    if (IsCon == "Y") {
+                        IsConsumable.prop("checked", true);
+                    }
+                    else {
+                        IsConsumable.prop("checked", false);
+                    }
+                    if (imageUrl != "") {
+                        imageUrl = imageUrl.substring(imageUrl.lastIndexOf("/") + 1, imageUrl.length);
+                        var d = new Date();
+                        imgUsrImage.removeAttr("src").attr("src", VIS.Application.contextUrl + "Images/Thumb140x120/" + imageUrl + "?" + d.getTime());
+                    }
+                    else {
+                        //imgUsrImage.removeAttr("src").attr("src", VIS.Application.contextUrl + "Areas/VA005/Images/img-defult.png");
+                        imgUsrImage.removeAttr("src").attr("src", "");
 
+                    }
+                    btnUndo.attr('disabled', 'disabled').css("opacity", 0.6);
+                    btnSave.attr('disabled', 'disabled').css("opacity", 0.6);
                 }
-                btnUndo.attr('disabled', 'disabled').css("opacity", 0.6);
-                btnSave.attr('disabled', 'disabled').css("opacity", 0.6);
+                //dr.close();
+                //pcats = [];
+                //pcats.push(pcat_ID);
+                $BusyIndicator[0].style.visibility = "hidden";
             }
-            dr.close();
-            //pcats = [];
-            //pcats.push(pcat_ID);
-            $BusyIndicator[0].style.visibility = "hidden";
         };
 
         var updateCategory = function (pcat_ID, pname, item) {
@@ -973,8 +1021,9 @@
         };
 
         var CheckDTD001 = function () {
-            var sql = "SELECT AD_Column_ID FROM AD_Column WHERE AD_Table_ID = 209 AND ColumnName = 'DTD001_IsConsumable'";
-            var no = VIS.Utility.Util.getValueOfInt(VIS.DB.executeScalar(sql.toString(), null, null));
+            var no = VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/ProductCategory/GetCheckDTD001", "");
+            //var sql = "SELECT AD_Column_ID FROM AD_Column WHERE AD_Table_ID = 209 AND ColumnName = 'DTD001_IsConsumable'";
+            // var no = VIS.Utility.Util.getValueOfInt(VIS.DB.executeScalar(sql.toString(), null, null));
             if (no > 0) {
                 return true;
             }
@@ -997,34 +1046,36 @@
             //divRight.find('input, textarea, button, select').attr('disabled', 'disabled');
         }
 
-        var LoadCategory = function (pgNo, pgSize) {
-
-            var sql = "SELECT pc.Name,pc.M_Product_Category_ID,img.ImageUrl,img.BinaryData FROM M_Product_Category pc LEFT JOIN AD_Image img ON pc.AD_Image_ID = img.AD_Image_ID WHERE pc.IsActive='Y' AND pc.AD_Client_ID = " + VIS.Env.getCtx().getAD_Client_ID();
+        var LoadCategory = function () {
+            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/ProductCategory/LoadCategory", "", CategoryCallBack);
+            //var sql = "SELECT pc.Name,pc.M_Product_Category_ID,img.ImageUrl,img.BinaryData FROM M_Product_Category pc LEFT JOIN AD_Image img ON pc.AD_Image_ID = img.AD_Image_ID WHERE pc.IsActive='Y' AND pc.AD_Client_ID = " + VIS.Env.getCtx().getAD_Client_ID();
             //  Added by Shifali to access product acc to org
-            sql = VIS.MRole.addAccessSQL(sql, "M_Product_Category", true, true);
-            VIS.DB.executeDataReaderPaging(sql.toString(), pgNo, pgSize, null, CategoryCallBack);
+            //sql = VIS.MRole.addAccessSQL(sql, "M_Product_Category", true, true);
+            //VIS.DB.executeDataReaderPaging(sql.toString(), pgNo, pgSize, null, CategoryCallBack);
         };
 
         function CategoryCallBack(dr) {
-            while (dr.read()) {
-                name = VIS.Utility.encodeText(dr.getString(0));
-                pcat_ID = dr.getInt(1);
-                imageUrl = dr.getString(2);
-                //binaryData = dr.getString(3);
-                if (imageUrl != "") {
-                    imageUrl = imageUrl.substring(imageUrl.lastIndexOf("/") + 1, imageUrl.length);
-                    var d = new Date();
-                    mainProductCategoryUl.append("<li class='VA005-pro-cat' procatID=" + pcat_ID + "><div procatID=" + pcat_ID + " class='VA005-cat-img'><img procatID=" + pcat_ID + " style='height: 100%;width: 100%;' src='"
-                        + VIS.Application.contextUrl + "Images/Thumb140x120/" + imageUrl + "?" + d.getTime() + "'> </div> <div class='VA005-cat-caption'> <input type='checkbox' class='VA005-catboxcheck'><p procatID=" + pcat_ID + " > " + name +
-                        " </p> <p style='display:none;width:100%;'><input procatID=" + pcat_ID + " type='text' value='" + name + "'></p></div></li>");
+            if (dr.length > 0) {
+                for (var i = 0; i < dr.length; i++) {
+                    name = dr[i].Name;
+                    pcat_ID = dr[i].M_Product_Category_ID;
+                    imageUrl = dr[i].ImageUrl;
+                    //binaryData = dr.getString(3);
+                    if (imageUrl != "") {
+                        imageUrl = imageUrl.substring(imageUrl.lastIndexOf("/") + 1, imageUrl.length);
+                        var d = new Date();
+                        mainProductCategoryUl.append("<li class='VA005-pro-cat' procatID=" + pcat_ID + "><div procatID=" + pcat_ID + " class='VA005-cat-img'><img procatID=" + pcat_ID + " style='height: 100%;width: 100%;' src='"
+                            + VIS.Application.contextUrl + "Images/Thumb140x120/" + imageUrl + "?" + d.getTime() + "'> </div> <div class='VA005-cat-caption'> <input type='checkbox' class='VA005-catboxcheck'><p procatID=" + pcat_ID + " > " + name +
+                            " </p> <p style='display:none;width:100%;'><input procatID=" + pcat_ID + " type='text' value='" + name + "'></p></div></li>");
+                    }
+                    else {
+                        mainProductCategoryUl.append("<li class='VA005-pro-cat' procatID=" + pcat_ID + "><div procatID=" + pcat_ID + " class='VA005-cat-img'><img procatID=" + pcat_ID
+                            + " style='height: 100%;width: 100%;' src=''> </div> <div class='VA005-cat-caption'><input type='checkbox' class='VA005-catboxcheck'> <p procatID=" + pcat_ID + "> " + name +
+                            " </p> <p style='display:none;width:100%;'><input procatID=" + pcat_ID + " type='text' value='" + name + "'></p></div></li>");
+                    }
                 }
-                else {
-                    mainProductCategoryUl.append("<li class='VA005-pro-cat' procatID=" + pcat_ID + "><div procatID=" + pcat_ID + " class='VA005-cat-img'><img procatID=" + pcat_ID
-                        + " style='height: 100%;width: 100%;' src=''> </div> <div class='VA005-cat-caption'><input type='checkbox' class='VA005-catboxcheck'> <p procatID=" + pcat_ID + "> " + name +
-                        " </p> <p style='display:none;width:100%;'><input procatID=" + pcat_ID + " type='text' value='" + name + "'></p></div></li>");
-                }
+                //dr.close();
             }
-            dr.close();
         }
 
         this.Initialize = function () {
@@ -1125,7 +1176,6 @@
             this.getRoot = null;
             this.disposeComponent = null;
         };
-
     };
 
     //Must Implement with same parameter
