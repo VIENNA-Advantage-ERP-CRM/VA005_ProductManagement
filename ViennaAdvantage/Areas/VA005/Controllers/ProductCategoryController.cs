@@ -146,10 +146,10 @@ namespace VA005.Controllers
         /// Category DropDown
         /// </summary>
         /// <returns>Json Data</returns>
-        public JsonResult LoadCategory()
+        public JsonResult LoadCategory(int PGNo,int PGSize)
         {
             ProductCategortModel model = new ProductCategortModel();
-            List<LoadCategory> value = model.LoadCategory(Session["Ctx"] as Ctx);
+            List<LoadCategory> value = model.LoadCategory(Session["Ctx"] as Ctx, PGNo, PGSize);
             return Json(JsonConvert.SerializeObject(value), JsonRequestBehavior.AllowGet);
         }
         /// <summary>
@@ -162,24 +162,7 @@ namespace VA005.Controllers
             ProductCategortModel model = new ProductCategortModel();
             return Json(JsonConvert.SerializeObject(model.LoadWindow(windowName)), JsonRequestBehavior.AllowGet);
         }
-        /// <summary>
-        /// BtnZoom
-        /// </summary>
-        /// <returns>Json Data</returns>
-        public JsonResult LoadbtnZoom()
-        {
-            ProductCategortModel model = new ProductCategortModel();
-            return Json(JsonConvert.SerializeObject(model.LoadbtnZoom()), JsonRequestBehavior.AllowGet);
-        }
-        /// <summary>
-        /// CheckDTD
-        /// </summary>
-        /// <returns>Json Data</returns>
-        public JsonResult GetCheckDTD001()
-        {
-            ProductCategortModel model = new ProductCategortModel();
-            return Json(JsonConvert.SerializeObject(model.GetCheckDTD001()), JsonRequestBehavior.AllowGet);
-        }
+      
         /// <summary>
         /// ImgUrl
         /// </summary>

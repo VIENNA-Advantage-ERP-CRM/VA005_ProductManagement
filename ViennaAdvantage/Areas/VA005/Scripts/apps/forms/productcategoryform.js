@@ -182,7 +182,7 @@
             if (dr.length > 0) {
                 for (var i = 0; i < dr.length; i++) {
                     key = VIS.Utility.Util.getValueOfInt(dr[i].C_TaxCategory_ID);
-                    value = dr[i].Name;
+                    value = VIS.Utility.encodeText(dr[i].Name);
                     cmbAttributeSet.append(" <option value=" + key + ">" + value + "</option>");
                 }
             }
@@ -199,7 +199,7 @@
             if (dr.length > 0) {
                 for (var i = 0; i < dr.length; i++) {
                     key = VIS.Utility.Util.getValueOfInt(dr[i].C_TaxCategory_ID);
-                    value = dr[i].Name;
+                    value = VIS.Utility.encodeText(dr[i].Name);
                     cmbTaxCategory.append(" <option value=" + key + ">" + value + "</option>");
                 }
             }
@@ -740,7 +740,7 @@
             if (btnZoom != null) {
                 btnZoom.on("click", function () {
 
-                    var ad_window_Id = VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/ProductCategory/LoadbtnZoom", "");
+                    var ad_window_Id = VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/ProductCategory/LoadWindow", { "windowName": 'Product Category'});
 
                     try {
                         //if (dr.read()) {
@@ -908,16 +908,11 @@
                 divRight.removeClass("VA005-web_dialog_overlay");
                 divRight.find('input, textarea, button, select').removeAttr('disabled');
                 // var sql = "";
-                if (CheckDTD001()) {
+               
                     VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/ProductCategory/GetCategory", { "M_Product_Category_ID": cat_ID }, FillCatCallBack);
                     //sql = "SELECT pc.Name,pc.Value,pc.M_AttributeSet_ID,pc.ProductType,pc.MMPolicy,pc.Description,pc.C_TaxCategory_ID,pc.A_Asset_Group_ID,pc.DTD001_IsConsumable,pc.AD_Image_ID,img.ImageUrl,img.BinaryData FROM M_Product_Category pc" +
                     //  " LEFT JOIN AD_Image img ON pc.AD_Image_ID = img.AD_Image_ID WHERE pc.M_Product_Category_ID = " + cat_ID;
-                }
-                else {
-                    VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/ProductCategory/GetCategory", { "M_Product_Category_ID": cat_ID }, FillCatCallBack);
-                    //sql = "SELECT pc.Name,pc.Value,pc.M_AttributeSet_ID,pc.ProductType,pc.MMPolicy,pc.Description,pc.C_TaxCategory_ID,pc.A_Asset_Group_ID,pc.AD_Image_ID,img.ImageUrl,img.BinaryData FROM M_Product_Category pc" +
-                    //    " LEFT JOIN AD_Image img ON pc.AD_Image_ID = img.AD_Image_ID WHERE pc.M_Product_Category_ID = " + cat_ID;
-                }
+      
                 // VIS.DB.executeReader(sql.toString(), null, FillCatCallBack);
             }
         };
@@ -933,9 +928,6 @@
                     Description = dr[i].Description;
                     taxCatID = dr[i].C_TaxCategory_ID;
                     asetGrp = dr[i].A_Asset_Group_ID;
-                    if (CheckDTD001()) {
-                        IsCon = dr[i].DTD001_IsConsumable;
-                    }
                     ad_image_id = dr[i].AD_Image_ID;
                     imageUrl = dr[i].ImageUrl;
                     txtName.val(catName);
@@ -1046,8 +1038,8 @@
             //divRight.find('input, textarea, button, select').attr('disabled', 'disabled');
         }
 
-        var LoadCategory = function () {
-            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/ProductCategory/LoadCategory", "", CategoryCallBack);
+        var LoadCategory = function (pgNo, pgSize) {
+            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/ProductCategory/LoadCategory", { "PGNo": pgNo, "PGSize": pgSize}, CategoryCallBack);
             //var sql = "SELECT pc.Name,pc.M_Product_Category_ID,img.ImageUrl,img.BinaryData FROM M_Product_Category pc LEFT JOIN AD_Image img ON pc.AD_Image_ID = img.AD_Image_ID WHERE pc.IsActive='Y' AND pc.AD_Client_ID = " + VIS.Env.getCtx().getAD_Client_ID();
             //  Added by Shifali to access product acc to org
             //sql = VIS.MRole.addAccessSQL(sql, "M_Product_Category", true, true);

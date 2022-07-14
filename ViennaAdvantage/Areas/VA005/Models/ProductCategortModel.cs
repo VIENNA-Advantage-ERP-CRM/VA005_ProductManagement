@@ -226,12 +226,12 @@ namespace VA005.Models
         /// </summary>
         /// <param name="ctx">Context</param>
         /// <returns>Data into Drop Down</returns>
-        public List<LoadCategory> LoadCategory(Ctx ctx)
+        public List<LoadCategory> LoadCategory(Ctx ctx, int PGNo, int PGSize)
         {
             List<LoadCategory> PPData = new List<LoadCategory>();
             string sql = @"SELECT pc.Name,pc.M_Product_Category_ID,img.ImageUrl,img.BinaryData FROM M_Product_Category pc LEFT JOIN AD_Image img ON pc.AD_Image_ID = img.AD_Image_ID WHERE pc.IsActive = 'Y' AND pc.AD_Client_ID = " + ctx.GetAD_Client_ID();
             sql = MRole.GetDefault(ctx).AddAccessSQL(sql, "M_Product_Category", true, true);
-            DataSet ds = DB.ExecuteDataset(sql, null, null);
+            DataSet ds = VIS.DBase.DB.ExecuteDatasetPaging(sql, PGNo, PGSize);
             if (ds != null && ds.Tables[0].Rows.Count > 0)
             {
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
@@ -253,30 +253,11 @@ namespace VA005.Models
         /// <returns>Load Window</returns>
         public int LoadWindow(string windowName)
         {
-            string sql = "select ad_window_id from ad_window where name = '" + windowName + "'";
+            string sql = "SELECT AD_Window_ID FROM AD_Window WHERE Name = '" + windowName + "'";
             int rule = Util.GetValueOfInt(DB.ExecuteScalar(sql, null, null));
             return rule;
         }
-        /// <summary>
-        /// Method For BtnZoom
-        /// </summary>
-        /// <returns>Load Zoom Window</returns>
-        public int LoadbtnZoom()
-        {
-            string sql = "select ad_window_id from ad_window where name = 'Product Category'";
-            int rule = Util.GetValueOfInt(DB.ExecuteScalar(sql, null, null));
-            return rule;
-        }
-        /// <summary>
-        /// Method For CheckDTD001
-        /// </summary>
-        /// <returns>Load Grid</returns>
-        public int GetCheckDTD001()
-        {
-            string sql = "SELECT AD_Column_ID FROM AD_Column WHERE AD_Table_ID = 209 AND ColumnName = 'DTD001_IsConsumable'";
-            int rule = Util.GetValueOfInt(DB.ExecuteScalar(sql, null, null));
-            return rule;
-        }
+      
         /// <summary>
         /// Get imgUrl
         /// </summary>
@@ -295,7 +276,7 @@ namespace VA005.Models
         /// <returns>Category Count</returns>
         public string GetAddCategory(Ctx ctx)
         {
-            string sql = "SELECT Count(*) FROM M_Product_Category WHERE IsActive = 'Y' AND AD_Client_ID = " + ctx.GetAD_Client_ID();
+            string sql = "SELECT COUNT(M_Product_Category_ID) FROM M_Product_Category WHERE IsActive = 'Y' AND AD_Client_ID = " + ctx.GetAD_Client_ID();
             string rule = Util.GetValueOfString(DB.ExecuteScalar(sql, null, null));
             return rule;
         }
