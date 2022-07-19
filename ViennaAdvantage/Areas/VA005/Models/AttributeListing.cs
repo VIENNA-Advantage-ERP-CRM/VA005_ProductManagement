@@ -532,7 +532,7 @@ namespace VA005.Models
         /// Method For Load Attribute
         /// </summary>
         /// <returns>Load Grid</returns>
-        public List<AttributeAppend> GetattributeAppendDiv()
+        public List<AttributeAppend> GetAttribute()
         {
             List<AttributeAppend> PPData = new List<AttributeAppend>();
             string sql = "SELECT Name, M_Attribute_ID,IsActive FROM M_Attribute  ORDER BY M_Attribute_ID DESC";
@@ -555,12 +555,12 @@ namespace VA005.Models
         /// Method For Save Attribute
         /// </summary>
         /// <returns>Save The Attribute</returns>
-        public int SaveAttributeOnAdd()
+        public int GetAttributeCount()
         {
             string sql = "SELECT COUNT(Name) as Name FROM M_Attribute WHERE IsActive='Y'";
             sql = MRole.GetDefault(_ctx).AddAccessSQL(sql, "M_Attribute", true, true);
-            int rule = Util.GetValueOfInt(DB.ExecuteScalar(sql));
-            return rule;
+            int count = Util.GetValueOfInt(DB.ExecuteScalar(sql));
+            return count;
         }
         /// <summary>
         /// Method For Get Attribute Value
@@ -590,12 +590,12 @@ namespace VA005.Models
         /// </summary>
         /// <param name="Control">Control</param>
         /// <returns>Load Window</returns>
-        public int EditAttributebtn(string Control)
+        public int GetWindow_ID(string Control)
         {
 
             string sql = "SELECT AD_Window_ID FROM AD_Window WHERE Name='" + Control + "'";
-            int rule = Util.GetValueOfInt(DB.ExecuteScalar(sql));
-            return rule;
+            int ID = Util.GetValueOfInt(DB.ExecuteScalar(sql));
+            return ID;
         }
         /// <summary>
         /// Method For Mandatory Drop Down
@@ -617,7 +617,6 @@ namespace VA005.Models
             }
             return Type;
         }
-
         /// <summary>
         /// Method For Lot Drop Down 
         /// </summary>
@@ -669,9 +668,9 @@ namespace VA005.Models
         /// </summary>
         /// <param name="NodeID">Node ID</param>
         /// <returns>Load Edit Attribute Set</returns>
-        public List<EditAttributeList> EditAttributeSet(int NodeID)
+        public List<AttributeData> GetAttributeSetData(int NodeID)
         {
-            List<EditAttributeList> Type = new List<EditAttributeList>();
+            List<AttributeData> Type = new List<AttributeData>();
             string sql = "SELECT NAME,DESCRIPTION,MANDATORYTYPE,ISGUARANTEEDATE,ISGUARANTEEDATEMANDATORY,M_LOTCTL_ID,M_SERNOCTL_ID,IsLot,IsSerNo FROM M_AttributeSet WHERE M_Attributeset_ID=" + NodeID;
             sql = MRole.GetDefault(_ctx).AddAccessSQL(sql, "M_AttributeSet", true, true);
             var ds = DB.ExecuteDataset(sql, null, null);
@@ -679,7 +678,7 @@ namespace VA005.Models
             {
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    EditAttributeList dep = new EditAttributeList();
+                    AttributeData dep = new AttributeData();
                     dep.name = Util.GetValueOfString(ds.Tables[0].Rows[i]["Name"]);
                     dep.description = Util.GetValueOfString(ds.Tables[0].Rows[i]["DESCRIPTION"]);
                     dep.mandatorytype = Util.GetValueOfString(ds.Tables[0].Rows[i]["MANDATORYTYPE"]);
@@ -700,54 +699,20 @@ namespace VA005.Models
         /// <param name="AttributeID">Attribute ID</param>
         /// <param name="ParentId">Parent ID</param>
         /// <returns>Remove Attribute Formatt</returns>
-        public int RemoveAttFormatt(int AttributeID, int ParentId)
+        public int DeleteAttributeUse(int AttributeID, int ParentId)
         {
             string sql = "DELETE FROM M_Attributeuse WHERE M_Attribute_ID=" + AttributeID + " and M_Attributeset_ID=" + ParentId;
-            int rule = Util.GetValueOfInt(DB.ExecuteScalar(sql));
-            return rule;
+            int ID = Util.GetValueOfInt(DB.ExecuteQuery(sql));
+            return ID;
         }
         /// <summary>
         /// Load Link Attribute
         /// </summary>
         /// <param name="AttributeID">Attribute ID</param>
         /// <returns>Load Link Attribute</returns>
-        public string LoadLinkAttSetAnd(int AttributeID)
+        public string LoadAttributeUse(int AttributeID)
         {
             string sql = "SELECT mas.Name FROM M_Attributeuse masu JOIN M_Attributeset mas on masu.M_Attributeset_ID=mas.M_Attributeset_ID WHERE masu.M_Attribute_ID=" + AttributeID;
-            string rule = Util.GetValueOfString(DB.ExecuteScalar(sql));
-            return rule;
-        }
-        /// <summary>
-        /// Table Attribute ID
-        /// </summary>
-        /// <param name="M_Attributeset">Attribute Set</param>
-        /// <returns>Table ID</returns>
-        public string GetTableAttribute(string M_Attributeset)
-        {
-            string sql = "SELECT AD_Table_ID from AD_Table WHERE TableName='" + M_Attributeset + "'";
-            string rule = Util.GetValueOfString(DB.ExecuteScalar(sql));
-            return rule;
-        }
-        /// <summary>
-        /// Field Length
-        /// </summary>
-        /// <param name="TableattributesetID">Table Attribute ID</param>
-        /// <param name="COLUMNNAME">Columnname</param>
-        /// <returns>Attribute ID And Columnname</returns>
-        public int GetFieldLength(string TableattributesetID, string COLUMNNAME)
-        {
-            string sql = "SELECT Fieldlength FROM AD_Column WHERE AD_Table_ID=(" + TableattributesetID + ") AND  IsActive ='Y' AND COLUMNNAME = '" + COLUMNNAME + "'";
-            int rule = Util.GetValueOfInt(DB.ExecuteScalar(sql));
-            return rule;
-        }
-        /// <summary>
-        /// LotTable
-        /// </summary>
-        /// <param name="M_lotCtl">Lot_ID</param>
-        /// <returns>Load Table</returns>
-        public string GetlottableId(string M_lotCtl)
-        {
-            string sql = "SELECT AD_Table_ID FROM AD_Table WHERE TableName='" + M_lotCtl + "'";
             string rule = Util.GetValueOfString(DB.ExecuteScalar(sql));
             return rule;
         }
@@ -756,10 +721,10 @@ namespace VA005.Models
         /// </summary>
         /// <param name="lottableID">Lot Table ID</param>
         /// <returns>Colunm Length</returns>
-        public List<ColumnData> GetField(string lottableID)
+        public List<ColumnData> GetFieldLength(int TableID, string COLUMNNAME)
         {
             List<ColumnData> Type = new List<ColumnData>();
-            string sql = "SELECT Fieldlength,ColunmName FROM AD_Column WHERE AD_Table_ID =" + lottableID + "  AND COLUMNNAME  IN ('Name', 'StartNo', 'CurrentNext', 'IncrementNo', 'Prefix', 'Suffix') AND isActive = 'Y'";
+            string sql = "SELECT Fieldlength,ColumnName FROM AD_Column WHERE AD_Table_ID =" + TableID + "  AND COLUMNNAME  IN ("+ COLUMNNAME + ") AND isActive = 'Y'";
             var ds = DB.ExecuteDataset(sql, null, null);
             if (ds != null)
             {
@@ -767,7 +732,7 @@ namespace VA005.Models
                 {
                     ColumnData dep = new ColumnData();
                     dep.fieldlength = Util.GetValueOfString(ds.Tables[0].Rows[i]["Fieldlength"]);
-                    dep.columnname = Util.GetValueOfString(ds.Tables[0].Rows[i]["ColunmName"]);
+                    dep.columnname = Util.GetValueOfString(ds.Tables[0].Rows[i]["ColumnName"]);
                     Type.Add(dep);
                 }
             }
@@ -916,7 +881,7 @@ namespace VA005.Models
             public int ad_window_id { get; set; }
         }
 
-        public class EditAttributeList
+        public class AttributeData
         {
             public string name { get; set; }
             public string description { get; set; }

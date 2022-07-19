@@ -109,21 +109,21 @@ namespace VA005.Controllers
         /// Load Attribute
         /// </summary>
         /// <returns>JSON Data</returns>
-        public JsonResult GetattributeAppendDiv()
+        public JsonResult GetAttribute()
         {
             AttributeListing model = new AttributeListing(Session["Ctx"] as Ctx);
-            List<AttributeAppend> value = model.GetattributeAppendDiv();
+            List<AttributeAppend> value = model.GetAttribute();
             return Json(JsonConvert.SerializeObject(value), JsonRequestBehavior.AllowGet);
         }
         /// <summary>
         /// Save Attribute
         /// </summary>
         /// <returns>JSON Data</returns>
-        public JsonResult SaveAttributeOnAdd()
+        public JsonResult GetAttributeCount()
         {
             Ctx ctx = Session["ctx"] as Ctx;
             AttributeListing obj = new AttributeListing(ctx);
-            int value = obj.SaveAttributeOnAdd();
+            int value = obj.GetAttributeCount();
             return Json(new { value }, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
@@ -142,11 +142,11 @@ namespace VA005.Controllers
         /// </summary>
         /// <param name="Control">Control</param>
         /// <returns>JSON Attribute</returns>
-        public JsonResult EditAttributebtn(string Control)
+        public JsonResult GetWindow_ID(string Control)
         {
             Ctx ctx = Session["ctx"] as Ctx;
             AttributeListing obj = new AttributeListing(ctx);
-            var value = obj.EditAttributebtn(Control);
+            var value = obj.GetWindow_ID(Control);
             return Json(new { value }, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
@@ -185,10 +185,10 @@ namespace VA005.Controllers
         /// </summary>
         /// <param name="NodeID">Node ID</param>
         /// <returns>JSON</returns>
-        public JsonResult EditAttributeSet(int NodeID)
+        public JsonResult GetAttributeSetData(int NodeID)
         {
             AttributeListing model = new AttributeListing(Session["Ctx"] as Ctx);
-            List<EditAttributeList> value = model.EditAttributeSet(NodeID);
+            List<AttributeData> value = model.GetAttributeSetData(NodeID);
             return Json(JsonConvert.SerializeObject(value), JsonRequestBehavior.AllowGet);
         }
         /// <summary>
@@ -197,11 +197,11 @@ namespace VA005.Controllers
         /// <param name="AttributeID">Attribute ID</param>
         /// <param name="ParentId">Parent ID</param>
         /// <returns>JSON Data</returns>
-        public JsonResult RemoveAttFormatt(int AttributeID, int ParentId)
+        public JsonResult DeleteAttributeUse(int AttributeID, int ParentId)
         {
             Ctx ctx = Session["ctx"] as Ctx;
             AttributeListing obj = new AttributeListing(ctx);
-            var value = obj.RemoveAttFormatt(AttributeID, ParentId);
+            var value = obj.DeleteAttributeUse(AttributeID, ParentId);
             return Json(new { value }, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
@@ -209,59 +209,18 @@ namespace VA005.Controllers
         /// </summary>
         /// <param name="AttributeID">Attribute ID</param>
         /// <returns>JSON Data</returns>
-        public JsonResult LoadLinkAttSetAnd(int AttributeID)
+        public JsonResult LoadAttributeUse(int AttributeID)
         {
             Ctx ctx = Session["ctx"] as Ctx;
             AttributeListing obj = new AttributeListing(ctx);
-            var value = obj.LoadLinkAttSetAnd(AttributeID);
+            var value = obj.LoadAttributeUse(AttributeID);
             return Json(new { value }, JsonRequestBehavior.AllowGet);
         }
-        /// <summary>
-        /// Attribute ID
-        /// </summary>
-        /// <param name="M_Attributeset">Attribute Set</param>
-        /// <returns>JSON Data</returns>
-        public JsonResult GetTableAttribute(string M_Attributeset)
-        {
-            Ctx ctx = Session["ctx"] as Ctx;
-            AttributeListing obj = new AttributeListing(ctx);
-            string value = obj.GetTableAttribute(M_Attributeset);
-            return Json(new { value }, JsonRequestBehavior.AllowGet);
-        }
-        /// <summary>
-        /// Field Length
-        /// </summary>
-        /// <param name="TableattributesetID">Table ID</param>
-        /// <param name="COLUMNNAME">Columnname</param>
-        /// <returns>JSON Data</returns>
-        public JsonResult GetFieldLength(string TableattributesetID, string COLUMNNAME)
-        {
-            Ctx ctx = Session["ctx"] as Ctx;
-            AttributeListing obj = new AttributeListing(ctx);
-            var value = obj.GetFieldLength(TableattributesetID, COLUMNNAME);
-            return Json(new { value }, JsonRequestBehavior.AllowGet);
-        }
-        /// <summary>
-        /// Lot Table ID
-        /// </summary>
-        /// <param name="M_lotCtl">Lot ID</param>
-        /// <returns>JSON Data</returns>
-        public JsonResult GetlottableId(string M_lotCtl)
-        {
-            Ctx ctx = Session["ctx"] as Ctx;
-            AttributeListing obj = new AttributeListing(ctx);
-            string value = obj.GetlottableId(M_lotCtl);
-            return Json(new { value }, JsonRequestBehavior.AllowGet);
-        }
-        /// <summary>
-        /// Field Length
-        /// </summary>
-        /// <param name="lottableID">LotTable_ID</param>
-        /// <returns>JSON Data</returns>
-        public JsonResult GetField(string lottableID)
+      
+        public JsonResult GetFieldLength(int TableID,string COLUMNNAME)
         {
             AttributeListing model = new AttributeListing(Session["Ctx"] as Ctx);
-            List<ColumnData> value = model.GetField(lottableID);
+            List<ColumnData> value = model.GetFieldLength(TableID, COLUMNNAME);
             return Json(JsonConvert.SerializeObject(value), JsonRequestBehavior.AllowGet);
         }
     }

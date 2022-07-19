@@ -336,7 +336,7 @@
             //var sql = "SELECT NAME, M_Attribute_ID FROM M_Attribute WHERE ISACTIVE='Y'";
             //var sql = "SELECT NAME, M_Attribute_ID FROM M_Attribute WHERE isactive='Y' ORDER BY M_Attribute_ID DESC";
 
-            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/GetattributeAppendDiv", "", AttributeAppendCatCallBack);
+            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/GetAttribute", "", AttributeAppendCatCallBack);
 
 
             //var sql = "SELECT NAME, M_Attribute_ID,isactive FROM M_Attribute  ORDER BY M_Attribute_ID DESC";
@@ -872,7 +872,7 @@
 
 
         function saveAttributeonaddplusbtn() {
-            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/SaveAttributeOnAdd", "", SaveAttributeOnAddCallBack);
+            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/GetAttributeCount", "", AttributeCountAddCallBack);
 
 
             //var sql = "SELECT count(name) as Name FROM M_Attribute WHERE isactive='Y'";
@@ -913,7 +913,7 @@
             //attributeidgetonokclick = selectedAttributeID;
         };
 
-        function SaveAttributeOnAddCallBack(dr) {
+        function AttributeCountAddCallBack(dr) {
 
             if (dr != null) {
                 findnamecount = dr['value'] + 1;
@@ -2100,7 +2100,7 @@
                 if (lotidget != "null" || serialidget != "null") {
                     if ($addatttextlot.is(":checked")) {
 
-                        var windowid = VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/EditAttributebtn", { "Control": 'Lot Control' }, EditAttributebtnCallBack);
+                        var windowid = VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/GetWindow_ID", { "Control": 'Lot Control' }, Window_IDCallBack);
 
                         //var windowid = VIS.Utility.Util.getValueOfInt(dr[i].ad_window_id);
                         //var sql1 = "select ad_window_id from ad_window where name='Lot Control'";
@@ -2116,7 +2116,7 @@
 
                     if ($addatttextserial.is(":checked")) {
 
-                        VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/EditAttributebtn", { "Control": 'SerialNoControl' }, EditAttributeCallBack);
+                        VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/GetWindow_ID", { "Control": 'SerialNoControl' }, Window_IDCallBack);
 
                         // var windowid = VIS.Utility.Util.getValueOfInt(dr["ad_window_id"]);
                         //var sql1 = "select ad_window_id from ad_window where name='Serial No Control'";
@@ -2135,7 +2135,7 @@
                 }
             });
 
-            function EditAttributebtnCallBack(dr) {
+            function Window_IDCallBack(dr) {
                 if (dr != null) {
                     var windowid = VIS.Utility.Util.getValueOfInt(dr['value']);
                     var zoomQuery = new VIS.Query();
@@ -2370,7 +2370,7 @@
         function editAttributeSet(nodeID) {
 
             cleartext();
-            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/EditAttributeSet", { "NodeID": nodeID }, EditAttributeSetCallBack);
+            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/GetAttributeSetData", { "NodeID": nodeID }, AttributeSetDataCallBack);
 
             //var sql = "Select NAME,DESCRIPTION,MANDATORYTYPE,ISGUARANTEEDATE,ISGUARANTEEDATEMANDATORY,M_LOTCTL_ID,M_SERNOCTL_ID,IsLot,IsSerNo FROM M_AttributeSet WHERE M_Attributeset_ID=" + nodeID;
             // sql = VIS.MRole.addAccessSQL(sql, "M_AttributeSet", true, true);            
@@ -2443,7 +2443,7 @@
             //}
 
         };
-        function EditAttributeSetCallBack(dr) {
+        function AttributeSetDataCallBack(dr) {
             if (dr != null) {
                 if (dr.length > 0) {
                     for (var i = 0; i < dr.length; i++) {
@@ -2828,7 +2828,7 @@
 
             var ParentID = $(this).data("parentid");
 
-            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/RemoveAttFormatt", { "AttributeID": attributeID, "ParentId": ParentID });
+            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/DeleteAttributeUse", { "AttributeID": attributeID, "ParentId": ParentID });
 
             //var sql = "DELETE FROM M_Attributeuse WHERE M_Attribute_ID=" + attributeID + " and M_Attributeset_id=" + ParentID;
             //var ds = VIS.DB.executeDataSet(sql, null, null);
@@ -3030,7 +3030,7 @@
 
         //*** Get related data on icon click...
         function linkAttSetAndAttribute(attributeID) {
-            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/LoadLinkAttSetAnd", { "AttributeID": attributeID }, LinkAttSetCallBack);
+            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/LoadAttributeUse", { "AttributeID": attributeID }, AttributeUseCallBack);
 
             //var sql = "select mas.Name from m_attributeuse masu JOIN m_attributeset mas on masu.m_attributeset_id=mas.m_attributeset_id where masu.m_attribute_id=" + attributeID;
             //var ds = VIS.DB.executeDataSet(sql, null, null);
@@ -3043,7 +3043,7 @@
             //    ds.close();
             //}
         };
-        function LinkAttSetCallBack(dr) {
+        function AttributeUseCallBack(dr) {
             if (dr != null) {
                 $listid.append($("<li>" + VIS.Utility.Util.getValueOfString(dr['value']) + "</li>"));
             }
@@ -3163,37 +3163,32 @@
         //*** Get field length....      
 
         function filedlength() {
-            var tableattributesetID = VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/GetTableAttribute", { "M_Attributeset": 'M_AttributeSet' });
-
+            
             //var tableattributesetID = "select ad_table_id from ad_table where tablename='M_AttributeSet'";
-            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/GetFieldLength", { "TableattributesetID": tableattributesetID.value, "COLUMNNAME": 'Name' }, FiledCallBack);
+            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/GetFieldLength", { "TableID": 560, "COLUMNNAME": "'Name','Description'" }, FieldCallBack);
 
             //var sqlname = "SELECT fieldlength FROM ad_column WHERE ad_table_id=(" + tableattributesetID + ") AND COLUMNNAME='Name'  AND isActive ='Y'";
             // var ds = VIS.DB.executeReader(sqlname.toString(), null);
             //columnLength = VIS.Utility.Util.getValueOfInt(ds.tables[0].rows[0].cells.fieldlength);
             //$addatttextname.attr("maxlength", columnLength);
 
-            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/GetFieldLength", { "TableattributesetID": tableattributesetID.value, "COLUMNNAME": 'Description' }, FiledCalBack);
             //var sqldes = "SELECT fieldlength FROM ad_column WHERE ad_table_id=(" + tableattributesetID + ") AND COLUMNNAME ='Description'  AND isActive ='Y'";
             //var ds1 = VIS.DB.executeReader(sqldes.toString(), null);
             //columndesLength = VIS.Utility.Util.getValueOfInt(ds1.tables[0].rows[0].cells.fieldlength);
             //$$addatttextdes.attr("maxlength", columndesLength);
 
         };
-        function FiledCallBack(dr) {
+        function FieldCallBack(dr) {
             if (dr != null) {
-                columnLength = VIS.Utility.Util.getValueOfInt(dr['value']);
-                $addatttextname.attr("maxlength", columnLength);
-
+                if (dr[i].COLUMNNAME == 'Name') {
+                    $addatttextname.attr("maxlength", dr[i].fieldlength);
+                }
+                else if (dr[i].COLUMNNAME == 'Description') {
+                    $addatttextdes.attr("maxlength", dr[i].fieldlength);
+                }
             }
         }
-        function FiledCalBack(dr) {
-            if (dr != null) {
-                columnLength = VIS.Utility.Util.getValueOfInt(dr['value']);
-                $addatttextdes.attr("maxlength", columndesLength);
-
-            }
-        }
+       
 
         //*** event handelling for lot serial dialog...
         function eventslotserialdialog() {
@@ -3214,9 +3209,8 @@
 
         //*** field length for lot serial dialog
         function fieldlengthlotserialdialog() {
-            var lottableID = VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/GetlottableId", { "M_lotCtl": 'M_LotCtl' });
-
-            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "AttributeListing/GetField", { "lottableID": lottableID.value }, LengthCallBack);
+       
+            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "AttributeListing/GetFieldLength", { "TableID": 556, "COLUMNNAME": "'Name','StartNo','CurrentNext','IncrementNo','Prefix','Suffix'" }, LengthCallBack);
 
 
             //var lottableID = "select ad_table_id from ad_table where tablename='M_LotCtl'";
