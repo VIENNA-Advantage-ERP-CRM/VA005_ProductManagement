@@ -3044,9 +3044,11 @@
             //}
         };
         function AttributeUseCallBack(dr) {
-            if (dr != null) {         
-                        $listid.append($("<li>" + VIS.Utility.Util.getValueOfString(dr['value']) + "</li>"));                 
+            if (dr != null) {
+                for (var i = 0; i < dr.value.length; i++) {
+                    $listid.append($("<li>" + VIS.Utility.Util.getValueOfString(dr.value[i]) + "</li>"));
                 }
+            }
         };
 
         //*** Show Link AttSet And Att()

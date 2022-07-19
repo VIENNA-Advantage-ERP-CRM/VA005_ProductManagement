@@ -710,19 +710,19 @@ namespace VA005.Models
         /// </summary>
         /// <param name="AttributeID">Attribute ID</param>
         /// <returns>Load Link Attribute</returns>
-        public AttributeUseData LoadAttributeUse(int AttributeID)
+        public List<string> LoadAttributeUse(int AttributeID)
         {
-            AttributeUseData Type = new AttributeUseData();
+            List<string> Lst = new List<string>();
             string sql = "SELECT mas.Name FROM M_Attributeuse masu JOIN M_Attributeset mas on masu.M_Attributeset_ID=mas.M_Attributeset_ID WHERE masu.M_Attribute_ID=" + AttributeID;
             var ds = DB.ExecuteDataset(sql, null, null);
             if (ds != null)
-            {
+            {              
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    Type.Name = Util.GetValueOfString(ds.Tables[0].Rows[i]["Name"]);
+                    Lst.Add(Util.GetValueOfString(ds.Tables[0].Rows[i]["Name"]));
                 }
             }
-            return Type;
+            return Lst;
         }
         /// <summary>
         /// Field Length
