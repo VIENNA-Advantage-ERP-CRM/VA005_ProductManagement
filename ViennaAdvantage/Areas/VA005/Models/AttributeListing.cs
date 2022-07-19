@@ -710,21 +710,30 @@ namespace VA005.Models
         /// </summary>
         /// <param name="AttributeID">Attribute ID</param>
         /// <returns>Load Link Attribute</returns>
-        public string LoadAttributeUse(int AttributeID)
+        public AttributeUseData LoadAttributeUse(int AttributeID)
         {
+            AttributeUseData Type = new AttributeUseData();
             string sql = "SELECT mas.Name FROM M_Attributeuse masu JOIN M_Attributeset mas on masu.M_Attributeset_ID=mas.M_Attributeset_ID WHERE masu.M_Attribute_ID=" + AttributeID;
-            string rule = Util.GetValueOfString(DB.ExecuteScalar(sql));
-            return rule;
+            var ds = DB.ExecuteDataset(sql, null, null);
+            if (ds != null)
+            {
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    Type.Name = Util.GetValueOfString(ds.Tables[0].Rows[i]["Name"]);
+                }
+            }
+            return Type;
         }
         /// <summary>
-        /// Get Field Length
+        /// Field Length
         /// </summary>
-        /// <param name="lottableID">Lot Table ID</param>
-        /// <returns>Colunm Length</returns>
+        /// <param name="TableID">TableID</param>
+        /// <param name="COLUMNNAME">COLUMNNAME</param>
+        /// <returns>Column Name And Length</returns>
         public List<ColumnData> GetFieldLength(int TableID, string COLUMNNAME)
         {
             List<ColumnData> Type = new List<ColumnData>();
-            string sql = "SELECT Fieldlength,ColumnName FROM AD_Column WHERE AD_Table_ID =" + TableID + "  AND COLUMNNAME  IN ("+ COLUMNNAME + ") AND isActive = 'Y'";
+            string sql = "SELECT Fieldlength,ColumnName FROM AD_Column WHERE AD_Table_ID =" + TableID + "  AND COLUMNNAME  IN (" + COLUMNNAME + ") AND isActive = 'Y'";
             var ds = DB.ExecuteDataset(sql, null, null);
             if (ds != null)
             {
@@ -892,6 +901,10 @@ namespace VA005.Models
             public int m_sernoctl_id { get; set; }
             public string islot { get; set; }
             public string isserno { get; set; }
+        }
+        public class AttributeUseData
+        {
+            public string Name { get; set; }
         }
         public class ColumnData
         {

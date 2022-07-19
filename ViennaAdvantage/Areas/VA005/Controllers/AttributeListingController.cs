@@ -216,7 +216,12 @@ namespace VA005.Controllers
             var value = obj.LoadAttributeUse(AttributeID);
             return Json(new { value }, JsonRequestBehavior.AllowGet);
         }
-      
+        /// <summary>
+        /// Field Length
+        /// </summary>
+        /// <param name="TableID">TableID</param>
+        /// <param name="COLUMNNAME">COLUMNNAME</param>
+        /// <returns>JSON Data</returns>
         public JsonResult GetFieldLength(int TableID,string COLUMNNAME)
         {
             AttributeListing model = new AttributeListing(Session["Ctx"] as Ctx);

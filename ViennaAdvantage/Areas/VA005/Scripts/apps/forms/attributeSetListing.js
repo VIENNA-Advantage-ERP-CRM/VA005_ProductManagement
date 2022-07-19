@@ -3044,9 +3044,9 @@
             //}
         };
         function AttributeUseCallBack(dr) {
-            if (dr != null) {
-                $listid.append($("<li>" + VIS.Utility.Util.getValueOfString(dr['value']) + "</li>"));
-            }
+            if (dr != null) {         
+                        $listid.append($("<li>" + VIS.Utility.Util.getValueOfString(dr['value']) + "</li>"));                 
+                }
         };
 
         //*** Show Link AttSet And Att()
@@ -3180,11 +3180,13 @@
         };
         function FieldCallBack(dr) {
             if (dr != null) {
-                if (dr[i].COLUMNNAME == 'Name') {
-                    $addatttextname.attr("maxlength", dr[i].fieldlength);
-                }
-                else if (dr[i].COLUMNNAME == 'Description') {
-                    $addatttextdes.attr("maxlength", dr[i].fieldlength);
+                for (var i = 0; i < dr.length; i++) {
+                    if (dr[i].COLUMNNAME == 'Name') {
+                        $addatttextname.attr("maxlength", dr[i].fieldlength);
+                    }
+                    else if (dr[i].COLUMNNAME == 'Description') {
+                        $addatttextdes.attr("maxlength", dr[i].fieldlength);
+                    }
                 }
             }
         }
