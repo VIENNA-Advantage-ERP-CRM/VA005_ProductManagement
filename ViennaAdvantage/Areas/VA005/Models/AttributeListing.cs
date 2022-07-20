@@ -715,7 +715,7 @@ namespace VA005.Models
             string sql = "SELECT mas.Name FROM M_Attributeuse masu JOIN M_Attributeset mas on masu.M_Attributeset_ID=mas.M_Attributeset_ID WHERE masu.M_Attribute_ID=" + AttributeID;
             var ds = DB.ExecuteDataset(sql, null, null);
             if (ds != null)
-            {              
+            {
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
                     Lst.Add(Util.GetValueOfString(ds.Tables[0].Rows[i]["Name"]));
@@ -746,7 +746,7 @@ namespace VA005.Models
             }
             return Type;
         }
-
+    }
         public class VA005_AddAttributeSet
         {
             public string name { get; set; }
@@ -905,6 +905,7 @@ namespace VA005.Models
         {
             public string Name { get; set; }
         }
+
         public class ColumnData
         {
             public string fieldlength { get; set; }
@@ -913,4 +914,3 @@ namespace VA005.Models
         }
 
     }
-}
