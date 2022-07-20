@@ -27,6 +27,7 @@ namespace VA005.Models
         {
             _ctx = ctx;
         }
+
         string exp = "";
         /// <summary>
         /// USed to Create Tree. This is main function which intialize tree creation.
@@ -157,10 +158,10 @@ namespace VA005.Models
 
                     if (Convert.ToString(drs[j]["ATTRIBUTEVALUETYPE"]) == "L")
                     {
-                    LoadAttributeValue(ds, attributeSetTree, Convert.ToInt32(drs[j]["m_attribute_ID"]));
+                        LoadAttributeValue(ds, attributeSetTree, Convert.ToInt32(drs[j]["m_attribute_ID"]));
+                    }
                 }
             }
-        }
         }
 
         /// <summary>
@@ -461,13 +462,13 @@ namespace VA005.Models
             MAttributeSet obj = new MAttributeSet(_ctx, value.attributesetdelID, null);
             int attvalid = obj.GetM_AttributeSet_ID();
             string _result = "";
-          
+
             if (!obj.Delete(true))
             {
                 ValueNamePair pp = VLogger.RetrieveError();
                 _result = pp.ToString();
             }
-            
+
             return _result;
         }
 
@@ -507,8 +508,8 @@ namespace VA005.Models
                 int attvalid = obj.GetM_Attribute_ID();
                 //try
                 //{
-                    if (!obj.Delete(true))
-                    {
+                if (!obj.Delete(true))
+                {
                     //ValueNamePair pp = VLogger.RetrieveError();
                     //_result += pp.ToString() + "/n";
                     // Added by Shifali on 27th July 2020 to get the names of attribute which are not deleted
@@ -527,139 +528,389 @@ namespace VA005.Models
             }
             return NameList;
         }
-
-    }
-
-
-
-
-
-
-    public class VA005_AddAttributeSet
-    {
-        public string name { get; set; }
-        public string description { get; set; }
-        public string mandatorytype { get; set; }
-        public bool IsGuaranteeDate { get; set; }
-        public bool IsGuaranteeDateMandatory { get; set; }
-        public string lotvalue { get; set; }
-        public string serialvalue { get; set; }
-        public bool islotcheck { get; set; }
-        public bool isserialcheck { get; set; }
-        public int ID { get; set; }
-    }
-    public class VA005_SerialCtr
-    {
-        public string name { get; set; }
-        public int startno { get; set; }
-        public int currentnext { get; set; }
-        public int incrementno { get; set; }
-        public string prefix { get; set; }
-        public string sufix { get; set; }
-        public bool IsLot { get; set; }
-    }
-    public class VA005_AddNewAttribute
-    {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public int M_AttributeSearch_ID { get; set; }
-    }
-    public class VA005_AddNewAttributeType
-    {
-        public string Value { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public int M_Attribute_ID { get; set; }
-    }
-    public class VA005_GetLoadAttributeName
-    {
-        public string name { get; set; }
-        public int id { get; set; }
+        /// <summary>
+        /// Method For Load Attribute
+        /// </summary>
+        /// <returns>Load Grid</returns>
+        public List<AttributeAppend> GetAttribute()
+        {
+            List<AttributeAppend> PPData = new List<AttributeAppend>();
+            string sql = "SELECT Name, M_Attribute_ID,IsActive FROM M_Attribute  ORDER BY M_Attribute_ID DESC";
+            sql = MRole.GetDefault(_ctx).AddAccessSQL(sql, "M_Attribute", true, true);
+            DataSet ds = DB.ExecuteDataset(sql, null, null);
+            if (ds != null && ds.Tables[0].Rows.Count > 0)
+            {
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    AttributeAppend PData = new AttributeAppend();
+                    PData.m_attribute_id = Util.GetValueOfInt(ds.Tables[0].Rows[i]["M_Attribute_ID"]);
+                    PData.name = Util.GetValueOfString(ds.Tables[0].Rows[i]["Name"]);
+                    PData.isactive = Util.GetValueOfString(ds.Tables[0].Rows[i]["isactive"]);
+                    PPData.Add(PData);
+                }
+            }
+            return PPData;
         }
-    public class VA005_GetAttributeNameByIcon
-    {
-        public string name { get; set; }
-        public int id { get; set; }
+        /// <summary>
+        /// Method For Save Attribute
+        /// </summary>
+        /// <returns>Save The Attribute</returns>
+        public int GetAttributeCount()
+        {
+            string sql = "SELECT COUNT(Name) as Name FROM M_Attribute WHERE IsActive='Y'";
+            sql = MRole.GetDefault(_ctx).AddAccessSQL(sql, "M_Attribute", true, true);
+            int count = Util.GetValueOfInt(DB.ExecuteScalar(sql));
+            return count;
+        }
+        /// <summary>
+        /// Method For Get Attribute Value
+        /// </summary>
+        /// <param name="SelectAttributeID">SelectAttributeID</param>
+        /// <returns>Load Attribute Grid</returns>
+        public List<AttributeValue> GetAttributeValue(int SelectAttributeID)
+        {
+            List<AttributeValue> PPData = new List<AttributeValue>();
+            string sql = "SELECT M_ATTRIBUTEVALUE_ID, Name, M_ATTRIBUTE_ID FROM M_Attributevalue WHERE M_ATTRIBUTE_ID=" + SelectAttributeID + " ORDER BY M_ATTRIBUTEVALUE_ID ";
+            DataSet ds = DB.ExecuteDataset(sql, null, null);
+            if (ds != null && ds.Tables[0].Rows.Count > 0)
+            {
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    AttributeValue PData = new AttributeValue();
+                    PData.m_attributevalue_id = Util.GetValueOfInt(ds.Tables[0].Rows[i]["M_ATTRIBUTEVALUE_ID"]);
+                    PData.name = Util.GetValueOfString(ds.Tables[0].Rows[i]["Name"]);
+                    PData.m_attribute_id = Util.GetValueOfInt(ds.Tables[0].Rows[i]["M_ATTRIBUTE_ID"]);
+                    PPData.Add(PData);
+                }
+            }
+            return PPData;
+        }
+        /// <summary>
+        /// Method For Edit Attribute list
+        /// </summary>
+        /// <param name="Control">Control</param>
+        /// <returns>Load Window</returns>
+        public int GetWindow_ID(string Control)
+        {
+            string sql = "SELECT AD_Window_ID FROM AD_Window WHERE Name='" + Control + "'";
+            int ID = Util.GetValueOfInt(DB.ExecuteScalar(sql));
+            return ID;
+        }
+        /// <summary>
+        /// Method For Mandatory Drop Down
+        /// </summary>
+        /// <returns>Data Into Mandatory DropDown</returns>
+        public List<ValueNamePair> GetMandatoryType()
+        {
+            List<ValueNamePair> Type = new List<ValueNamePair>();
+            string sql = @"SELECT  AD_Ref_List.Name, AD_Ref_List.Value FROM AD_Ref_List JOIN AD_Reference ON AD_Ref_List.AD_Reference_ID=AD_Reference.AD_Reference_ID
+                           WHERE AD_Reference.Name='M_AttributeSet MandatoryType' AND AD_Ref_List.IsActive='Y'";
+            var ds = DB.ExecuteDataset(sql, null, null);
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                ValueNamePair dep = new ValueNamePair();
+                dep.Key = Util.GetValueOfString(ds.Tables[0].Rows[i]["Value"]);
+                dep.Name = Util.GetValueOfString(ds.Tables[0].Rows[i]["Name"]);
+
+                Type.Add(dep);
+            }
+            return Type;
+        }
+        /// <summary>
+        /// Method For Lot Drop Down 
+        /// </summary>
+        /// <returns>Load Lot Drop Down</returns>
+        public List<KeyNamePair> GetLotData()
+        {
+            List<KeyNamePair> Type = new List<KeyNamePair>();
+            string sql = "SELECT M_LotCtl_ID,Name FROM M_LotCtl WHERE isActive='Y'";
+            sql = MRole.GetDefault(_ctx).AddAccessSQL(sql, "M_LotCtl", true, true);
+            var ds = DB.ExecuteDataset(sql, null, null);
+            if (ds != null)
+            {
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    KeyNamePair dep = new KeyNamePair();
+                    dep.Key = Util.GetValueOfInt(ds.Tables[0].Rows[i]["M_LotCtl_ID"]);
+                    dep.Name = Util.GetValueOfString(ds.Tables[0].Rows[i]["Name"]);
+                    Type.Add(dep);
+                }
+
+            }
+            return Type;
+        }
+        /// <summary>
+        /// Method For Serial DropDown
+        /// </summary>
+        /// <returns>Get Data Into Serial DropDown</returns>
+        public List<KeyNamePair> GetSerialData()
+        {
+            List<KeyNamePair> Type = new List<KeyNamePair>();
+            string sql = "SELECT M_SerNoCtl_ID,Name FROM M_SerNoCtl WHERE IsActive='Y'";
+            sql = MRole.GetDefault(_ctx).AddAccessSQL(sql, "M_SerNoCtl", true, true);
+            var ds = DB.ExecuteDataset(sql, null, null);
+            if (ds != null)
+            {
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    KeyNamePair dep = new KeyNamePair();
+                    dep.Key = Util.GetValueOfInt(ds.Tables[0].Rows[i]["M_SerNoCtl_ID"]);
+                    dep.Name = Util.GetValueOfString(ds.Tables[0].Rows[i]["Name"]);
+                    Type.Add(dep);
+                }
+
+            }
+            return Type;
+        }
+        /// <summary>
+        /// Load Edit Attribute Set
+        /// </summary>
+        /// <param name="NodeID">Node ID</param>
+        /// <returns>Load Edit Attribute Set</returns>
+        public List<AttributeData> GetAttributeSetData(int NodeID)
+        {
+            List<AttributeData> Type = new List<AttributeData>();
+            string sql = "SELECT NAME,DESCRIPTION,MANDATORYTYPE,ISGUARANTEEDATE,ISGUARANTEEDATEMANDATORY,M_LOTCTL_ID,M_SERNOCTL_ID,IsLot,IsSerNo FROM M_AttributeSet WHERE M_Attributeset_ID=" + NodeID;
+            sql = MRole.GetDefault(_ctx).AddAccessSQL(sql, "M_AttributeSet", true, true);
+            var ds = DB.ExecuteDataset(sql, null, null);
+            if (ds != null)
+            {
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    AttributeData dep = new AttributeData();
+                    dep.name = Util.GetValueOfString(ds.Tables[0].Rows[i]["Name"]);
+                    dep.description = Util.GetValueOfString(ds.Tables[0].Rows[i]["DESCRIPTION"]);
+                    dep.mandatorytype = Util.GetValueOfString(ds.Tables[0].Rows[i]["MANDATORYTYPE"]);
+                    dep.isguaranteedate = Util.GetValueOfString(ds.Tables[0].Rows[i]["ISGUARANTEEDATE"]);
+                    dep.isguaranteedatemandatory = Util.GetValueOfString(ds.Tables[0].Rows[i]["ISGUARANTEEDATEMANDATORY"]);
+                    dep.m_lotctl_id = Util.GetValueOfInt(ds.Tables[0].Rows[i]["M_LOTCTL_ID"]);
+                    dep.m_sernoctl_id = Util.GetValueOfInt(ds.Tables[0].Rows[i]["M_SERNOCTL_ID"]);
+                    dep.islot = Util.GetValueOfString(ds.Tables[0].Rows[i]["IsLot"]);
+                    dep.isserno = Util.GetValueOfString(ds.Tables[0].Rows[i]["IsSerNo"]);
+                    Type.Add(dep);
+                }
+            }
+            return Type;
+        }
+        /// <summary>
+        /// Remove Attribute Formatt
+        /// </summary>
+        /// <param name="AttributeID">Attribute ID</param>
+        /// <param name="ParentId">Parent ID</param>
+        /// <returns>Remove Attribute Formatt</returns>
+        public int DeleteAttributeUse(int AttributeID, int ParentId)
+        {
+            string sql = "DELETE FROM M_Attributeuse WHERE M_Attribute_ID=" + AttributeID + " and M_Attributeset_ID=" + ParentId;
+            int ID = Util.GetValueOfInt(DB.ExecuteQuery(sql));
+            return ID;
+        }
+        /// <summary>
+        /// Load Link Attribute
+        /// </summary>
+        /// <param name="AttributeID">Attribute ID</param>
+        /// <returns>Load Link Attribute</returns>
+        public List<string> LoadAttributeUse(int AttributeID)
+        {
+            List<string> Lst = new List<string>();
+            string sql = "SELECT mas.Name FROM M_Attributeuse masu JOIN M_Attributeset mas on masu.M_Attributeset_ID=mas.M_Attributeset_ID WHERE masu.M_Attribute_ID=" + AttributeID;
+            var ds = DB.ExecuteDataset(sql, null, null);
+            if (ds != null)
+            {              
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    Lst.Add(Util.GetValueOfString(ds.Tables[0].Rows[i]["Name"]));
+                }
+            }
+            return Lst;
+        }
+        /// <summary>
+        /// Field Length
+        /// </summary>
+        /// <param name="TableID">TableID</param>
+        /// <param name="COLUMNNAME">COLUMNNAME</param>
+        /// <returns>Column Name And Length</returns>
+        public List<ColumnData> GetFieldLength(int TableID, string COLUMNNAME)
+        {
+            List<ColumnData> Type = new List<ColumnData>();
+            string sql = "SELECT Fieldlength,ColumnName FROM AD_Column WHERE AD_Table_ID =" + TableID + "  AND COLUMNNAME  IN (" + COLUMNNAME + ") AND isActive = 'Y'";
+            var ds = DB.ExecuteDataset(sql, null, null);
+            if (ds != null)
+            {
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    ColumnData dep = new ColumnData();
+                    dep.fieldlength = Util.GetValueOfString(ds.Tables[0].Rows[i]["Fieldlength"]);
+                    dep.columnname = Util.GetValueOfString(ds.Tables[0].Rows[i]["ColumnName"]);
+                    Type.Add(dep);
+                }
+            }
+            return Type;
+        }
+
+        public class VA005_AddAttributeSet
+        {
+            public string name { get; set; }
+            public string description { get; set; }
+            public string mandatorytype { get; set; }
+            public bool IsGuaranteeDate { get; set; }
+            public bool IsGuaranteeDateMandatory { get; set; }
+            public string lotvalue { get; set; }
+            public string serialvalue { get; set; }
+            public bool islotcheck { get; set; }
+            public bool isserialcheck { get; set; }
+            public int ID { get; set; }
+        }
+        public class VA005_SerialCtr
+        {
+            public string name { get; set; }
+            public int startno { get; set; }
+            public int currentnext { get; set; }
+            public int incrementno { get; set; }
+            public string prefix { get; set; }
+            public string sufix { get; set; }
+            public bool IsLot { get; set; }
+        }
+        public class VA005_AddNewAttribute
+        {
+            public string Name { get; set; }
+            public string Description { get; set; }
+            public int M_AttributeSearch_ID { get; set; }
+        }
+        public class VA005_AddNewAttributeType
+        {
+            public string Value { get; set; }
+            public string Name { get; set; }
+            public string Description { get; set; }
+            public int M_Attribute_ID { get; set; }
+        }
+        public class VA005_GetLoadAttributeName
+        {
+            public string name { get; set; }
+            public int id { get; set; }
+        }
+        public class VA005_GetAttributeNameByIcon
+        {
+            public string name { get; set; }
+            public int id { get; set; }
+        }
+
+
+
+        //=================================================================================================================
+
+
+
+
+        public class VA005_TreeStructure
+        {
+            public int id { get; set; }
+            public string text { get; set; }
+            public int NodeID { get; set; }
+            public string color { get; set; }
+            public string bColor { get; set; }
+            public string ImageSource { get; set; }
+            public string Image2 { get; set; }
+            public string Image3 { get; set; }
+            public string visibility { get; set; }
+            public string ShowInfo { get; set; }
+            public string Type { get; set; }
+            public string UID { get; set; }
+            public int NID { get; set; }
+            public bool expanded { get; set; }
+            public string padding { get; set; }
+            public string margin { get; set; }
+            public string checkbox { get; set; }
+            public int ParentID { get; set; }
+            public List<VA005_TreeStructure> items { get; set; }
+            public string classforgetnod { get; set; }
+            public string zindex { get; set; }
+
+
+            //public int parentid { get; set; }
+        }
+
+        public class VA005_AttributeSet
+        {
+            public string Name { get; set; }
+            public string Description { get; set; }
+            public string MType { get; set; }
+            public bool IsActive { get; set; }
+            public bool IsExpiryDate { get; set; }
+            public bool IsMExpiryDate { get; set; }
+            public bool IsLot { get; set; }
+            public bool IsSerial { get; set; }
+            public int LotORSerialID { get; set; }
+            public List<VA005_KeyVal> Lots { get; set; }
+        }
+
+        public class VA005_LotCtrl
+        {
+            public string Name { get; set; }
+            public string StartNo { get; set; }
+            public string CurrentNext { get; set; }
+            public string Increment { get; set; }
+            public string prefix { get; set; }
+            public string Suffix { get; set; }
+            public bool IsLot { get; set; }
+        }
+
+        public class VA005_KeyVal
+        {
+            public string Name { get; set; }
+            public string ID { get; set; }
+        }
+
+
+        public class VA005_DeleteAttributeSetValue
+        {
+            public int attributesetdelID { get; set; }
+        }
+
+        public class VA005_DeleteAttributeFromData
+        {
+            public int deleteattributefromdataID { get; set; }
+        }
+
+
+        public class AttributeAppend
+        {
+            public int m_attribute_id { get; set; }
+            public string name { get; set; }
+            public string isactive { get; set; }
+        }
+        public class AttributeValue
+        {
+            public int m_attributevalue_id { get; set; }
+            public string name { get; set; }
+            public int m_attribute_id { get; set; }
+        }
+        public class EditAttribute
+        {
+            public int ad_window_id { get; set; }
+        }
+
+        public class AttributeData
+        {
+            public string name { get; set; }
+            public string description { get; set; }
+            public string mandatorytype { get; set; }
+            public string isguaranteedate { get; set; }
+            public string isguaranteedatemandatory { get; set; }
+            public int m_lotctl_id { get; set; }
+            public int m_sernoctl_id { get; set; }
+            public string islot { get; set; }
+            public string isserno { get; set; }
+        }
+        public class AttributeUseData
+        {
+            public string Name { get; set; }
+        }
+        public class ColumnData
+        {
+            public string fieldlength { get; set; }
+            public string columnname { get; set; }
+
+        }
+
     }
-
-
-
-    //=================================================================================================================
-
-
-
-
-    public class VA005_TreeStructure
-    {
-        public int id { get; set; }
-        public string text { get; set; }
-        public int NodeID { get; set; }
-        public string color { get; set; }
-        public string bColor { get; set; }
-        public string ImageSource { get; set; }
-        public string Image2 { get; set; }
-        public string Image3 { get; set; }
-        public string visibility { get; set; }
-        public string ShowInfo { get; set; }
-        public string Type { get; set; }
-        public string UID { get; set; }
-        public int NID { get; set; }
-        public bool expanded { get; set; }
-        public string padding { get; set; }
-        public string margin { get; set; }
-        public string checkbox { get; set; }
-        public int ParentID { get; set; }
-        public List<VA005_TreeStructure> items { get; set; }
-        public string classforgetnod { get; set; }
-        public string zindex { get; set; }
-        
-
-        //public int parentid { get; set; }
-    }
-
-    public class VA005_AttributeSet
-    {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string MType { get; set; }
-        public bool IsActive { get; set; }
-        public bool IsExpiryDate { get; set; }
-        public bool IsMExpiryDate { get; set; }
-        public bool IsLot { get; set; }
-        public bool IsSerial { get; set; }
-        public int LotORSerialID { get; set; }
-        public List<VA005_KeyVal> Lots { get; set; }
-    }
-
-    public class VA005_LotCtrl
-    {
-        public string Name { get; set; }
-        public string StartNo { get; set; }
-        public string CurrentNext { get; set; }
-        public string Increment { get; set; }
-        public string prefix { get; set; }
-        public string Suffix { get; set; }
-        public bool IsLot { get; set; }
-    }
-
-    public class VA005_KeyVal
-    {
-        public string Name { get; set; }
-        public string ID { get; set; }
-    }
-
-
-    public class VA005_DeleteAttributeSetValue
-    {
-        public int attributesetdelID { get; set; }
-    }
-
-    public class VA005_DeleteAttributeFromData
-    {
-        public int deleteattributefromdataID { get; set; }
-    }
-
-
-
-
 }
