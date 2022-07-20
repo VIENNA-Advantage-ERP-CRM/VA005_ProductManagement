@@ -146,8 +146,8 @@ namespace VA005.Controllers
         {
             Ctx ctx = Session["ctx"] as Ctx;
             AttributeListing obj = new AttributeListing(ctx);
-            var value = obj.GetWindow_ID(Control);
-            return Json(new { value }, JsonRequestBehavior.AllowGet);
+            var Result = obj.GetWindow_ID(Control);
+            return Json(JsonConvert.SerializeObject(Result), JsonRequestBehavior.AllowGet);
         }
         /// <summary>
         /// Method For Mandatory DropDown

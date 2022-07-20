@@ -2100,7 +2100,7 @@
                 if (lotidget != "null" || serialidget != "null") {
                     if ($addatttextlot.is(":checked")) {
 
-                        var windowid = VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/GetWindow_ID", { "Control": 'Lot Control' }, Window_IDCallBack);
+                        var windowid =  VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/GetWindow_ID", { "Control": 'Lot Control' });
 
                         //var windowid = VIS.Utility.Util.getValueOfInt(dr[i].ad_window_id);
                         //var sql1 = "select ad_window_id from ad_window where name='Lot Control'";
@@ -2109,14 +2109,14 @@
                         //var windowid = VIS.Utility.Util.getValueOfInt(ds.tables[0].rows[0].cells["ad_window_id"]);
 
 
-                        //var zoomQuery = new VIS.Query();
-                        //zoomQuery.addRestriction("M_LotCtl_ID", VIS.Query.prototype.EQUAL, lotidget);
-                        //VIS.viewManager.startWindow(windowid, zoomQuery);
+                        var zoomQuery = new VIS.Query();
+                        zoomQuery.addRestriction("M_LotCtl_ID", VIS.Query.prototype.EQUAL, lotidget);
+                        VIS.viewManager.startWindow(windowid, zoomQuery);
                     }
 
                     if ($addatttextserial.is(":checked")) {
 
-                        VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/GetWindow_ID", { "Control": 'SerialNoControl' }, Window_IDCallBack);
+                        var windowid =  VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/GetWindow_ID", { "Control": 'Serial No Control' });
 
                         // var windowid = VIS.Utility.Util.getValueOfInt(dr["ad_window_id"]);
                         //var sql1 = "select ad_window_id from ad_window where name='Serial No Control'";
@@ -2135,22 +2135,6 @@
                 }
             });
 
-            function Window_IDCallBack(dr) {
-                if (dr != null) {
-                    var windowid = VIS.Utility.Util.getValueOfInt(dr['value']);
-                    var zoomQuery = new VIS.Query();
-                    zoomQuery.addRestriction("M_LotCtl_ID", VIS.Query.prototype.EQUAL, lotidget);
-                    VIS.viewManager.startWindow(windowid, zoomQuery);
-                }
-            };
-            function EditAttributeCallBack(dr) {
-                if (dr != null) {
-                    var windowid = VIS.Utility.Util.getValueOfInt(dr['value']);
-                    var zoomQuery = new VIS.Query();
-                    zoomQuery.addRestriction("M_SerNoCtl_ID", VIS.Query.prototype.EQUAL, serialidget);
-                    VIS.viewManager.startWindow(windowid, zoomQuery);
-                }
-            };
 
             $cmbSerialDropdown.on("change", function () {
 
@@ -3165,7 +3149,7 @@
         //*** Get field length....      
 
         function filedlength() {
-            
+
             //var tableattributesetID = "select ad_table_id from ad_table where tablename='M_AttributeSet'";
             VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/GetFieldLength", { "TableID": 560, "COLUMNNAME": "'Name','Description'" }, FieldCallBack);
 
@@ -3192,7 +3176,7 @@
                 }
             }
         }
-       
+
 
         //*** event handelling for lot serial dialog...
         function eventslotserialdialog() {
@@ -3213,7 +3197,7 @@
 
         //*** field length for lot serial dialog
         function fieldlengthlotserialdialog() {
-       
+
             VIS.dataContext.getJSONData(VIS.Application.contextUrl + "AttributeListing/GetFieldLength", { "TableID": 556, "COLUMNNAME": "'Name','StartNo','CurrentNext','IncrementNo','Prefix','Suffix'" }, LengthCallBack);
 
 

@@ -592,7 +592,6 @@ namespace VA005.Models
         /// <returns>Load Window</returns>
         public int GetWindow_ID(string Control)
         {
-
             string sql = "SELECT AD_Window_ID FROM AD_Window WHERE Name='" + Control + "'";
             int ID = Util.GetValueOfInt(DB.ExecuteScalar(sql));
             return ID;
