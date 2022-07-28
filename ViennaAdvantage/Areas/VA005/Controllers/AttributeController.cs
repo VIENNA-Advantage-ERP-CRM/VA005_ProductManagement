@@ -8,9 +8,7 @@ using VAdvantage.Utility;
 using ViennaAdvantage.Model;
 using VAdvantage.Model;
 using VA005.Models;
-using Attribute = VA005.Models.Attribute;
-using static VA005.Models.Attribute;
-using ColumnData = VA005.Models.Attribute.ColumnData;
+
 
 namespace VA005.Controllers
 {
@@ -103,10 +101,10 @@ namespace VA005.Controllers
         /// Load Select
         /// </summary>
         /// <returns>JSON Data</returns>
-        public JsonResult LoadSelect()
+        public JsonResult LoadSelectAttribute()
         {
             Attribute model = new Attribute(Session["Ctx"] as Ctx);
-            List<ValueNamePair> value = model.LoadSelect();
+            List<ValueNamePair> value = model.LoadSelectAttribute();
             return Json(JsonConvert.SerializeObject(value), JsonRequestBehavior.AllowGet);
         }
         /// <summary>

@@ -1160,8 +1160,8 @@
             $griddiv.show();
         };
         function AttributeCallBack(dr) {
-            if (dr != null) {
-                if (dr.length > 0) {
+            
+                if (dr != null && dr.length > 0) {
                     for (var i = 0; i < dr.length; i++) {
                         $textname.val(dr[i].name.toString().trim());
                         if (dr[i].description != null) {
@@ -1189,7 +1189,7 @@
                     }
                 }
                 gridekendoattributesvalule();
-                    }
+                    
         };
 
 
@@ -1336,7 +1336,7 @@
         //*** Attribute Type combo box..
         function selectionList() {
             $cmbselect.empty();
-            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/Attribute/LoadSelect", "", SelectCallBack);
+            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/Attribute/LoadSelectAttribute", "", SelectCallBack);
 
             //var sql = "SELECT a.name,a.value FROM ad_ref_list a INNER JOIN ad_reference b ON a.ad_reference_id=b.ad_reference_id where b.name='M_Attribute Value Type' and a.isactive='Y'";
            // var ds = VIS.DB.executeReader(sql.toString(), null);

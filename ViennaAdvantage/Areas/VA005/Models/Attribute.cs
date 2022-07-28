@@ -200,23 +200,12 @@ namespace VA005.Models
             //}
             return _result;
         }
+
         /// <summary>
-        /// Get Attribute
-        /// </summary>
-        /// <param name="SelectedAttributeID">SelectedAttributeID</param>
-        /// <returns>Count</returns>
-        public int GetAttributeCount(int SelectedAttributeID)
-        {
-            string sql = "SELECT COUNT(*) FROM M_AttributeValue WHERE M_Attribute_ID=" + SelectedAttributeID;
-            sql = MRole.GetDefault(_ctx).AddAccessSQL(sql, "M_AttributeValue", true, true);
-            int count = Util.GetValueOfInt(DB.ExecuteScalar(sql));
-            return count;
-        }
-        /// <summary>
-        /// Load Select
+        /// LoadSelectAttribute
         /// </summary>
         /// <returns>Load Select </returns>
-        public List<ValueNamePair> LoadSelect()
+        public List<ValueNamePair> LoadSelectAttribute()
         {
             List<ValueNamePair> Type = new List<ValueNamePair>();
             string sql = "SELECT a.Name,a.Value FROM AD_Ref_List a INNER JOIN AD_Reference b ON a.AD_Reference_ID=b.Ad_Reference_ID WHERE b.Name='M_Attribute Value Type' AND a.IsActive='Y'";
@@ -239,7 +228,7 @@ namespace VA005.Models
         public List<AttributeDatas> LoadAttribute(int ID)
         {
             List<AttributeDatas> Type = new List<AttributeDatas>();
-            string sql = "SELECT a.Name,  a.DESCRIPTION,a.IsActive, a.IsMandatory,  a.ATTRIBUTEVALUETYPE,  m.name,  m.Value  FROM m_attribute a LEFT OUTER  JOIN m_attributevalue m  ON a.m_attribute_id  =m.m_attribute_id WHERE a.m_attribute_id =" + ID;
+            string sql = "SELECT a.Name,  a.DESCRIPTION,a.IsActive, a.IsMandatory,  a.ATTRIBUTEVALUETYPE,  m.Value  FROM M_Attribute a LEFT OUTER  JOIN M_Attributevalue m  ON a.M_Attribute_ID  =m.M_Attribute_ID WHERE a.M_Attribute_ID =" + ID;
             var ds = DB.ExecuteDataset(sql, null, null);
             if (ds != null)
             {
@@ -315,7 +304,7 @@ namespace VA005.Models
             string attribute = Util.GetValueOfString(DB.ExecuteQuery(sql));
             return attribute;
         }
-
+    }
         /// <summary>
         /// Declares Properties For ColumnData
         /// </summary>
@@ -380,4 +369,4 @@ namespace VA005.Models
 
         }
     }
-}
+
