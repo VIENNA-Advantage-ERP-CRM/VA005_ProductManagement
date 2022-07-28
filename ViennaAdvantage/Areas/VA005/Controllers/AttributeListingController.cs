@@ -148,6 +148,7 @@ namespace VA005.Controllers
             AttributeListing obj = new AttributeListing(ctx);
             var Result = obj.GetWindow_ID(Control);
             return Json(JsonConvert.SerializeObject(Result), JsonRequestBehavior.AllowGet);
+
         }
         /// <summary>
         /// Method For Mandatory DropDown

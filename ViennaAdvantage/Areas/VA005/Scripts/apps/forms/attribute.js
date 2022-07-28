@@ -152,9 +152,9 @@
 
                          
                     
-                            var sql = "SELECT COUNT(*) FROM M_AttributeValue WHERE M_Attribute_ID=" + selectedAttributeID;
-                            SQL = VIS.MRole.addAccessSQL(sql, "M_AttributeValue", true, true);
-                            var _count = VIS.DB.executeScalar(sql);
+                            //var sql = "SELECT COUNT(*) FROM M_AttributeValue WHERE M_Attribute_ID=" + selectedAttributeID;
+                           // SQL = VIS.MRole.addAccessSQL(sql, "M_AttributeValue", true, true);
+                        var _count = VIS.dataContext.getJSONData(VIS.Application.contextUrl + "Attribute/GetAttributeCount", { "SelectedAttributeID": selectedAttributeID});
                           
                         objAttrSet.removeatttvaluewithgrid(attvalidfordel, selectedAttributeID, _count);
 
@@ -252,9 +252,10 @@
                                 //flagg = true;
                             },
                             update: function (options) {
-                               
-                                var sql = "update m_attributevalue set name='" + options.data.models[0]["name"] + "',value='" + options.data.models[0]["searchkey"] + "' where m_attributevalue_id=" + options.data.models[0]["attributevalueid"];
-                                VIS.DB.executeDataSet(sql, null);
+                                var paramString = options.data.models[0]["name"].toString() + ", " + options.data.models[0]["searchkey"].toString() + ", " + options.data.models[0]["attributevalueid"].toString();
+                                 VIS.dataContext.getJSONRecord("Attribute/Update", paramString);
+                                //var sql = "update m_attributevalue set name='" + options.data.models[0]["name"] + "',value='" + options.data.models[0]["searchkey"] + "' where m_attributevalue_id=" + options.data.models[0]["attributevalueid"];
+                                //VIS.DB.executeDataSet(sql, null);
                                 var elements = $.grep(grdRows, function (ele, index) {
                                     if (ele.attributevalueid == options.data.models[0]["attributevalueid"]) {
                                         ele.name = options.data.models[0]["name"];
@@ -695,31 +696,61 @@
         //*** Get field length....
         function filedlength() {
 
-            var tbID = "select ad_table_id from ad_table where tablename='M_Attribute'";
-            var sqlname = "SELECT fieldlength, columnname FROM ad_column WHERE ad_table_id=(" + tbID + ") AND COLUMNNAME='Name' AND isActive ='Y'";
-            var ds = VIS.DB.executeDataSet(sqlname.toString(), null);
-            columnLength = VIS.Utility.Util.getValueOfInt(ds.tables[0].rows[0].cells.fieldlength);
-            //$textname.attr("maxlength", columnLength);
+            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "Attribute/GetFieldLength", { "TableID": 562, "COLUMNNAME": "'Name','Description'" }, LengthCallBack);
 
-            var sqldes = "SELECT fieldlength FROM ad_column WHERE ad_table_id=(" + tbID + ") AND COLUMNNAME='Description' AND isActive ='Y'";
-            var ds1 = VIS.DB.executeDataSet(sqldes.toString(), null);
-            columndescLength = VIS.Utility.Util.getValueOfInt(ds1.tables[0].rows[0].cells.fieldlength);
-            $textdesc.attr("maxlength", columndescLength);
 
-            var tbattributevalueid = "select ad_table_id from ad_table where tablename='M_AttributeValue'";
-            var sql1 = "SELECT fieldlength FROM ad_column WHERE ad_table_id=(" + tbattributevalueid + ") AND  COLUMNNAME  ='Name' AND isActive ='Y'";
-            var ds1 = VIS.DB.executeDataSet(sql1.toString(), null);
-            columnlengthattributevalue = VIS.Utility.Util.getValueOfInt(ds1.tables[0].rows[0].cells.fieldlength);
-            $textnamediv.attr("maxlength", columnlengthattributevalue);
 
-            var sql1 = "SELECT fieldlength FROM ad_column WHERE ad_table_id=(" + tbattributevalueid + ") AND  COLUMNNAME  ='Value' AND isActive ='Y'";
-            var ds1 = VIS.DB.executeDataSet(sql1.toString(), null);
-            columnvalueLength = VIS.Utility.Util.getValueOfInt(ds1.tables[0].rows[0].cells.fieldlength);
-            $textnamediv.attr("maxlength", columnvalueLength);
+            //var tbID = "select ad_table_id from ad_table where tablename='M_Attribute'";
+            //var sqlname = "SELECT fieldlength, columnname FROM ad_column WHERE ad_table_id=(" + tbID + ") AND COLUMNNAME='Name' AND isActive ='Y'";
+            //var ds = VIS.DB.executeDataSet(sqlname.toString(), null);
+            //columnLength = VIS.Utility.Util.getValueOfInt(ds.tables[0].rows[0].cells.fieldlength);
+           // $textname.attr("maxlength", columnLength);
+
+            //var sqldes = "SELECT fieldlength FROM ad_column WHERE ad_table_id=(" + tbID + ") AND COLUMNNAME='Description' AND isActive ='Y'";
+            //var ds1 = VIS.DB.executeDataSet(sqldes.toString(), null);
+            //columndescLength = VIS.Utility.Util.getValueOfInt(ds1.tables[0].rows[0].cells.fieldlength);
+            //$textdesc.attr("maxlength", columndescLength);
+
+            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "Attribute/GetField", { "TableID": 558, "COLUMNNAME": "'Name','Value'" }, FieldCallBack);
+
+
+           // var tbattributevalueid = "select ad_table_id from ad_table where tablename='M_AttributeValue'";
+            //var sql1 = "SELECT fieldlength FROM ad_column WHERE ad_table_id=(" + tbattributevalueid + ") AND  COLUMNNAME  ='Name' AND isActive ='Y'";
+            //var ds1 = VIS.DB.executeDataSet(sql1.toString(), null);
+            //columnlengthattributevalue = VIS.Utility.Util.getValueOfInt(ds1.tables[0].rows[0].cells.fieldlength);
+            //$textnamediv.attr("maxlength", columnlengthattributevalue);
+
+            //var sql1 = "SELECT fieldlength FROM ad_column WHERE ad_table_id=(" + tbattributevalueid + ") AND  COLUMNNAME  ='Value' AND isActive ='Y'";
+            //var ds1 = VIS.DB.executeDataSet(sql1.toString(), null);
+            //columnvalueLength = VIS.Utility.Util.getValueOfInt(ds1.tables[0].rows[0].cells.fieldlength);
+            //$textnamediv.attr("maxlength", columnvalueLength);
 
             //sql = VIS.MRole.addAccessSQL(sql, "ad_column", true, true);
         };
-
+        function LengthCallBack(dr) {
+            if (dr != null) {
+                for (var i = 0; i < dr.length; i++) {
+                    if (dr[i].COLUMNNAME == 'Name') {
+                        $textname.attr("maxlength", dr[i].fieldlength);
+                    }
+                    else if (dr[i].COLUMNNAME == 'Description') {
+                        $textdesc.attr("maxlength", dr[i].fieldlength);
+                    } 
+                }
+            }
+        }
+        function FieldCallBack(dr) {
+            if (dr != null) {
+                for (var i = 0; i < dr.length; i++) {
+                    if (dr[i].COLUMNNAME == 'Name') {
+                        $textnamediv.attr("maxlength", dr[i].fieldlength);
+                    }
+                    else if (dr[i].COLUMNNAME == 'Value') {
+                        $textnamediv.attr("maxlength", dr[i].fieldlength);
+                    }
+                }
+            }
+        }
         //*** event call..
         function eventCall()
         {
@@ -1071,50 +1102,51 @@
             refreshFunction = loadTreeData;
             selectedAttributeID = id;
             //var sql = "SELECT a.name,  a.description,a.isactive, a.ismandatory,  a.ATTRIBUTEVALUETYPE,  m.name,  m.value  FROM m_attribute a LEFT OUTER  JOIN m_attributevalue m  ON a.m_attribute_id  =m.m_attribute_id WHERE a.m_attribute_id =" + id + "   AND a.isactive  ='Y'";
-            var sql = "SELECT a.name,  a.description,a.isactive, a.ismandatory,  a.ATTRIBUTEVALUETYPE,  m.name,  m.value  FROM m_attribute a LEFT OUTER  JOIN m_attributevalue m  ON a.m_attribute_id  =m.m_attribute_id WHERE a.m_attribute_id =" + id + "";
-           
+           // var sql = "SELECT a.name,  a.description,a.isactive, a.ismandatory,  a.ATTRIBUTEVALUETYPE,  m.name,  m.value  FROM m_attribute a LEFT OUTER  JOIN m_attributevalue m  ON a.m_attribute_id  =m.m_attribute_id WHERE a.m_attribute_id =" + id + "";
+
+            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/Attribute/LoadAttribute", { "Id": id }, AttributeCallBack);
             // var sql = "SELECT name,description, ATTRIBUTEVALUETYPE,isactive, ismandatory FROM m_attribute WHERE m_attribute_id=" + id + " AND isactive ='Y'";
 
-            var ds = VIS.DB.executeDataSet(sql, null, null);
-            if (ds != null) {
+            //var ds = VIS.DB.executeDataSet(sql, null, null);
+            //if (ds != null) {
                
-                if (ds.tables[0].rows.length > 0) {
-                    for (var i = 0; i < ds.tables[0].rows.length ; i++) {
-                        $textname.val(  ds.tables[0].rows[0].cells["name"].toString().trim());
-                        if (ds.tables[0].rows[0].cells["description"] != null) {
-                            $textdesc.val(ds.tables[0].rows[0].cells["description"].toString().trim());
-                        }
-                        if (ds.tables[0].rows[0].cells["attributevaluetype"] != null) {
-                            $cmbselect.val(ds.tables[0].rows[0].cells["attributevaluetype"]);
-                        }
+            //    if (ds.tables[0].rows.length > 0) {
+            //        for (var i = 0; i < ds.tables[0].rows.length ; i++) {
+            //            $textname.val(  ds.tables[0].rows[0].cells["name"].toString().trim());
+            //            if (ds.tables[0].rows[0].cells["description"] != null) {
+            //                $textdesc.val(ds.tables[0].rows[0].cells["description"].toString().trim());
+            //            }
+            //            if (ds.tables[0].rows[0].cells["attributevaluetype"] != null) {
+            //                $cmbselect.val(ds.tables[0].rows[0].cells["attributevaluetype"]);
+            //            }
                         
-                        if (ds.tables[0].rows[0].cells["isactive"] == 'Y') {
-                            $chkboxisactivefield.val(ds.tables[0].rows[0].cells["isactive"]);
-                            $chkboxisactivefield.prop("checked", true);
-                        }
-                        else
-                        {
-                            $chkboxisactivefield.prop("checked", false);
-                        }
+            //            if (ds.tables[0].rows[0].cells["isactive"] == 'Y') {
+            //                $chkboxisactivefield.val(ds.tables[0].rows[0].cells["isactive"]);
+            //                $chkboxisactivefield.prop("checked", true);
+            //            }
+            //            else
+            //            {
+            //                $chkboxisactivefield.prop("checked", false);
+            //            }
 
-                        if (ds.tables[0].rows[0].cells["ismandatory"] == 'Y') {
-                            $chkboxmandatoryfield.val(ds.tables[0].rows[0].cells["ismandatory"]);
-                            $chkboxmandatoryfield.prop("checked", true);
-                        }
-                        else
-                        {
-                            $chkboxmandatoryfield.prop("checked", false);
-                        }
+            //            if (ds.tables[0].rows[0].cells["ismandatory"] == 'Y') {
+            //                $chkboxmandatoryfield.val(ds.tables[0].rows[0].cells["ismandatory"]);
+            //                $chkboxmandatoryfield.prop("checked", true);
+            //            }
+            //            else
+            //            {
+            //                $chkboxmandatoryfield.prop("checked", false);
+            //            }
 
-                        // if ($maindiv2.is('visible'))
-                        //{
-                        //    $textsearchdiv.val(ds.tables[0].rows[0].cells["value"]);
-                        //    $textnamediv.val(ds.tables[0].rows[0].cells["name1"]);
-                        //}
-                    }
-                }
-                gridekendoattributesvalule();
-            }
+            //            // if ($maindiv2.is('visible'))
+            //            //{
+            //            //    $textsearchdiv.val(ds.tables[0].rows[0].cells["value"]);
+            //            //    $textnamediv.val(ds.tables[0].rows[0].cells["name1"]);
+            //            //}
+            //        }
+            //    }
+            //    gridekendoattributesvalule();
+            //}
             if ($textname.val().trim().length <= 0) {
                 $textname.css("background-color", "pink");
             }
@@ -1127,6 +1159,39 @@
             $chkboxisactivefield.attr('disabled', false);
             $griddiv.show();
         };
+        function AttributeCallBack(dr) {
+            if (dr != null) {
+                if (dr.length > 0) {
+                    for (var i = 0; i < dr.length; i++) {
+                        $textname.val(dr[i].name.toString().trim());
+                        if (dr[i].description != null) {
+                            $textdesc.val(dr[i].description.toString().trim());
+                        }
+                        if (dr[i].attributevaluetype != null) {
+                            $cmbselect.val(dr[i].attributevaluetype);
+                        }
+
+                        if (dr[i].isactive == 'Y') {
+                            $chkboxisactivefield.val(dr[i].isactive);
+                            $chkboxisactivefield.prop("checked", true);
+                        }
+                        else {
+                            $chkboxisactivefield.prop("checked", false);
+                        }
+
+                        if (dr[i].ismandatory == 'Y') {
+                            $chkboxmandatoryfield.val(dr[i].ismandatory);
+                            $chkboxmandatoryfield.prop("checked", true);
+                        }
+                        else {
+                            $chkboxmandatoryfield.prop("checked", false);
+                        }  
+                    }
+                }
+                gridekendoattributesvalule();
+                    }
+        };
+
 
         //this.show = function () {
         //               
@@ -1271,16 +1336,28 @@
         //*** Attribute Type combo box..
         function selectionList() {
             $cmbselect.empty();
-            var sql = "SELECT a.name,a.value FROM ad_ref_list a INNER JOIN ad_reference b ON a.ad_reference_id=b.ad_reference_id where b.name='M_Attribute Value Type' and a.isactive='Y'";
-            var ds = VIS.DB.executeReader(sql.toString(), null);
-            if (ds != null) {
-                var key, value = null;
-                while (ds.read()) {
-                    value = ds.getString(0);
-                    key = ds.getString(1);
-                    $cmbselect.append($("<Option value=" + key + ">" + value + "</option>"));
+            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/Attribute/LoadSelect", "", SelectCallBack);
+
+            //var sql = "SELECT a.name,a.value FROM ad_ref_list a INNER JOIN ad_reference b ON a.ad_reference_id=b.ad_reference_id where b.name='M_Attribute Value Type' and a.isactive='Y'";
+           // var ds = VIS.DB.executeReader(sql.toString(), null);
+            //if (ds != null) {
+            //    var key, value = null;
+            //    while (ds.read()) {
+            //        value = ds.getString(0);
+            //        key = ds.getString(1);
+            //        $cmbselect.append($("<Option value=" + key + ">" + value + "</option>"));
+            //    }
+            //    ds.close();
+            //}
+        };
+        function SelectCallBack(dr) {
+            if (dr != null) {
+                var Key, Name = null;
+                for (var i = 0; i < dr.length; i++) {
+                    Key = dr[i].Key;
+                    Name = dr[i].Name;
+                    $cmbselect.append($("<Option value=" + Key + ">" + Name + "</option>"));
                 }
-                ds.close();
             }
         };
 

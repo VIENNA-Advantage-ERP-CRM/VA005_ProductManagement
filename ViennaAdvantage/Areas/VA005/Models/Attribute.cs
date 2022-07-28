@@ -15,7 +15,7 @@ namespace VA005.Models
     public class Attribute
     {
         private Ctx _ctx = null;
-        int mattributeid = 0;
+
 
         public Attribute(Ctx ctx)
         {
@@ -118,7 +118,6 @@ namespace VA005.Models
                     });
                 }
             }
-
             return obj;
         }
 
@@ -159,10 +158,10 @@ namespace VA005.Models
                 MAttributeUse obj = new MAttributeUse(_ctx, 0, null);
                 obj.SetM_AttributeSet_ID(nid);
                 obj.SetM_Attribute_ID(Util.GetValueOfInt(attributeID[i]));
-                var sql = "SELECT max(seqno) AS seqno FROM M_AttributeUse where isactive='Y' AND M_AttributeSet_ID="+ obj.GetM_AttributeSet_ID();
+                var sql = "SELECT max(seqno) AS seqno FROM M_AttributeUse where isactive='Y' AND M_AttributeSet_ID=" + obj.GetM_AttributeSet_ID();
                 DataSet ds = DB.ExecuteDataset(sql, null, null);
                 var sqno = Util.GetValueOfInt(ds.Tables[0].Rows[0]["seqno"]);
-                 
+
                 obj.SetSeqNo(sqno + 10);
                 if (!obj.Save())
                 {
@@ -201,8 +200,143 @@ namespace VA005.Models
             //}
             return _result;
         }
+        /// <summary>
+        /// Get Attribute
+        /// </summary>
+        /// <param name="SelectedAttributeID">SelectedAttributeID</param>
+        /// <returns>Count</returns>
+        public int GetAttributeCount(int SelectedAttributeID)
+        {
+            string sql = "SELECT COUNT(*) FROM M_AttributeValue WHERE M_Attribute_ID=" + SelectedAttributeID;
+            sql = MRole.GetDefault(_ctx).AddAccessSQL(sql, "M_AttributeValue", true, true);
+            int count = Util.GetValueOfInt(DB.ExecuteScalar(sql));
+            return count;
+        }
+        /// <summary>
+        /// Load Select
+        /// </summary>
+        /// <returns>Load Select </returns>
+        public List<ValueNamePair> LoadSelect()
+        {
+            List<ValueNamePair> Type = new List<ValueNamePair>();
+            string sql = "SELECT a.Name,a.Value FROM AD_Ref_List a INNER JOIN AD_Reference b ON a.AD_Reference_ID=b.Ad_Reference_ID WHERE b.Name='M_Attribute Value Type' AND a.IsActive='Y'";
+            DataSet ds = DB.ExecuteDataset(sql, null, null);
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                ValueNamePair dep = new ValueNamePair(Util.GetValueOfString(ds.Tables[0].Rows[i]["Value"]), Util.GetValueOfString(ds.Tables[0].Rows[i]["Name"]));
+                //dep.Key = Util.GetValueOfString(ds.Tables[0].Rows[i]["value"]);
+                //dep.Name = Util.GetValueOfString(ds.Tables[0].Rows[i]["name"]);
 
+                Type.Add(dep);
+            }
+            return Type;
+        }
+        /// <summary>
+        /// Load Attribute
+        /// </summary>
+        /// <param name="ID">ID</param>
+        /// <returns>Load Attribute</returns>
+        public List<AttributeDatas> LoadAttribute(int ID)
+        {
+            List<AttributeDatas> Type = new List<AttributeDatas>();
+            string sql = "SELECT a.Name,  a.DESCRIPTION,a.IsActive, a.IsMandatory,  a.ATTRIBUTEVALUETYPE,  m.name,  m.Value  FROM m_attribute a LEFT OUTER  JOIN m_attributevalue m  ON a.m_attribute_id  =m.m_attribute_id WHERE a.m_attribute_id =" + ID;
+            var ds = DB.ExecuteDataset(sql, null, null);
+            if (ds != null)
+            {
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    AttributeDatas dep = new AttributeDatas();
+                    dep.name = Util.GetValueOfString(ds.Tables[0].Rows[i]["Name"]);
+                    dep.description = Util.GetValueOfString(ds.Tables[0].Rows[i]["DESCRIPTION"]);
+                    dep.isactive = Util.GetValueOfString(ds.Tables[0].Rows[i]["IsActive"]);
+                    dep.ismandatory = Util.GetValueOfString(ds.Tables[0].Rows[i]["IsMandatory"]);
+                    dep.attributevaluetype = Util.GetValueOfString(ds.Tables[0].Rows[i]["ATTRIBUTEVALUETYPE"]);
+                    dep.value = Util.GetValueOfString(ds.Tables[0].Rows[i]["Value"]);
+                    Type.Add(dep);
+                }
+            }
+            return Type;
+        }
+        /// <summary>
+        /// GetFieldLength
+        /// </summary>
+        /// <param name="TableID">TableID</param>
+        /// <param name="COLUMNNAME">COLUMNNAME</param>
+        /// <returns>Field length and column </returns>
+        public List<ColumnData> GetFieldLength(int TableID, string COLUMNNAME)
+        {
+            List<ColumnData> Type = new List<ColumnData>();
+            string sql = "SELECT Fieldlength,ColumnName FROM AD_Column WHERE AD_Table_ID =" + TableID + "  AND COLUMNNAME  IN (" + COLUMNNAME + ") AND isActive = 'Y'";
+            var ds = DB.ExecuteDataset(sql, null, null);
+            if (ds != null)
+            {
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    ColumnData dep = new ColumnData();
+                    dep.fieldlength = Util.GetValueOfString(ds.Tables[0].Rows[i]["Fieldlength"]);
+                    dep.columnname = Util.GetValueOfString(ds.Tables[0].Rows[i]["ColumnName"]);
+                    Type.Add(dep);
+                }
+            }
+            return Type;
+        }
+        /// <summary>
+        /// Field Length
+        /// </summary>
+        /// <param name="TableID">TableID</param>
+        /// <param name="COLUMNNAME">COLUMNNAME</param>
+        /// <returns>Field length and column</returns>
+        public List<ColumnData> GetField(int TableID, string COLUMNNAME)
+        {
+            List<ColumnData> Type = new List<ColumnData>();
+            string sql = "SELECT Fieldlength,ColumnName FROM AD_Column WHERE AD_Table_ID =" + TableID + "  AND COLUMNNAME  IN (" + COLUMNNAME + ") AND isActive = 'Y'";
+            var ds = DB.ExecuteDataset(sql, null, null);
+            if (ds != null)
+            {
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    ColumnData dep = new ColumnData();
+                    dep.fieldlength = Util.GetValueOfString(ds.Tables[0].Rows[i]["Fieldlength"]);
+                    dep.columnname = Util.GetValueOfString(ds.Tables[0].Rows[i]["ColumnName"]);
+                    Type.Add(dep);
+                }
+            }
+            return Type;
+        }
+        /// <summary>
+        /// Update Attribute
+        /// </summary>
+        /// <param name="fields">fields</param>
+        /// <returns>Update Attribute</returns>
+        public string Update(string fields)
+        {
+            string[] paramValue = fields.Split(',');
+            string sql = "UPDATE M_Attributevalue SET Name='" + paramValue[0] + "',Value='" + paramValue[1] + "' WHERE M_Attributevalue_ID=" + paramValue[2];
+            string attribute = Util.GetValueOfString(DB.ExecuteQuery(sql));
+            return attribute;
+        }
 
+        /// <summary>
+        /// Declares Properties For ColumnData
+        /// </summary>
+        public class ColumnData
+        {
+            public string fieldlength { get; set; }
+            public string columnname { get; set; }
+
+        }
+        /// <summary>
+        /// Declares Properties For Attribute Data
+        /// </summary>
+        public class AttributeDatas
+        {
+            public string name { get; set; }
+            public string description { get; set; }
+            public string isactive { get; set; }
+            public string ismandatory { get; set; }
+            public string attributevaluetype { get; set; }
+            public string value { get; set; }
+        }
         public class VA005_SaveAttribute
         {
             public string name { get; set; }
@@ -245,7 +379,5 @@ namespace VA005.Models
             public int attributeID { get; set; }
 
         }
-
-
     }
 }

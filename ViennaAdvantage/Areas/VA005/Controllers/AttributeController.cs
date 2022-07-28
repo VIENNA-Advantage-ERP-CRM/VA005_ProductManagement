@@ -8,8 +8,9 @@ using VAdvantage.Utility;
 using ViennaAdvantage.Model;
 using VAdvantage.Model;
 using VA005.Models;
-
-
+using Attribute = VA005.Models.Attribute;
+using static VA005.Models.Attribute;
+using ColumnData = VA005.Models.Attribute.ColumnData;
 
 namespace VA005.Controllers
 {
@@ -85,6 +86,74 @@ namespace VA005.Controllers
             var text = obj.DeleteAttributeValue(value);
             return Json(JsonConvert.SerializeObject(text), JsonRequestBehavior.AllowGet);
            // return Json(new { text }, JsonRequestBehavior.AllowGet);
+        }
+        /// <summary>
+        /// Attribute Count
+        /// </summary>
+        /// <param name="SelectedAttributeID">SelectedAttributeID</param>
+        /// <returns>JSON Data</returns>
+        public JsonResult GetAttributeCount(int SelectedAttributeID)
+        {
+            Ctx ctx = Session["ctx"] as Ctx;
+            Attribute obj = new Attribute(ctx);
+            int value = obj.GetAttributeCount(SelectedAttributeID);
+            return Json(new { value }, JsonRequestBehavior.AllowGet);
+        }
+        /// <summary>
+        /// Load Select
+        /// </summary>
+        /// <returns>JSON Data</returns>
+        public JsonResult LoadSelect()
+        {
+            Attribute model = new Attribute(Session["Ctx"] as Ctx);
+            List<ValueNamePair> value = model.LoadSelect();
+            return Json(JsonConvert.SerializeObject(value), JsonRequestBehavior.AllowGet);
+        }
+        /// <summary>
+        /// Load Attribute
+        /// </summary>
+        /// <param name="ID">ID</param>
+        /// <returns>JSON Data</returns>
+        public JsonResult LoadAttribute(int ID)
+        {
+            Attribute model = new Attribute(Session["Ctx"] as Ctx);
+            List<AttributeDatas> value = model.LoadAttribute(ID);
+            return Json(JsonConvert.SerializeObject(value), JsonRequestBehavior.AllowGet);
+        }
+        /// <summary>
+        /// Field Length
+        /// </summary>
+        /// <param name="TableID">Table ID</param>
+        /// <param name="COLUMNNAME">Column Name</param>
+        /// <returns>JSON Data</returns>
+        public JsonResult GetFieldLength(int TableID, string COLUMNNAME)
+        {
+            Attribute model = new Attribute(Session["Ctx"] as Ctx);
+            List<ColumnData> value = model.GetFieldLength(TableID, COLUMNNAME);
+            return Json(JsonConvert.SerializeObject(value), JsonRequestBehavior.AllowGet);
+        }
+        /// <summary>
+        /// Get Field
+        /// </summary>
+        /// <param name="TableID">TableID</param>
+        /// <param name="COLUMNNAME">COLUMNNAME</param>
+        /// <returns>JSON Data</returns>
+        public JsonResult GetField(int TableID, string COLUMNNAME)
+        {
+            Attribute model = new Attribute(Session["Ctx"] as Ctx);
+            List<ColumnData> value = model.GetField(TableID, COLUMNNAME);
+            return Json(JsonConvert.SerializeObject(value), JsonRequestBehavior.AllowGet);
+        }
+        /// <summary>
+        /// Update 
+        /// </summary>
+        /// <param name="fields">fields</param>
+        /// <returns>JSON Data</returns>
+        public JsonResult Update(string fields)
+        {
+            Attribute model = new Attribute(Session["Ctx"] as Ctx);
+            var value = model.Update(fields);
+            return Json(JsonConvert.SerializeObject(value), JsonRequestBehavior.AllowGet);
         }
     }
 }

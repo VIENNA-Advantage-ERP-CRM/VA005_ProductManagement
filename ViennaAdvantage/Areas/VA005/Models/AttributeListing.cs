@@ -608,9 +608,9 @@ namespace VA005.Models
             var ds = DB.ExecuteDataset(sql, null, null);
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
-                ValueNamePair dep = new ValueNamePair();
-                dep.Key = Util.GetValueOfString(ds.Tables[0].Rows[i]["Value"]);
-                dep.Name = Util.GetValueOfString(ds.Tables[0].Rows[i]["Name"]);
+                ValueNamePair dep = new ValueNamePair(Util.GetValueOfString(ds.Tables[0].Rows[i]["Value"]), Util.GetValueOfString(ds.Tables[0].Rows[i]["Name"]));
+                //dep.Key = Util.GetValueOfString(ds.Tables[0].Rows[i]["Value"]);
+                //dep.Name = Util.GetValueOfString(ds.Tables[0].Rows[i]["Name"]);
 
                 Type.Add(dep);
             }
