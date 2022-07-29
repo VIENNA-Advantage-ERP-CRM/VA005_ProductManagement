@@ -8,7 +8,6 @@ using VAdvantage.Utility;
 using ViennaAdvantage.Model;
 using VA005.Models;
 using VAdvantage.Model;
-using static VA005.Models.AttributeListing;
 
 namespace VA005.Controllers
 {
@@ -148,6 +147,7 @@ namespace VA005.Controllers
             AttributeListing obj = new AttributeListing(ctx);
             var Result = obj.GetWindow_ID(Control);
             return Json(JsonConvert.SerializeObject(Result), JsonRequestBehavior.AllowGet);
+
         }
         /// <summary>
         /// Method For Mandatory DropDown
@@ -217,7 +217,7 @@ namespace VA005.Controllers
             return Json(new { value }, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
-        /// Field Length
+        /// GetFieldLength
         /// </summary>
         /// <param name="TableID">TableID</param>
         /// <param name="COLUMNNAME">COLUMNNAME</param>
@@ -225,7 +225,7 @@ namespace VA005.Controllers
         public JsonResult GetFieldLength(int TableID,string COLUMNNAME)
         {
             AttributeListing model = new AttributeListing(Session["Ctx"] as Ctx);
-            List<ColumnData> value = model.GetFieldLength(TableID, COLUMNNAME);
+            List<fieldlengthDetails> value = model.GetFieldLength(TableID, COLUMNNAME);
             return Json(JsonConvert.SerializeObject(value), JsonRequestBehavior.AllowGet);
         }
     }

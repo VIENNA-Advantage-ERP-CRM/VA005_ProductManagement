@@ -608,9 +608,9 @@ namespace VA005.Models
             var ds = DB.ExecuteDataset(sql, null, null);
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
-                ValueNamePair dep = new ValueNamePair();
-                dep.Key = Util.GetValueOfString(ds.Tables[0].Rows[i]["Value"]);
-                dep.Name = Util.GetValueOfString(ds.Tables[0].Rows[i]["Name"]);
+                ValueNamePair dep = new ValueNamePair(Util.GetValueOfString(ds.Tables[0].Rows[i]["Value"]), Util.GetValueOfString(ds.Tables[0].Rows[i]["Name"]));
+                //dep.Key = Util.GetValueOfString(ds.Tables[0].Rows[i]["Value"]);
+                //dep.Name = Util.GetValueOfString(ds.Tables[0].Rows[i]["Name"]);
 
                 Type.Add(dep);
             }
@@ -729,16 +729,16 @@ namespace VA005.Models
         /// <param name="TableID">TableID</param>
         /// <param name="COLUMNNAME">COLUMNNAME</param>
         /// <returns>Column Name And Length</returns>
-        public List<ColumnData> GetFieldLength(int TableID, string COLUMNNAME)
+        public List<fieldlengthDetails> GetFieldLength(int TableID, string COLUMNNAME)
         {
-            List<ColumnData> Type = new List<ColumnData>();
+            List<fieldlengthDetails> Type = new List<fieldlengthDetails>();
             string sql = "SELECT Fieldlength,ColumnName FROM AD_Column WHERE AD_Table_ID =" + TableID + "  AND COLUMNNAME  IN (" + COLUMNNAME + ") AND isActive = 'Y'";
             var ds = DB.ExecuteDataset(sql, null, null);
             if (ds != null)
             {
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    ColumnData dep = new ColumnData();
+                    fieldlengthDetails dep = new fieldlengthDetails();
                     dep.fieldlength = Util.GetValueOfString(ds.Tables[0].Rows[i]["Fieldlength"]);
                     dep.columnname = Util.GetValueOfString(ds.Tables[0].Rows[i]["ColumnName"]);
                     Type.Add(dep);
@@ -747,6 +747,13 @@ namespace VA005.Models
             return Type;
         }
     }
+        public class fieldlengthDetails
+    {
+            public string fieldlength { get; set; }
+            public string columnname { get; set; }
+
+        }
+
         public class VA005_AddAttributeSet
         {
             public string name { get; set; }
@@ -905,12 +912,4 @@ namespace VA005.Models
         {
             public string Name { get; set; }
         }
-
-        public class ColumnData
-        {
-            public string fieldlength { get; set; }
-            public string columnname { get; set; }
-
-        }
-
-    }
+}
