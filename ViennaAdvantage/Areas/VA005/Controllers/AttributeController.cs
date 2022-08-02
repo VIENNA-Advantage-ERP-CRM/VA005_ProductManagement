@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -22,10 +21,10 @@ namespace VA005.Controllers
             return View();
         }
 
-        public JsonResult SaveAttributemodel(VA005.Models.Attribute.VA005_SaveAttribute value)
+        public JsonResult SaveAttributemodel(VA005_SaveAttribute value)
         {
             Ctx ctx = Session["ctx"] as Ctx;
-            VA005.Models.Attribute obj = new VA005.Models.Attribute(ctx);
+            Attribute obj = new Attribute(ctx);
 
             value.name = Server.HtmlDecode(value.name);
             value.description = Server.HtmlDecode(value.description);
@@ -34,10 +33,10 @@ namespace VA005.Controllers
             return Json(JsonConvert.SerializeObject(text), JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult SelectionSavemodel(VA005.Models.Attribute.VA005_SaveSelectionList value)
+        public JsonResult SelectionSavemodel(VA005_SaveSelectionList value)
         {
             Ctx ctx = Session["ctx"] as Ctx;
-            VA005.Models.Attribute obj = new VA005.Models.Attribute(ctx);
+            Attribute obj = new Attribute(ctx);
 
             value.secname = Server.HtmlDecode(value.secname);
             value.searchkey = Server.HtmlDecode(value.searchkey);
@@ -46,18 +45,18 @@ namespace VA005.Controllers
             return Json(JsonConvert.SerializeObject(text), JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult ShowGrideData(VA005.Models.Attribute.VA005_ShowGrideData value)
+        public ActionResult ShowGrideData(VA005_ShowGrideData value)
         {
             Ctx ctx = Session["ctx"] as Ctx;
-            VA005.Models.Attribute obj = new VA005.Models.Attribute(ctx);
+            Attribute obj = new Attribute(ctx);
             var text = obj.ShowGrideData(value);
             return Json(new { result =text}, JsonRequestBehavior.AllowGet);           
         }
 //=================================================
-        //public JsonResult SaveAttributeuses(VA005.Models.Attribute.VA005_SaveAttributeuses value)
+        //public JsonResult SaveAttributeuses(Attribute.VA005_SaveAttributeuses value)
         //{
         //    Ctx ctx = Session["ctx"] as Ctx;
-        //    VA005.Models.Attribute obj = new VA005.Models.Attribute(ctx);
+        //    Attribute obj = new Attribute(ctx);
         //    var text = obj.SaveAttributeuses(value);
         //    return Json(JsonConvert.SerializeObject(text), JsonRequestBehavior.AllowGet);
         //}
@@ -72,15 +71,15 @@ namespace VA005.Controllers
         public JsonResult SaveAttributeuses(string attributsetid,int nid)
         {
             Ctx ctx = Session["ctx"] as Ctx;
-            VA005.Models.Attribute obj = new VA005.Models.Attribute(ctx);
+            Attribute obj = new Attribute(ctx);
             var text = obj.SaveAttributeuses(ctx, attributsetid,nid);
             return Json(JsonConvert.SerializeObject(text), JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult DeleteAttributeValue(VA005.Models.Attribute.VA005_DeleteAttributeValue value)
+        public JsonResult DeleteAttributeValue(VA005_DeleteAttributeValue value)
         {
             Ctx ctx = Session["ctx"] as Ctx;
-            VA005.Models.Attribute obj = new VA005.Models.Attribute(ctx);
+            Attribute obj = new Attribute(ctx);
             var text = obj.DeleteAttributeValue(value);
             return Json(JsonConvert.SerializeObject(text), JsonRequestBehavior.AllowGet);
            // return Json(new { text }, JsonRequestBehavior.AllowGet);
@@ -90,13 +89,13 @@ namespace VA005.Controllers
         /// </summary>
         /// <param name="SelectedAttributeID">SelectedAttributeID</param>
         /// <returns>JSON Data</returns>
-        public JsonResult GetAttributeCount(int SelectedAttributeID)
-        {
-            Ctx ctx = Session["ctx"] as Ctx;
-            Attribute obj = new Attribute(ctx);
-            int value = obj.GetAttributeCount(SelectedAttributeID);
-            return Json(new { value }, JsonRequestBehavior.AllowGet);
-        }
+        //public JsonResult GetAttributeCount(int SelectedAttributeID)
+        //{
+        //    Ctx ctx = Session["ctx"] as Ctx;
+        //    Attribute obj = new Attribute(ctx);
+        //    int value = obj.GetAttributeCount(SelectedAttributeID);
+        //    return Json(new { value }, JsonRequestBehavior.AllowGet);
+        //}
         /// <summary>
         /// Load Select
         /// </summary>
