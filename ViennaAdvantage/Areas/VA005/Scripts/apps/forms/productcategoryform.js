@@ -142,7 +142,7 @@
             chkMultiple = $root.find("#chkMultiple_" + $self.windowNo);
             btnMultiple.hide();
             pageNo++;
-            if (!CheckDTD001() || cmbProductType.val() != "I") {
+            if ( cmbProductType.val() != "I") {
                 IsConsumable.css({ "display": "none" });
                 lblConsumable.css({ "display": "none" });
             }
@@ -181,7 +181,7 @@
             cmbAttributeSet.append(" <option value = 0></option>");
             if (dr.length > 0) {
                 for (var i = 0; i < dr.length; i++) {
-                    key = VIS.Utility.Util.getValueOfInt(dr[i].C_TaxCategory_ID);
+                    key = VIS.Utility.Util.getValueOfInt(dr[i].M_AttributeSet_ID);
                     value = VIS.Utility.encodeText(dr[i].Name);
                     cmbAttributeSet.append(" <option value=" + key + ">" + value + "</option>");
                 }
@@ -230,7 +230,7 @@
             };
 
             cmbProductType.change(function () {
-                if (cmbProductType.val() == "I" && CheckDTD001()) {
+                if (cmbProductType.val() == "I" ) {
                     IsConsumable.css({ "display": "block" });
                     lblConsumable.css({ "display": "block" });
                 }
@@ -1012,15 +1012,15 @@
             }
         };
 
-        var CheckDTD001 = function () {
-            var no = VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/ProductCategory/GetCheckDTD001", "");
+        //var CheckDTD001 = function () {
+            //var no = VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/ProductCategory/GetCheckDTD001", "");
             //var sql = "SELECT AD_Column_ID FROM AD_Column WHERE AD_Table_ID = 209 AND ColumnName = 'DTD001_IsConsumable'";
             // var no = VIS.Utility.Util.getValueOfInt(VIS.DB.executeScalar(sql.toString(), null, null));
-            if (no > 0) {
-                return true;
-            }
-            return false;
-        };
+            //if (no > 0) {
+               // return true;
+           // }
+           // return false;
+        //};
 
         var ClearData = function () {
             pcat_ID = 0;
