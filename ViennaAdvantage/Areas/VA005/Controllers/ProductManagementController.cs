@@ -698,6 +698,12 @@ namespace VA005.Controllers
             return Json(JsonConvert.SerializeObject(model.LoadPriceListData(M_PriceList_ID, Session["ctx"] as Ctx)), JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetListPrice(int PriceListVersion_ID, int Product_ID, int UOM, int Attribute)
+        {
+            ProductManagementModel model = new ProductManagementModel();
+            return Json(JsonConvert.SerializeObject(model.GetListPrice(PriceListVersion_ID, Product_ID, UOM, Attribute)), JsonRequestBehavior.AllowGet);
+        }
+
         // Added by Bharat to Load Releated Data on 05 March 2018
         public JsonResult LoadReleatedData(int M_Product_ID)
         {

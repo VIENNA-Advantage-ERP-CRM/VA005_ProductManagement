@@ -694,9 +694,9 @@ namespace VA005.Models
                         if (!po.Save())
                         {
                             ValueNamePair pp = VLogger.RetrieveError();
-                             error += pro.GetName() + (pp != null ? " - " + Msg.GetMsg(ctx, pp.GetValue()) + " " + pp.ToString() : "") + "\n";
-                           
-                           
+                            error += pro.GetName() + (pp != null ? " - " + Msg.GetMsg(ctx, pp.GetValue()) + " " + pp.ToString() : "") + "\n";
+
+
                         }
                         else
                         {
@@ -991,7 +991,7 @@ namespace VA005.Models
         /// </summary>
         public object CreateTree(int attributeSet_id, Ctx _ctx)
         {
-            List<VA005_TreeStructure> final = null;            
+            List<VA005_TreeStructure> final = null;
             MAttributeSet aset = new MAttributeSet(_ctx, attributeSet_id, null);
             if (aset.IsLot() || aset.IsSerNo() || aset.IsGuaranteeDate())
             {
@@ -1783,6 +1783,17 @@ LEFT JOIN ad_image adimg ON adimg.ad_image_id    =attimage.ad_image_id
                 obj["ISO_Code"] = Util.GetValueOfString(ds.Tables[0].Rows[0]["ISO_Code"]);
             }
             return obj;
+        }
+
+        public decimal GetListPrice(int PriceListVersion, int product_ID, int uom, int attribute)
+        {
+            string sql = "SELECT pr.PriceList FROM M_ProductPrice pr INNER JOIN M_PriceList_Version plv" +
+                    " ON pr.M_PriceList_Version_ID = plv.M_PriceList_Version_ID WHERE pr.M_PriceList_Version_ID=" + PriceListVersion
+                    + " AND pr.M_Product_ID = " + product_ID +
+                    " AND pr.C_UOM_ID = " + uom + " AND pr.M_AttributeSetInstance_ID = " + attribute;
+
+            decimal price = Util.GetValueOfDecimal(DB.ExecuteScalar(sql, null, null));
+            return price;
         }
 
         // Added by Bharat on 05 March 2018 to get Varients Data of Product
