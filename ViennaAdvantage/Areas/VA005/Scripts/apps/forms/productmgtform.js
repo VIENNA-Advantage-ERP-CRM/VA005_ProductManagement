@@ -755,7 +755,7 @@
                     },
                     { field: "Product", caption: '<div ><span>' + VIS.Msg.translate(VIS.Env.getCtx(), "Product") + '</span></div>', sortable: false, size: '200px', hidden: false },
                     {
-                        field: "PriceList", caption: '<div ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceList") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, style: 'text-align: right' , editable: { type: 'number' },
+                        field: "PriceList", caption: '<div ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceList") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, style: 'text-align: right', editable: { type: 'number' },
                         // Added by shifali on 29th July 2020 to get PriceList value acc. to culture
                         render: function (record, index, col_index) {
                             var val = record["PriceList"];
@@ -764,7 +764,7 @@
                         }
                     },
                     {
-                        field: "PriceStd", caption: '<div ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceStd") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, style: 'text-align: right' , editable: { type: 'number' },
+                        field: "PriceStd", caption: '<div ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceStd") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, style: 'text-align: right', editable: { type: 'number' },
                         // Added by shifali on 29th July 2020 to get PriceStd value acc. to culture
                         render: function (record, index, col_index) {
                             var val = record["PriceStd"];
@@ -773,7 +773,7 @@
                         }
                     },
                     {
-                        field: "PriceLimit", caption: '<div ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceLimit") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, style: 'text-align: right' , editable: { type: 'number' },
+                        field: "PriceLimit", caption: '<div ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceLimit") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, style: 'text-align: right', editable: { type: 'number' },
                         // Added by shifali on 29th July 2020 to get PriceLimit value acc. to culture
                         render: function (record, index, col_index) {
                             var val = record["PriceLimit"];
@@ -1026,7 +1026,7 @@
                     { field: "product_ID", caption: "", sortable: false, size: '80px', display: false },
                     { field: "Product", caption: '<div ><span>' + VIS.Msg.translate(VIS.Env.getCtx(), "Product") + '</span></div>', sortable: false, size: '200px', hidden: false },
                     {
-                        field: "OrderMin", caption: '<div ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "Order_Min") + '</span></div>', sortable: false, size: '120px', min: 80, hidden: false, style: 'text-align: right' , editable: { type: 'number' },
+                        field: "OrderMin", caption: '<div ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "Order_Min") + '</span></div>', sortable: false, size: '120px', min: 80, hidden: false, style: 'text-align: right', editable: { type: 'number' },
                         // Added by shifali on 29th July 2020 to get ordermin value acc. to culture
                         render: function (record, index, col_index) {
                             var val = record["OrderMin"];
@@ -1035,7 +1035,7 @@
                         }
                     },
                     {
-                        field: "OrderPack", caption: '<div ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "Order_Pack") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, style: 'text-align: right' , editable: { type: 'number' },
+                        field: "OrderPack", caption: '<div ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "Order_Pack") + '</span></div>', sortable: false, size: '100px', min: 80, hidden: false, style: 'text-align: right', editable: { type: 'number' },
                         // Added by shifali on 29th July 2020 to get orderpack value acc. to culture
                         render: function (record, index, col_index) {
                             var val = record["OrderPack"];
@@ -1064,7 +1064,7 @@
                         }
                     },
                     {
-                        field: "PriceList", caption: '<div ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceList") + '</span></div>', sortable: false, size: '80px', min: 80, hidden: false, style: 'text-align: right' , editable: { type: 'number' },
+                        field: "PriceList", caption: '<div ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "PriceList") + '</span></div>', sortable: false, size: '80px', min: 80, hidden: false, style: 'text-align: right', editable: { type: 'number' },
                         // Added by Shifali to change the pricelist acc. to culture
                         //render: function (record, index, col_index) {
                         //    var val = VIS.Utility.Util.getValueOfDecimal(record["PriceList"].toFixed(precision));
@@ -1249,7 +1249,7 @@
                     { field: "product_ID", caption: "product_ID", sortable: false, size: '80px', display: false },
                     { field: "Product", caption: '<div ><span>' + VIS.Msg.translate(VIS.Env.getCtx(), "Product") + '</span></div>', sortable: false, size: '35%', hidden: false },
                     {
-                        field: "Qty", caption: '<div ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "Quantity") + '</span></div>', sortable: false, size: '15%', hidden: false, style: 'text-align: right' , editable: { type: 'float' },
+                        field: "Qty", caption: '<div ><span>' + VIS.Msg.getElement(VIS.Env.getCtx(), "Quantity") + '</span></div>', sortable: false, size: '15%', hidden: false, style: 'text-align: right', editable: { type: 'float' },
                         //Added by Shifali to change the Qty acc. to culture.
                         render: function (record, index, col_index) {
                             var val = VIS.Utility.Util.getValueOfDecimal(record["Qty"].toFixed(precision));
@@ -5774,6 +5774,17 @@
 
         };
 
+        this.refreshUI = function () {
+            /*Refresh Grid on Focus*/
+            if (dRelatedGrid) {
+                dRelatedGrid.resize();
+            }
+
+            if (cartGrid) {
+                cartGrid.resize();
+            }
+        };
+
         /*
         dispose all object used in this form
         */
@@ -5930,7 +5941,10 @@
             orgid = null;
             options = null;
         };
+    };
 
+    VA005.ProductMgtForm.prototype.refresh = function () {
+        this.refreshUI();
     };
 
     //Must Implement with same parameter

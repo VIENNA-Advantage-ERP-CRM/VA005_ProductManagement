@@ -28,7 +28,7 @@ namespace VA005 //  Please replace namespace with prefix of your module..
                 , new[] { "VA005.Controllers" }
             );    // Please replace ViennaAdvantage with prefix of your module...
 
-            ScriptBundle script = new ScriptBundle("~/Areas/VA005/Scripts/VA005Js");  
+            ScriptBundle script = new ScriptBundle("~/Areas/VA005/Scripts/VA005Js");
             StyleBundle style = new StyleBundle("~/Areas/VA005/Contents/VA005Style");
 
             /* ==>  Here include all css files in style bundle......see example below....  */
