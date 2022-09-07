@@ -141,17 +141,17 @@
             //chkDataBaseSave = $root.find("#chkDataBaseSave_" + $self.windowNo);
             chkMultiple = $root.find("#chkMultiple_" + $self.windowNo);
             btnMultiple.hide();
-            pageNo++;
-            if ( cmbProductType.val() != "I") {
-                IsConsumable.css({ "display": "none" });
-                lblConsumable.css({ "display": "none" });
-            }
+            pageNo++;            
             LoadCategory(pageNo, PAGESIZE);
             LoadAttributes();
             LoadTaxCategories();
             LoadAssetGroup();
             LoadProductTypes();
             LoadMatPolicies();
+            if (cmbProductType.val() != "I") {
+                IsConsumable.css({ "display": "none" });
+                lblConsumable.css({ "display": "none" });
+            }
             mainProductCategoryUl.find('li:eq(1) .VA005-cat-caption').addClass('VA005-highlighted');
             fillCategory(mainProductCategoryUl.find('li:eq(1)').attr('procatid'));
             btnUndo.attr('disabled', 'disabled').css("opacity", 0.6);
@@ -928,6 +928,7 @@
                     Description = dr[i].Description;
                     taxCatID = dr[i].C_TaxCategory_ID;
                     asetGrp = dr[i].A_Asset_Group_ID;
+                    IsCon = dr[i].DTD001_IsConsumable;
                     ad_image_id = dr[i].AD_Image_ID;
                     imageUrl = dr[i].ImageUrl;
                     txtName.val(catName);
