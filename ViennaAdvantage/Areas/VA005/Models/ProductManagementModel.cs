@@ -1820,7 +1820,7 @@ LEFT JOIN ad_image adimg ON adimg.ad_image_id    =attimage.ad_image_id
             string sql = "SELECT po.VAICNT_InventoryCountLine_ID,po.M_Product_ID,prd.Name, po.C_UOM_ID, u.Name AS UOM, po.UPC, po.M_AttributeSetInstance_ID, ats.Description, po.VAICNT_Quantity," +
                         " prd.M_AttributeSet_ID FROM VAICNT_InventoryCountLine po LEFT JOIN C_UOM u ON po.C_UOM_ID = u.C_UOM_ID LEFT JOIN M_Product prd" +
                         " ON po.M_Product_ID= prd.M_Product_ID LEFT JOIN M_AttributeSetInstance ats ON po.M_AttributeSetInstance_ID = ats.M_AttributeSetInstance_ID" +
-                        " WHERE po.IsActive = 'Y' AND po.VAICNT_InventoryCount_ID = " + invCount_ID;
+                        " WHERE po.IsActive = 'Y' AND po.VAICNT_InventoryCount_ID = " + invCount_ID + " ORDER BY po.Line";
             DataSet ds = DB.ExecuteDataset(sql, null, null);
             if (ds != null && ds.Tables[0].Rows.Count > 0)
             {
