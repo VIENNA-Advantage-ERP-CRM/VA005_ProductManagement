@@ -540,11 +540,15 @@
                         attributeidbydivboxes.push($($($attributedivleftdragdrop.find("[data-id='" + selectedIds[i] + "']"))[0]).attr("data-id"));
                     }
                     attributesetidbydivboxes = $(this).children().eq(0).attr('NID');
-                    saveAttribute(attributeidbydivboxes, attributesetidbydivboxes);
-                    // loadTreeData();
-                    //}, 200);
-                    attributeidbydivboxes.length = [];
-                    //$bsyDiv[0].style.visibility = "hidden";
+                    if (attributeidbydivboxes.length > 0) {
+                        saveAttribute(attributeidbydivboxes, attributesetidbydivboxes);
+                        // loadTreeData();
+                        //}, 200);
+                        attributeidbydivboxes = [];
+                    }
+                    else {
+                        $bsyDiv[0].style.visibility = "hidden";
+                    }
                 }
             });
         };
@@ -2100,7 +2104,7 @@
                 if (lotidget != "null" || serialidget != "null") {
                     if ($addatttextlot.is(":checked")) {
 
-                        var windowid =  VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/GetWindow_ID", { "Control": 'Lot Control' });
+                        var windowid = VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/GetWindow_ID", { "Control": 'Lot Control' });
 
                         //var windowid = VIS.Utility.Util.getValueOfInt(dr[i].ad_window_id);
                         //var sql1 = "select ad_window_id from ad_window where name='Lot Control'";
@@ -2116,7 +2120,7 @@
 
                     if ($addatttextserial.is(":checked")) {
 
-                        var windowid =  VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/GetWindow_ID", { "Control": 'Serial No Control' });
+                        var windowid = VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/GetWindow_ID", { "Control": 'Serial No Control' });
 
                         // var windowid = VIS.Utility.Util.getValueOfInt(dr["ad_window_id"]);
                         //var sql1 = "select ad_window_id from ad_window where name='Serial No Control'";
