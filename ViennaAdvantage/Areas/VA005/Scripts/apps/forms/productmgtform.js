@@ -5775,9 +5775,13 @@
         };
 
         this.refreshUI = function () {
-            /*Refresh Grid on Focus*/
-            dRelatedGrid.resize();
-            cartGrid.resize();
+        /*Refresh Grid on Focus*/
+            if (dRelatedGrid) {
+                dRelatedGrid.resize();
+            }
+            if (cartGrid) {
+                cartGrid.resize();
+            }
         };
 
         /*
