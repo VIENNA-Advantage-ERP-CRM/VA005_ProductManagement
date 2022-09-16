@@ -336,145 +336,193 @@
             //var sql = "SELECT NAME, M_Attribute_ID FROM M_Attribute WHERE ISACTIVE='Y'";
             //var sql = "SELECT NAME, M_Attribute_ID FROM M_Attribute WHERE isactive='Y' ORDER BY M_Attribute_ID DESC";
 
-
-            var sql = "SELECT NAME, M_Attribute_ID,isactive FROM M_Attribute  ORDER BY M_Attribute_ID DESC";
-            sql = VIS.MRole.addAccessSQL(sql, "M_Attribute", true, true);
-            var ds = VIS.DB.executeDataSet(sql, null, null);
+            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/GetAttribute", "", AttributeAppendCatCallBack);
 
 
-            if (ds != null) {
-                var str = '';
-                for (var i = 0; i < ds.tables[0].rows.length; i++) {
-                    //str += "<div style='cursor:pointer' data-id='" + VIS.Utility.Util.getValueOfInt(ds.tables[0].rows[i].cells["m_attribute_id"]) + "' class='VA005-attributediv  VA005-divboxtarget-design-hover'>"
-                    //                 //+ "<label  style='font-weight:normal'>" + ds.tables[0].rows[i].cells["name"] + "</label>"
-                    //                 + "<div style='float: left; width: 100%;'><input attid=" + VIS.Utility.Util.getValueOfInt(ds.tables[0].rows[i].cells["m_attribute_id"]) + " class='VA005-checkboxonleftdiv' type='checkbox' style='float: left;'></div>"
-                    //                 //+ "<label id='" + $self.windowNo + "lableidofdivboxes' style='word-break:break-word;line-height:20px;cursor:pointer;font-weight:normal'>" + ds.tables[0].rows[i].cells["name"] + "</label>"
-                    //                  + "<label id='" + $self.windowNo + "lableidofdivboxes' style='word-break:break-word;line-height: 44px;cursor:pointer;font-weight:normal;float: left;text-align: center;width: 100%;'>" + ds.tables[0].rows[i].cells["name"] + "</label>"
-                    //         + "</div>";
-
-                    str += getTemaplate(VIS.Utility.Util.getValueOfInt(ds.tables[0].rows[i].cells["m_attribute_id"]), VIS.Utility.encodeText(ds.tables[0].rows[i].cells["name"]), ds.tables[0].rows[i].cells["isactive"]);
-
-                    //if (ds.tables[0].rows[i].cells["isactive"] == "N") {
-                    //     
-                    //    return
-                    //}
-                }
+            //var sql = "SELECT NAME, M_Attribute_ID,isactive FROM M_Attribute  ORDER BY M_Attribute_ID DESC";
+            //sql = VIS.MRole.addAccessSQL(sql, "M_Attribute", true, true);
+            //var ds = VIS.DB.executeDataSet(sql, null, null);
 
 
+            // if (ds != null) {
+            //    var str = '';
+            //    for (var i = 0; i < ds.tables[0].rows.length; i++) {
+            //        //str += "<div style='cursor:pointer' data-id='" + VIS.Utility.Util.getValueOfInt(ds.tables[0].rows[i].cells["m_attribute_id"]) + "' class='VA005-attributediv  VA005-divboxtarget-design-hover'>"
+            //        //                 //+ "<label  style='font-weight:normal'>" + ds.tables[0].rows[i].cells["name"] + "</label>"
+            //        //                 + "<div style='float: left; width: 100%;'><input attid=" + VIS.Utility.Util.getValueOfInt(ds.tables[0].rows[i].cells["m_attribute_id"]) + " class='VA005-checkboxonleftdiv' type='checkbox' style='float: left;'></div>"
+            //        //                 //+ "<label id='" + $self.windowNo + "lableidofdivboxes' style='word-break:break-word;line-height:20px;cursor:pointer;font-weight:normal'>" + ds.tables[0].rows[i].cells["name"] + "</label>"
+            //        //                  + "<label id='" + $self.windowNo + "lableidofdivboxes' style='word-break:break-word;line-height: 44px;cursor:pointer;font-weight:normal;float: left;text-align: center;width: 100%;'>" + ds.tables[0].rows[i].cells["name"] + "</label>"
+            //        //         + "</div>";
 
-                // $attributedivleftdragdrop.find('.VA005-innerattrb').append($(str));
-                $attributedivleftdragdrop.append($(str));
+            //        str += getTemaplate(VIS.Utility.Util.getValueOfInt(ds.tables[0].rows[i].cells["m_attribute_id"]), VIS.Utility.encodeText(ds.tables[0].rows[i].cells["name"]), ds.tables[0].rows[i].cells["isactive"]);
 
-                //getidoflablefordrop = $attributedivleftdragdrop.find("#" + $self.windowNo + "lableidofdivboxes");
-
-                //$attributedivleftdragdrop.find('.VA005-attributediv').on("click", attributeDivClicked);
-                $attributedivleftdragdrop.find('.VA005-attributediv').on(VIS.Events.onTouchStartOrClick, attributeDivClicked);
-
-                //*** check box for multiple selction delete....
-                //$attributedivleftdragdrop.find('.VA005-checkboxonleftdiv').on("click", function (evt) {
-                //    checkboxclickformultyselect(evt, $(this));
-                //});
-
-                // Done by shifali on 30th july to drag multiple attributes
-                $attributedivleftdragdrop.find('.VA005-attributediv').draggable({
-                    cursorAt: { left: -10, top: -10 },
-                    helper: function () {
-                        // Getting attributes which needs to be dragged
-                        var selected = $($attributedivleftdragdrop.find('.VA005-attributediv div').find("input:checked")).parent().parent();
-                        if (selected.length === 0) {
-                            selected = $(this);
-                        }
-                        var container = $('<div/>').attr('id', 'draggingContainer');
-                        container.append(selected.clone());
-                        return container;
-                    },
-                    start: function (event, ui) {
-                        $dragevents = true;
-                    },
-                    drag: function (event, ui) {
-                    },
-
-                    stop: function () {
-                        $dragevents = false;
-                    }
-                });
-
-
-                //$attributedivleftdragdrop.find('.VA005-attributediv').draggable({
-                //    //zIndex: 2,
-                //    revert: "invalid",
-                //    helper: "clone",
-                //    containment: $root,
-                //    start: function (event, ui) {
-                //        debugger;
-                //        //$($($(this).find('.k-state-hover').parents('li')[0]).find('.k-state-hover')).css('z-index', '99999');
-                //        //$($divLeftTree.find('.va005-parentss').parent()).css('z-index', '99999');
-
-                //            //attrlabelvalue = $(this).find('label');
-                //            //draggabledivid = $(this).attr("data-id");
-
-
-                //        for (var j = 0; j < selectedIds.length; j++) {
-                //            attrlabelvalue = $($($attributedivleftdragdrop.find("[data-id='" + selectedIds[j] + "']"))[0]).find('label');
-                //            draggabledivid = $($($attributedivleftdragdrop.find("[data-id='" + selectedIds[j] + "']"))[0]).attr("data-id");
-                //            $dragevents = true;
-                //        }
-                //    },
-                //    drag: function (event, ui) {
-                //        if ($(this).data('isactive') == 'N') {
-                //            $dragevents = false;
-                //            return false;
-                //        }
-                //    },
-
-                //    stop: function () {
-                //        $dragevents = false;
-                //    }
-                //    //hoverClass: function () {
-                //    //         
-                //    //        if ($(event.target).children().eq(1).find("a").data("dtype") != 1) {
-                //    //            return;
-                //    //        }
-                //    //        $(event.target).css("background-color", "red");
-                //    //    },                  
-
-
-                //});
+            //        //if (ds.tables[0].rows[i].cells["isactive"] == "N") {
+            //        //     
+            //        //    return
+            //        //}
+            //    }
 
 
 
+            // $attributedivleftdragdrop.find('.VA005-innerattrb').append($(str));
+            //$attributedivleftdragdrop.append($(str));
 
-                //       $divLeftTree.data("kendoTreeView").wrapper.off("mouseenter mouseleave").find(".k-item > div:only-child .k-in") .on({
-                //           mouseenter: function () {  $(this).addClass("k-state-hover"); },
-                //    mouseleave: function () { $(this).removeClass("k-state-hover"); }
-                //});
+            ////getidoflablefordrop = $attributedivleftdragdrop.find("#" + $self.windowNo + "lableidofdivboxes");
+
+            ////$attributedivleftdragdrop.find('.VA005-attributediv').on("click", attributeDivClicked);
+            //$attributedivleftdragdrop.find('.VA005-attributediv').on(VIS.Events.onTouchStartOrClick, attributeDivClicked);
+
+            ////*** check box for multiple selction delete....
+            ////$attributedivleftdragdrop.find('.VA005-checkboxonleftdiv').on("click", function (evt) {
+            ////    checkboxclickformultyselect(evt, $(this));
+            ////});
+
+            //// Done by shifali on 30th july to drag multiple attributes
+            //$attributedivleftdragdrop.find('.VA005-attributediv').draggable({
+            //    cursorAt: { left: -10, top: -10 },
+            //    helper: function () {
+            //        // Getting attributes which needs to be dragged
+            //        var selected = $($attributedivleftdragdrop.find('.VA005-attributediv div').find("input:checked")).parent().parent();
+            //        if (selected.length === 0) {
+            //            selected = $(this);
+            //        }
+            //        var container = $('<div/>').attr('id', 'draggingContainer');
+            //        container.append(selected.clone());
+            //        return container;
+            //    },
+            //    start: function (event, ui) {
+            //        $dragevents = true;
+            //    },
+            //    drag: function (event, ui) {
+            //    },
+
+            //    stop: function () {
+            //        $dragevents = false;
+            //    }
+            //});
+
+
+            //$attributedivleftdragdrop.find('.VA005-attributediv').draggable({
+            //    //zIndex: 2,
+            //    revert: "invalid",
+            //    helper: "clone",
+            //    containment: $root,
+            //    start: function (event, ui) {
+            //        debugger;
+            //        //$($($(this).find('.k-state-hover').parents('li')[0]).find('.k-state-hover')).css('z-index', '99999');
+            //        //$($divLeftTree.find('.va005-parentss').parent()).css('z-index', '99999');
+
+            //            //attrlabelvalue = $(this).find('label');
+            //            //draggabledivid = $(this).attr("data-id");
+
+
+            //        for (var j = 0; j < selectedIds.length; j++) {
+            //            attrlabelvalue = $($($attributedivleftdragdrop.find("[data-id='" + selectedIds[j] + "']"))[0]).find('label');
+            //            draggabledivid = $($($attributedivleftdragdrop.find("[data-id='" + selectedIds[j] + "']"))[0]).attr("data-id");
+            //            $dragevents = true;
+            //        }
+            //    },
+            //    drag: function (event, ui) {
+            //        if ($(this).data('isactive') == 'N') {
+            //            $dragevents = false;
+            //            return false;
+            //        }
+            //    },
+
+            //    stop: function () {
+            //        $dragevents = false;
+            //    }
+            //    //hoverClass: function () {
+            //    //         
+            //    //        if ($(event.target).children().eq(1).find("a").data("dtype") != 1) {
+            //    //            return;
+            //    //        }
+            //    //        $(event.target).css("background-color", "red");
+            //    //    },                  
+
+
+            //});
 
 
 
 
-                //$divLeftTree.kendoDropTarget({
-                //    drop: function (e)
-                //    {
-                //        if ($(event.target).children().eq(1).find("a").data("dtype") != 1) {
-                //                                return;
-                //                            }
-                //                            $(event.target).css("background-color", "red");
-                //    }
-                //});
+            //       $divLeftTree.data("kendoTreeView").wrapper.off("mouseenter mouseleave").find(".k-item > div:only-child .k-in") .on({
+            //           mouseenter: function () {  $(this).addClass("k-state-hover"); },
+            //    mouseleave: function () { $(this).removeClass("k-state-hover"); }
+            //});
 
 
-                //$divLeftTree.find(".va005_mouseover").mouseover(function () {
-                //    if ($(event.target).children().eq(1).find("a").data("dtype") != 1) {
-                //                    return;
-                //                }
-                //                $(event.target).css("background-color", "red");
-                //})
 
 
-            }
+            //$divLeftTree.kendoDropTarget({
+            //    drop: function (e)
+            //    {
+            //        if ($(event.target).children().eq(1).find("a").data("dtype") != 1) {
+            //                                return;
+            //                            }
+            //                            $(event.target).css("background-color", "red");
+            //    }
+            //});
+
+
+            //$divLeftTree.find(".va005_mouseover").mouseover(function () {
+            //    if ($(event.target).children().eq(1).find("a").data("dtype") != 1) {
+            //                    return;
+            //                }
+            //                $(event.target).css("background-color", "red");
+            //})
+
+
+            //}
         };
 
 
+        function AttributeAppendCatCallBack(dr) {
+            var str = '';
+            if (dr.length > 0) {
+                for (var i = 0; i < dr.length; i++) {
+                    str += getTemaplate(VIS.Utility.Util.getValueOfInt(dr[i].m_attribute_id), VIS.Utility.encodeText(dr[i].name), dr[i].isactive);
+                }
+            }
+
+            $attributedivleftdragdrop.append($(str));
+
+            //getidoflablefordrop = $attributedivleftdragdrop.find("#" + $self.windowNo + "lableidofdivboxes");
+
+            //$attributedivleftdragdrop.find('.VA005-attributediv').on("click", attributeDivClicked);
+            $attributedivleftdragdrop.find('.VA005-attributediv').on(VIS.Events.onTouchStartOrClick, attributeDivClicked);
+
+            //*** check box for multiple selction delete....
+            //$attributedivleftdragdrop.find('.VA005-checkboxonleftdiv').on("click", function (evt) {
+            //    checkboxclickformultyselect(evt, $(this));
+            //});
+
+            // Done by shifali on 30th july to drag multiple attributes
+            $attributedivleftdragdrop.find('.VA005-attributediv').draggable({
+                cursorAt: { left: -10, top: -10 },
+                helper: function () {
+                    // Getting attributes which needs to be dragged
+                    var selected = $($attributedivleftdragdrop.find('.VA005-attributediv div').find("input:checked")).parent().parent();
+                    if (selected.length === 0) {
+                        selected = $(this);
+                    }
+                    var container = $('<div/>').attr('id', 'draggingContainer');
+                    container.append(selected.clone());
+                    return container;
+                },
+                start: function (event, ui) {
+                    $dragevents = true;
+                },
+                drag: function (event, ui) {
+                },
+
+                stop: function () {
+                    $dragevents = false;
+                }
+
+            });
+
+        };
 
         function DropItem() {
             $divid.find(".k-in").droppable({
@@ -492,11 +540,15 @@
                         attributeidbydivboxes.push($($($attributedivleftdragdrop.find("[data-id='" + selectedIds[i] + "']"))[0]).attr("data-id"));
                     }
                     attributesetidbydivboxes = $(this).children().eq(0).attr('NID');
-                    saveAttribute(attributeidbydivboxes, attributesetidbydivboxes);
-                    // loadTreeData();
-                    //}, 200);
-                    attributeidbydivboxes.length = [];
-                    //$bsyDiv[0].style.visibility = "hidden";
+                    if (attributeidbydivboxes.length > 0) {
+                        saveAttribute(attributeidbydivboxes, attributesetidbydivboxes);
+                        // loadTreeData();
+                        //}, 200);
+                        attributeidbydivboxes = [];
+                    }
+                    else {
+                        $bsyDiv[0].style.visibility = "hidden";
+                    }
                 }
             });
         };
@@ -824,16 +876,52 @@
 
 
         function saveAttributeonaddplusbtn() {
+            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/GetAttributeCount", "", AttributeCountAddCallBack);
 
-            //var sql = "select count(name) as Name from m_attribute where isactive='Y'";
+
+            //var sql = "SELECT count(name) as Name FROM M_Attribute WHERE isactive='Y'";
+            //sql = VIS.MRole.addAccessSQL(sql, "M_Attribute", true, true);
             //var ds = VIS.DB.executeDataSet(sql, null, null);
             //findnamecount = ds.tables[0].rows[0].cells["name"] + 1;
 
+            //var valuesendtoctrl = {
+            //    name: VIS.Msg.getMsg("VA005_Attribute") + " " + findnamecount,
+            //    isactivefield: true,
+            //    mandatory: false,
+            //    istanceattribute: true
+            //    // name: findnamecount
+            //    //description: VIS.Utility.encodeText($textdesc.val().toString().trim()),
+            //    //attributetype: $cmbselect.val(),
 
-            var sql = "SELECT count(name) as Name FROM M_Attribute WHERE isactive='Y'";
-            sql = VIS.MRole.addAccessSQL(sql, "M_Attribute", true, true);
-            var ds = VIS.DB.executeDataSet(sql, null, null);
-            findnamecount = ds.tables[0].rows[0].cells["name"] + 1;
+            //    //searchkey: VIS.Utility.encodeText($textsearchdiv.val().toString().trim()),
+            //    //secname: VIS.Utility.encodeText($textnamediv.val().toString().trim()),
+            //    //ID: selectedAttributeID
+            //};
+
+            //$.ajax({
+            //    url: VIS.Application.contextUrl + "Attribute/SaveAttributemodel",
+            //    type: 'Post',
+            //    async: false,
+            //    datatype: "Json",
+            //    data: valuesendtoctrl,
+            //    success: function (data) {
+            //        selectedAttributeID = JSON.parse(data);
+            //        $self.getidfromdivboxesselect = selectedAttributeID + "_2_" + $self.windowNo;
+
+            //    },
+            //   error: function (data) {
+            //        //alert(data)
+            //    },
+            //});
+            // attributeAppendDiv();
+            //attributeidgetonokclick = selectedAttributeID;
+        };
+
+        function AttributeCountAddCallBack(dr) {
+
+            if (dr != null) {
+                findnamecount = dr['value'] + 1;
+            }
 
             var valuesendtoctrl = {
                 name: VIS.Msg.getMsg("VA005_Attribute") + " " + findnamecount,
@@ -848,7 +936,6 @@
                 //secname: VIS.Utility.encodeText($textnamediv.val().toString().trim()),
                 //ID: selectedAttributeID
             };
-
             $.ajax({
                 url: VIS.Application.contextUrl + "Attribute/SaveAttributemodel",
                 type: 'Post',
@@ -864,9 +951,8 @@
                     //alert(data)
                 },
             });
-            //attributeAppendDiv();
-            // attributeidgetonokclick = selectedAttributeID;
-        };
+        }
+
 
         this.attributevallueonattributeclick = function (selectedAttributeID) {
             debugger;
@@ -877,45 +963,60 @@
                 $attributevaluedivleftdragdrop.empty();
                 //var sql = "SELECT M_ATTRIBUTEVALUE_ID, name, M_ATTRIBUTE_ID FROM m_attributevalue where M_ATTRIBUTE_ID=" + selectedAttributeID;
                 // Added "ORDER BY CLAUSE" by Shifali on 16th July 2020
-                var sql = "SELECT M_ATTRIBUTEVALUE_ID, name, M_ATTRIBUTE_ID FROM m_attributevalue WHERE M_ATTRIBUTE_ID=" + selectedAttributeID + " ORDER BY M_ATTRIBUTEVALUE_ID ";
 
-                //sql = VIS.MRole.addAccessSQL(sql, "M_AttributeValue", true, true);
-                //    var ds = VIS.DB.executeDataSet(sql, null, null);
+                VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/GetAttributeValue", { "SelectAttributeID": selectedAttributeID }, AttributeValueOnClickCallBack);
+
+                //var sql = "SELECT M_ATTRIBUTEVALUE_ID, name, M_ATTRIBUTE_ID FROM m_attributevalue WHERE M_ATTRIBUTE_ID=" + selectedAttributeID + " ORDER BY M_ATTRIBUTEVALUE_ID ";
+
+                // sql = VIS.MRole.addAccessSQL(sql, "M_AttributeValue", true, true);
+                // var ds = VIS.DB.executeDataSet(sql, null, null);
 
 
-                var ds = VIS.DB.executeDataSet(sql, null, null);
+                //var ds = VIS.DB.executeDataSet(sql, null, null);
 
-                if (ds != null) {
-                    var str = '';
-                    for (var i = 0; i < ds.tables[0].rows.length; i++) {
-                        str += "<div data-id='" + VIS.Utility.Util.getValueOfInt(ds.tables[0].rows[i].cells["m_attributevalue_id"]) + "' class='VA005-attributediv  VA005-divboxtarget-design-hover'>"
-                            //+ "<label class='VA005-textoverfllowhidden1' title='" + VIS.Utility.encodeText(ds.tables[0].rows[i].cells["name"]) + "'>" + VIS.Utility.encodeText(ds.tables[0].rows[i].cells["name"]) + "</label>"
-                            + "<label class='VA005-textoverfllowhidden2' title='" + VIS.Utility.encodeText(ds.tables[0].rows[i].cells["name"]) + "'>" + VIS.Utility.encodeText(ds.tables[0].rows[i].cells["name"]) + "</label>"
-                            + "</div>";
-                    }
-                    $attributevaluedivleftdragdrop.append($(str));
+                //if (ds != null) {
+                //    var str = '';
+                //    for (var i = 0; i < ds.tables[0].rows.length; i++) {
+                //     str += "<div data-id='" + VIS.Utility.Util.getValueOfInt(ds.tables[0].rows[i].cells["m_attributevalue_id"]) + "' class='VA005-attributediv  VA005-divboxtarget-design-hover'>"
+                //           //+ "<label class='VA005-textoverfllowhidden1' title='" + VIS.Utility.encodeText(ds.tables[0].rows[i].cells["name"]) + "'>" + VIS.Utility.encodeText(ds.tables[0].rows[i].cells["name"]) + "</label>"
+                //            + "<label class='VA005-textoverfllowhidden2' title='" + VIS.Utility.encodeText(ds.tables[0].rows[i].cells["name"]) + "'>" + VIS.Utility.encodeText(ds.tables[0].rows[i].cells["name"]) + "</label>"
+                //            + "</div>";
+                //    }
+                //    $attributevaluedivleftdragdrop.append($(str));
 
-                    // $attributevaluedivleftdragdrop.find('.VA005-attributediv').on("click", attributeValueDivClicked);
-                    //$attributevaluedivleftdragdrop.find('.VA005-attributediv').draggable({
-                    //    revert: "invalid",
-                    //    helper: "clone",
-                    //    containment: $root,
-                    //});
+                //    // $attributevaluedivleftdragdrop.find('.VA005-attributediv').on("click", attributeValueDivClicked);
+                //    //$attributevaluedivleftdragdrop.find('.VA005-attributediv').draggable({
+                //    //    revert: "invalid",
+                //    //    helper: "clone",
+                //    //    containment: $root,
+                //    //});
 
-                    //$divid.droppable({
-                    //    drop: function (event, ui) {
-                    //         
-                    //        attributeidbydivboxes = ($(ui.draggable)).data('id');
-                    //        attributesetidbydivboxes = ($(($($(this).find('.k-state-hover').parents('li')[0])).find('a')[0])).data('nodeid');
+                //    //$divid.droppable({
+                //    //    drop: function (event, ui) {
+                //    //         
+                //    //        attributeidbydivboxes = ($(ui.draggable)).data('id');
+                //    //        attributesetidbydivboxes = ($(($($(this).find('.k-state-hover').parents('li')[0])).find('a')[0])).data('nodeid');
 
-                    //        saveAttribute(attributeidbydivboxes, attributesetidbydivboxes);
-                    //        loadTreeData();
-                    //    }
-                    //});
-                }
+                //    //        saveAttribute(attributeidbydivboxes, attributesetidbydivboxes);
+                //    //        loadTreeData();
+                //    //    }
+                //    //});
+                // }
             }
         }
 
+        function AttributeValueOnClickCallBack(dr) {
+            var str = '';
+            if (dr.length > 0) {
+                for (var i = 0; i < dr.length; i++) {
+                    str += "<div data-id='" + VIS.Utility.Util.getValueOfInt(dr[i].m_attributevalue_id) + "' class='VA005-attributediv  VA005-divboxtarget-design-hover'>"
+                        //+ "<label class='VA005-textoverfllowhidden1' title='" + VIS.Utility.encodeText(ds.tables[0].rows[i].cells["name"]) + "'>" + VIS.Utility.encodeText(ds.tables[0].rows[i].cells["name"]) + "</label>"
+                        + "<label class='VA005-textoverfllowhidden2' title='" + VIS.Utility.encodeText(dr[i].name) + "'>" + VIS.Utility.encodeText(dr[i].name) + "</label>"
+                        + "</div>";
+                }
+            }
+            $attributevaluedivleftdragdrop.append($(str));
+        };
 
 
 
@@ -1035,18 +1136,18 @@
                     getidfromattboxexforaddnode = selectedAttributeID;
 
                     if (target.prop("checked")) {
-                            selectedIds.push(selectedAttributeID);
-                            target.parent().parent().addClass('VA005-divboxtarget-design');
-                            if (selectedIds.length == 1) {
-                                objectcall();
-                                $attributeobject.cmboonclick();
-                                $self.attributevallueonattributeclick(selectedAttributeID);
-                                $editattributeboxes.removeClass("VA005-disabled");
-                                $delattributeboxes.removeClass("VA005-disabled");
-                            }
-                            else {
-                                $attributevaluedivleftdragdrop.empty();
-                            }
+                        selectedIds.push(selectedAttributeID);
+                        target.parent().parent().addClass('VA005-divboxtarget-design');
+                        if (selectedIds.length == 1) {
+                            objectcall();
+                            $attributeobject.cmboonclick();
+                            $self.attributevallueonattributeclick(selectedAttributeID);
+                            $editattributeboxes.removeClass("VA005-disabled");
+                            $delattributeboxes.removeClass("VA005-disabled");
+                        }
+                        else {
+                            $attributevaluedivleftdragdrop.empty();
+                        }
                     }
                     else {
                         if (selectedIds.length == 1) {
@@ -2002,10 +2103,15 @@
 
                 if (lotidget != "null" || serialidget != "null") {
                     if ($addatttextlot.is(":checked")) {
-                        var sql1 = "select ad_window_id from ad_window where name='Lot Control'";
-                        var ds = VIS.DB.executeDataSet(sql1, null, null);
 
-                        var windowid = VIS.Utility.Util.getValueOfInt(ds.tables[0].rows[0].cells["ad_window_id"]);
+                        var windowid = VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/GetWindow_ID", { "Control": 'Lot Control' });
+
+                        //var windowid = VIS.Utility.Util.getValueOfInt(dr[i].ad_window_id);
+                        //var sql1 = "select ad_window_id from ad_window where name='Lot Control'";
+                        //var ds = VIS.DB.executeDataSet(sql1, null, null);
+
+                        //var windowid = VIS.Utility.Util.getValueOfInt(ds.tables[0].rows[0].cells["ad_window_id"]);
+
 
                         var zoomQuery = new VIS.Query();
                         zoomQuery.addRestriction("M_LotCtl_ID", VIS.Query.prototype.EQUAL, lotidget);
@@ -2013,10 +2119,14 @@
                     }
 
                     if ($addatttextserial.is(":checked")) {
-                        var sql1 = "select ad_window_id from ad_window where name='Serial No Control'";
-                        var ds = VIS.DB.executeDataSet(sql1, null, null);
 
-                        var windowid = VIS.Utility.Util.getValueOfInt(ds.tables[0].rows[0].cells["ad_window_id"]);
+                        var windowid = VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/GetWindow_ID", { "Control": 'Serial No Control' });
+
+                        // var windowid = VIS.Utility.Util.getValueOfInt(dr["ad_window_id"]);
+                        //var sql1 = "select ad_window_id from ad_window where name='Serial No Control'";
+                        //var ds = VIS.DB.executeDataSet(sql1, null, null);
+
+                        //var windowid = VIS.Utility.Util.getValueOfInt(ds.tables[0].rows[0].cells["ad_window_id"]);
 
                         var zoomQuery = new VIS.Query();
                         zoomQuery.addRestriction("M_SerNoCtl_ID", VIS.Query.prototype.EQUAL, serialidget);
@@ -2028,6 +2138,7 @@
                     //alert(VIS.Msg.getMsg("VA005_Selectlotorserialcheck"));
                 }
             });
+
 
             $cmbSerialDropdown.on("change", function () {
 
@@ -2090,20 +2201,33 @@
         //*** Get mandatory type data..
         function getMendatoryTypeData() {
             $cmbattsectmandtype.empty();
-            var sql = "SELECT  AD_Ref_list.Name, AD_Ref_list.value" +
-                " FROM AD_Ref_list" +
-                " JOIN AD_Reference" +
-                " ON AD_Ref_List.AD_Reference_ID=AD_Reference.AD_Reference_ID" +
-                " WHERE AD_Reference.Name='M_AttributeSet MandatoryType' AND ad_ref_list.isactive='Y'";
-            var ds = VIS.DB.executeReader(sql.toString(), null);
-            if (ds != null) {
-                var key, value = null;
-                while (ds.read()) {
-                    value = ds.getString(0);
-                    key = ds.getString(1);
-                    $cmbattsectmandtype.append($("<Option value=" + key + ">" + value + "</option>"));
+            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/GetMandatoryType", "", MandatoryTypeCallBack);
+
+            //var sql = "SELECT  AD_Ref_list.Name, AD_Ref_list.value" +
+            //    " FROM AD_Ref_list" +
+            //    " JOIN AD_Reference" +
+            //    " ON AD_Ref_List.AD_Reference_ID=AD_Reference.AD_Reference_ID" +
+            //    " WHERE AD_Reference.Name='M_AttributeSet MandatoryType' AND ad_ref_list.isactive='Y'";
+            //var ds = VIS.DB.executeReader(sql.toString(), null);
+            //if (ds != null) {
+            //    var key, value = null;
+            //    while (ds.read()) {
+            //        value = ds.getString(0);
+            //        key = ds.getString(1);
+            //        $cmbattsectmandtype.append($("<Option value=" + key + ">" + value + "</option>"));
+            //    }
+            //    ds.close();
+            //}
+        };
+
+        function MandatoryTypeCallBack(dr) {
+            if (dr != null) {
+                var Key, Name = null;
+                for (var i = 0; i < dr.length; i++) {
+                    Key = dr[i].Key;
+                    Name = dr[i].Name;
+                    $cmbattsectmandtype.append($("<Option value=" + Key + ">" + Name + "</option>"));
                 }
-                ds.close();
             }
         };
 
@@ -2111,41 +2235,71 @@
         function lotDataDropdown() {
 
             $cmbSerialDropdown.empty();
-            var sql = "SELECT M_LotCtl_id,Name FROM M_LotCtl WHERE isActive='Y'";
 
-            sql = VIS.MRole.addAccessSQL(sql, "M_LotCtl", true, true);
+            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/GetLotData", "", LotDataCallBack);
 
-            var ds = VIS.DB.executeReader(sql.toString(), null);
-            if (ds != null) {
-                var key, value = null;
+            // var sql = "SELECT M_LotCtl_id,Name FROM M_LotCtl WHERE isActive='Y'";
+
+            //sql = VIS.MRole.addAccessSQL(sql, "M_LotCtl", true, true);
+
+            //var ds = VIS.DB.executeReader(sql.toString(), null);
+            //if (ds != null) {
+            //    var key, value = null;
+            //    $cmbSerialDropdown.append($("<Option value=''> </option>"));
+            //    while (ds.read()) {
+            //        value = ds.getString(1);
+            //        key = VIS.Utility.Util.getValueOfInt(ds.getString(0));
+            //        $cmbSerialDropdown.append($("<Option value=" + key + ">" + VIS.Utility.encodeText(value) + "</option>"));
+            //    }
+            //    ds.close();
+            //}
+        };
+        function LotDataCallBack(dr) {
+            if (dr != null) {
+                var Key, Name = null;
                 $cmbSerialDropdown.append($("<Option value=''> </option>"));
-                while (ds.read()) {
-                    value = ds.getString(1);
-                    key = VIS.Utility.Util.getValueOfInt(ds.getString(0));
-                    $cmbSerialDropdown.append($("<Option value=" + key + ">" + VIS.Utility.encodeText(value) + "</option>"));
+                for (var i = 0; i < dr.length; i++) {
+                    Key = dr[i].Key;
+                    Name = dr[i].Name;
+                    $cmbSerialDropdown.append($("<Option value=" + Key + ">" + VIS.Utility.encodeText(Name) + "</option>"));
                 }
-                ds.close();
             }
         };
+
 
         //*** Serial data dropdown
         function serialDatadDopdown() {
 
             $cmbSerialDropdown.empty();
-            var sql = "SELECT M_SerNoCtl_id,Name FROM M_SerNoCtl WHERE isActive='Y'";
-            sql = VIS.MRole.addAccessSQL(sql, "M_SerNoCtl", true, true);
-            var ds = VIS.DB.executeReader(sql.toString(), null);
-            if (ds != null) {
-                var key, value = null;
+            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/GetSerialData", "", SerialDataCallBack);
+
+
+            //var sql = "SELECT M_SerNoCtl_id,Name FROM M_SerNoCtl WHERE isActive='Y'";
+            //sql = VIS.MRole.addAccessSQL(sql, "M_SerNoCtl", true, true);
+            //var ds = VIS.DB.executeReader(sql.toString(), null);
+            //if (ds != null) {
+            //    var key, value = null;
+            //    $cmbSerialDropdown.append($("<Option value=''> </option>"));
+            //    while (ds.read()) {
+            //        value = ds.getString(1);
+            //        key = VIS.Utility.Util.getValueOfInt(ds.getString(0));
+            //        $cmbSerialDropdown.append($("<Option value=" + key + ">" + VIS.Utility.encodeText(value) + "</option>"));
+            //    }
+            //    ds.close();
+            //}
+        };
+        function SerialDataCallBack(dr) {
+            if (dr != null) {
+                var Key, Name = null;
                 $cmbSerialDropdown.append($("<Option value=''> </option>"));
-                while (ds.read()) {
-                    value = ds.getString(1);
-                    key = VIS.Utility.Util.getValueOfInt(ds.getString(0));
-                    $cmbSerialDropdown.append($("<Option value=" + key + ">" + VIS.Utility.encodeText(value) + "</option>"));
+                for (var i = 0; i < dr.length; i++) {
+                    Key = dr[i].Key;
+                    Name = dr[i].Name;
+                    $cmbSerialDropdown.append($("<Option value=" + Key + ">" + VIS.Utility.encodeText(Name) + "</option>"));
                 }
-                ds.close();
             }
         };
+
 
 
         //*** Save attributeset value..
@@ -2204,19 +2358,89 @@
         function editAttributeSet(nodeID) {
 
             cleartext();
-            var sql = "Select NAME,DESCRIPTION,MANDATORYTYPE,ISGUARANTEEDATE,ISGUARANTEEDATEMANDATORY,M_LOTCTL_ID,M_SERNOCTL_ID,IsLot,IsSerNo FROM M_AttributeSet WHERE M_Attributeset_ID=" + nodeID;
-            // sql = VIS.MRole.addAccessSQL(sql, "M_AttributeSet", true, true);            
-            var ds = VIS.DB.executeDataSet(sql, null, null);
-            if (ds != null) {
-                if (ds.tables[0].rows.length > 0) {
-                    for (var i = 0; i < ds.tables[0].rows.length; i++) {
-                        $addatttextname.val(ds.tables[0].rows[0].cells["name"].toString().trim());
-                        //$$addatttextdes.val(ds.tables[0].rows[0].cells["description"].toString().trim());
-                        $$addatttextdes.val(ds.tables[0].rows[0].cells["description"]);
-                        $cmbattsectmandtype.val(ds.tables[0].rows[0].cells["mandatorytype"]);
-                        $addatttextexpdate.val(ds.tables[0].rows[0].cells["isguaranteedate"]);
+            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/GetAttributeSetData", { "NodeID": nodeID }, AttributeSetDataCallBack);
 
-                        if (ds.tables[0].rows[0].cells["isguaranteedate"] == "Y") {
+            //var sql = "Select NAME,DESCRIPTION,MANDATORYTYPE,ISGUARANTEEDATE,ISGUARANTEEDATEMANDATORY,M_LOTCTL_ID,M_SERNOCTL_ID,IsLot,IsSerNo FROM M_AttributeSet WHERE M_Attributeset_ID=" + nodeID;
+            // sql = VIS.MRole.addAccessSQL(sql, "M_AttributeSet", true, true);            
+            //var ds = VIS.DB.executeDataSet(sql, null, null);
+            //if (ds != null) {
+            //    if (ds.tables[0].rows.length > 0) {
+            //        for (var i = 0; i < ds.tables[0].rows.length; i++) {
+            //            $addatttextname.val(ds.tables[0].rows[0].cells["name"].toString().trim());
+            //            //$$addatttextdes.val(ds.tables[0].rows[0].cells["description"].toString().trim());
+            //            $$addatttextdes.val(ds.tables[0].rows[0].cells["description"]);
+            //            $cmbattsectmandtype.val(ds.tables[0].rows[0].cells["mandatorytype"]);
+            //            $addatttextexpdate.val(ds.tables[0].rows[0].cells["isguaranteedate"]);
+
+            //            if (ds.tables[0].rows[0].cells["isguaranteedate"] == "Y") {
+            //                $addatttextexpdate.prop("checked", true);
+            //                $mandatoryexpdate.prop('disabled', false);
+
+            //            }
+            //            else {
+            //                $addatttextexpdate.prop("checked", false);
+            //            }
+
+            //            $mandatoryexpdate.val(ds.tables[0].rows[0].cells["isguaranteedatemandatory"]);
+
+            //            if (ds.tables[0].rows[0].cells["isguaranteedatemandatory"] == "Y") {
+            //                $mandatoryexpdate.attr('disabled', false);
+            //                $mandatoryexpdate.prop('checked', true);
+            //            }
+            //            else {
+            //                $mandatoryexpdate.prop('checked', false);
+            //            }
+
+            //            $addatttextlot.val(ds.tables[0].rows[0].cells["m_lotctl_id"]);
+
+            //            if (ds.tables[0].rows[0].cells["islot"] == 'Y') {
+            //                $addatttextlot.prop("checked", true);
+            //                //$addatttextlot.trigger("click");
+            //                lotDataDropdown();
+            //                $cmbSerialDropdown.val(ds.tables[0].rows[0].cells["m_lotctl_id"]);
+            //                lotidget = ds.tables[0].rows[0].cells["m_lotctl_id"];
+            //            }
+            //            else {
+            //                $addatttextlot.prop("checked", false);
+            //            }
+
+            //            $addatttextserial.val(ds.tables[0].rows[0].cells["m_sernoctl_id"]);
+
+            //            if (ds.tables[0].rows[0].cells["isserno"] == 'Y') {
+            //                $addatttextserial.prop("checked", true);
+            //                //$addatttextserial.trigger("click");
+            //                serialDatadDopdown();
+            //                $cmbSerialDropdown.val(ds.tables[0].rows[0].cells["m_sernoctl_id"]);
+            //                serialidget = ds.tables[0].rows[0].cells["m_sernoctl_id"];
+            //            }
+            //            else {
+            //                $addatttextserial.prop("checked", false);
+            //            }
+            //        }
+            //    }
+            //}
+
+            //$addattaddbtn.prop('disabled', true);
+            //if ($addatttextname.val().trim().length <= 0) {
+            //    //$addatttextname.css("background-color", "pink");
+            //    $addatttextname.addClass('vis-ev-col-mandatory');
+            //}
+            //else {
+            //    //$addatttextname.css("background-color", "white");
+            //    $addatttextname.removeClass('vis-ev-col-mandatory');
+            //}
+
+        };
+        function AttributeSetDataCallBack(dr) {
+            if (dr != null) {
+                if (dr.length > 0) {
+                    for (var i = 0; i < dr.length; i++) {
+                        $addatttextname.val(dr[i].name);
+                        $$addatttextdes.val(dr[i].description);
+                        $cmbattsectmandtype.val(dr[i].mandatorytype);
+                        $addatttextexpdate.val(dr[i].isguaranteedate);
+
+                        if (dr[i].isguaranteedate == "Y") {
                             $addatttextexpdate.prop("checked", true);
                             $mandatoryexpdate.prop('disabled', false);
 
@@ -2225,9 +2449,9 @@
                             $addatttextexpdate.prop("checked", false);
                         }
 
-                        $mandatoryexpdate.val(ds.tables[0].rows[0].cells["isguaranteedatemandatory"]);
+                        $mandatoryexpdate.val(dr[i].isguaranteedatemandatory);
 
-                        if (ds.tables[0].rows[0].cells["isguaranteedatemandatory"] == "Y") {
+                        if (dr[i].isguaranteedatemandatory == "Y") {
                             $mandatoryexpdate.attr('disabled', false);
                             $mandatoryexpdate.prop('checked', true);
                         }
@@ -2235,27 +2459,27 @@
                             $mandatoryexpdate.prop('checked', false);
                         }
 
-                        $addatttextlot.val(ds.tables[0].rows[0].cells["m_lotctl_id"]);
+                        $addatttextlot.val(dr[i].m_lotctl_id);
 
-                        if (ds.tables[0].rows[0].cells["islot"] == 'Y') {
+                        if (dr[i].islot == 'Y') {
                             $addatttextlot.prop("checked", true);
                             //$addatttextlot.trigger("click");
                             lotDataDropdown();
-                            $cmbSerialDropdown.val(ds.tables[0].rows[0].cells["m_lotctl_id"]);
-                            lotidget = ds.tables[0].rows[0].cells["m_lotctl_id"];
+                            $cmbSerialDropdown.val(dr[i].lotctl_id);
+                            lotidget = dr[i].m_lotctl_id;
                         }
                         else {
                             $addatttextlot.prop("checked", false);
                         }
 
-                        $addatttextserial.val(ds.tables[0].rows[0].cells["m_sernoctl_id"]);
+                        $addatttextserial.val(dr[i].m_sernoctl_id);
 
-                        if (ds.tables[0].rows[0].cells["isserno"] == 'Y') {
+                        if (dr[i].isserno == 'Y') {
                             $addatttextserial.prop("checked", true);
                             //$addatttextserial.trigger("click");
                             serialDatadDopdown();
-                            $cmbSerialDropdown.val(ds.tables[0].rows[0].cells["m_sernoctl_id"]);
-                            serialidget = ds.tables[0].rows[0].cells["m_sernoctl_id"];
+                            $cmbSerialDropdown.val(dr[i]._sernoctl_id);
+                            serialidget = dr[i].m_sernoctl_id;
                         }
                         else {
                             $addatttextserial.prop("checked", false);
@@ -2273,8 +2497,8 @@
                 //$addatttextname.css("background-color", "white");
                 $addatttextname.removeClass('vis-ev-col-mandatory');
             }
-
         };
+
 
         function createBusyIndicator() {
             $bsyDiv = $("<div>");
@@ -2592,9 +2816,10 @@
 
             var ParentID = $(this).data("parentid");
 
+            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/DeleteAttributeUse", { "AttributeID": attributeID, "ParentId": ParentID });
 
-            var sql = "DELETE FROM M_Attributeuse WHERE M_Attribute_ID=" + attributeID + " and M_Attributeset_id=" + ParentID;
-            var ds = VIS.DB.executeDataSet(sql, null, null);
+            //var sql = "DELETE FROM M_Attributeuse WHERE M_Attribute_ID=" + attributeID + " and M_Attributeset_id=" + ParentID;
+            //var ds = VIS.DB.executeDataSet(sql, null, null);
 
 
         }
@@ -2793,16 +3018,24 @@
 
         //*** Get related data on icon click...
         function linkAttSetAndAttribute(attributeID) {
+            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/LoadAttributeUse", { "AttributeID": attributeID }, AttributeUseCallBack);
 
-            var sql = "select mas.Name from m_attributeuse masu JOIN m_attributeset mas on masu.m_attributeset_id=mas.m_attributeset_id where masu.m_attribute_id=" + attributeID;
+            //var sql = "select mas.Name from m_attributeuse masu JOIN m_attributeset mas on masu.m_attributeset_id=mas.m_attributeset_id where masu.m_attribute_id=" + attributeID;
             //var ds = VIS.DB.executeDataSet(sql, null, null);
-            var ds = VIS.DB.executeReader(sql.toString(), null);
-            var $str = null;
-            if (ds != null) {
-                while (ds.read()) {
-                    $listid.append($("<li>" + VIS.Utility.Util.getValueOfString(ds.getString(0)) + "</li>"));
+            //var ds = VIS.DB.executeReader(sql.toString(), null);
+            //var $str = null;
+            //if (ds != null) {
+            //    while (ds.read()) {
+            //        $listid.append($("<li>" + VIS.Utility.Util.getValueOfString(ds.getString(0)) + "</li>"));
+            //    }
+            //    ds.close();
+            //}
+        };
+        function AttributeUseCallBack(dr) {
+            if (dr != null) {
+                for (var i = 0; i < dr.value.length; i++) {
+                    $listid.append($("<li>" + VIS.Utility.Util.getValueOfString(dr.value[i]) + "</li>"));
                 }
-                ds.close();
             }
         };
 
@@ -2921,18 +3154,33 @@
 
         function filedlength() {
 
-            var tableattributesetID = "select ad_table_id from ad_table where tablename='M_AttributeSet'";
-            var sqlname = "SELECT fieldlength FROM ad_column WHERE ad_table_id=(" + tableattributesetID + ") AND COLUMNNAME='Name'  AND isActive ='Y'";
-            var ds = VIS.DB.executeReader(sqlname.toString(), null);
-            columnLength = VIS.Utility.Util.getValueOfInt(ds.tables[0].rows[0].cells.fieldlength);
-            $addatttextname.attr("maxlength", columnLength);
+            //var tableattributesetID = "select ad_table_id from ad_table where tablename='M_AttributeSet'";
+            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/AttributeListing/GetFieldLength", { "TableID": 560, "COLUMNNAME": "'Name','Description'" }, FieldCallBack);
 
-            var sqldes = "SELECT fieldlength FROM ad_column WHERE ad_table_id=(" + tableattributesetID + ") AND COLUMNNAME ='Description'  AND isActive ='Y'";
-            var ds1 = VIS.DB.executeReader(sqldes.toString(), null);
-            columndesLength = VIS.Utility.Util.getValueOfInt(ds1.tables[0].rows[0].cells.fieldlength);
-            $$addatttextdes.attr("maxlength", columndesLength);
+            //var sqlname = "SELECT fieldlength FROM ad_column WHERE ad_table_id=(" + tableattributesetID + ") AND COLUMNNAME='Name'  AND isActive ='Y'";
+            // var ds = VIS.DB.executeReader(sqlname.toString(), null);
+            //columnLength = VIS.Utility.Util.getValueOfInt(ds.tables[0].rows[0].cells.fieldlength);
+            //$addatttextname.attr("maxlength", columnLength);
+
+            //var sqldes = "SELECT fieldlength FROM ad_column WHERE ad_table_id=(" + tableattributesetID + ") AND COLUMNNAME ='Description'  AND isActive ='Y'";
+            //var ds1 = VIS.DB.executeReader(sqldes.toString(), null);
+            //columndesLength = VIS.Utility.Util.getValueOfInt(ds1.tables[0].rows[0].cells.fieldlength);
+            //$$addatttextdes.attr("maxlength", columndesLength);
 
         };
+        function FieldCallBack(dr) {
+            if (dr != null) {
+                for (var i = 0; i < dr.length; i++) {
+                    if (dr[i].COLUMNNAME == 'Name') {
+                        $addatttextname.attr("maxlength", dr[i].fieldlength);
+                    }
+                    else if (dr[i].COLUMNNAME == 'Description') {
+                        $addatttextdes.attr("maxlength", dr[i].fieldlength);
+                    }
+                }
+            }
+        }
+
 
         //*** event handelling for lot serial dialog...
         function eventslotserialdialog() {
@@ -2954,36 +3202,63 @@
         //*** field length for lot serial dialog
         function fieldlengthlotserialdialog() {
 
-            var lottableID = "select ad_table_id from ad_table where tablename='M_LotCtl'";
-            var sqldivname = "SELECT fieldlength FROM ad_column WHERE ad_table_id=(" + lottableID + ") AND COLUMNNAME='Name' AND isActive  ='Y'";
-            var ds2 = VIS.DB.executeReader(sqldivname.toString(), null);
-            clumnlengthLotLength = VIS.Utility.Util.getValueOfInt(ds2.tables[0].rows[0].cells.fieldlength);
-            $divnametxt.attr("maxlength", clumnlengthLotLength);
+            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "AttributeListing/GetFieldLength", { "TableID": 556, "COLUMNNAME": "'Name','StartNo','CurrentNext','IncrementNo','Prefix','Suffix'" }, LengthCallBack);
 
-            var sqldivstartno = "SELECT fieldlength FROM ad_column WHERE ad_table_id=(" + lottableID + ") AND COLUMNNAME='StartNo' AND isActive  ='Y'";
-            var ds3 = VIS.DB.executeReader(sqldivstartno.toString(), null);
-            columnstartnoLength = VIS.Utility.Util.getValueOfInt(ds3.tables[0].rows[0].cells.fieldlength);
-            $divstarttxt.attr("maxlength", columnstartnoLength);
 
-            var sqldivcurrenttext = "SELECT fieldlength FROM ad_column WHERE ad_table_id=(" + lottableID + ") AND COLUMNNAME='CurrentNext' AND isActive  ='Y'";
-            var ds4 = VIS.DB.executeReader(sqldivcurrenttext.toString(), null);
-            columncurrenttextLength = VIS.Utility.Util.getValueOfInt(ds4.tables[0].rows[0].cells.fieldlength);
-            $divcurrenttxt.attr("maxlength", columncurrenttextLength);
+            //var lottableID = "select ad_table_id from ad_table where tablename='M_LotCtl'";
+            //var sqldivname = "SELECT fieldlength FROM ad_column WHERE ad_table_id=(" + lottableID + ") AND COLUMNNAME='Name' AND isActive  ='Y'";
+            //var ds2 = VIS.DB.executeReader(sqldivname.toString(), null);
+            //clumnlengthLotLength = VIS.Utility.Util.getValueOfInt(ds2.tables[0].rows[0].cells.fieldlength);
+            //$divnametxt.attr("maxlength", clumnlengthLotLength);
 
-            var sqldivincrement = "SELECT fieldlength FROM ad_column WHERE ad_table_id=(" + lottableID + ") AND COLUMNNAME='IncrementNo' AND isActive  ='Y'";
-            var ds5 = VIS.DB.executeReader(sqldivincrement.toString(), null);
-            columnincremnetnoLength = VIS.Utility.Util.getValueOfInt(ds5.tables[0].rows[0].cells.fieldlength);
-            $incrementtext.attr("maxlength", columnincremnetnoLength);
+            //var sqldivstartno = "SELECT fieldlength FROM ad_column WHERE ad_table_id=(" + lottableID + ") AND COLUMNNAME='StartNo' AND isActive  ='Y'";
+            //var ds3 = VIS.DB.executeReader(sqldivstartno.toString(), null);
+            //columnstartnoLength = VIS.Utility.Util.getValueOfInt(ds3.tables[0].rows[0].cells.fieldlength);
+            //$divstarttxt.attr("maxlength", columnstartnoLength);
 
-            var sqldivprefix = "SELECT fieldlength FROM ad_column WHERE ad_table_id=(" + lottableID + ") AND COLUMNNAME='Prefix' AND isActive  ='Y'";
-            var ds6 = VIS.DB.executeReader(sqldivprefix.toString(), null);
-            columnprefixLength = VIS.Utility.Util.getValueOfInt(ds6.tables[0].rows[0].cells.fieldlength);
-            $prefixtext.attr("maxlength", columnprefixLength);
+            //var sqldivcurrenttext = "SELECT fieldlength FROM ad_column WHERE ad_table_id=(" + lottableID + ") AND COLUMNNAME='CurrentNext' AND isActive  ='Y'";
+            //var ds4 = VIS.DB.executeReader(sqldivcurrenttext.toString(), null);
+            //columncurrenttextLength = VIS.Utility.Util.getValueOfInt(ds4.tables[0].rows[0].cells.fieldlength);
+            //$divcurrenttxt.attr("maxlength", columncurrenttextLength);
 
-            var sqldivSuffix = "SELECT fieldlength FROM ad_column WHERE ad_table_id=(" + lottableID + ") AND COLUMNNAME='Suffix' AND isActive  ='Y'";
-            var ds7 = VIS.DB.executeReader(sqldivSuffix.toString(), null);
-            columnsufixLength = VIS.Utility.Util.getValueOfInt(ds7.tables[0].rows[0].cells.fieldlength);
-            $prefixtext.attr("maxlength", columnsufixLength);
+            //var sqldivincrement = "SELECT fieldlength FROM ad_column WHERE ad_table_id=(" + lottableID + ") AND COLUMNNAME='IncrementNo' AND isActive  ='Y'";
+            //var ds5 = VIS.DB.executeReader(sqldivincrement.toString(), null);
+            //columnincremnetnoLength = VIS.Utility.Util.getValueOfInt(ds5.tables[0].rows[0].cells.fieldlength);
+            //$incrementtext.attr("maxlength", columnincremnetnoLength);
+
+            //var sqldivprefix = "SELECT fieldlength FROM ad_column WHERE ad_table_id=(" + lottableID + ") AND COLUMNNAME='Prefix' AND isActive  ='Y'";
+            //var ds6 = VIS.DB.executeReader(sqldivprefix.toString(), null);
+            //columnprefixLength = VIS.Utility.Util.getValueOfInt(ds6.tables[0].rows[0].cells.fieldlength);
+            //$prefixtext.attr("maxlength", columnprefixLength);
+
+            //var sqldivSuffix = "SELECT fieldlength FROM ad_column WHERE ad_table_id=(" + lottableID + ") AND COLUMNNAME='Suffix' AND isActive  ='Y'";
+            //var ds7 = VIS.DB.executeReader(sqldivSuffix.toString(), null);
+            //columnsufixLength = VIS.Utility.Util.getValueOfInt(ds7.tables[0].rows[0].cells.fieldlength);
+            //$prefixtext.attr("maxlength", columnsufixLength);
+        }
+        function LengthCallBack(dr) {
+            if (dr != null) {
+                for (var i = 0; i < dr.length; i++) {
+                    if (dr[i].COLUMNNAME == 'Name') {
+                        $divnametxt.attr("maxlength", dr[i].fieldlength);
+                    }
+                    else if (dr[i].COLUMNNAME == 'StartNo') {
+                        $divstarttxt.attr("maxlength", dr[i].fieldlength);
+                    }
+                    else if (dr[i].COLUMNNAME == 'CurrentNext') {
+                        $divstarttxt.attr("maxlength", dr[i].fieldlength);
+                    }
+                    else if (dr[i].COLUMNNAME == 'IncrementNo') {
+                        $divstarttxt.attr("maxlength", dr[i].fieldlength);
+                    }
+                    else if (dr[i].COLUMNNAME == 'Prefix') {
+                        $divstarttxt.attr("maxlength", dr[i].fieldlength);
+                    }
+                    else if (dr[i].COLUMNNAME == 'Suffix') {
+                        $divstarttxt.attr("maxlength", dr[i].fieldlength);
+                    }
+                }
+            }
         }
 
         this.disposeComponent = function () {

@@ -694,9 +694,9 @@ namespace VA005.Models
                         if (!po.Save())
                         {
                             ValueNamePair pp = VLogger.RetrieveError();
-                             error += pro.GetName() + (pp != null ? " - " + Msg.GetMsg(ctx, pp.GetValue()) + " " + pp.ToString() : "") + "\n";
-                           
-                           
+                            error += pro.GetName() + (pp != null ? " - " + Msg.GetMsg(ctx, pp.GetValue()) + " " + pp.ToString() : "") + "\n";
+
+
                         }
                         else
                         {
@@ -992,22 +992,19 @@ namespace VA005.Models
         public object CreateTree(int attributeSet_id, Ctx _ctx)
         {
             List<VA005_TreeStructure> final = null;
-            StringBuilder sql = new StringBuilder();
             MAttributeSet aset = new MAttributeSet(_ctx, attributeSet_id, null);
             if (aset.IsLot() || aset.IsSerNo() || aset.IsGuaranteeDate())
             {
                 return null;
             }
-            sql.Append(MRole.GetDefault(_ctx).AddAccessSQL(@"SELECT m_attribute.m_attribute_ID,m_attribute.Name,m_attributeuse.m_attributeset_id
-                                        FROM m_attributeuse JOIN m_attribute ON m_attributeuse.m_attribute_ID=m_attribute.m_attribute_ID 
-                                        WHERE m_attributeuse.IsActive='Y' AND m_attributeuse.IsActive='Y'AND m_attributeuse.m_attributeSet_ID =" + attributeSet_id, "M_AttributeUse", true, true));
-            SqlParamsIn sqlpar = new SqlParamsIn();
-            sqlpar.sql = sql.ToString();
-            sqlpar.pageSize = 0;
 
-            VIS.Helpers.SqlHelper sHelper = new VIS.Helpers.SqlHelper();
+            string sql = "SELECT mau.M_Attribute_ID, ma.Name, mau.M_AttributeSet_ID"
+                    + " FROM M_AttributeUse mau"
+                    + " INNER JOIN M_Attribute ma ON (mau.M_Attribute_ID=ma.M_Attribute_ID)"
+                    + " WHERE mau.IsActive='Y' AND ma.IsActive='Y'"
+                    + " AND mau.M_AttributeSet_ID=" + attributeSet_id + " ORDER BY mau.SeqNo, mau.M_Attribute_ID";
 
-            DataSet ds = sHelper.ExecuteDataSet(sqlpar);
+            DataSet ds = DB.ExecuteDataset(sql);
 
             if (ds == null || ds.Tables.Count < 1)
             {
@@ -1015,8 +1012,7 @@ namespace VA005.Models
             }
             else if (ds.Tables[0].Rows.Count > 0)
             {
-                string qry = "SELECT Name FROM M_AttributeSet WHERE M_AttributeSet_ID = " + attributeSet_id;
-                string setName = Util.GetValueOfString(DB.ExecuteScalar(qry, null, null));
+                string setName = aset.GetName();
                 VA005_TreeStructure tree = new VA005_TreeStructure();
                 tree.text = setName;
                 tree.ImageSource = "Areas/VA005/Images/attSet.png";
@@ -1787,6 +1783,17 @@ LEFT JOIN ad_image adimg ON adimg.ad_image_id    =attimage.ad_image_id
                 obj["ISO_Code"] = Util.GetValueOfString(ds.Tables[0].Rows[0]["ISO_Code"]);
             }
             return obj;
+        }
+
+        public decimal GetListPrice(int PriceListVersion, int product_ID, int uom, int attribute)
+        {
+            string sql = "SELECT pr.PriceList FROM M_ProductPrice pr INNER JOIN M_PriceList_Version plv" +
+                    " ON pr.M_PriceList_Version_ID = plv.M_PriceList_Version_ID WHERE pr.M_PriceList_Version_ID=" + PriceListVersion
+                    + " AND pr.M_Product_ID = " + product_ID +
+                    " AND pr.C_UOM_ID = " + uom + " AND pr.M_AttributeSetInstance_ID = " + attribute;
+
+            decimal price = Util.GetValueOfDecimal(DB.ExecuteScalar(sql, null, null));
+            return price;
         }
 
         // Added by Bharat on 05 March 2018 to get Varients Data of Product

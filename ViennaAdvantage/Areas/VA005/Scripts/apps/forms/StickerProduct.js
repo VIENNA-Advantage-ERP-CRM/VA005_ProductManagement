@@ -33,9 +33,15 @@
             //var DS = VIS.DB.executeDataSet("select dtd001_stickerheader, dtd001_price, dtd001_qty, value, upc from dtd001_productstickerline where dtd001_productsticker_id=" + Record_ID);
             var DivBarcode = null;
             var $report = $("#VA005_Barcode");
-            var sql = "SELECT cur.iso_code FROM M_PriceList_Version plv INNER JOIN M_PriceList pl ON plv.M_PriceList_ID= pl.M_PriceList_ID INNER JOIN C_Currency cur ON pl.C_Currency_ID = cur.C_Currency_ID" +
-                   " WHERE plv.M_PriceList_Version_ID=" + PriceListVersion;
-            curCode = VIS.Utility.Util.getValueOfString(VIS.DB.executeScalar(sql));
+            //var sql = "SELECT cur.iso_code FROM M_PriceList_Version plv INNER JOIN M_PriceList pl ON plv.M_PriceList_ID= pl.M_PriceList_ID INNER JOIN C_Currency cur ON pl.C_Currency_ID = cur.C_Currency_ID" +
+            //    " WHERE plv.M_PriceList_Version_ID=" + PriceListVersion;
+            // curCode = VIS.Utility.Util.getValueOfString(VIS.DB.executeScalar(sql));
+
+            var dr = VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/ProductManagement/LoadPriceListData", { "M_PriceList_ID": PriceListVersion });
+            if (dr != null) {
+                curCode = dr["ISO_Code"];
+            }
+
             for (item in Records) {
                 product_ID = VIS.Utility.Util.getValueOfInt(Records[item].product_ID);
                 prodName = VIS.Utility.Util.getValueOfString(Records[item].product);
@@ -46,10 +52,14 @@
                 if (CheckSpecialCharacter(upc) == true || upc.indexOf(':') != -1 || upc.indexOf(';') != -1 || upc.indexOf('!') != -1 || upc.indexOf('~') != -1) {
                     continue;
                 }
-                priceList = VIS.Utility.Util.getValueOfString(VIS.DB.executeScalar(" SELECT  pr.PriceList FROM M_ProductPrice pr INNER JOIN M_PriceList_Version plv" +
-                    " ON pr.M_PriceList_Version_ID = plv.M_PriceList_Version_ID WHERE pr.M_PriceList_Version_ID=" + PriceListVersion + " AND pr.M_Product_ID = " + product_ID +
-                    " AND pr.C_UOM_ID = " + uom + " AND pr.M_AttributeSetInstance_ID = " + attribute));
-                for (var j = 0; j < qty ; j++) {
+                //priceList = VIS.Utility.Util.getValueOfString(VIS.DB.executeScalar(" SELECT  pr.PriceList FROM M_ProductPrice pr INNER JOIN M_PriceList_Version plv" +
+                //    " ON pr.M_PriceList_Version_ID = plv.M_PriceList_Version_ID WHERE pr.M_PriceList_Version_ID=" + PriceListVersion + " AND pr.M_Product_ID = " + product_ID +
+                //    " AND pr.C_UOM_ID = " + uom + " AND pr.M_AttributeSetInstance_ID = " + attribute));
+
+                priceList = VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/ProductManagement/GetListPrice",
+                    { "PriceListVersion_ID": PriceListVersion, "Product_ID": product_ID, "UOM": uom, "Attribute": attribute });
+
+                for (var j = 0; j < qty; j++) {
                     id = id + 1;
                     if (id == 1) {
                         if (upc.length == 13) {
