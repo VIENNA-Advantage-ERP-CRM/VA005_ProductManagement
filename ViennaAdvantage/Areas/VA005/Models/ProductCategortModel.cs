@@ -230,7 +230,7 @@ namespace VA005.Models
         {
             List<LoadCategory> PPData = new List<LoadCategory>();
             string sql = @"SELECT pc.Name,pc.M_Product_Category_ID,img.ImageUrl,img.BinaryData FROM M_Product_Category pc LEFT JOIN AD_Image img ON pc.AD_Image_ID = img.AD_Image_ID WHERE pc.IsActive = 'Y' AND pc.AD_Client_ID = " + ctx.GetAD_Client_ID();
-            sql = MRole.GetDefault(ctx).AddAccessSQL(sql, "M_Product_Category", true, true);
+            sql = MRole.GetDefault(ctx).AddAccessSQL(sql, "M_Product_Category", true, false);
             DataSet ds = VIS.DBase.DB.ExecuteDatasetPaging(sql, PGNo, PGSize);
             if (ds != null && ds.Tables[0].Rows.Count > 0)
             {

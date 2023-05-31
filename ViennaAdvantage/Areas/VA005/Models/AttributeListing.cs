@@ -536,7 +536,7 @@ namespace VA005.Models
         {
             List<AttributeAppend> PPData = new List<AttributeAppend>();
             string sql = "SELECT Name, M_Attribute_ID,IsActive FROM M_Attribute  ORDER BY M_Attribute_ID DESC";
-            sql = MRole.GetDefault(_ctx).AddAccessSQL(sql, "M_Attribute", true, true);
+            sql = MRole.GetDefault(_ctx).AddAccessSQL(sql, "M_Attribute", true, false);
             DataSet ds = DB.ExecuteDataset(sql, null, null);
             if (ds != null && ds.Tables[0].Rows.Count > 0)
             {

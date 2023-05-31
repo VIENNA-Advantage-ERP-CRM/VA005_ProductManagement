@@ -52,7 +52,7 @@ namespace VA005.Models
             //}
             StringBuilder sql = new StringBuilder();
             string orderby = " ORDER BY M_Product.Value";
-            sql.Append(@"SELECT DISTINCT M_Product.Name,M_Product.Value,M_Product.M_Product_ID,M_Product.IsActive,M_Product.M_AttributeSet_ID, M_Product.AD_Image_ID, M_Product.AD_Client_ID,M_Product.AD_Org_ID, M_Product.M_Product_Category_ID, M_Product_Category.Name as ProdCat, C_UOM.Name as UOM, M_Product.C_UOM_ID, M_Product.UPC FROM M_Product 
+            sql.Append(@"SELECT DISTINCT M_Product.Name,M_Product.Value,M_Product.M_Product_ID,M_Product.IsActive,M_Product.M_AttributeSet_ID, M_Product.AD_Image_ID, M_Product.AD_Client_ID,M_Product.AD_Org_ID, M_Product.M_Product_Category_ID, M_Product_Category.Name as ProdCat, C_UOM.Name as UOM, M_Product.C_UOM_ID, M_Product.UPC FROM M_Product M_Product
                             INNER JOIN C_UOM C_UOM ON M_Product.C_UOM_ID = C_UOM.C_UOM_ID INNER JOIN M_Product_Category M_Product_Category ON M_Product.M_Product_Category_ID = 
                             M_Product_Category.M_Product_Category_ID LEFT OUTER JOIN M_Manufacturer M_Manufacturer ON M_Product.M_Product_ID = M_Manufacturer.M_Product_ID
                             LEFT OUTER JOIN M_ProductAttributes M_ProductAttributes ON M_Product.M_Product_ID = M_ProductAttributes.M_Product_ID WHERE M_Product.IsActive = 'Y' AND M_Product.IsSummary = 'N' AND M_Product.AD_Client_ID = " + ctx.GetAD_Client_ID());
