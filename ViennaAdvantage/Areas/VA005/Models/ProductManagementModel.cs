@@ -360,7 +360,7 @@ namespace VA005.Models
                 qry = "SELECT prd.M_Product_ID,prd.Name, po.PriceList, po.Order_Min, po.Order_Pack, po.C_UOM_ID, u.Name AS UOM, po.C_Currency_ID, po.DeliveryTime_Promised" +
                         " FROM M_Product_PO po INNER JOIN C_UOM u ON(po.C_UOM_ID= u.C_UOM_ID) INNER JOIN C_Currency c ON(po.C_Currency_ID = c.C_Currency_ID) INNER JOIN M_Product prd" +
                         " ON (po.M_Product_ID= prd.M_Product_ID) WHERE po.IsActive = 'Y' AND po.C_BPartner_ID = " + Supplier;
-                DataSet dsProd = DB.ExecuteDataset(MRole.GetDefault(ct).AddAccessSQL(qry, "po", true, false), null, null);
+                DataSet dsProd = DB.ExecuteDataset(qry, null, null);
                 int Recid = 0;
                 for (int i = 0; i < M_Product_ID.Count; i++)
                 {
@@ -442,7 +442,7 @@ namespace VA005.Models
                     }
                 }
             }
-            catch
+            catch(Exception e)
             {
 
             }
