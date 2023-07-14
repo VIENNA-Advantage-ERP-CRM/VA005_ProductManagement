@@ -318,9 +318,9 @@ namespace VA005.Models
         public object createTreeAttributeName()
         {
             StringBuilder sql = new StringBuilder();
-            sql.Append(MRole.GetDefault(_ctx).AddAccessSQL("SELECT M_Attribute_id  , Name FROM M_Attribute  WHERE IsActive='Y'", "M_Attribute", true, true));
+            sql.Append(MRole.GetDefault(_ctx).AddAccessSQL("SELECT M_Attribute_id  , Name FROM M_Attribute  WHERE IsActive='Y'", "M_Attribute", true, false));
             sql.Append("~");
-            sql.Append(MRole.GetDefault(_ctx).AddAccessSQL("SELECT ma.M_Attribute_id,mv.m_attributevalue_id, ma.Name as NameAttribute,mv.Name FROM M_Attribute ma inner JOIN m_attributevalue mv ON ma.M_Attribute_id=mv.M_Attribute_id", "M_Attribute", true, true));
+            sql.Append(MRole.GetDefault(_ctx).AddAccessSQL("SELECT ma.M_Attribute_id,mv.m_attributevalue_id, ma.Name as NameAttribute,mv.Name FROM M_Attribute ma inner JOIN m_attributevalue mv ON ma.M_Attribute_id=mv.M_Attribute_id", "M_Attribute", true, false));
 
             SqlParamsIn sqlpar = new SqlParamsIn();
             sqlpar.sql = sql.ToString();
@@ -558,7 +558,7 @@ namespace VA005.Models
         public int GetAttributeCount()
         {
             string sql = "SELECT COUNT(Name) as Name FROM M_Attribute WHERE IsActive='Y'";
-            sql = MRole.GetDefault(_ctx).AddAccessSQL(sql, "M_Attribute", true, true);
+            sql = MRole.GetDefault(_ctx).AddAccessSQL(sql, "M_Attribute", true, false);
             int count = Util.GetValueOfInt(DB.ExecuteScalar(sql));
             return count;
         }
@@ -624,7 +624,7 @@ namespace VA005.Models
         {
             List<KeyNamePair> Type = new List<KeyNamePair>();
             string sql = "SELECT M_LotCtl_ID,Name FROM M_LotCtl WHERE isActive='Y'";
-            sql = MRole.GetDefault(_ctx).AddAccessSQL(sql, "M_LotCtl", true, true);
+            sql = MRole.GetDefault(_ctx).AddAccessSQL(sql, "M_LotCtl", true, false);
             var ds = DB.ExecuteDataset(sql, null, null);
             if (ds != null)
             {
@@ -647,7 +647,7 @@ namespace VA005.Models
         {
             List<KeyNamePair> Type = new List<KeyNamePair>();
             string sql = "SELECT M_SerNoCtl_ID,Name FROM M_SerNoCtl WHERE IsActive='Y'";
-            sql = MRole.GetDefault(_ctx).AddAccessSQL(sql, "M_SerNoCtl", true, true);
+            sql = MRole.GetDefault(_ctx).AddAccessSQL(sql, "M_SerNoCtl", true, false);
             var ds = DB.ExecuteDataset(sql, null, null);
             if (ds != null)
             {
@@ -670,8 +670,7 @@ namespace VA005.Models
         public List<AttributeData> GetAttributeSetData(int NodeID)
         {
             List<AttributeData> Type = new List<AttributeData>();
-            string sql = "SELECT NAME,DESCRIPTION,MANDATORYTYPE,ISGUARANTEEDATE,ISGUARANTEEDATEMANDATORY,M_LOTCTL_ID,M_SERNOCTL_ID,IsLot,IsSerNo FROM M_AttributeSet WHERE M_Attributeset_ID=" + NodeID;
-            sql = MRole.GetDefault(_ctx).AddAccessSQL(sql, "M_AttributeSet", true, true);
+            string sql = "SELECT NAME,DESCRIPTION,MANDATORYTYPE,ISGUARANTEEDATE,ISGUARANTEEDATEMANDATORY,M_LOTCTL_ID,M_SERNOCTL_ID,IsLot,IsSerNo FROM M_AttributeSet WHERE M_Attributeset_ID=" + NodeID;            
             var ds = DB.ExecuteDataset(sql, null, null);
             if (ds != null)
             {
