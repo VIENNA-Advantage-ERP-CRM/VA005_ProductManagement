@@ -1666,7 +1666,7 @@
         };
 
         function LoadSupplierCallBack(data) {
-            cmbSupplier.append(" <option value = 0>" + VIS.Msg.getMsg("VA005_SelSupplier") + "</option>");
+            //cmbSupplier.append(" <option value = 0>" + VIS.Msg.getMsg("VA005_SelSupplier") + "</option>");
             var key, value;
             if (data.length > 0) {
                 for (var i in data) {
@@ -5407,85 +5407,9 @@
             multiValues = [];
             sGrid.clear();
             precision = 2;
-            window.setTimeout(function () {
-                VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/ProductManagement/GetSupplierData", { "M_Product_ID": prods, "Supplier": cmbSupplier.val() }, callBackSupplierGrid);
-                //var qry = "SELECT act.C_Currency_ID FROM AD_ClientInfo tnt INNER JOIN C_AcctSchema act ON tnt.C_AcctSchema1_ID = act.C_AcctSchema_ID WHERE tnt.AD_Client_ID = " + VIS.context.getAD_Client_ID();
-                //var currency = VIS.Utility.Util.getValueOfInt(VIS.DB.executeScalar(qry));
-                //if (cmbSupplier.val() > 0) {
-                //    var Recid = 0;
-                //    for (var item in prods) {
-                //        var sqlaa = "SELECT prd.Name, po.PriceList, po.Order_Min, po.Order_Pack, po.C_UOM_ID, u.Name AS UOM, po.C_Currency_ID, po.DeliveryTime_Promised" +
-                //        " FROM M_Product_PO po INNER JOIN C_UOM u ON(po.C_UOM_ID= u.C_UOM_ID) INNER JOIN C_Currency c ON(po.C_Currency_ID = c.C_Currency_ID) INNER JOIN M_Product prd" +
-                //        " ON (po.M_Product_ID= prd.M_Product_ID) WHERE po.IsActive = 'Y' AND po.C_BPartner_ID = " + cmbSupplier.val() + " AND po.M_Product_ID = " + prods[item];
-                //        var ds = VIS.DB.executeDataSet(sqlaa.toString(), null, null);
-                //        if (ds != null && ds.tables[0].rows.length > 0) {
-                //            qry = "SELECT StdPrecision FROM C_UOM WHERE C_UOM_ID = " + VIS.Utility.Util.getValueOfInt(ds.tables[0].rows[0].cells.c_uom_id);
-                //            precision = VIS.Utility.Util.getValueOfInt(VIS.DB.executeScalar(qry));
-                //            for (var i = 0; i < ds.tables[0].rows.length; i++) {
-                //                Recid = Recid + 1;
-                //                multiValues.push(
-                //                {
-                //                    recid: Recid,
-                //                    product_ID: prods[item],
-                //                    Product: ds.tables[0].rows[i].cells.name,
-                //                    PriceList: VIS.Utility.Util.getValueOfDecimal(ds.tables[0].rows[i].cells.pricelist),
-                //                    OrderMin: VIS.Utility.Util.getValueOfDecimal(ds.tables[0].rows[i].cells.order_min),
-                //                    OrderPack: VIS.Utility.Util.getValueOfDecimal(ds.tables[0].rows[i].cells.order_pack),
-                //                    C_Uom_ID: VIS.Utility.Util.getValueOfInt(ds.tables[0].rows[i].cells.c_uom_id),
-                //                    C_Currency_ID: VIS.Utility.Util.getValueOfInt(ds.tables[0].rows[i].cells.c_currency_id),
-                //                    DeliveryTime: VIS.Utility.Util.getValueOfInt(ds.tables[0].rows[i].cells.deliverytime_promised),
-                //                    updated: false
-                //                });
-                //            }
-                //        }
-                //        else {
-                //            var dr = VIS.DB.executeReader("SELECT Name, C_UOM_ID FROM M_Product WHERE M_Product_ID = " + prods[item], null);
-                //            while (dr.read()) {
-                //                var prodName = dr.getString(0);
-                //                var uom = dr.getInt(1);
-                //            }
-                //            Recid = Recid + 1;
-                //            multiValues.push(
-                //            {
-                //                recid: Recid,
-                //                product_ID: prods[item],
-                //                Product: prodName,
-                //                PriceList: 0.0,
-                //                OrderMin: 0.0,
-                //                OrderPack: 0.0,
-                //                C_Uom_ID: uom,
-                //                C_Currency_ID: currency,
-                //                DeliveryTime: 0,
-                //                updated: false
-                //            });
-                //        }
-                //    }
 
-                //}
-                //else {
-                //    for (var item in prods) {
-                //        var dr = VIS.DB.executeReader("SELECT Name, C_UOM_ID FROM M_Product WHERE M_Product_ID = " + prods[item], null);
-                //        while (dr.read()) {
-                //            var prodName = dr.getString(0);
-                //            var uom = dr.getInt(1);
-                //        }
-                //        Recid = Recid + 1;
-                //        multiValues.push(
-                //        {
-                //            recid: Recid,
-                //            product_ID: prods[item],
-                //            Product: prodName,
-                //            PriceList: 0.0,
-                //            OrderMin: 0.0,
-                //            OrderPack: 0.0,
-                //            C_Uom_ID: uom,
-                //            C_Currency_ID: currency,
-                //            DeliveryTime: 0,
-                //            updated: false
-                //        });
-                //    }
-                //}
-            }, 200);
+            VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/ProductManagement/GetSupplierData",
+                { "M_Product_ID": prods, "Supplier": cmbSupplier.val() }, callBackSupplierGrid);            
         };
 
         function callBackSupplierGrid(data) {

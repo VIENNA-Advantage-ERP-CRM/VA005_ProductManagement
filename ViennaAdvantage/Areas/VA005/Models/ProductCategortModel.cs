@@ -130,7 +130,7 @@ namespace VA005.Models
         {
             List<Attribut> PPData = new List<Attribut>();
             string sql = "SELECT M_AttributeSet_ID,Name FROM M_AttributeSet WHERE IsActive = 'Y' AND AD_Client_ID = " + ctx.GetAD_Client_ID();
-            DataSet ds = DB.ExecuteDataset(sql, null, null);
+            DataSet ds = DB.ExecuteDataset(MRole.GetDefault(ctx).AddAccessSQL(sql, "M_AttributeSet", true, false), null, null);
             if (ds != null && ds.Tables[0].Rows.Count > 0)
             {
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
@@ -152,7 +152,7 @@ namespace VA005.Models
         {
             List<TaxCategory> PPData = new List<TaxCategory>();
             string sql = "SELECT C_TaxCategory_ID,Name FROM C_TaxCategory WHERE IsActive = 'Y' AND AD_Client_ID = " + ctx.GetAD_Client_ID();
-            DataSet ds = DB.ExecuteDataset(sql, null, null);
+            DataSet ds = DB.ExecuteDataset(MRole.GetDefault(ctx).AddAccessSQL(sql, "C_TaxCategory", true, false), null, null);
             if (ds != null && ds.Tables[0].Rows.Count > 0)
             {
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
@@ -174,7 +174,7 @@ namespace VA005.Models
         {
             List<AssetGroup> PPData = new List<AssetGroup>();
             string sql = "SELECT A_Asset_Group_ID,Name FROM A_Asset_Group WHERE IsActive = 'Y' AND AD_Client_ID = " + ctx.GetAD_Client_ID();
-            DataSet ds = DB.ExecuteDataset(sql, null, null);
+            DataSet ds = DB.ExecuteDataset(MRole.GetDefault(ctx).AddAccessSQL(sql, "A_Asset_Group", true, false), null, null);
             if (ds != null && ds.Tables[0].Rows.Count > 0)
             {
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
@@ -230,7 +230,7 @@ namespace VA005.Models
         {
             List<LoadCategory> PPData = new List<LoadCategory>();
             string sql = @"SELECT pc.Name,pc.M_Product_Category_ID,img.ImageUrl,img.BinaryData FROM M_Product_Category pc LEFT JOIN AD_Image img ON pc.AD_Image_ID = img.AD_Image_ID WHERE pc.IsActive = 'Y' AND pc.AD_Client_ID = " + ctx.GetAD_Client_ID();
-            sql = MRole.GetDefault(ctx).AddAccessSQL(sql, "M_Product_Category", true, true);
+            sql = MRole.GetDefault(ctx).AddAccessSQL(sql, "pc", true, false);
             DataSet ds = VIS.DBase.DB.ExecuteDatasetPaging(sql, PGNo, PGSize);
             if (ds != null && ds.Tables[0].Rows.Count > 0)
             {
@@ -277,7 +277,7 @@ namespace VA005.Models
         public string GetAddCategory(Ctx ctx)
         {
             string sql = "SELECT COUNT(M_Product_Category_ID) FROM M_Product_Category WHERE IsActive = 'Y' AND AD_Client_ID = " + ctx.GetAD_Client_ID();
-            string rule = Util.GetValueOfString(DB.ExecuteScalar(sql, null, null));
+            string rule = Util.GetValueOfString(DB.ExecuteScalar(MRole.GetDefault(ctx).AddAccessSQL(sql, "M_Product_Category", true, false), null, null));
             return rule;
         }
     }

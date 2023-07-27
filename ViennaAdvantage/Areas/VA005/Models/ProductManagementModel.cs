@@ -37,28 +37,16 @@ namespace VA005.Models
         {
             List<ProductInfo> pInfo = new List<ProductInfo>();
             int count = 0;
-            //count = Util.GetValueOfInt(DB.ExecuteScalar("SELECT COUNT(*) FROM AD_MODULEINFO WHERE PREFIX='BGT01_'", null, null));
-            //int ProdTableID = MTable.Get_Table_ID("M_Product");
-            //int ProdWindowID = Convert.ToInt32(DB.ExecuteScalar("SELECT AD_Window_ID from AD_Window WHERE Name='Product'", null, null));
-
-            //if (!(bool)MRole.GetDefault(ctx).GetWindowAccess(ProdWindowID))
-            //{
-            //    return pInfo;
-            //}
-
-            //if (!MRole.GetDefault(ctx).IsTableAccess(ProdTableID, false))
-            //{
-            //    return pInfo;
-            //}
+            
             StringBuilder sql = new StringBuilder();
             string orderby = " ORDER BY M_Product.Value";
-            sql.Append(@"SELECT DISTINCT M_Product.Name,M_Product.Value,M_Product.M_Product_ID,M_Product.IsActive,M_Product.M_AttributeSet_ID, M_Product.AD_Image_ID, M_Product.AD_Client_ID,M_Product.AD_Org_ID, M_Product.M_Product_Category_ID, M_Product_Category.Name as ProdCat, C_UOM.Name as UOM, M_Product.C_UOM_ID, M_Product.UPC FROM M_Product 
+            sql.Append(@"SELECT DISTINCT M_Product.Name,M_Product.Value,M_Product.M_Product_ID,M_Product.IsActive,M_Product.M_AttributeSet_ID, M_Product.AD_Image_ID, M_Product.AD_Client_ID,M_Product.AD_Org_ID, M_Product.M_Product_Category_ID, M_Product_Category.Name as ProdCat, C_UOM.Name as UOM, M_Product.C_UOM_ID, M_Product.UPC FROM M_Product M_Product
                             INNER JOIN C_UOM C_UOM ON M_Product.C_UOM_ID = C_UOM.C_UOM_ID INNER JOIN M_Product_Category M_Product_Category ON M_Product.M_Product_Category_ID = 
                             M_Product_Category.M_Product_Category_ID LEFT OUTER JOIN M_Manufacturer M_Manufacturer ON M_Product.M_Product_ID = M_Manufacturer.M_Product_ID
                             LEFT OUTER JOIN M_ProductAttributes M_ProductAttributes ON M_Product.M_Product_ID = M_ProductAttributes.M_Product_ID WHERE M_Product.IsActive = 'Y' AND M_Product.IsSummary = 'N' AND M_Product.AD_Client_ID = " + ctx.GetAD_Client_ID());
             if (!String.IsNullOrEmpty(searchText))
             {
-                sql.Append(" AND ( UPPER(M_Product.Name) LIKE UPPER('%" + searchText + "%') OR UPPER(M_Product.UPC) LIKE UPPER('" + searchText + "')  OR  UPPER(M_Product.Value) LIKE UPPER('%" + searchText + "%')" +
+                sql.Append(" AND (UPPER(M_Product.Name) LIKE UPPER('%" + searchText + "%') OR UPPER(M_Product.UPC) LIKE UPPER('" + searchText + "')  OR  UPPER(M_Product.Value) LIKE UPPER('%" + searchText + "%')" +
                 " OR UPPER(M_Manufacturer.UPC) LIKE UPPER('" + searchText + "') OR UPPER(M_ProductAttributes.UPC) LIKE UPPER('" + searchText + "'))");
             }
             if (searchQuery > 0)
@@ -74,12 +62,7 @@ namespace VA005.Models
             {
                 sql.Append(" AND M_Product_Category.M_Product_Category_ID = " + pcat_ID);
             }
-            //Manjot
-            //if (count > 0)
-            //{
-            //    sql += " AND M_Product.BGT01_isstyle='N'";
-            //}
-
+            
             if (Parent_ID > 0)
             {
                 int AD_Table_ID = MTable.Get_Table_ID("M_Product");
@@ -93,7 +76,6 @@ namespace VA005.Models
                 sql.Append(@" AND M_Product.M_Product_ID IN (SELECT M_Product.M_Product_ID  FROM AD_TreeNodePR AD_TreeNodePR  INNER JOIN AD_Tree AD_Tree  ON AD_Tree.AD_Tree_ID =AD_TreeNodePR.AD_Tree_ID 
                         INNER JOIN M_Product M_Product ON M_Product.M_Product_ID=AD_TreeNodePR.Node_ID  WHERE AD_TreeNodePR.Parent_ID IN (" + parentIDs.ToString() + ") AND AD_Tree.TreeType ='PR')");
             }
-            //End
 
             // JID_0788: Implemented role based security
             string qry = MRole.GetDefault(ctx).AddAccessSQL(sql.ToString(), "M_Product", true, false);
@@ -262,11 +244,13 @@ namespace VA005.Models
             List<PriceInfo> lst = new List<PriceInfo>();
             try
             {
-                string qry = "SELECT prd.M_Product_ID,prd.Name,pr.PriceList,pr.PriceStd,pr.PriceLimit,pr.C_UOM_ID,u.Name as UOM,pr.Lot,pr.M_AttributeSetInstance_ID,ats.Description" +
-                                " FROM M_ProductPrice pr INNER JOIN C_UOM u ON (pr.C_UOM_ID= u.C_UOM_ID) INNER JOIN M_Product prd ON (pr.M_Product_ID= prd.M_Product_ID)" +
-                                " INNER JOIN M_AttributeSetInstance ats ON (pr.M_AttributeSetInstance_ID = ats.M_AttributeSetInstance_ID) " +
-                                " WHERE pr.IsActive = 'Y' AND pr.M_PriceList_Version_ID = " + PriceList;
-                DataSet dsProd = DB.ExecuteDataset(qry, null, null);
+                string qry = @"SELECT prd.M_Product_ID,prd.Name,pr.PriceList,pr.PriceStd,pr.PriceLimit,pr.C_UOM_ID,u.Name as UOM,
+                            pr.Lot,pr.M_AttributeSetInstance_ID,ats.Description
+                            FROM M_ProductPrice pr INNER JOIN C_UOM u ON (pr.C_UOM_ID= u.C_UOM_ID) 
+                            INNER JOIN M_Product prd ON (pr.M_Product_ID= prd.M_Product_ID)
+                            INNER JOIN M_AttributeSetInstance ats ON (pr.M_AttributeSetInstance_ID = ats.M_AttributeSetInstance_ID)
+                            WHERE pr.IsActive = 'Y' AND pr.M_PriceList_Version_ID = " + PriceList;
+                DataSet dsProd = DB.ExecuteDataset(MRole.GetDefault(ct).AddAccessSQL(qry, "pr", true, false), null, null);
                 int Recid = 0;
                 for (int i = 0; i < M_Product_ID.Count; i++)
                 {
@@ -458,7 +442,7 @@ namespace VA005.Models
                     }
                 }
             }
-            catch
+            catch(Exception e)
             {
 
             }
@@ -1141,8 +1125,6 @@ namespace VA005.Models
             return id;
         }
 
-
-
         public VA005_AttributeValueImage SaveAttributeValueImage(Ctx ctx, byte[] buffer, string imageName, bool isSaveInDB, int productID, string attributeValue, string attimages_id)
         {
             string imageDataURL = null;
@@ -1538,7 +1520,7 @@ LEFT JOIN ad_image adimg ON adimg.ad_image_id    =attimage.ad_image_id
         {
             List<Dictionary<string, object>> reDIc = null;
             string sql = "SELECT AD_UserQuery_ID, Name FROM AD_UserQuery WHERE IsActive = 'Y' AND AD_Client_ID = " + ctx.GetAD_Client_ID() + " AND AD_Tab_ID = 180";
-            DataSet ds = DB.ExecuteDataset(sql, null, null);
+            DataSet ds = DB.ExecuteDataset(MRole.GetDefault(ctx).AddAccessSQL(sql, "AD_UserQuery", true, false), null, null);
             if (ds != null && ds.Tables[0].Rows.Count > 0)
             {
                 reDIc = new List<Dictionary<string, object>>();
@@ -1639,8 +1621,9 @@ LEFT JOIN ad_image adimg ON adimg.ad_image_id    =attimage.ad_image_id
         {
             // Added by shifali on 06 July 2020 to get DivideRate and MultiplyRate Data
             Dictionary<string, object> obj = null;
-            string sql = "SELECT prd.Name, prd.M_Product_ID, uc.C_UOM_To_ID, uc.UPC,uc.MultiplyRate AS DivideRate, uc.DivideRate AS MultiplyRate FROM C_UOM_Conversion uc INNER JOIN M_Product prd ON uc.M_Product_ID = prd.M_Product_ID WHERE uc.C_UOM_Conversion_ID = " + c_UomConv_ID;
-            DataSet ds = DB.ExecuteDataset(sql, null, null);
+            string sql = @"SELECT prd.Name, prd.M_Product_ID, uc.C_UOM_To_ID, uc.UPC,uc.MultiplyRate AS DivideRate, uc.DivideRate AS MultiplyRate 
+                FROM C_UOM_Conversion uc INNER JOIN M_Product prd ON uc.M_Product_ID = prd.M_Product_ID WHERE uc.C_UOM_Conversion_ID = " + c_UomConv_ID;
+            DataSet ds = DB.ExecuteDataset(MRole.GetDefault(ctx).AddAccessSQL(sql, "uc", true, false), null, null);
             if (ds != null && ds.Tables[0].Rows.Count > 0)
             {
                 obj = new Dictionary<string, object>();
@@ -1727,7 +1710,7 @@ LEFT JOIN ad_image adimg ON adimg.ad_image_id    =attimage.ad_image_id
             List<Dictionary<string, object>> retDic = null;
             string sql = "SELECT (SELECT u.Name FROM C_UOM u WHERE u.C_UOM_ID = uc.C_UOM_TO_ID) AS UomTo, uc.C_UOM_TO_ID, uc.MultiplyRate AS DivideRate, uc.DivideRate AS MultiplyRate, uc.C_UOM_Conversion_ID," +
             " uc.UPC FROM C_UOM_Conversion uc INNER JOIN M_Product p ON uc.M_Product_ID = p.M_Product_ID WHERE p.M_Product_ID =" + prod_ID;
-            DataSet ds = DB.ExecuteDataset(sql, null, null);
+            DataSet ds = DB.ExecuteDataset(MRole.GetDefault(ctx).AddAccessSQL(sql, "uc", true, false), null, null);
             if (ds != null && ds.Tables[0].Rows.Count > 0)
             {
                 retDic = new List<Dictionary<string, object>>();
@@ -1752,7 +1735,7 @@ LEFT JOIN ad_image adimg ON adimg.ad_image_id    =attimage.ad_image_id
             List<Dictionary<string, object>> retDic = null;
             string sql = "SELECT patr.UPC,patr.M_AttributeSetInstance_ID,ats.Description,patr.M_ProductAttributes_ID FROM M_ProductAttributes patr INNER JOIN M_AttributeSetInstance ats ON" +
                     " (patr.M_AttributeSetInstance_ID = ats.M_AttributeSetInstance_ID) WHERE patr.M_Product_ID = " + prod_ID;
-            DataSet ds = DB.ExecuteDataset(sql, null, null);
+            DataSet ds = DB.ExecuteDataset(MRole.GetDefault(ctx).AddAccessSQL(sql, "patr", true, false), null, null);
             if (ds != null && ds.Tables[0].Rows.Count > 0)
             {
                 retDic = new List<Dictionary<string, object>>();
@@ -1775,7 +1758,7 @@ LEFT JOIN ad_image adimg ON adimg.ad_image_id    =attimage.ad_image_id
             Dictionary<string, object> obj = null;
             string sql = "SELECT pl.PricePrecision, cur.ISO_Code FROM M_PriceList_Version plv INNER JOIN M_PriceList pl ON plv.M_PriceList_ID=pl.M_PriceList_ID " +
                         " INNER JOIN C_Currency cur ON pl.C_Currency_ID = cur.C_Currency_ID WHERE plv.M_PriceList_Version_ID = " + pricelist_ID;
-            DataSet ds = DB.ExecuteDataset(sql, null, null);
+            DataSet ds = DB.ExecuteDataset(MRole.GetDefault(ctx).AddAccessSQL(sql, "plv", true, false), null, null);
             if (ds != null && ds.Tables[0].Rows.Count > 0)
             {
                 obj = new Dictionary<string, object>();
@@ -1803,7 +1786,7 @@ LEFT JOIN ad_image adimg ON adimg.ad_image_id    =attimage.ad_image_id
             string sql = "SELECT s.Name AS Product, p.Name as RelatedProduct, s.RelatedProductType, s.RelatedProduct_ID"
                 + " FROM M_RelatedProduct s INNER JOIN M_Product p ON (p.M_Product_ID = s.RelatedProduct_ID)"
                 + " WHERE s.IsActive='Y' AND s.M_Product_ID = " + prod_ID;
-            DataSet ds = DB.ExecuteDataset(sql, null, null);
+            DataSet ds = DB.ExecuteDataset(MRole.GetDefault(ctx).AddAccessSQL(sql, "s", true, false), null, null);
             if (ds != null && ds.Tables[0].Rows.Count > 0)
             {
                 retDic = new List<Dictionary<string, object>>();
@@ -1827,8 +1810,8 @@ LEFT JOIN ad_image adimg ON adimg.ad_image_id    =attimage.ad_image_id
             string sql = "SELECT po.VAICNT_InventoryCountLine_ID,po.M_Product_ID,prd.Name, po.C_UOM_ID, u.Name AS UOM, po.UPC, po.M_AttributeSetInstance_ID, ats.Description, po.VAICNT_Quantity," +
                         " prd.M_AttributeSet_ID FROM VAICNT_InventoryCountLine po LEFT JOIN C_UOM u ON po.C_UOM_ID = u.C_UOM_ID LEFT JOIN M_Product prd" +
                         " ON po.M_Product_ID= prd.M_Product_ID LEFT JOIN M_AttributeSetInstance ats ON po.M_AttributeSetInstance_ID = ats.M_AttributeSetInstance_ID" +
-                        " WHERE po.IsActive = 'Y' AND po.VAICNT_InventoryCount_ID = " + invCount_ID;
-            DataSet ds = DB.ExecuteDataset(sql, null, null);
+                        " WHERE po.IsActive = 'Y' AND po.VAICNT_InventoryCount_ID = " + invCount_ID + " ORDER BY po.Line";
+            DataSet ds = DB.ExecuteDataset(MRole.GetDefault(ctx).AddAccessSQL(sql, "po", true, false), null, null);
             if (ds != null && ds.Tables[0].Rows.Count > 0)
             {
                 retDic = new List<Dictionary<string, object>>();
