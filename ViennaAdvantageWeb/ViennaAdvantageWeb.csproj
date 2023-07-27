@@ -193,7 +193,7 @@
     </Reference>
     <Reference Include="ViennaBase, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Framework Breakage Dlls\ViennaBase.dll</HintPath>
+      <HintPath>DLL\ViennaBase.dll</HintPath>
     </Reference>
     <Reference Include="VIS, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
