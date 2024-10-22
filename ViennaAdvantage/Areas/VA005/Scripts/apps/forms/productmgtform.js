@@ -5409,7 +5409,7 @@
             precision = 2;
 
             VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/ProductManagement/GetSupplierData",
-                { "M_Product_ID": prods, "Supplier": cmbSupplier.val() }, callBackSupplierGrid);            
+                { "M_Product_ID": prods, "Supplier": cmbSupplier.val() }, callBackSupplierGrid);
         };
 
         function callBackSupplierGrid(data) {
@@ -5708,11 +5708,18 @@
                 cartGrid.resize();
             }
 
-            $lb.height($td0leftbar.height());
-            $divlbMain.height($lb.height() - 43);
-            leftHeight = $divlbMain.height() - ($root.find('.VA005-Serach-Query').height() * 2) - 30;
-            var divProduct = $divProductInner.find('.vis-group-user-wrap:eq(0)');
-            $divProductInner.find('.vis-group-user-profile').width(divProduct.width() - divProduct.find('.vis-group-user-right:eq(0)').width() - 20);
+            if ($lb)
+                $lb.height($td0leftbar.height());
+
+            if ($divlbMain) {
+                $divlbMain.height($lb.height() - 43);
+                leftHeight = $divlbMain.height() - ($root.find('.VA005-Serach-Query').height() * 2) - 30;
+            }
+
+            if ($divProductInner) {
+                var divProduct = $divProductInner.find('.vis-group-user-wrap:eq(0)');
+                $divProductInner.find('.vis-group-user-profile').width(divProduct.width() - divProduct.find('.vis-group-user-right:eq(0)').width() - 20);
+            }
         };
 
         /*
