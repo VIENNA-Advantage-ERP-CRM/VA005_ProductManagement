@@ -5707,6 +5707,12 @@
             if (cartGrid) {
                 cartGrid.resize();
             }
+
+            $lb.height($td0leftbar.height());
+            $divlbMain.height($lb.height() - 43);
+            leftHeight = $divlbMain.height() - ($root.find('.VA005-Serach-Query').height() * 2) - 30;
+            var divProduct = $divProductInner.find('.vis-group-user-wrap:eq(0)');
+            $divProductInner.find('.vis-group-user-profile').width(divProduct.width() - divProduct.find('.vis-group-user-right:eq(0)').width() - 20);
         };
 
         /*
@@ -5877,12 +5883,11 @@
         this.frame = frame;
         this.windowNo = windowNo;
         frame.setTitle("VA005_ProductMgt");
+        this.frame.getContentGrid().append(this.getRoot());
         window.setTimeout(function (t) {
             t.Initialize();
             t.initData();
         }, 10, this);
-        this.frame.getContentGrid().append(this.getRoot());
-
     };
 
     //Must implement dispose
