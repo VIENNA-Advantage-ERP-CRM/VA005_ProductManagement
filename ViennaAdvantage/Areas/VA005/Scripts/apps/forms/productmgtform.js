@@ -5409,7 +5409,7 @@
             precision = 2;
 
             VIS.dataContext.getJSONData(VIS.Application.contextUrl + "VA005/ProductManagement/GetSupplierData",
-                { "M_Product_ID": prods, "Supplier": cmbSupplier.val() }, callBackSupplierGrid);            
+                { "M_Product_ID": prods, "Supplier": cmbSupplier.val() }, callBackSupplierGrid);
         };
 
         function callBackSupplierGrid(data) {
@@ -5707,6 +5707,19 @@
             if (cartGrid) {
                 cartGrid.resize();
             }
+
+            if ($lb)
+                $lb.height($td0leftbar.height());
+
+            if ($divlbMain) {
+                $divlbMain.height($lb.height() - 43);
+                leftHeight = $divlbMain.height() - ($root.find('.VA005-Serach-Query').height() * 2) - 30;
+            }
+
+            if ($divProductInner) {
+                var divProduct = $divProductInner.find('.vis-group-user-wrap:eq(0)');
+                $divProductInner.find('.vis-group-user-profile').width(divProduct.width() - divProduct.find('.vis-group-user-right:eq(0)').width() - 20);
+            }
         };
 
         /*
@@ -5877,12 +5890,11 @@
         this.frame = frame;
         this.windowNo = windowNo;
         frame.setTitle("VA005_ProductMgt");
+        this.frame.getContentGrid().append(this.getRoot());
         window.setTimeout(function (t) {
             t.Initialize();
             t.initData();
         }, 10, this);
-        this.frame.getContentGrid().append(this.getRoot());
-
     };
 
     //Must implement dispose
