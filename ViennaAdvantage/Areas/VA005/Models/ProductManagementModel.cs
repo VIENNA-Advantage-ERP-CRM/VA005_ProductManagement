@@ -10,6 +10,7 @@ using System.Web.Hosting;
 using VIS.Classes;
 using VIS.DBase;
 using System.Data;
+using System.Data.SqlClient;
 using VAdvantage.Logging;
 using ViennaAdvantage.Model;
 using System.Text;
@@ -37,17 +38,22 @@ namespace VA005.Models
         {
             List<ProductInfo> pInfo = new List<ProductInfo>();
             int count = 0;
-            
+
             StringBuilder sql = new StringBuilder();
             string orderby = " ORDER BY M_Product.Value";
             sql.Append(@"SELECT DISTINCT M_Product.Name,M_Product.Value,M_Product.M_Product_ID,M_Product.IsActive,M_Product.M_AttributeSet_ID, M_Product.AD_Image_ID, M_Product.AD_Client_ID,M_Product.AD_Org_ID, M_Product.M_Product_Category_ID, M_Product_Category.Name as ProdCat, C_UOM.Name as UOM, M_Product.C_UOM_ID, M_Product.UPC FROM M_Product M_Product
                             INNER JOIN C_UOM C_UOM ON M_Product.C_UOM_ID = C_UOM.C_UOM_ID INNER JOIN M_Product_Category M_Product_Category ON M_Product.M_Product_Category_ID = 
                             M_Product_Category.M_Product_Category_ID LEFT OUTER JOIN M_Manufacturer M_Manufacturer ON M_Product.M_Product_ID = M_Manufacturer.M_Product_ID
                             LEFT OUTER JOIN M_ProductAttributes M_ProductAttributes ON M_Product.M_Product_ID = M_ProductAttributes.M_Product_ID WHERE M_Product.IsActive = 'Y' AND M_Product.IsSummary = 'N' AND M_Product.AD_Client_ID = " + ctx.GetAD_Client_ID());
+            SqlParameter[] searchParam = null;
             if (!String.IsNullOrEmpty(searchText))
             {
-                sql.Append(" AND (UPPER(M_Product.Name) LIKE UPPER('%" + searchText + "%') OR UPPER(M_Product.UPC) LIKE UPPER('" + searchText + "')  OR  UPPER(M_Product.Value) LIKE UPPER('%" + searchText + "%')" +
-                " OR UPPER(M_Manufacturer.UPC) LIKE UPPER('" + searchText + "') OR UPPER(M_ProductAttributes.UPC) LIKE UPPER('" + searchText + "'))");
+                sql.Append(" AND (UPPER(M_Product.Name) LIKE UPPER(@searchPattern) OR UPPER(M_Product.UPC) LIKE UPPER(@searchExact)  OR  UPPER(M_Product.Value) LIKE UPPER(@searchPattern)" +
+                " OR UPPER(M_Manufacturer.UPC) LIKE UPPER(@searchExact) OR UPPER(M_ProductAttributes.UPC) LIKE UPPER(@searchExact))");
+                searchParam = new SqlParameter[] {
+                    new SqlParameter("@searchPattern", "%" + searchText + "%"),
+                    new SqlParameter("@searchExact", searchText)
+                };
             }
             if (searchQuery > 0)
             {
@@ -62,7 +68,7 @@ namespace VA005.Models
             {
                 sql.Append(" AND M_Product_Category.M_Product_Category_ID = " + pcat_ID);
             }
-            
+
             if (Parent_ID > 0)
             {
                 int AD_Table_ID = MTable.Get_Table_ID("M_Product");
@@ -83,9 +89,9 @@ namespace VA005.Models
             if (pageNo == 1)
             {
                 string sql1 = qry.Replace(@"DISTINCT M_Product.Name,M_Product.Value,M_Product.M_Product_ID,M_Product.IsActive,M_Product.M_AttributeSet_ID, M_Product.AD_Image_ID, M_Product.AD_Client_ID,M_Product.AD_Org_ID, M_Product.M_Product_Category_ID, M_Product_Category.Name as ProdCat, C_UOM.Name as UOM, M_Product.C_UOM_ID, M_Product.UPC", "Count(*)");
-                count = Util.GetValueOfInt(DB.ExecuteScalar(sql1, null, null));
+                count = Util.GetValueOfInt(VAdvantage.DataBase.DB.ExecuteScalar(sql1, searchParam, null));
             }
-            DataSet ds = DB.ExecuteDatasetPaging(qry + orderby, pageNo, pageSize);
+            DataSet ds = DB.ExecuteDatasetPaging(qry + orderby, searchParam, null, pageNo, pageSize);
 
             if (ds != null && ds.Tables[0].Rows.Count > 0)
             {
@@ -180,9 +186,13 @@ namespace VA005.Models
             //}
 
             // Added by Bharat on 09 March 2018 to add search on Product categories
+            SqlParameter[] searchParam = null;
             if (!String.IsNullOrEmpty(searchText))
             {
-                sql.Append(" AND UPPER(M_Product_Category.Name) LIKE UPPER('%" + searchText + "%')");
+                sql.Append(" AND UPPER(M_Product_Category.Name) LIKE UPPER(@searchPattern)");
+                searchParam = new SqlParameter[] {
+                    new SqlParameter("@searchPattern", "%" + searchText + "%")
+                };
             }
 
             // JID_0788: Implemented role based security
@@ -194,10 +204,10 @@ namespace VA005.Models
             if (pageNo == 1)
             {
                 string sql1 = "SELECT COUNT(M_Product_Category_ID) FROM (" + sql + ") t";
-                count = Util.GetValueOfInt(DB.ExecuteScalar(sql1, null, null));
+                count = Util.GetValueOfInt(VAdvantage.DataBase.DB.ExecuteScalar(sql1, searchParam, null));
             }
 
-            DataSet ds = DB.ExecuteDatasetPaging(sql.ToString(), pageNo, pageSize);
+            DataSet ds = DB.ExecuteDatasetPaging(sql.ToString(), searchParam, null, pageNo, pageSize);
             if (ds != null && ds.Tables[0].Rows.Count > 0)
             {
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
@@ -442,7 +452,7 @@ namespace VA005.Models
                     }
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
 
             }
@@ -781,8 +791,9 @@ namespace VA005.Models
                     upc = Util.GetValueOfString(columnName[i].UPC);
                 }
                 qry = "SELECT VAICNT_InventoryCountLine_ID FROM VAICNT_InventoryCountLine WHERE M_Product_ID = " + columnName[i].product_ID + " AND VAICNT_InventoryCount_ID=" + count_id +
-                    " AND NVL(C_UOM_ID,0) = " + columnName[i].C_Uom_ID + " AND NVL(M_AttributeSetInstance_ID,0) = " + columnName[i].attribute_ID + " AND nvl(UPC,' ') ='" + upc + "'";
-                lineID = Util.GetValueOfInt(DB.ExecuteScalar(qry, null, null));
+                    " AND NVL(C_UOM_ID,0) = " + columnName[i].C_Uom_ID + " AND NVL(M_AttributeSetInstance_ID,0) = " + columnName[i].attribute_ID + " AND nvl(UPC,' ') = @upc";
+                SqlParameter[] upcParam = new SqlParameter[] { new SqlParameter("@upc", upc) };
+                lineID = Util.GetValueOfInt(VAdvantage.DataBase.DB.ExecuteScalar(qry, upcParam, null));
                 MVAICNTInventoryCountLine iline = new MVAICNTInventoryCountLine(ctx, lineID, null);
                 pro = new MProduct(ctx, columnName[i].product_ID, null);
                 if (lineID > 0)
@@ -1589,8 +1600,9 @@ LEFT JOIN ad_image adimg ON adimg.ad_image_id    =attimage.ad_image_id
         {
             int window_ID = 0;
             string windowName = Util.GetValueOfString(fields);
-            string sql = "SELECT AD_Window_ID FROM AD_Window WHERE Name = '" + windowName + "'";
-            window_ID = Util.GetValueOfInt(DB.ExecuteScalar(sql, null, null));
+            string sql = "SELECT AD_Window_ID FROM AD_Window WHERE Name = @windowName";
+            SqlParameter[] param = new SqlParameter[] { new SqlParameter("@windowName", windowName) };
+            window_ID = Util.GetValueOfInt(VAdvantage.DataBase.DB.ExecuteScalar(sql, param, null));
             return window_ID;
         }
 
@@ -1643,8 +1655,9 @@ LEFT JOIN ad_image adimg ON adimg.ad_image_id    =attimage.ad_image_id
             Dictionary<string, object> obj = null;
             string sql = "SELECT prd.Name, prd.M_Product_ID, prd.C_UOM_ID, patr.M_AttributeSetInstance_ID, ats.Description, patr.UPC FROM M_ProductAttributes patr " +
                 "INNER JOIN M_Product prd ON patr.M_Product_ID = prd.M_Product_ID INNER JOIN M_AttributeSetInstance ats ON patr.M_AttributeSetInstance_ID = ats.M_AttributeSetInstance_ID " +
-                "WHERE patr.M_Product_ID = " + product_ID + " AND patr.M_AttributeSetInstance_ID = " + m_attribute_ID + " AND nvl(patr.UPC,' ') = '" + upcvalue + "'";
-            DataSet ds = DB.ExecuteDataset(sql, null, null);
+                "WHERE patr.M_Product_ID = " + product_ID + " AND patr.M_AttributeSetInstance_ID = " + m_attribute_ID + " AND nvl(patr.UPC,' ') = @upcvalue";
+            SqlParameter[] param = new SqlParameter[] { new SqlParameter("@upcvalue", upcvalue) };
+            DataSet ds = VAdvantage.DataBase.DB.ExecuteDataset(sql, param, null);
             if (ds != null && ds.Tables[0].Rows.Count > 0)
             {
                 obj = new Dictionary<string, object>();

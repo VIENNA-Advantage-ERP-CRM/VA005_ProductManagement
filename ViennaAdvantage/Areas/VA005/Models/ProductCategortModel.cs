@@ -10,6 +10,7 @@ using System.Web.Hosting;
 using VAdvantage.DataBase;
 using VIS.Classes;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace VA005.Models
 {
@@ -107,14 +108,14 @@ namespace VA005.Models
             List<KeyNamePair> NameList = new List<KeyNamePair>();
             for (int i = 0; i < pcats.Length; i++)
             {
-                string sql = "DELETE FROM M_Product_Category WHERE M_Product_Category_ID = " + pcats[i];
+                string sql = "DELETE FROM M_Product_Category WHERE M_Product_Category_ID = " + Util.GetValueOfInt(pcats[i]);
                 int result = Util.GetValueOfInt(DB.ExecuteQuery(sql, null, null));
                 KeyNamePair obj = new KeyNamePair();
                 obj.Key = Util.GetValueOfInt(pcats[i]);
                 obj.Name = string.Empty;
                 if (result < 0)
                 {
-                    string str = "SELECT Name FROM M_Product_Category WHERE M_Product_Category_ID = " + pcats[i];
+                    string str = "SELECT Name FROM M_Product_Category WHERE M_Product_Category_ID = " + Util.GetValueOfInt(pcats[i]);
                     obj.Name = Util.GetValueOfString(DB.ExecuteScalar(str, null, null));
                 }
                 NameList.Add(obj);
@@ -253,11 +254,12 @@ namespace VA005.Models
         /// <returns>Load Window</returns>
         public int LoadWindow(string windowName)
         {
-            string sql = "SELECT AD_Window_ID FROM AD_Window WHERE Name = '" + windowName + "'";
-            int rule = Util.GetValueOfInt(DB.ExecuteScalar(sql, null, null));
+            string sql = "SELECT AD_Window_ID FROM AD_Window WHERE Name = @windowName";
+            SqlParameter[] param = new SqlParameter[] { new SqlParameter("@windowName", windowName) };
+            int rule = Util.GetValueOfInt(DB.ExecuteScalar(sql, param, null));
             return rule;
         }
-      
+
         /// <summary>
         /// Get imgUrl
         /// </summary>

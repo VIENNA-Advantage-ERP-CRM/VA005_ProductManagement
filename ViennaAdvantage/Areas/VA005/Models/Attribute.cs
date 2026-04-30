@@ -6,6 +6,7 @@ using VAdvantage.Model;
 using VAdvantage.DataBase;
 using VAdvantage.Utility;
 using System.Data;
+using System.Data.SqlClient;
 using Newtonsoft.Json;
 using VAdvantage.Logging;
 
@@ -255,8 +256,21 @@ namespace VA005.Models
         public List<ColumnData> GetFieldLength(int TableID, string COLUMNNAME)
         {
             List<ColumnData> Type = new List<ColumnData>();
-            string sql = "SELECT Fieldlength,ColumnName FROM AD_Column WHERE AD_Table_ID =" + TableID + "  AND COLUMNNAME  IN (" + COLUMNNAME + ") AND isActive = 'Y'";
-            var ds = DB.ExecuteDataset(sql, null, null);
+            List<string> placeholders = new List<string>();
+            List<SqlParameter> param = new List<SqlParameter>();
+            string[] tokens = (COLUMNNAME ?? string.Empty).Split(',');
+            for (int i = 0; i < tokens.Length; i++)
+            {
+                string val = tokens[i].Trim().Trim('\'').Trim();
+                if (val.Length == 0) continue;
+                string ph = "@col" + i;
+                placeholders.Add(ph);
+                param.Add(new SqlParameter(ph, val));
+            }
+            if (placeholders.Count == 0) return Type;
+
+            string sql = "SELECT Fieldlength,ColumnName FROM AD_Column WHERE AD_Table_ID =" + TableID + "  AND COLUMNNAME  IN (" + string.Join(",", placeholders) + ") AND isActive = 'Y'";
+            var ds = DB.ExecuteDataset(sql, param.ToArray(), null);
             if (ds != null)
             {
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
@@ -278,8 +292,21 @@ namespace VA005.Models
         public List<ColumnData> GetField(int TableID, string COLUMNNAME)
         {
             List<ColumnData> Type = new List<ColumnData>();
-            string sql = "SELECT Fieldlength,ColumnName FROM AD_Column WHERE AD_Table_ID =" + TableID + "  AND COLUMNNAME  IN (" + COLUMNNAME + ") AND isActive = 'Y'";
-            var ds = DB.ExecuteDataset(sql, null, null);
+            List<string> placeholders = new List<string>();
+            List<SqlParameter> param = new List<SqlParameter>();
+            string[] tokens = (COLUMNNAME ?? string.Empty).Split(',');
+            for (int i = 0; i < tokens.Length; i++)
+            {
+                string val = tokens[i].Trim().Trim('\'').Trim();
+                if (val.Length == 0) continue;
+                string ph = "@col" + i;
+                placeholders.Add(ph);
+                param.Add(new SqlParameter(ph, val));
+            }
+            if (placeholders.Count == 0) return Type;
+
+            string sql = "SELECT Fieldlength,ColumnName FROM AD_Column WHERE AD_Table_ID =" + TableID + "  AND COLUMNNAME  IN (" + string.Join(",", placeholders) + ") AND isActive = 'Y'";
+            var ds = DB.ExecuteDataset(sql, param.ToArray(), null);
             if (ds != null)
             {
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
@@ -300,8 +327,12 @@ namespace VA005.Models
         public string Update(string fields)
         {
             string[] paramValue = fields.Split(',');
-            string sql = "UPDATE M_Attributevalue SET Name='" + paramValue[0] + "',Value='" + paramValue[1] + "' WHERE M_Attributevalue_ID=" + paramValue[2];
-            string attribute = Util.GetValueOfString(DB.ExecuteQuery(sql));
+            string sql = "UPDATE M_Attributevalue SET Name = @name, Value = @value WHERE M_Attributevalue_ID = " + paramValue[2];
+            SqlParameter[] param = new SqlParameter[] {
+                new SqlParameter("@name", paramValue[0]),
+                new SqlParameter("@value", paramValue[1])
+            };
+            string attribute = Util.GetValueOfString(DB.ExecuteQuery(sql, param, null));
             return attribute;
         }
     }

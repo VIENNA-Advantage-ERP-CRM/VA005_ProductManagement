@@ -13,6 +13,7 @@ using System.Text;
 using System.Web;
 using VAdvantage.DataBase;
 using VAdvantage.Logging;
+using System.Data.SqlClient;
 using VAdvantage.Model;
 using VAdvantage.Utility;
 using VIS.DataContracts;
@@ -592,8 +593,9 @@ namespace VA005.Models
         /// <returns>Load Window</returns>
         public int GetWindow_ID(string Control)
         {
-            string sql = "SELECT AD_Window_ID FROM AD_Window WHERE Name='" + Control + "'";
-            int ID = Util.GetValueOfInt(DB.ExecuteScalar(sql));
+            string sql = "SELECT AD_Window_ID FROM AD_Window WHERE Name = @windowName";
+            SqlParameter[] param = new SqlParameter[] { new SqlParameter("@windowName", Control) };
+            int ID = Util.GetValueOfInt(DB.ExecuteScalar(sql, param, null));
             return ID;
         }
         /// <summary>
@@ -731,8 +733,21 @@ namespace VA005.Models
         public List<fieldlengthDetails> GetFieldLength(int TableID, string COLUMNNAME)
         {
             List<fieldlengthDetails> Type = new List<fieldlengthDetails>();
-            string sql = "SELECT Fieldlength,ColumnName FROM AD_Column WHERE AD_Table_ID =" + TableID + "  AND COLUMNNAME  IN (" + COLUMNNAME + ") AND isActive = 'Y'";
-            var ds = DB.ExecuteDataset(sql, null, null);
+            List<string> placeholders = new List<string>();
+            List<SqlParameter> param = new List<SqlParameter>();
+            string[] tokens = (COLUMNNAME ?? string.Empty).Split(',');
+            for (int i = 0; i < tokens.Length; i++)
+            {
+                string val = tokens[i].Trim().Trim('\'').Trim();
+                if (val.Length == 0) continue;
+                string ph = "@col" + i;
+                placeholders.Add(ph);
+                param.Add(new SqlParameter(ph, val));
+            }
+            if (placeholders.Count == 0) return Type;
+
+            string sql = "SELECT Fieldlength,ColumnName FROM AD_Column WHERE AD_Table_ID =" + TableID + "  AND COLUMNNAME  IN (" + string.Join(",", placeholders) + ") AND isActive = 'Y'";
+            var ds = DB.ExecuteDataset(sql, param.ToArray(), null);
             if (ds != null)
             {
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
