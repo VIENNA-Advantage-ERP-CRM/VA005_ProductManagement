@@ -2041,12 +2041,12 @@
                         midtopdivvv.css("float", "left");
                         $bsyDiv[0].style.visibility = 'hidden';
                     }, 500);
-
+                    isClick = false;
 
                     //                    $bsyDiv[0].style.visibility = 'hidden';
                 },
                 error: function () {
-
+                    isClick = false;
                     VIS.ADialog.error("VA005_ErrorLoadingProducts");
                     $bsyDiv[0].style.visibility = "hidden";
                 }
@@ -2509,6 +2509,7 @@
         function callBackFillProduct(dr) {
             if (dr != null) {
                 cmbOrg.val(dr["AD_Org_ID"]);
+                cmbOrg.prop("disabled", true);
                 txtName.val(dr["Name"]);
                 if (M_Product_ID == 0) {
                     txtValue.val("");
@@ -2527,6 +2528,7 @@
 
         var ClearProdData = function () {
             cmbOrg.val(orgid);
+            cmbOrg.prop("disabled", false);
             txtName.val("");
             txtValue.val("");
             cmbUOM.val(-1);
@@ -2833,8 +2835,10 @@
 
             $searchProduct.on("keydown", function (e) {
 
-                if (e.keyCode == 9 || e.keyCode == 13) {
+                if (!isClick && (e.keyCode == 9 || e.keyCode == 13)) {
+                    isClick = true;
                     $bsyDiv[0].style.visibility = "visible";
+                    console.log("Searching Product");
                     pgno = 1;
                     prods = [];
                     uoms = [];
@@ -3083,7 +3087,8 @@
                     VIS.ADialog.error("VA005_SelectProduct");
                     return false;
                 }
-                var update = new VA005.updateProductPanel($self.windowNo, 140, 208, prods);
+                var ad_window_Id = VIS.dataContext.getJSONRecord("VA005/ProductManagement/GetWindow_ID", "VAS_ProductMaster");
+                var update = new VA005.updateProductPanel($self.windowNo, ad_window_Id, 208, prods);
                 update.onClose = function () {
                     if (update.okBtnPressed) {
                         prods = [];
@@ -4216,7 +4221,7 @@
 
             else if (target.hasClass('vis-edit')) {
                 ProdID = target.data("uid");
-                zoomToWindow(ProdID, "Product");
+                zoomToWindow(ProdID, "VAS_ProductMaster");
                 $getProdectIDAfterEdit = ProdID;
                 ProdID = 0;
                 return;
