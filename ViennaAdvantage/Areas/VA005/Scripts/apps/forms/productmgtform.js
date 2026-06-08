@@ -2450,19 +2450,19 @@
                 //dr.dispose();
                 if (ad_window_Id > 0) {
                     var zoomQuery = new VIS.Query();
-                    if (windowName == "Product")
+                    if (windowName == "VAS_ProductMaster")
                         zoomQuery.addRestriction("M_Product_ID", VIS.Query.prototype.EQUAL, record_id);
-                    else if (windowName == "Attribute Set")
+                    else if (windowName == "VAS_AttributeGroup")
                         zoomQuery.addRestriction("M_AttributeSet_ID", VIS.Query.prototype.EQUAL, record_id);
-                    else if (windowName == "Product Category")
+                    else if (windowName == "VAS_ProductCategory")
                         zoomQuery.addRestriction("M_Product_Category_ID", VIS.Query.prototype.EQUAL, record_id);
-                    else if (windowName == "Tax Category")
+                    else if (windowName == "VAS_TaxCategory")
                         zoomQuery.addRestriction("C_TaxCategory_ID", VIS.Query.prototype.EQUAL, record_id);
-                    else if (windowName == "Unit of Measure")
+                    else if (windowName == "VAS_UnitofMeasure")
                         zoomQuery.addRestriction("C_Uom_ID", VIS.Query.prototype.EQUAL, record_id);
                     else if (windowName == "VAICNT_InventoryCount")
                         zoomQuery.addRestriction("VAICNT_InventoryCount_ID", VIS.Query.prototype.EQUAL, record_id);
-                    else if (windowName == "Vendor Master")
+                    else if (windowName == "VAS_VendorMaster")
                         zoomQuery.addRestriction("C_BPartner_ID", VIS.Query.prototype.EQUAL, record_id);
                     zoomQuery.setRecordCount(1);
                     VIS.viewManager.startWindow(ad_window_Id, zoomQuery);
@@ -2666,13 +2666,13 @@
                     }
                     else if (action == VIS.Actions.zoom) {
                         if (options.Attribute == "Y")
-                            zoomToWindow(VIS.Utility.Util.getValueOfInt(cmbAttributeSet.val()), "Attribute Set");
+                            zoomToWindow(VIS.Utility.Util.getValueOfInt(cmbAttributeSet.val()), "VAS_AttributeGroup");
                         if (options.Category == "Y")
-                            zoomToWindow(VIS.Utility.Util.getValueOfInt(cmbCat.val()), "Product Category");
+                            zoomToWindow(VIS.Utility.Util.getValueOfInt(cmbCat.val()), "VAS_ProductCategory");
                         else if (options.Tax == "Y")
-                            zoomToWindow(VIS.Utility.Util.getValueOfInt(cmbTaxCategory.val()), "Tax Category");
+                            zoomToWindow(VIS.Utility.Util.getValueOfInt(cmbTaxCategory.val()), "VAS_TaxCategory");
                         else if (options.UOM == "Y")
-                            zoomToWindow(VIS.Utility.Util.getValueOfInt(cmbUOM.val()), "Unit of Measure");
+                            zoomToWindow(VIS.Utility.Util.getValueOfInt(cmbUOM.val()), "VAS_UnitofMeasure");
                     }
                 });
             }
